@@ -50,7 +50,7 @@ export async function POST(request: Request) {
 
     // Insérer le message dans la base de données
     const { error: insertError } = await supabase
-      .from('contact_messages')
+      .from('contact_messages' as never)
       .insert({
         name: name.trim(),
         company: company?.trim() || null,
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         message: message.trim(),
         ip_address: ipAddress,
         user_agent: userAgent,
-      });
+      } as never);
 
     if (insertError) {
       console.error('Erreur insertion message contact:', insertError);
