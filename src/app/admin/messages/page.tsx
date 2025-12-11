@@ -39,22 +39,22 @@ export default function AdminMessagesPage() {
   const fetchMessages = async () => {
     setLoading(true);
     const { data, error } = await supabase
-      .from('contact_messages')
+      .from('contact_messages' as never)
       .select('*')
       .order('created_at', { ascending: false });
 
     if (error) {
       console.error('Erreur chargement messages:', error);
     } else {
-      setMessages(data || []);
+      setMessages((data as ContactMessage[]) || []);
     }
     setLoading(false);
   };
 
   const toggleRead = async (id: number, currentStatus: boolean) => {
     const { error } = await supabase
-      .from('contact_messages')
-      .update({ is_read: !currentStatus })
+      .from('contact_messages' as never)
+      .update({ is_read: !currentStatus } as never)
       .eq('id', id);
 
     if (!error) {
@@ -68,7 +68,7 @@ export default function AdminMessagesPage() {
     if (!confirm('Êtes-vous sûr de vouloir supprimer ce message ?')) return;
 
     const { error } = await supabase
-      .from('contact_messages')
+      .from('contact_messages' as never)
       .delete()
       .eq('id', id);
 
