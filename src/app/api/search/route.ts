@@ -136,11 +136,16 @@ export async function GET(request: Request) {
     console.error('Erreur recherche posts:', postsError);
   }
 
+  // Types pour les résultats
+  type RecipeResult = { id: number; slug: string; title: string; featured_image: string | null; total_time: number | null; difficulty: string | null; excerpt: string | null };
+  type PostResult = { id: number; slug: string; title: string; featured_image: string | null; excerpt: string | null };
+
   // Dédupliquer les résultats (au cas où les variantes trouvent les mêmes items)
-  const uniqueRecipes = recipes ?
-    Array.from(new Map(recipes.map(r => [r.id, r])).values()) : [];
-  const uniquePosts = posts ?
-    Array.from(new Map(posts.map(p => [p.id, p])).values()) : [];
+  const typedRecipes = (recipes || []) as RecipeResult[];
+  const typedPosts = (posts || []) as PostResult[];
+
+  const uniqueRecipes = Array.from(new Map(typedRecipes.map(r => [r.id, r])).values());
+  const uniquePosts = Array.from(new Map(typedPosts.map(p => [p.id, p])).values());
 
   return NextResponse.json({
     recipes: uniqueRecipes,
