@@ -1,0 +1,197 @@
+import Link from 'next/link';
+import { createClient } from '@/lib/supabase-server';
+import DeleteRecipeButton from '@/components/admin/DeleteRecipeButton';
+
+interface RecipeListItem {
+  id: number;
+  title: string;
+  slug: string;
+  difficulty: 'facile' | 'moyen' | 'difficile';
+  likes: number;
+  created_at: string;
+  featured_image: string | null;
+}
+
+async function getRecipes(search?: string): Promise<RecipeListItem[]> {
+  const supabase = await createClient();
+
+  let query = supabase
+    .from('recipes')
+    .select('id, title, slug, difficulty, likes, created_at, featured_image')
+    .order('created_at', { ascending: false });
+
+  if (search) {
+    query = query.ilike('title', `%${search}%`);
+  }
+
+  const { data, error } = await query.limit(100);
+
+  if (error) {
+    console.error('Error fetching recipes:', error);
+    return [];
+  }
+
+  return (data as RecipeListItem[] | null) || [];
+}
+
+export default async function RecipesListPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string }>;
+}) {
+  const params = await searchParams;
+  const recipes = await getRecipes(params.search);
+
+  return (
+    <div>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">Recettes</h1>
+        <Link
+          href="/admin/recettes/new"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-orange-600 hover:bg-orange-700"
+        >
+          + Nouvelle recette
+        </Link>
+      </div>
+
+      {/* Search */}
+      <div className="mb-6">
+        <form method="GET" className="flex gap-2">
+          <input
+            type="text"
+            name="search"
+            defaultValue={params.search}
+            placeholder="Rechercher une recette..."
+            className="flex-1 max-w-md px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200"
+          >
+            Rechercher
+          </button>
+          {params.search && (
+            <Link
+              href="/admin/recettes"
+              className="px-4 py-2 text-gray-500 hover:text-gray-700"
+            >
+              Effacer
+            </Link>
+          )}
+        </form>
+      </div>
+
+      {/* Table */}
+      <div className="bg-white rounded-lg shadow overflow-hidden">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Recette
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Difficulté
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Likes
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Date
+              </th>
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {recipes.map((recipe) => (
+              <tr key={recipe.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4">
+                  <div className="flex items-center">
+                    {recipe.featured_image && (
+                      <img
+                        src={recipe.featured_image}
+                        alt=""
+                        className="w-12 h-12 rounded object-cover mr-4"
+                      />
+                    )}
+                    <div>
+                      <div className="text-sm font-medium text-gray-900">
+                        {recipe.title}
+                      </div>
+                      <div className="text-sm text-gray-500">/{recipe.slug}</div>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <DifficultyBadge difficulty={recipe.difficulty} />
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className="inline-flex items-center text-sm text-pink-600">
+                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                    </svg>
+                    {recipe.likes}
+                  </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  {new Date(recipe.created_at).toLocaleDateString('fr-CA')}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <div className="flex justify-end gap-2">
+                    <Link
+                      href={`/recette/${recipe.slug}`}
+                      target="_blank"
+                      className="text-gray-400 hover:text-gray-600"
+                      title="Voir"
+                    >
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </Link>
+                    <Link
+                      href={`/admin/recettes/${recipe.id}`}
+                      className="text-orange-600 hover:text-orange-900"
+                      title="Éditer"
+                    >
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                      </svg>
+                    </Link>
+                    <DeleteRecipeButton recipeId={recipe.id} recipeTitle={recipe.title} />
+                  </div>
+                </td>
+              </tr>
+            ))}
+            {recipes.length === 0 && (
+              <tr>
+                <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
+                  Aucune recette trouvée
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-4 text-sm text-gray-500">
+        {recipes.length} recette{recipes.length > 1 ? 's' : ''}
+      </div>
+    </div>
+  );
+}
+
+function DifficultyBadge({ difficulty }: { difficulty: string }) {
+  const colors = {
+    facile: 'bg-green-100 text-green-800',
+    moyen: 'bg-yellow-100 text-yellow-800',
+    difficile: 'bg-red-100 text-red-800',
+  };
+
+  return (
+    <span className={`px-2 py-1 text-xs font-medium rounded ${colors[difficulty as keyof typeof colors] || 'bg-gray-100 text-gray-800'}`}>
+      {difficulty}
+    </span>
+  );
+}
