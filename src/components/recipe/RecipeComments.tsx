@@ -75,7 +75,7 @@ export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
         recipe_id: recipeId,
         user_id: user.id,
         content: newComment.trim(),
-      });
+      } as never);
 
     if (!error) {
       setNewComment('');
