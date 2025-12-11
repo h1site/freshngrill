@@ -23,7 +23,7 @@ async function analyzeConvertisseurUrls() {
       const matches = post.content.match(/https?:\/\/[^\s"'<>]*convertisseur-de-mesures[^\s"'<>]*/g) || [];
       if (matches.length > 0) {
         postsWithUrl++;
-        postMatches.push({ id: post.id, slug: post.slug, urls: [...new Set(matches)] });
+        postMatches.push({ id: post.id, slug: post.slug, urls: [...new Set(matches)] as string[] });
       }
     }
   }
@@ -42,7 +42,7 @@ async function analyzeConvertisseurUrls() {
       const matches = searchContent.match(/https?:\/\/[^\s"'<>\\]*convertisseur-de-mesures[^\s"'<>\\]*/g) || [];
       if (matches.length > 0) {
         recipesWithUrl++;
-        recipeMatches.push({ id: recipe.id, slug: recipe.slug, urls: [...new Set(matches)] });
+        recipeMatches.push({ id: recipe.id, slug: recipe.slug, urls: [...new Set(matches)] as string[] });
       }
     }
   }
