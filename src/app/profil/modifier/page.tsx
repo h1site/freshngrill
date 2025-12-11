@@ -75,7 +75,7 @@ export default function ModifierProfilPage() {
         display_name: displayName.trim() || null,
         avatar_url: avatarUrl.trim() || null,
         updated_at: new Date().toISOString(),
-      });
+      } as never);
 
     if (error) {
       setError('Erreur lors de la sauvegarde: ' + error.message);
