@@ -594,8 +594,8 @@ export async function getAllIngredientNames(): Promise<string[]> {
 
   const ingredientSet = new Set<string>();
 
-  for (const recipe of data || []) {
-    const groups = recipe.ingredients as IngredientGroup[] | null;
+  for (const recipe of (data || []) as { ingredients: IngredientGroup[] | null }[]) {
+    const groups = recipe.ingredients;
     if (!groups) continue;
 
     for (const group of groups) {
@@ -647,8 +647,8 @@ export async function searchByIngredients(
 
   const results: RecipeWithMatchScore[] = [];
 
-  for (const recipe of data || []) {
-    const groups = recipe.ingredients as IngredientGroup[] | null;
+  for (const recipe of (data || []) as (RecipeCard & { ingredients: IngredientGroup[] | null })[]) {
+    const groups = recipe.ingredients;
     if (!groups) continue;
 
     // Extraire tous les ingrédients de la recette
