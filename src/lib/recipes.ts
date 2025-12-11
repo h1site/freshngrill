@@ -647,7 +647,7 @@ export async function searchByIngredients(
 
   const results: RecipeWithMatchScore[] = [];
 
-  for (const recipe of (data || []) as { id: number; slug: string; title: string; featured_image: string | null; prep_time: number | null; cook_time: number | null; total_time: number | null; difficulty: string | null; categories: string[]; likes: number | null; ingredients: IngredientGroup[] | null }[]) {
+  for (const recipe of (data || []) as { id: number; slug: string; title: string; featured_image: string | null; prep_time: number | null; cook_time: number | null; total_time: number | null; difficulty: string | null; categories: Category[]; likes: number | null; ingredients: IngredientGroup[] | null }[]) {
     const groups = recipe.ingredients;
     if (!groups) continue;
 
