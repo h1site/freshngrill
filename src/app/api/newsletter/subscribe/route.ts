@@ -31,22 +31,24 @@ export async function POST(request: Request) {
 
     // Vérifier si l'email existe déjà
     const { data: existing } = await supabase
-      .from('newsletter_subscribers')
+      .from('newsletter_subscribers' as never)
       .select('id, is_active')
       .eq('email', normalizedEmail)
       .single();
 
-    if (existing) {
+    const existingData = existing as { id: number; is_active: boolean } | null;
+
+    if (existingData) {
       // Si l'email existe mais est désabonné, le réactiver
-      if (!existing.is_active) {
+      if (!existingData.is_active) {
         const { error: updateError } = await supabase
-          .from('newsletter_subscribers')
+          .from('newsletter_subscribers' as never)
           .update({
             is_active: true,
             unsubscribed_at: null,
             locale,
-          })
-          .eq('id', existing.id);
+          } as never)
+          .eq('id', existingData.id);
 
         if (updateError) {
           console.error('Erreur réactivation newsletter:', updateError);
@@ -73,14 +75,14 @@ export async function POST(request: Request) {
 
     // Nouvel abonné
     const { error: insertError } = await supabase
-      .from('newsletter_subscribers')
+      .from('newsletter_subscribers' as never)
       .insert({
         email: normalizedEmail,
         locale,
         ip_address: ipAddress,
         user_agent: userAgent,
         source: 'website',
-      });
+      } as never);
 
     if (insertError) {
       console.error('Erreur inscription newsletter:', insertError);
