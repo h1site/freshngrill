@@ -2,10 +2,74 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, ArrowRight } from 'lucide-react';
+import { Mail, ArrowRight, Check, Loader2, AlertCircle } from 'lucide-react';
+import type { Locale } from '@/i18n/config';
 
-export function NewsletterSection() {
+interface NewsletterSectionProps {
+  locale?: Locale;
+}
+
+export function NewsletterSection({ locale = 'fr' }: NewsletterSectionProps) {
   const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  const t = locale === 'en' ? {
+    title: 'Stay Inspired',
+    subtitle: 'Receive our best recipes and cooking tips directly in your inbox.',
+    placeholder: 'Your email address',
+    subscribe: 'Subscribe',
+    noSpam: 'No spam. Unsubscribe with one click.',
+    invalidEmail: 'Please enter a valid email address.',
+    errorGeneric: 'An error occurred. Please try again.',
+  } : {
+    title: 'Restez Inspiré',
+    subtitle: 'Recevez nos meilleures recettes et conseils culinaires directement dans votre boîte mail.',
+    placeholder: 'Votre adresse email',
+    subscribe: "S'inscrire",
+    noSpam: 'Pas de spam. Désabonnement en un clic.',
+    invalidEmail: 'Veuillez entrer une adresse email valide.',
+    errorGeneric: 'Une erreur est survenue. Veuillez réessayer.',
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validation côté client
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailRegex.test(email)) {
+      setStatus('error');
+      setMessage(t.invalidEmail);
+      return;
+    }
+
+    setStatus('loading');
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, locale }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setStatus('success');
+        setMessage(data.message);
+        setEmail('');
+      } else {
+        setStatus('error');
+        setMessage(data.error || t.errorGeneric);
+      }
+    } catch {
+      setStatus('error');
+      setMessage(t.errorGeneric);
+    }
+  };
 
   return (
     <section className="py-16 md:py-24 bg-[#F77313]">
@@ -19,31 +83,66 @@ export function NewsletterSection() {
         >
           <Mail className="w-10 h-10 text-white/80 mx-auto mb-6" />
           <h2 className="text-3xl md:text-4xl font-display text-white mb-4">
-            Restez Inspiré
+            {t.title}
           </h2>
           <p className="text-white/80 mb-8">
-            Recevez nos meilleures recettes et conseils culinaires directement dans votre boîte mail.
+            {t.subtitle}
           </p>
 
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Votre adresse email"
-              className="flex-1 px-5 py-3.5 bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-white transition-colors"
-            />
-            <button
-              type="submit"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-black text-white font-medium uppercase tracking-wide text-sm hover:bg-neutral-900 transition-colors"
+          {status === 'success' ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex items-center justify-center gap-3 bg-white/20 backdrop-blur px-6 py-4 rounded-lg max-w-md mx-auto"
             >
-              S&apos;inscrire
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </form>
+              <Check className="w-6 h-6 text-white" />
+              <span className="text-white font-medium">{message}</span>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-3 max-w-md mx-auto">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (status === 'error') setStatus('idle');
+                  }}
+                  placeholder={t.placeholder}
+                  disabled={status === 'loading'}
+                  className="flex-1 px-5 py-3.5 bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-white transition-colors disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-black text-white font-medium uppercase tracking-wide text-sm hover:bg-neutral-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {status === 'loading' ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <>
+                      {t.subscribe}
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {status === 'error' && message && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center justify-center gap-2 text-white/90 text-sm"
+                >
+                  <AlertCircle className="w-4 h-4" />
+                  <span>{message}</span>
+                </motion.div>
+              )}
+            </form>
+          )}
 
           <p className="text-white/50 text-xs mt-4">
-            Pas de spam. Désabonnement en un clic.
+            {t.noSpam}
           </p>
         </motion.div>
       </div>

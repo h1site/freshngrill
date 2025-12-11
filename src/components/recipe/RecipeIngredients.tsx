@@ -3,18 +3,25 @@
 import { useState } from 'react';
 import { IngredientGroup } from '@/types/recipe';
 import { Minus, Plus, Check } from 'lucide-react';
+import type { Locale } from '@/i18n/config';
 
 interface Props {
   ingredients: IngredientGroup[];
   servings: number;
   servingsUnit?: string;
+  locale?: Locale;
 }
 
 export default function RecipeIngredients({
   ingredients,
   servings: initialServings,
-  servingsUnit = 'portions',
+  servingsUnit,
+  locale = 'fr',
 }: Props) {
+  const isEN = locale === 'en';
+  const defaultServingsUnit = isEN ? 'servings' : 'portions';
+  const ingredientsTitle = isEN ? 'Ingredients' : 'Ingrédients';
+  const servingsLabel = isEN ? 'Servings' : 'Portions';
   const [servings, setServings] = useState(initialServings);
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
 
@@ -56,13 +63,13 @@ export default function RecipeIngredients({
   return (
     <div className="bg-neutral-50 p-8 rounded-t-[5px]">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-display text-2xl tracking-wide text-black">Ingrédients</h2>
+        <h2 className="font-display text-2xl tracking-wide text-black">{ingredientsTitle}</h2>
         <div className="w-12 h-0.5 bg-[#F77313]" />
       </div>
 
       {/* Ajustement des portions */}
       <div className="flex items-center justify-between border border-neutral-200 bg-white p-4 mb-8">
-        <span className="text-neutral-500 text-sm uppercase tracking-wider">Portions</span>
+        <span className="text-neutral-500 text-sm uppercase tracking-wider">{servingsLabel}</span>
         <div className="flex items-center gap-4">
           <button
             onClick={() => setServings(Math.max(1, servings - 1))}

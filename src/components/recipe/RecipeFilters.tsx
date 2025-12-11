@@ -5,33 +5,42 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Category } from '@/types/recipe';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
+import type { Locale } from '@/i18n/config';
 
 interface Props {
   categories: Category[];
+  locale?: Locale;
 }
 
-export default function RecipeFilters({ categories }: Props) {
+export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const isEN = locale === 'en';
+
+  // Use localized param names
+  const categoryParam = isEN ? 'category' : 'categorie';
+  const difficultyParam = isEN ? 'difficulty' : 'difficulte';
+  const timeParam = isEN ? 'time' : 'temps';
+  const basePath = isEN ? '/en/recipe' : '/recette';
 
   const [search, setSearch] = useState(searchParams.get('q') || '');
   const [selectedCategory, setSelectedCategory] = useState(
-    searchParams.get('categorie') || ''
+    searchParams.get(categoryParam) || ''
   );
   const [selectedDifficulty, setSelectedDifficulty] = useState(
-    searchParams.get('difficulte') || ''
+    searchParams.get(difficultyParam) || ''
   );
-  const [maxTime, setMaxTime] = useState(searchParams.get('temps') || '');
+  const [maxTime, setMaxTime] = useState(searchParams.get(timeParam) || '');
   const [showFilters, setShowFilters] = useState(false);
 
   const applyFilters = () => {
     const params = new URLSearchParams();
     if (search) params.set('q', search);
-    if (selectedCategory) params.set('categorie', selectedCategory);
-    if (selectedDifficulty) params.set('difficulte', selectedDifficulty);
-    if (maxTime) params.set('temps', maxTime);
+    if (selectedCategory) params.set(categoryParam, selectedCategory);
+    if (selectedDifficulty) params.set(difficultyParam, selectedDifficulty);
+    if (maxTime) params.set(timeParam, maxTime);
 
-    router.push(`/recette?${params.toString()}`);
+    router.push(`${basePath}?${params.toString()}`);
   };
 
   const clearFilters = () => {
@@ -39,7 +48,43 @@ export default function RecipeFilters({ categories }: Props) {
     setSelectedCategory('');
     setSelectedDifficulty('');
     setMaxTime('');
-    router.push('/recette');
+    router.push(basePath);
+  };
+
+  const t = isEN ? {
+    searchPlaceholder: 'Search for a recipe...',
+    filters: 'Filters',
+    category: 'Category',
+    allCategories: 'All categories',
+    difficulty: 'Difficulty',
+    allDifficulties: 'All',
+    easy: 'Easy',
+    medium: 'Medium',
+    hard: 'Hard',
+    maxTime: 'Maximum time',
+    anyTime: 'Any',
+    minutes: 'minutes',
+    hour: 'hour',
+    hours: 'hours',
+    clear: 'Clear',
+    apply: 'Apply',
+  } : {
+    searchPlaceholder: 'Rechercher une recette...',
+    filters: 'Filtres',
+    category: 'Catégorie',
+    allCategories: 'Toutes les catégories',
+    difficulty: 'Difficulté',
+    allDifficulties: 'Toutes',
+    easy: 'Facile',
+    medium: 'Moyen',
+    hard: 'Difficile',
+    maxTime: 'Temps maximum',
+    anyTime: 'Peu importe',
+    minutes: 'minutes',
+    hour: 'heure',
+    hours: 'heures',
+    clear: 'Effacer',
+    apply: 'Appliquer',
   };
 
   const hasActiveFilters =
@@ -56,7 +101,7 @@ export default function RecipeFilters({ categories }: Props) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && applyFilters()}
-            placeholder="Rechercher une recette..."
+            placeholder={t.searchPlaceholder}
             className="w-full pl-12 pr-4 py-3.5 bg-neutral-100 border-0 focus:outline-none focus:ring-2 focus:ring-[#F77313] text-sm"
           />
         </div>
@@ -70,7 +115,7 @@ export default function RecipeFilters({ categories }: Props) {
           }`}
         >
           <SlidersHorizontal className="w-4 h-4" />
-          Filtres
+          {t.filters}
           {hasActiveFilters && (
             <span className="w-2 h-2 rounded-full bg-white" />
           )}
@@ -92,14 +137,14 @@ export default function RecipeFilters({ categories }: Props) {
                 {/* Category */}
                 <div>
                   <label className="block text-xs font-medium text-neutral-500 uppercase tracking-wide mb-2">
-                    Catégorie
+                    {t.category}
                   </label>
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
                     className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#F77313] focus:border-transparent"
                   >
-                    <option value="">Toutes les catégories</option>
+                    <option value="">{t.allCategories}</option>
                     {categories.map((cat) => (
                       <option key={cat.id} value={cat.slug}>
                         {cat.name}
@@ -111,36 +156,36 @@ export default function RecipeFilters({ categories }: Props) {
                 {/* Difficulty */}
                 <div>
                   <label className="block text-xs font-medium text-neutral-500 uppercase tracking-wide mb-2">
-                    Difficulté
+                    {t.difficulty}
                   </label>
                   <select
                     value={selectedDifficulty}
                     onChange={(e) => setSelectedDifficulty(e.target.value)}
                     className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#F77313] focus:border-transparent"
                   >
-                    <option value="">Toutes</option>
-                    <option value="facile">Facile</option>
-                    <option value="moyen">Moyen</option>
-                    <option value="difficile">Difficile</option>
+                    <option value="">{t.allDifficulties}</option>
+                    <option value="facile">{t.easy}</option>
+                    <option value="moyen">{t.medium}</option>
+                    <option value="difficile">{t.hard}</option>
                   </select>
                 </div>
 
                 {/* Max Time */}
                 <div>
                   <label className="block text-xs font-medium text-neutral-500 uppercase tracking-wide mb-2">
-                    Temps maximum
+                    {t.maxTime}
                   </label>
                   <select
                     value={maxTime}
                     onChange={(e) => setMaxTime(e.target.value)}
                     className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#F77313] focus:border-transparent"
                   >
-                    <option value="">Peu importe</option>
-                    <option value="15">15 minutes</option>
-                    <option value="30">30 minutes</option>
-                    <option value="45">45 minutes</option>
-                    <option value="60">1 heure</option>
-                    <option value="120">2 heures</option>
+                    <option value="">{t.anyTime}</option>
+                    <option value="15">15 {t.minutes}</option>
+                    <option value="30">30 {t.minutes}</option>
+                    <option value="45">45 {t.minutes}</option>
+                    <option value="60">1 {t.hour}</option>
+                    <option value="120">2 {t.hours}</option>
                   </select>
                 </div>
               </div>
@@ -153,14 +198,14 @@ export default function RecipeFilters({ categories }: Props) {
                     className="flex items-center gap-2 px-4 py-2 text-neutral-600 hover:text-black text-sm"
                   >
                     <X className="w-4 h-4" />
-                    Effacer
+                    {t.clear}
                   </button>
                 )}
                 <button
                   onClick={applyFilters}
                   className="bg-black hover:bg-neutral-800 text-white font-medium text-sm uppercase tracking-wide px-6 py-2.5 transition-colors"
                 >
-                  Appliquer
+                  {t.apply}
                 </button>
               </div>
             </div>

@@ -5,13 +5,40 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Refrigerator, X, Plus, Search, Percent } from 'lucide-react';
 import { searchByIngredients, RecipeWithMatchScore } from '@/lib/recipes';
 import RecipeCard from './RecipeCard';
+import type { Locale } from '@/i18n/config';
 
 interface FridgeSearchProps {
   allIngredients: string[];
   onResultsChange?: (hasResults: boolean) => void;
+  locale?: Locale;
 }
 
-export default function FridgeSearch({ allIngredients, onResultsChange }: FridgeSearchProps) {
+export default function FridgeSearch({ allIngredients, onResultsChange, locale = 'fr' }: FridgeSearchProps) {
+  const isEN = locale === 'en';
+
+  const t = isEN ? {
+    buttonText: "What's in my fridge?",
+    instructions: 'Add the ingredients you have. The more you add, the more accurate the results!',
+    placeholder: 'Type an ingredient (e.g., chicken, tomato, cheese...)',
+    yourIngredients: 'Your ingredients',
+    clearAll: 'Clear all',
+    recipesFound: 'recipe(s) found',
+    ingredientsAvailable: 'ingredients available',
+    andMore: 'And more recipes...',
+    noRecipes: 'No recipes found with these ingredients.',
+    tryMore: 'Try adding more ingredients!',
+  } : {
+    buttonText: "Qu'est-ce que j'ai dans le frigo?",
+    instructions: 'Ajoutez les ingrédients que vous avez. Plus vous en ajoutez, plus les résultats seront précis!',
+    placeholder: 'Tapez un ingrédient (ex: poulet, tomate, fromage...)',
+    yourIngredients: 'Vos ingrédients',
+    clearAll: 'Tout effacer',
+    recipesFound: 'recette(s) trouvée(s)',
+    ingredientsAvailable: 'ingrédients disponibles',
+    andMore: 'Et autres recettes...',
+    noRecipes: 'Aucune recette trouvée avec ces ingrédients.',
+    tryMore: "Essayez d'ajouter d'autres ingrédients!",
+  };
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const [searchInput, setSearchInput] = useState('');
@@ -103,7 +130,7 @@ export default function FridgeSearch({ allIngredients, onResultsChange }: Fridge
         }`}
       >
         <Refrigerator className="w-5 h-5" />
-        Qu&apos;est-ce que j&apos;ai dans le frigo?
+        {t.buttonText}
         {selectedIngredients.length > 0 && (
           <span className="bg-white text-[#F77313] text-xs font-bold px-2 py-0.5 rounded-full ml-2">
             {selectedIngredients.length}
@@ -124,7 +151,7 @@ export default function FridgeSearch({ allIngredients, onResultsChange }: Fridge
             <div className="bg-neutral-50 border border-neutral-200 p-6 mt-4">
               {/* Instructions */}
               <p className="text-neutral-600 text-sm mb-4">
-                Ajoutez les ingrédients que vous avez. Plus vous en ajoutez, plus les résultats seront précis!
+                {t.instructions}
               </p>
 
               {/* Input avec suggestions */}
@@ -136,7 +163,7 @@ export default function FridgeSearch({ allIngredients, onResultsChange }: Fridge
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Tapez un ingrédient (ex: poulet, tomate, fromage...)"
+                  placeholder={t.placeholder}
                   className="w-full pl-12 pr-4 py-3.5 bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none text-sm rounded-lg"
                 />
 
@@ -162,14 +189,14 @@ export default function FridgeSearch({ allIngredients, onResultsChange }: Fridge
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-medium text-neutral-500 uppercase tracking-wide">
-                      Vos ingrédients ({selectedIngredients.length})
+                      {t.yourIngredients} ({selectedIngredients.length})
                     </span>
                     <button
                       onClick={clearAll}
                       className="text-xs text-neutral-500 hover:text-red-500 flex items-center gap-1"
                     >
                       <X className="w-3 h-3" />
-                      Tout effacer
+                      {t.clearAll}
                     </button>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -203,7 +230,7 @@ export default function FridgeSearch({ allIngredients, onResultsChange }: Fridge
                 <div>
                   <div className="flex items-center justify-between mb-4 pt-4 border-t border-neutral-200">
                     <span className="text-sm font-medium text-neutral-700">
-                      {results.length} recette{results.length > 1 ? 's' : ''} trouvée{results.length > 1 ? 's' : ''}
+                      {results.length} {t.recipesFound}
                     </span>
                   </div>
 
@@ -229,13 +256,14 @@ export default function FridgeSearch({ allIngredients, onResultsChange }: Fridge
                             likes: recipe.likes,
                           }}
                           index={index}
+                          locale={locale}
                         />
                         {/* Ingrédients matchés */}
                         <div className="mt-2 text-xs text-neutral-500">
                           <span className="font-medium text-neutral-700">
                             {recipe.matchedIngredients.length}/{recipe.totalIngredients}
                           </span>
-                          {' '}ingrédients disponibles
+                          {' '}{t.ingredientsAvailable}
                         </div>
                       </div>
                     ))}
@@ -243,7 +271,7 @@ export default function FridgeSearch({ allIngredients, onResultsChange }: Fridge
 
                   {results.length > 9 && (
                     <p className="text-center text-sm text-neutral-500 mt-4">
-                      Et {results.length - 9} autres recettes...
+                      {t.andMore.replace('...', ` (${results.length - 9})...`)}
                     </p>
                   )}
                 </div>
@@ -253,8 +281,8 @@ export default function FridgeSearch({ allIngredients, onResultsChange }: Fridge
               {!isLoading && selectedIngredients.length > 0 && results.length === 0 && (
                 <div className="text-center py-8 text-neutral-500">
                   <Refrigerator className="w-12 h-12 mx-auto mb-3 opacity-30" />
-                  <p>Aucune recette trouvée avec ces ingrédients.</p>
-                  <p className="text-sm">Essayez d&apos;ajouter d&apos;autres ingrédients!</p>
+                  <p>{t.noRecipes}</p>
+                  <p className="text-sm">{t.tryMore}</p>
                 </div>
               )}
             </div>

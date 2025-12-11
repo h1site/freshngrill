@@ -4,22 +4,29 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Category } from '@/types/recipe';
 import { ArrowRight } from 'lucide-react';
+import type { Locale } from '@/i18n/config';
 
 interface CategoryGridProps {
   categories: Category[];
+  locale?: Locale;
 }
 
-export function CategoryGrid({ categories }: CategoryGridProps) {
+export function CategoryGrid({ categories, locale = 'fr' }: CategoryGridProps) {
+  const recipeBasePath = locale === 'en' ? '/en/recipe' : '/recette';
+  const categoryParam = locale === 'en' ? 'category' : 'categorie';
+  const exploreText = locale === 'en' ? 'Explore' : 'Explorer';
+  const byCategory = locale === 'en' ? 'By Category' : 'Par Catégorie';
+
   return (
     <section className="py-16 md:py-20 bg-neutral-50">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
           <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
-            Explorer
+            {exploreText}
           </span>
           <h2 className="text-4xl md:text-5xl font-display text-black mt-2">
-            Par Catégorie
+            {byCategory}
           </h2>
           <div className="w-16 h-1 bg-[#F77313] mx-auto mt-6" />
         </div>
@@ -35,7 +42,7 @@ export function CategoryGrid({ categories }: CategoryGridProps) {
               transition={{ duration: 0.4, delay: index * 0.05 }}
             >
               <Link
-                href={`/recette?categorie=${category.slug}`}
+                href={`${recipeBasePath}?${categoryParam}=${category.slug}`}
                 className="group block relative bg-white border border-neutral-200 p-6 md:p-8 text-center hover:border-[#F77313] transition-all duration-300"
               >
                 {/* Decorative corner */}

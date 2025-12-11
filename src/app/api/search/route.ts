@@ -1,6 +1,93 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
 
+// Fonction pour normaliser les accents (retirer les accents)
+function removeAccents(str: string): string {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+// Fonction pour générer les variantes avec accents communs français
+function generateAccentVariants(query: string): string[] {
+  const variants = new Set<string>();
+  variants.add(query.toLowerCase());
+  variants.add(removeAccents(query.toLowerCase()));
+
+  // Mapping des caractères sans accent vers leurs variantes avec accents
+  const accentMap: Record<string, string[]> = {
+    'a': ['a', 'à', 'â', 'ä'],
+    'e': ['e', 'é', 'è', 'ê', 'ë'],
+    'i': ['i', 'î', 'ï'],
+    'o': ['o', 'ô', 'ö'],
+    'u': ['u', 'ù', 'û', 'ü'],
+    'c': ['c', 'ç'],
+    'n': ['n', 'ñ'],
+  };
+
+  // Générer des variantes communes
+  // Par exemple: "crepe" -> essayer "crêpe"
+  const commonReplacements: Record<string, string> = {
+    'crepe': 'crêpe',
+    'creme': 'crème',
+    'pate': 'pâte',
+    'gateau': 'gâteau',
+    'puree': 'purée',
+    'salade': 'salade',
+    'cafe': 'café',
+    'the': 'thé',
+    'ble': 'blé',
+    'mais': 'maïs',
+    'noel': 'noël',
+    'diner': 'dîner',
+    'dejeuner': 'déjeuner',
+    'souper': 'souper',
+    'legume': 'légume',
+    'legumes': 'légumes',
+    'epice': 'épice',
+    'epices': 'épices',
+    'herbe': 'herbe',
+    'boeuf': 'bœuf',
+    'oeuf': 'œuf',
+    'oeufs': 'œufs',
+    'coeur': 'cœur',
+    'soeur': 'sœur',
+    'peche': 'pêche',
+    'peches': 'pêches',
+    'fraiche': 'fraîche',
+    'frais': 'frais',
+    'grille': 'grillé',
+    'rotie': 'rôtie',
+    'roti': 'rôti',
+    'poele': 'poêle',
+    'brule': 'brûlé',
+    'brulee': 'brûlée',
+    'entree': 'entrée',
+    'entrees': 'entrées',
+  };
+
+  const queryLower = query.toLowerCase();
+
+  // Vérifier les remplacements communs
+  if (commonReplacements[queryLower]) {
+    variants.add(commonReplacements[queryLower]);
+  }
+
+  // Vérifier aussi si la query avec accents a un équivalent sans accent
+  const queryNoAccents = removeAccents(queryLower);
+  if (commonReplacements[queryNoAccents]) {
+    variants.add(commonReplacements[queryNoAccents]);
+  }
+
+  // Ajouter la version inverse (avec accents -> sans accents)
+  for (const [noAccent, withAccent] of Object.entries(commonReplacements)) {
+    if (queryLower === withAccent || queryNoAccents === noAccent) {
+      variants.add(noAccent);
+      variants.add(withAccent);
+    }
+  }
+
+  return Array.from(variants);
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
@@ -10,14 +97,25 @@ export async function GET(request: Request) {
     return NextResponse.json({ recipes: [], posts: [] });
   }
 
-  const searchTerm = `%${query}%`;
   const actualLimit = Math.min(limit, 50);
+
+  // Générer les variantes de recherche (avec et sans accents)
+  const searchVariants = generateAccentVariants(query);
+
+  // Construire la condition OR pour toutes les variantes
+  const recipeConditions = searchVariants
+    .map(variant => `title.ilike.%${variant}%,excerpt.ilike.%${variant}%`)
+    .join(',');
+
+  const postConditions = searchVariants
+    .map(variant => `title.ilike.%${variant}%,excerpt.ilike.%${variant}%,content.ilike.%${variant}%`)
+    .join(',');
 
   // Rechercher dans les recettes
   const { data: recipes, error: recipesError } = await supabase
     .from('recipes')
     .select('id, slug, title, featured_image, total_time, difficulty, excerpt')
-    .or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm}`)
+    .or(recipeConditions)
     .order('likes', { ascending: false })
     .limit(actualLimit);
 
@@ -29,7 +127,7 @@ export async function GET(request: Request) {
   const { data: posts, error: postsError } = await supabase
     .from('posts')
     .select('id, slug, title, featured_image, excerpt')
-    .or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm},content.ilike.${searchTerm}`)
+    .or(postConditions)
     .eq('status', 'publish')
     .order('published_at', { ascending: false })
     .limit(actualLimit);
@@ -38,8 +136,14 @@ export async function GET(request: Request) {
     console.error('Erreur recherche posts:', postsError);
   }
 
+  // Dédupliquer les résultats (au cas où les variantes trouvent les mêmes items)
+  const uniqueRecipes = recipes ?
+    Array.from(new Map(recipes.map(r => [r.id, r])).values()) : [];
+  const uniquePosts = posts ?
+    Array.from(new Map(posts.map(p => [p.id, p])).values()) : [];
+
   return NextResponse.json({
-    recipes: recipes || [],
-    posts: posts || [],
+    recipes: uniqueRecipes,
+    posts: uniquePosts,
   });
 }

@@ -6,14 +6,18 @@ import { motion } from 'framer-motion';
 import { RecipeCard as RecipeCardType } from '@/types/recipe';
 import { Clock, ArrowUpRight } from 'lucide-react';
 
+import type { Locale } from '@/i18n/config';
+
 interface Props {
   recipe: RecipeCardType;
   index?: number;
   variant?: 'default' | 'large';
+  locale?: Locale;
 }
 
-export default function RecipeCard({ recipe, index = 0, variant = 'default' }: Props) {
+export default function RecipeCard({ recipe, index = 0, variant = 'default', locale = 'fr' }: Props) {
   const isLarge = variant === 'large';
+  const recipeBasePath = locale === 'en' ? '/en/recipe' : '/recette';
 
   return (
     <motion.article
@@ -23,7 +27,7 @@ export default function RecipeCard({ recipe, index = 0, variant = 'default' }: P
       transition={{ duration: 0.4, delay: index * 0.05 }}
       className="group"
     >
-      <Link href={`/recette/${recipe.slug}`} className="block">
+      <Link href={`${recipeBasePath}/${recipe.slug}`} className="block">
         {/* Image Container */}
         <div className={`relative overflow-hidden bg-neutral-100 rounded-[5px] ${isLarge ? 'aspect-[4/5]' : 'aspect-[3/4]'}`}>
           {recipe.featuredImage ? (

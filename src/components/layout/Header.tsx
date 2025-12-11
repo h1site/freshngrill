@@ -6,6 +6,9 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensils, Globe, Cake, Soup, Coffee, Salad, Fish, Beef, Drumstick, Refrigerator, Plus, Percent } from 'lucide-react';
 import UserMenu from '@/components/auth/UserMenu';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import type { Locale } from '@/i18n/config';
+import type { Dictionary } from '@/i18n/getDictionary';
 
 interface SearchResult {
   recipes: Array<{
@@ -109,7 +112,12 @@ const megaMenuData = {
   },
 };
 
-export default function Header() {
+interface HeaderProps {
+  locale?: Locale;
+  dictionary?: Dictionary;
+}
+
+export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
@@ -128,12 +136,61 @@ export default function Header() {
   const [ingredientResults, setIngredientResults] = useState<IngredientRecipeResult[]>([]);
   const [isLoadingIngredients, setIsLoadingIngredients] = useState(false);
 
+  // Préfixe URL pour la locale
+  const urlPrefix = locale === 'en' ? '/en' : '';
+
+  // Traductions avec fallback FR
+  const t = dictionary || {
+    nav: { home: 'Accueil', recipes: 'Recettes', lexicon: 'Lexique', converter: 'Convertisseur', blog: 'Blog' },
+    header: {
+      search: 'Rechercher',
+      searchPlaceholder: 'Rechercher une recette, un article...',
+      ingredientMode: 'Dans mon frigo',
+      ingredientPlaceholder: 'Tapez un ingrédient (ex: poulet, tomate...)',
+      clearAll: 'Tout effacer',
+      noResults: 'Aucun résultat pour "{query}"',
+      noIngredientResults: 'Aucune recette trouvée avec ces ingrédients.',
+      tryMoreIngredients: "Essayez d'ajouter d'autres ingrédients!",
+      viewAllResults: 'Voir tous les résultats',
+      articles: 'Articles',
+      mobileCategories: 'Catégories populaires',
+      menu: {
+        mainDishes: 'Plats principaux', beef: 'Boeuf', poultry: 'Volaille', pork: 'Porc',
+        fish: 'Poissons', seafood: 'Fruits de mer', vegetarian: 'Végétariens',
+        sides: 'Accompagnements', vegetables: 'Légumes', salads: 'Salades', pasta: 'Pâtes',
+        rice: 'Riz', sauces: 'Sauces', other: 'Autres',
+        meals: 'Repas', breakfast: 'Déjeuner', soups: 'Soupes', snacks: 'Snacks',
+        appetizers: 'Amuse-gueules', pizza: 'Pizza', poutine: 'Poutine',
+        sweet: 'Sucré', desserts: 'Desserts', pastries: 'Pâtisseries', pies: 'Tartes',
+        breads: 'Pains', drinks: 'Boissons', worldCuisines: 'Cuisines du monde',
+        seeAllRecipes: 'Voir toutes les recettes', culinaryLexicon: 'Lexique culinaire',
+        holidayRecipes: 'Recettes des fêtes', canning: 'Mise en conserve'
+      }
+    },
+    recipes: { difficulty: { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' } }
+  };
+
+  // Route paths based on locale
+  const routes = locale === 'en' ? {
+    recipe: '/en/recipe',
+    lexicon: '/en/lexicon',
+    converter: '/en/converter',
+    blog: '/en/blog',
+    search: '/en/search',
+  } : {
+    recipe: '/recette',
+    lexicon: '/lexique',
+    converter: '/convertisseur',
+    blog: '/blog',
+    search: '/recherche',
+  };
+
   const navigation = [
-    { name: 'Accueil', href: '/', hasMegaMenu: false },
-    { name: 'Recettes', href: '/recette', hasMegaMenu: true },
-    { name: 'Lexique', href: '/lexique', hasMegaMenu: false },
-    { name: 'Convertisseur', href: '/convertisseur', hasMegaMenu: false },
-    { name: 'Blog', href: '/blog', hasMegaMenu: false },
+    { name: t.nav.home, href: `${urlPrefix}/`, hasMegaMenu: false },
+    { name: t.nav.recipes, href: routes.recipe, hasMegaMenu: true },
+    { name: t.nav.lexicon, href: routes.lexicon, hasMegaMenu: false },
+    { name: t.nav.converter, href: routes.converter, hasMegaMenu: false },
+    { name: t.nav.blog, href: routes.blog, hasMegaMenu: false },
   ];
 
   // Fermer la recherche quand on clique en dehors
@@ -308,7 +365,7 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <div className="flex items-center h-16 md:h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center group">
+          <Link href={`${urlPrefix}/`} className="flex items-center group">
             <Image
               src="/images/logos/menucochon-blanc.svg"
               alt="Menu Cochon"
@@ -360,6 +417,11 @@ export default function Header() {
 
             {/* User Menu */}
             <UserMenu />
+
+            {/* Language Switcher */}
+            <div className="hidden md:block">
+              <LanguageSwitcher locale={locale} />
+            </div>
 
             {/* Mobile menu button */}
             <button
@@ -485,30 +547,32 @@ export default function Header() {
               transition={{ duration: 0.2 }}
               className="overflow-visible border-t border-neutral-800"
             >
-              <div className="py-4 relative">
+              <div className="py-4 px-2 md:px-0 relative">
                 {/* Mode Toggle */}
                 <div className="flex justify-center gap-2 mb-4 max-w-2xl mx-auto">
                   <button
                     onClick={() => !isIngredientMode && toggleSearchMode()}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all ${
                       !isIngredientMode
                         ? 'bg-[#F77313] text-white'
                         : 'bg-neutral-800 text-neutral-400 hover:text-white'
                     }`}
                   >
                     <Search className="w-4 h-4" />
-                    Recherche
+                    <span className="hidden sm:inline">{t.header.search}</span>
+                    <span className="sm:hidden">{t.header.search}</span>
                   </button>
                   <button
                     onClick={() => isIngredientMode || toggleSearchMode()}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all ${
                       isIngredientMode
                         ? 'bg-[#F77313] text-white'
                         : 'bg-neutral-800 text-neutral-400 hover:text-white'
                     }`}
                   >
                     <Refrigerator className="w-4 h-4" />
-                    Dans mon frigo
+                    <span className="hidden sm:inline">{t.header.ingredientMode}</span>
+                    <span className="sm:hidden">{locale === 'en' ? 'Fridge' : 'Frigo'}</span>
                     {selectedIngredients.length > 0 && (
                       <span className="bg-white text-[#F77313] text-xs font-bold px-1.5 py-0.5 rounded-full">
                         {selectedIngredients.length}
@@ -520,9 +584,9 @@ export default function Header() {
                 {/* Search Input */}
                 <div className="relative max-w-2xl mx-auto">
                   {isIngredientMode ? (
-                    <Refrigerator className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+                    <Refrigerator className="absolute left-4 md:left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                   ) : (
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
+                    <Search className="absolute left-4 md:left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
                   )}
                   <input
                     ref={inputRef}
@@ -532,10 +596,10 @@ export default function Header() {
                     onKeyDown={isIngredientMode ? handleIngredientKeyDown : undefined}
                     placeholder={
                       isIngredientMode
-                        ? 'Tapez un ingrédient (ex: poulet, tomate...)'
-                        : 'Rechercher une recette, un article...'
+                        ? (locale === 'en' ? 'Ingredient (e.g., chicken...)' : 'Ingrédient (ex: poulet...)')
+                        : (locale === 'en' ? 'Search...' : 'Rechercher...')
                     }
-                    className="w-full pl-12 pr-12 py-3 bg-neutral-900 text-white rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#F77313] transition-all placeholder:text-neutral-500"
+                    className="w-full pl-11 md:pl-12 pr-11 md:pr-12 py-3 bg-neutral-900 text-white rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[#F77313] transition-all placeholder:text-neutral-500"
                   />
                   {(isSearching || isLoadingIngredients) && (
                     <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#F77313] animate-spin" />
@@ -552,7 +616,7 @@ export default function Header() {
 
                 {/* Selected Ingredients Tags */}
                 {isIngredientMode && selectedIngredients.length > 0 && (
-                  <div className="flex flex-wrap gap-2 justify-center mt-3 max-w-2xl mx-auto">
+                  <div className="flex flex-wrap gap-2 justify-center mt-3 max-w-2xl mx-auto px-2 md:px-0">
                     {selectedIngredients.map((ingredient) => (
                       <span
                         key={ingredient}
@@ -575,7 +639,7 @@ export default function Header() {
                       className="text-xs text-neutral-500 hover:text-red-400 flex items-center gap-1 px-2"
                     >
                       <X className="w-3 h-3" />
-                      Tout effacer
+                      {t.header.clearAll}
                     </button>
                   </div>
                 )}
@@ -587,7 +651,7 @@ export default function Header() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute left-0 right-0 top-full mt-2 max-w-2xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden z-50"
+                      className="absolute left-2 right-2 md:left-0 md:right-0 top-full mt-2 max-w-2xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden z-50"
                     >
                       <div className="p-2">
                         {ingredientSuggestions.map((suggestion) => (
@@ -612,7 +676,7 @@ export default function Header() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute left-0 right-0 top-full mt-2 max-w-2xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden z-50"
+                      className="absolute left-2 right-2 md:left-0 md:right-0 top-full mt-2 max-w-2xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden z-50"
                     >
                       {isLoadingIngredients ? (
                         <div className="p-6 flex justify-center">
@@ -621,21 +685,23 @@ export default function Header() {
                       ) : ingredientResults.length === 0 ? (
                         <div className="p-6 text-center text-neutral-400">
                           <Refrigerator className="w-10 h-10 mx-auto mb-2 opacity-30" />
-                          <p>Aucune recette trouvée avec ces ingrédients.</p>
-                          <p className="text-sm">Essayez d&apos;ajouter d&apos;autres ingrédients!</p>
+                          <p>{t.header.noIngredientResults}</p>
+                          <p className="text-sm">{t.header.tryMoreIngredients}</p>
                         </div>
                       ) : (
                         <div className="max-h-[70vh] overflow-y-auto">
                           <div className="p-4">
                             <h3 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3 flex items-center gap-2">
                               <ChefHat className="w-4 h-4" />
-                              {ingredientResults.length} recette{ingredientResults.length > 1 ? 's' : ''} trouvée{ingredientResults.length > 1 ? 's' : ''}
+                              {locale === 'en'
+                                ? `${ingredientResults.length} recipe${ingredientResults.length > 1 ? 's' : ''} found`
+                                : `${ingredientResults.length} recette${ingredientResults.length > 1 ? 's' : ''} trouvée${ingredientResults.length > 1 ? 's' : ''}`}
                             </h3>
                             <div className="space-y-2">
                               {ingredientResults.slice(0, 8).map((recipe) => (
                                 <Link
                                   key={recipe.id}
-                                  href={`/recette/${recipe.slug}`}
+                                  href={`${routes.recipe}/${recipe.slug}`}
                                   onClick={handleSearchClose}
                                   className="flex items-center gap-4 p-3 rounded-xl hover:bg-neutral-800 transition-colors group"
                                 >
@@ -676,7 +742,9 @@ export default function Header() {
                           </div>
                           {ingredientResults.length > 8 && (
                             <div className="p-4 border-t border-neutral-800 text-center text-sm text-neutral-500">
-                              Et {ingredientResults.length - 8} autres recettes...
+                              {locale === 'en'
+                                ? `And ${ingredientResults.length - 8} more recipes...`
+                                : `Et ${ingredientResults.length - 8} autres recettes...`}
                             </div>
                           )}
                         </div>
@@ -692,11 +760,11 @@ export default function Header() {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute left-0 right-0 top-full mt-2 max-w-2xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden z-50"
+                      className="absolute left-2 right-2 md:left-0 md:right-0 top-full mt-2 max-w-2xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden z-50"
                     >
                       {noResults && (
                         <div className="p-6 text-center text-neutral-400">
-                          <p>Aucun résultat pour &quot;{searchQuery}&quot;</p>
+                          <p>{locale === 'en' ? `No results for "${searchQuery}"` : `Aucun résultat pour "${searchQuery}"`}</p>
                         </div>
                       )}
 
@@ -707,13 +775,13 @@ export default function Header() {
                             <div className="p-4">
                               <h3 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3 flex items-center gap-2">
                                 <ChefHat className="w-4 h-4" />
-                                Recettes
+                                {t.nav.recipes}
                               </h3>
                               <div className="space-y-2">
                                 {searchResults.recipes.map((recipe) => (
                                   <Link
                                     key={recipe.id}
-                                    href={`/recette/${recipe.slug}`}
+                                    href={`${routes.recipe}/${recipe.slug}`}
                                     onClick={handleSearchClose}
                                     className="flex items-center gap-4 p-3 rounded-xl hover:bg-neutral-800 transition-colors group"
                                   >
@@ -755,13 +823,13 @@ export default function Header() {
                             <div className="p-4 border-t border-neutral-800">
                               <h3 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3 flex items-center gap-2">
                                 <FileText className="w-4 h-4" />
-                                Articles
+                                {t.header.articles}
                               </h3>
                               <div className="space-y-2">
                                 {searchResults.posts.map((post) => (
                                   <Link
                                     key={post.id}
-                                    href={`/blog/${post.slug}`}
+                                    href={`${routes.blog}/${post.slug}`}
                                     onClick={handleSearchClose}
                                     className="flex items-center gap-4 p-3 rounded-xl hover:bg-neutral-800 transition-colors group"
                                   >
@@ -797,11 +865,11 @@ export default function Header() {
                           {/* Voir tous les résultats */}
                           <div className="p-4 border-t border-neutral-800">
                             <Link
-                              href={`/recherche?q=${encodeURIComponent(searchQuery)}`}
+                              href={`${routes.search}?q=${encodeURIComponent(searchQuery)}`}
                               onClick={handleSearchClose}
                               className="block w-full py-3 text-center text-sm font-medium text-[#F77313] hover:bg-neutral-800 rounded-xl transition-colors"
                             >
-                              Voir tous les résultats
+                              {t.header.viewAllResults}
                             </Link>
                           </div>
                         </div>
@@ -848,16 +916,16 @@ export default function Header() {
                 {/* Catégories populaires mobile */}
                 <div className="mt-6 pt-6 border-t border-neutral-800">
                   <h3 className="px-4 text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">
-                    Catégories populaires
+                    {t.header.mobileCategories}
                   </h3>
                   <div className="grid grid-cols-2 gap-2 px-4">
                     {[
-                      { name: 'Boeuf', href: '/recette?categorie=plats-principaux-boeuf', icon: '🥩' },
-                      { name: 'Volaille', href: '/recette?categorie=plats-principaux-volaille', icon: '🍗' },
-                      { name: 'Desserts', href: '/recette?categorie=dessert', icon: '🍰' },
-                      { name: 'Soupes', href: '/recette?categorie=soupes', icon: '🍲' },
-                      { name: 'Pâtes', href: '/recette?categorie=pates', icon: '🍝' },
-                      { name: 'Salades', href: '/recette?categorie=salades', icon: '🥗' },
+                      { name: t.header.menu.beef, href: `${routes.recipe}?categorie=plats-principaux-boeuf`, icon: '🥩' },
+                      { name: t.header.menu.poultry, href: `${routes.recipe}?categorie=plats-principaux-volaille`, icon: '🍗' },
+                      { name: t.header.menu.desserts, href: `${routes.recipe}?categorie=dessert`, icon: '🍰' },
+                      { name: t.header.menu.soups, href: `${routes.recipe}?categorie=soupes`, icon: '🍲' },
+                      { name: t.header.menu.pasta, href: `${routes.recipe}?categorie=pates`, icon: '🍝' },
+                      { name: t.header.menu.salads, href: `${routes.recipe}?categorie=salades`, icon: '🥗' },
                     ].map((cat) => (
                       <Link
                         key={cat.name}
@@ -875,7 +943,7 @@ export default function Header() {
                 {/* Cuisines mobile */}
                 <div className="mt-6 pt-6 border-t border-neutral-800">
                   <h3 className="px-4 text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">
-                    Cuisines du monde
+                    {t.header.menu.worldCuisines}
                   </h3>
                   <div className="flex flex-wrap gap-2 px-4">
                     {megaMenuData.recettes.featured.links.map((country) => (

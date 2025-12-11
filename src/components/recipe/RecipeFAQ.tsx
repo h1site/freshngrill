@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ChevronDown, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Locale } from '@/i18n/config';
 
 interface FAQItem {
   question: string;
@@ -11,6 +12,7 @@ interface FAQItem {
 
 interface Props {
   faq: string;
+  locale?: Locale;
 }
 
 function parseFAQ(html: string): FAQItem[] {
@@ -106,8 +108,17 @@ function FAQItemComponent({ item, index, isOpen, onToggle }: {
   );
 }
 
-export default function RecipeFAQ({ faq }: Props) {
+export default function RecipeFAQ({ faq, locale = 'fr' }: Props) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const isEN = locale === 'en';
+
+  const t = isEN ? {
+    title: 'Frequently Asked Questions',
+    questionsCount: (n: number) => `${n} question${n > 1 ? 's' : ''} about this recipe`,
+  } : {
+    title: 'Questions fréquentes',
+    questionsCount: (n: number) => `${n} question${n > 1 ? 's' : ''} sur cette recette`,
+  };
 
   // Parser immédiatement (fonctionne côté serveur avec regex)
   const items = parseFAQ(faq);
@@ -121,7 +132,7 @@ export default function RecipeFAQ({ faq }: Props) {
           <div className="flex items-center gap-3">
             <HelpCircle className="w-5 h-5 text-[#F77313]" />
             <h2 className="font-display text-2xl text-black">
-              Questions fréquentes
+              {t.title}
             </h2>
           </div>
         </div>
@@ -141,11 +152,11 @@ export default function RecipeFAQ({ faq }: Props) {
         <div className="flex items-center gap-3">
           <HelpCircle className="w-5 h-5 text-[#F77313]" />
           <h2 className="font-display text-2xl text-black">
-            Questions fréquentes
+            {t.title}
           </h2>
         </div>
         <p className="text-sm text-neutral-500 mt-2 pl-8">
-          {items.length} question{items.length > 1 ? 's' : ''} sur cette recette
+          {t.questionsCount(items.length)}
         </p>
       </div>
 

@@ -21,19 +21,29 @@ export default function ContactPage() {
     setSubmitStatus('idle');
 
     try {
-      // Pour l'instant, on simule l'envoi
-      // TODO: Implémenter l'envoi réel (API route + email service)
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        company: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: '',
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSubmitStatus('success');
+        setFormData({
+          name: '',
+          company: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
+        });
+      } else {
+        setSubmitStatus('error');
+      }
     } catch {
       setSubmitStatus('error');
     } finally {

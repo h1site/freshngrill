@@ -357,6 +357,134 @@ export interface Database {
           category_id?: number;
         };
       };
+      // Translation tables for i18n
+      recipe_translations: {
+        Row: {
+          id: number;
+          recipe_id: number;
+          locale: string;
+          title: string;
+          excerpt: string | null;
+          introduction: string | null;
+          conclusion: string | null;
+          ingredients: Json | null;
+          instructions: Json | null;
+          seo_title: string | null;
+          seo_description: string | null;
+          translated_at: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          recipe_id: number;
+          locale: string;
+          title: string;
+          excerpt?: string | null;
+          introduction?: string | null;
+          conclusion?: string | null;
+          ingredients?: Json | null;
+          instructions?: Json | null;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          translated_at?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          recipe_id?: number;
+          locale?: string;
+          title?: string;
+          excerpt?: string | null;
+          introduction?: string | null;
+          conclusion?: string | null;
+          ingredients?: Json | null;
+          instructions?: Json | null;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          translated_at?: string;
+        };
+      };
+      post_translations: {
+        Row: {
+          id: number;
+          post_id: number;
+          locale: string;
+          title: string;
+          excerpt: string | null;
+          content: string | null;
+          seo_title: string | null;
+          seo_description: string | null;
+          translated_at: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          post_id: number;
+          locale: string;
+          title: string;
+          excerpt?: string | null;
+          content?: string | null;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          translated_at?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          post_id?: number;
+          locale?: string;
+          title?: string;
+          excerpt?: string | null;
+          content?: string | null;
+          seo_title?: string | null;
+          seo_description?: string | null;
+          translated_at?: string;
+        };
+      };
+      category_translations: {
+        Row: {
+          id: number;
+          category_id: number;
+          locale: string;
+          name: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          category_id: number;
+          locale: string;
+          name: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          category_id?: number;
+          locale?: string;
+          name?: string;
+        };
+      };
+      post_category_translations: {
+        Row: {
+          id: number;
+          category_id: number;
+          locale: string;
+          name: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: number;
+          category_id: number;
+          locale: string;
+          name: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: number;
+          category_id?: number;
+          locale?: string;
+          name?: string;
+        };
+      };
       // View treated as table for Supabase client compatibility
       posts_with_details: {
         Row: {

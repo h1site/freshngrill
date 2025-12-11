@@ -5,19 +5,24 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Clock, ArrowRight } from 'lucide-react';
 import { Recipe } from '@/types/recipe';
+import type { Locale } from '@/i18n/config';
 
 interface FeaturedHeroProps {
   featuredRecipe?: Recipe;
   secondaryRecipes?: Recipe[];
+  locale?: Locale;
 }
 
-export function FeaturedHero({ featuredRecipe, secondaryRecipes = [] }: FeaturedHeroProps) {
+export function FeaturedHero({ featuredRecipe, secondaryRecipes = [], locale = 'fr' }: FeaturedHeroProps) {
+  const recipeBasePath = locale === 'en' ? '/en/recipe' : '/recette';
+  const defaultText = locale === 'en' ? 'Discover our delicious recipes' : 'Découvrez nos recettes gourmandes';
+
   if (!featuredRecipe) {
     return (
       <section className="relative h-[70vh] bg-neutral-900 flex items-center justify-center">
         <div className="text-center text-white">
           <h1 className="text-5xl md:text-7xl font-display mb-4">MENU COCHON</h1>
-          <p className="text-neutral-400">Découvrez nos recettes gourmandes</p>
+          <p className="text-neutral-400">{defaultText}</p>
         </div>
       </section>
     );
@@ -34,7 +39,7 @@ export function FeaturedHero({ featuredRecipe, secondaryRecipes = [] }: Featured
             transition={{ duration: 0.5 }}
             className="relative"
           >
-            <Link href={`/recette/${featuredRecipe.slug}`} className="group block">
+            <Link href={`${recipeBasePath}/${featuredRecipe.slug}`} className="group block">
               <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-neutral-100">
                 {featuredRecipe.featuredImage ? (
                   <Image
@@ -92,7 +97,7 @@ export function FeaturedHero({ featuredRecipe, secondaryRecipes = [] }: Featured
                 transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
                 className="flex-1"
               >
-                <Link href={`/recette/${recipe.slug}`} className="group block h-full">
+                <Link href={`${recipeBasePath}/${recipe.slug}`} className="group block h-full">
                   <div className="relative h-full min-h-[200px] md:min-h-0 aspect-auto md:aspect-[16/9] overflow-hidden bg-neutral-100">
                     {recipe.featuredImage ? (
                       <Image

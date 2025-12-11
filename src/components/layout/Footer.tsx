@@ -1,32 +1,84 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Facebook, Instagram, Rss } from 'lucide-react';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import type { Locale } from '@/i18n/config';
+import type { Dictionary } from '@/i18n/getDictionary';
 
-export default function Footer() {
+interface FooterProps {
+  locale?: Locale;
+  dictionary?: Dictionary;
+}
+
+export default function Footer({ locale = 'fr', dictionary }: FooterProps) {
   const currentYear = new Date().getFullYear();
+
+  // Préfixe URL pour la locale
+  const urlPrefix = locale === 'en' ? '/en' : '';
+
+  // Route paths based on locale
+  const routes = locale === 'en' ? {
+    recipe: '/en/recipe',
+    blog: '/en/blog',
+    about: '/en/about',
+    contact: '/en/contact',
+    privacy: '/en/privacy',
+  } : {
+    recipe: '/recette',
+    blog: '/blog',
+    about: '/a-propos',
+    contact: '/contact',
+    privacy: '/confidentialite',
+  };
+
+  // Traductions avec fallback FR
+  const t = dictionary?.footer || {
+    tagline: 'Des recettes gourmandes et faciles à réaliser pour tous les jours. Découvrez notre collection de plats délicieux.',
+    recipes: 'Recettes',
+    allRecipes: 'Toutes les recettes',
+    popularRecipes: 'Recettes populaires',
+    quickRecipes: 'Recettes rapides',
+    easyRecipes: 'Recettes faciles',
+    categories: 'Catégories',
+    starters: 'Entrées',
+    mainDishes: 'Plats principaux',
+    desserts: 'Desserts',
+    vegetarian: 'Végétarien',
+    blog: 'Blog',
+    allArticles: 'Tous les articles',
+    cookingTips: 'Conseils cuisine',
+    news: 'Actualités',
+    info: 'Informations',
+    about: 'À propos',
+    contact: 'Contact',
+    privacy: 'Confidentialité',
+    copyright: '© {year} Menu Cochon. Tous droits réservés.',
+    madeWith: 'Fait avec',
+    inQuebec: 'au Québec'
+  };
 
   const links = {
     recettes: [
-      { name: 'Toutes les recettes', href: '/recette' },
-      { name: 'Recettes populaires', href: '/recette?tri=populaire' },
-      { name: 'Recettes rapides', href: '/recette?temps=30' },
-      { name: 'Recettes faciles', href: '/recette?difficulte=facile' },
+      { name: t.allRecipes, href: routes.recipe },
+      { name: t.popularRecipes, href: `${routes.recipe}?tri=populaire` },
+      { name: t.quickRecipes, href: `${routes.recipe}?temps=30` },
+      { name: t.easyRecipes, href: `${routes.recipe}?difficulte=facile` },
     ],
     categories: [
-      { name: 'Entrées', href: '/recette?categorie=entrees' },
-      { name: 'Plats principaux', href: '/recette?categorie=plats-principaux' },
-      { name: 'Desserts', href: '/recette?categorie=desserts' },
-      { name: 'Végétarien', href: '/recette?categorie=vegetarien' },
+      { name: t.starters, href: `${routes.recipe}?categorie=entrees` },
+      { name: t.mainDishes, href: `${routes.recipe}?categorie=plats-principaux` },
+      { name: t.desserts, href: `${routes.recipe}?categorie=desserts` },
+      { name: t.vegetarian, href: `${routes.recipe}?categorie=vegetarien` },
     ],
     blog: [
-      { name: 'Tous les articles', href: '/blog' },
-      { name: 'Conseils cuisine', href: '/blog?categorie=conseils' },
-      { name: 'Actualités', href: '/blog?categorie=actualites' },
+      { name: t.allArticles, href: routes.blog },
+      { name: t.cookingTips, href: `${routes.blog}?categorie=conseils` },
+      { name: t.news, href: `${routes.blog}?categorie=actualites` },
     ],
     info: [
-      { name: 'À propos', href: '/a-propos' },
-      { name: 'Contact', href: '/contact' },
-      { name: 'Confidentialité', href: '/confidentialite' },
+      { name: t.about, href: routes.about },
+      { name: t.contact, href: routes.contact },
+      { name: t.privacy, href: routes.privacy },
     ],
   };
 
@@ -36,7 +88,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="inline-block mb-6">
+            <Link href={`${urlPrefix}/`} className="inline-block mb-6">
               <Image
                 src="/images/logos/menucochon-blanc.svg"
                 alt="Menu Cochon"
@@ -46,8 +98,7 @@ export default function Footer() {
               />
             </Link>
             <p className="text-neutral-400 text-sm leading-relaxed">
-              Des recettes gourmandes et faciles à réaliser pour tous les jours.
-              Découvrez notre collection de plats délicieux.
+              {t.tagline}
             </p>
             {/* Réseaux sociaux */}
             <div className="flex items-center gap-4 mt-6">
@@ -77,12 +128,16 @@ export default function Footer() {
                 <Rss className="w-5 h-5" />
               </a>
             </div>
+            {/* Language Switcher Mobile */}
+            <div className="mt-6 md:hidden">
+              <LanguageSwitcher locale={locale} />
+            </div>
           </div>
 
           {/* Recettes */}
           <div>
             <h3 className="font-display text-xl tracking-wide mb-6 text-[#F77313]">
-              Recettes
+              {t.recipes}
             </h3>
             <ul className="space-y-3">
               {links.recettes.map((link) => (
@@ -101,7 +156,7 @@ export default function Footer() {
           {/* Catégories */}
           <div>
             <h3 className="font-display text-xl tracking-wide mb-6 text-[#F77313]">
-              Catégories
+              {t.categories}
             </h3>
             <ul className="space-y-3">
               {links.categories.map((link) => (
@@ -120,7 +175,7 @@ export default function Footer() {
           {/* Blog */}
           <div>
             <h3 className="font-display text-xl tracking-wide mb-6 text-[#F77313]">
-              Blog
+              {t.blog}
             </h3>
             <ul className="space-y-3">
               {links.blog.map((link) => (
@@ -139,7 +194,7 @@ export default function Footer() {
           {/* Informations */}
           <div>
             <h3 className="font-display text-xl tracking-wide mb-6 text-[#F77313]">
-              Informations
+              {t.info}
             </h3>
             <ul className="space-y-3">
               {links.info.map((link) => (
@@ -159,12 +214,12 @@ export default function Footer() {
         {/* Bottom */}
         <div className="border-t border-neutral-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-neutral-500 text-sm">
-            © {currentYear} Menu Cochon. Tous droits réservés.
+            {t.copyright.replace('{year}', currentYear.toString())}
           </p>
           <div className="flex items-center gap-2 text-neutral-500 text-sm">
-            <span>Fait avec</span>
+            <span>{t.madeWith}</span>
             <span className="text-[#F77313]">♥</span>
-            <span>au Québec</span>
+            <span>{t.inQuebec}</span>
           </div>
         </div>
       </div>

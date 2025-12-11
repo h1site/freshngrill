@@ -4,12 +4,24 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { InstructionStep } from '@/types/recipe';
 import { Check, Lightbulb } from 'lucide-react';
+import type { Locale } from '@/i18n/config';
 
 interface Props {
   instructions: InstructionStep[];
+  locale?: Locale;
 }
 
-export default function RecipeInstructions({ instructions }: Props) {
+export default function RecipeInstructions({ instructions, locale = 'fr' }: Props) {
+  const isEN = locale === 'en';
+  const t = isEN ? {
+    preparation: 'Preparation',
+    instructions: 'Instructions',
+    step: 'Step',
+  } : {
+    preparation: 'Préparation',
+    instructions: 'Instructions',
+    step: 'Étape',
+  };
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
 
   const toggleStep = (step: number) => {
@@ -30,9 +42,9 @@ export default function RecipeInstructions({ instructions }: Props) {
       <div className="flex items-center justify-between mb-10">
         <div>
           <span className="text-[#F77313] text-xs font-medium uppercase tracking-widest">
-            Préparation
+            {t.preparation}
           </span>
-          <h2 className="font-display text-3xl md:text-4xl text-black mt-1">Instructions</h2>
+          <h2 className="font-display text-3xl md:text-4xl text-black mt-1">{t.instructions}</h2>
         </div>
 
         {/* Barre de progression */}
@@ -101,7 +113,7 @@ export default function RecipeInstructions({ instructions }: Props) {
                     <div className="relative aspect-video overflow-hidden mt-6">
                       <Image
                         src={instruction.image}
-                        alt={`Étape ${instruction.step}`}
+                        alt={`${t.step} ${instruction.step}`}
                         fill
                         className="object-cover"
                       />

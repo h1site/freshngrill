@@ -4,8 +4,14 @@ import { NextResponse, type NextRequest } from 'next/server';
 const ADMIN_EMAIL = 'info@h1site.com';
 
 export async function middleware(request: NextRequest) {
+  // Add pathname header for locale detection in layout
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-pathname', request.nextUrl.pathname);
+
   let supabaseResponse = NextResponse.next({
-    request,
+    request: {
+      headers: requestHeaders,
+    },
   });
 
   const supabase = createServerClient(
@@ -21,7 +27,9 @@ export async function middleware(request: NextRequest) {
             request.cookies.set(name, value)
           );
           supabaseResponse = NextResponse.next({
-            request,
+            request: {
+              headers: requestHeaders,
+            },
           });
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
@@ -66,8 +74,14 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/admin/:path*',
-    '/login',
-    '/register',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - images (public images)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|images).*)',
   ],
 };

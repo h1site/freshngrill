@@ -1,11 +1,23 @@
 import { NutritionInfo } from '@/types/recipe';
+import type { Locale } from '@/i18n/config';
 
 interface Props {
   nutrition: NutritionInfo;
+  locale?: Locale;
 }
 
-export default function RecipeNutrition({ nutrition }: Props) {
-  const items = [
+export default function RecipeNutrition({ nutrition, locale = 'fr' }: Props) {
+  const isEN = locale === 'en';
+
+  const items = isEN ? [
+    { key: 'calories', label: 'Calories', unit: 'kcal' },
+    { key: 'protein', label: 'Protein', unit: 'g' },
+    { key: 'carbs', label: 'Carbs', unit: 'g' },
+    { key: 'fat', label: 'Fat', unit: 'g' },
+    { key: 'fiber', label: 'Fiber', unit: 'g' },
+    { key: 'sugar', label: 'Sugar', unit: 'g' },
+    { key: 'sodium', label: 'Sodium', unit: 'mg' },
+  ] : [
     { key: 'calories', label: 'Calories', unit: 'kcal' },
     { key: 'protein', label: 'Protéines', unit: 'g' },
     { key: 'carbs', label: 'Glucides', unit: 'g' },
@@ -14,6 +26,8 @@ export default function RecipeNutrition({ nutrition }: Props) {
     { key: 'sugar', label: 'Sucres', unit: 'g' },
     { key: 'sodium', label: 'Sodium', unit: 'mg' },
   ];
+
+  const perServing = isEN ? 'Per serving' : 'Par portion';
 
   const hasNutrition = items.some(
     (item) => nutrition[item.key as keyof NutritionInfo] !== undefined
@@ -31,7 +45,7 @@ export default function RecipeNutrition({ nutrition }: Props) {
         </h2>
         <div className="w-8 h-0.5 bg-[#F77313]" />
       </div>
-      <p className="text-xs text-white/50 uppercase tracking-wider mb-6">Par portion</p>
+      <p className="text-xs text-white/50 uppercase tracking-wider mb-6">{perServing}</p>
 
       <div className="space-y-3">
         {items.map((item) => {

@@ -1,10 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getPopularRecipes, getRecentRecipes, getAllCategories, getMostLikedRecipes } from '@/lib/recipes';
+import { getRecentRecipes, getAllCategories, getMostLikedRecipes } from '@/lib/recipes';
 import { getRecentPosts } from '@/lib/posts';
 import RecipeCard from '@/components/recipe/RecipeCard';
-import { ArrowRight, Clock, ChefHat, Heart, BookOpen } from 'lucide-react';
-import { FeaturedHero } from '@/components/home/FeaturedHero';
+import { ArrowRight, Heart, BookOpen } from 'lucide-react';
 import { CategoryGrid } from '@/components/home/CategoryGrid';
 import { NewsletterSection } from '@/components/home/NewsletterSection';
 import GoogleAd from '@/components/ads/GoogleAd';
@@ -12,25 +11,16 @@ import GoogleAd from '@/components/ads/GoogleAd';
 export const revalidate = 60; // Revalider toutes les 60 secondes pour les likes
 
 export default async function HomePage() {
-  const [popularRecipes, recentRecipes, allCategories, mostLikedRecipes, recentPosts] = await Promise.all([
-    getPopularRecipes(6),
+  const [recentRecipes, allCategories, mostLikedRecipes, recentPosts] = await Promise.all([
     getRecentRecipes(8),
     getAllCategories(),
     getMostLikedRecipes(6),
     getRecentPosts(3),
   ]);
   const categories = allCategories.slice(0, 8);
-  const featuredRecipe = popularRecipes[0];
-  const secondaryRecipes = popularRecipes.slice(1, 3);
 
   return (
     <main className="min-h-screen">
-      {/* Hero Section - Magazine Style */}
-      <FeaturedHero
-        featuredRecipe={featuredRecipe}
-        secondaryRecipes={secondaryRecipes}
-      />
-
       {/* 1. Latest Recipes - Fraîchement ajoutées */}
       {recentRecipes.length > 0 && (
         <section className="py-16 md:py-24 bg-white">

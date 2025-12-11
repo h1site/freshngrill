@@ -5,6 +5,10 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/layout/ScrollToTop';
 import { siteConfig } from '@/lib/config';
+import { headers } from 'next/headers';
+import { getDictionary } from '@/i18n/getDictionary';
+import { LocaleProvider } from '@/i18n/LocaleContext';
+import type { Locale } from '@/i18n/config';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -47,14 +51,37 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Detect locale from URL path
+  const headersList = await headers();
+  const pathname = headersList.get('x-pathname') || headersList.get('x-invoke-path') || '';
+  const locale: Locale = pathname.startsWith('/en') ? 'en' : 'fr';
+
+  const dictionary = await getDictionary(locale);
+
   return (
-    <html lang="fr">
+    <html lang={locale}>
       <head>
+        {/* Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-KSP0R9W4MP"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-KSP0R9W4MP');
+            `,
+          }}
+        />
+        {/* Google AdSense */}
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8781698761921917"
@@ -62,10 +89,12 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
-        <ScrollToTop />
-        <Header />
-        {children}
-        <Footer />
+        <LocaleProvider locale={locale} dictionary={dictionary}>
+          <ScrollToTop />
+          <Header locale={locale} dictionary={dictionary} />
+          {children}
+          <Footer locale={locale} dictionary={dictionary} />
+        </LocaleProvider>
       </body>
     </html>
   );

@@ -12,6 +12,31 @@ interface RecipeWithIngredients {
   ingredients: IngredientGroup[];
 }
 
+// Fonction pour normaliser les accents (retirer les accents)
+function removeAccents(str: string): string {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+// Fonction pour vérifier si deux chaînes correspondent (avec ou sans accents)
+function matchesWithAccents(str1: string, str2: string): boolean {
+  const s1 = str1.toLowerCase();
+  const s2 = str2.toLowerCase();
+  const s1NoAccent = removeAccents(s1);
+  const s2NoAccent = removeAccents(s2);
+
+  // Vérifier toutes les combinaisons
+  return (
+    s1.includes(s2) ||
+    s2.includes(s1) ||
+    s1NoAccent.includes(s2NoAccent) ||
+    s2NoAccent.includes(s1NoAccent) ||
+    s1.includes(s2NoAccent) ||
+    s2.includes(s1NoAccent) ||
+    s1NoAccent.includes(s2) ||
+    s2NoAccent.includes(s1)
+  );
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const ingredientsParam = searchParams.get('ingredients');
@@ -24,6 +49,8 @@ export async function GET(request: Request) {
       .select('ingredients') as { data: { ingredients: IngredientGroup[] | null }[] | null };
 
     const ingredientSet = new Set<string>();
+    const suggestLower = suggestParam.toLowerCase();
+    const suggestNoAccent = removeAccents(suggestLower);
 
     for (const recipe of recipes || []) {
       const groups = recipe.ingredients;
@@ -33,7 +60,16 @@ export async function GET(request: Request) {
         for (const item of group.items || []) {
           if (item.name) {
             const normalized = item.name.toLowerCase().trim();
-            if (normalized.includes(suggestParam.toLowerCase()) && normalized.length > 1) {
+            const normalizedNoAccent = removeAccents(normalized);
+
+            // Vérifier si l'ingrédient correspond (avec ou sans accents)
+            if (
+              (normalized.includes(suggestLower) ||
+                normalizedNoAccent.includes(suggestNoAccent) ||
+                normalized.includes(suggestNoAccent) ||
+                normalizedNoAccent.includes(suggestLower)) &&
+              normalized.length > 1
+            ) {
               ingredientSet.add(normalized);
             }
           }
@@ -96,11 +132,11 @@ export async function GET(request: Request) {
 
     if (recipeIngredients.length === 0) continue;
 
-    // Trouver les ingrédients matchés
+    // Trouver les ingrédients matchés (avec support des accents)
     const matchedIngredients: string[] = [];
     for (const searchIng of searchIngredients) {
-      const found = recipeIngredients.find(
-        (recipeIng) => recipeIng.includes(searchIng) || searchIng.includes(recipeIng)
+      const found = recipeIngredients.find((recipeIng) =>
+        matchesWithAccents(recipeIng, searchIng)
       );
       if (found) {
         matchedIngredients.push(found);
