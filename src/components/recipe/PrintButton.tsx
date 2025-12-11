@@ -5,9 +5,10 @@ import { Recipe } from '@/types/recipe';
 
 interface Props {
   recipe: Recipe;
+  compact?: boolean;
 }
 
-export default function PrintButton({ recipe }: Props) {
+export default function PrintButton({ recipe, compact = false }: Props) {
   const handlePrint = () => {
     // Créer une nouvelle fenêtre pour l'impression
     const printWindow = window.open('', '_blank');
@@ -245,10 +246,13 @@ export default function PrintButton({ recipe }: Props) {
   return (
     <button
       onClick={handlePrint}
-      className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium px-5 py-2.5 rounded-full transition-colors print:hidden"
+      className={`flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium rounded-full transition-colors print:hidden ${
+        compact ? 'p-2 md:px-4 md:py-2' : 'px-5 py-2.5'
+      }`}
+      title="Imprimer"
     >
-      <Printer className="w-5 h-5" />
-      <span>Imprimer</span>
+      <Printer className={compact ? 'w-4 h-4 md:w-5 md:h-5' : 'w-5 h-5'} />
+      <span className={compact ? 'hidden md:inline text-sm' : ''}>Imprimer</span>
     </button>
   );
 }

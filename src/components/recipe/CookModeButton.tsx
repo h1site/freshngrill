@@ -8,9 +8,10 @@ import Image from 'next/image';
 
 interface Props {
   recipe: Recipe;
+  compact?: boolean;
 }
 
-export default function CookModeButton({ recipe }: Props) {
+export default function CookModeButton({ recipe, compact = false }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [checkedIngredients, setCheckedIngredients] = useState<Set<string>>(new Set());
@@ -80,10 +81,13 @@ export default function CookModeButton({ recipe }: Props) {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 bg-[#F77313] hover:bg-[#d45f0a] text-white font-medium px-5 py-2.5 rounded-full transition-colors"
+        className={`flex items-center gap-2 bg-[#F77313] hover:bg-[#d45f0a] text-white font-medium rounded-full transition-colors ${
+          compact ? 'p-2 md:px-4 md:py-2' : 'px-5 py-2.5'
+        }`}
+        title="Mode Cuisine"
       >
-        <Maximize2 className="w-5 h-5" />
-        <span>Mode Cuisine</span>
+        <Maximize2 className={compact ? 'w-4 h-4 md:w-5 md:h-5' : 'w-5 h-5'} />
+        <span className={compact ? 'hidden md:inline text-sm' : ''}>Mode Cuisine</span>
       </button>
 
       <AnimatePresence>

@@ -70,8 +70,8 @@ export default async function RecipePageEN({ params }: Props) {
       <RecipeSchema recipe={recipe} />
 
       <main className="min-h-screen bg-white">
-        {/* Hero Image */}
-        <section className="relative h-[40vh] md:h-[50vh] lg:h-[60vh]">
+        {/* Hero Image - Mobile optimized */}
+        <section className="relative h-[55vh] sm:h-[50vh] md:h-[55vh] lg:h-[60vh]">
           {recipe.featuredImage ? (
             <Image
               src={recipe.featuredImage}
@@ -84,10 +84,10 @@ export default async function RecipePageEN({ params }: Props) {
           ) : (
             <div className="absolute inset-0 bg-black" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
 
-          {/* Header overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
+          {/* Header overlay - reduced padding on mobile */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-12">
             <div className="container mx-auto">
               <RecipeHeader recipe={recipe} locale="en" />
             </div>

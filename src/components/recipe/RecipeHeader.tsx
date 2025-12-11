@@ -48,13 +48,13 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
 
   return (
     <div className="text-white max-w-4xl">
-      {/* Categories */}
+      {/* Categories - hidden on small mobile */}
       {recipe.categories.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-4">
-          {recipe.categories.map((cat) => (
+        <div className="hidden sm:flex flex-wrap gap-2 mb-3 md:mb-4">
+          {recipe.categories.slice(0, 2).map((cat) => (
             <span
               key={cat.id}
-              className="bg-white/20 backdrop-blur-sm text-white text-sm font-medium px-4 py-1.5 rounded-full"
+              className="bg-white/20 backdrop-blur-sm text-white text-xs md:text-sm font-medium px-3 py-1 md:px-4 md:py-1.5 rounded-full"
             >
               {cat.name}
             </span>
@@ -62,88 +62,64 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
         </div>
       )}
 
-      {/* Title */}
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+      {/* Title - smaller on mobile */}
+      <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 leading-tight">
         {recipe.title}
       </h1>
 
-      {/* Meta information */}
-      <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-6">
+      {/* Meta information - compact on mobile */}
+      <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 md:gap-3 mb-3 md:mb-6">
         {/* Prep time */}
         {recipe.prepTime > 0 && (
-          <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2.5 rounded-lg">
-            <Clock className="w-5 h-5 text-[#F77313]" />
-            <div>
-              <div className="text-[10px] text-white/70 uppercase tracking-wider font-medium">
-                {t.prep}
-              </div>
-              <div className="font-bold text-white text-lg leading-tight">{recipe.prepTime} min</div>
-            </div>
+          <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 bg-black/40 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2.5 rounded-md md:rounded-lg">
+            <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#F77313]" />
+            <span className="font-semibold text-white text-xs sm:text-sm md:text-base">{recipe.prepTime}m</span>
           </div>
         )}
 
         {/* Cook time */}
         {recipe.cookTime > 0 && (
-          <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2.5 rounded-lg">
-            <Clock className="w-5 h-5 text-[#F77313]" />
-            <div>
-              <div className="text-[10px] text-white/70 uppercase tracking-wider font-medium">
-                {t.cook}
-              </div>
-              <div className="font-bold text-white text-lg leading-tight">{recipe.cookTime} min</div>
-            </div>
+          <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 bg-black/40 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2.5 rounded-md md:rounded-lg">
+            <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#F77313]" />
+            <span className="font-semibold text-white text-xs sm:text-sm md:text-base">{recipe.cookTime}m</span>
           </div>
         )}
 
         {/* Servings */}
         {recipe.servings > 0 && (
-          <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2.5 rounded-lg">
-            <Users className="w-5 h-5 text-[#F77313]" />
-            <div>
-              <div className="text-[10px] text-white/70 uppercase tracking-wider font-medium">
-                {t.servings}
-              </div>
-              <div className="font-bold text-white text-lg leading-tight">
-                {recipe.servings} {recipe.servingsUnit || (isEN ? 'servings' : 'portions')}
-              </div>
-            </div>
+          <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 bg-black/40 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2.5 rounded-md md:rounded-lg">
+            <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#F77313]" />
+            <span className="font-semibold text-white text-xs sm:text-sm md:text-base">{recipe.servings}</span>
           </div>
         )}
 
         {/* Difficulty */}
-        <div className="flex items-center gap-2 bg-black/40 backdrop-blur-sm px-4 py-2.5 rounded-lg">
-          <ChefHat className="w-5 h-5 text-[#F77313]" />
-          <div>
-            <div className="text-[10px] text-white/70 uppercase tracking-wider font-medium">
-              {t.difficulty}
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-white text-lg leading-tight capitalize">
-                {difficultyTranslation[recipe.difficulty] || recipe.difficulty}
-              </span>
-              <span
-                className={`w-2.5 h-2.5 rounded-full ${
-                  difficultyColors[recipe.difficulty] || difficultyColors.moyen
-                }`}
-              />
-            </div>
-          </div>
+        <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 bg-black/40 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2.5 rounded-md md:rounded-lg">
+          <span
+            className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${
+              difficultyColors[recipe.difficulty] || difficultyColors.moyen
+            }`}
+          />
+          <span className="font-semibold text-white text-xs sm:text-sm md:text-base capitalize">
+            {difficultyTranslation[recipe.difficulty] || recipe.difficulty}
+          </span>
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex flex-wrap items-center gap-3">
-        <LikeButton recipeId={recipe.id} initialCount={recipe.likes} size="md" />
+      {/* Actions - icon only on mobile */}
+      <div className="flex flex-wrap items-center gap-2 md:gap-3">
+        <LikeButton recipeId={recipe.id} initialCount={recipe.likes} size="sm" showCount={false} />
 
         <ShareButton
           title={recipe.title}
           description={recipe.excerpt}
           image={recipe.featuredImage}
+          compact
         />
 
-        <PrintButton recipe={recipe} />
+        <PrintButton recipe={recipe} compact />
 
-        <CookModeButton recipe={recipe} />
+        <CookModeButton recipe={recipe} compact />
       </div>
     </div>
   );

@@ -959,6 +959,17 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
                     ))}
                   </div>
                 </div>
+
+                {/* Language Switcher Mobile */}
+                <div className="mt-6 pt-6 border-t border-neutral-800 px-4 pb-4">
+                  <div className="flex items-center justify-center gap-3">
+                    <Globe className="w-5 h-5 text-[#F77313]" />
+                    <span className="text-neutral-500 text-sm">{locale === 'en' ? 'Language' : 'Langue'}</span>
+                  </div>
+                  <div className="flex justify-center gap-4 mt-3">
+                    <LanguageSwitcher locale={locale} className="justify-center" />
+                  </div>
+                </div>
               </div>
             </motion.nav>
           )}

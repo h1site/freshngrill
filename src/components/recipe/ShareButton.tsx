@@ -8,9 +8,10 @@ interface Props {
   title: string;
   description?: string;
   image?: string;
+  compact?: boolean;
 }
 
-export default function ShareButton({ title, description, image }: Props) {
+export default function ShareButton({ title, description, image, compact = false }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -119,10 +120,13 @@ export default function ShareButton({ title, description, image }: Props) {
     <div className="relative" ref={menuRef}>
       <button
         onClick={handleShare}
-        className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium px-5 py-2.5 rounded-full transition-colors"
+        className={`flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium rounded-full transition-colors ${
+          compact ? 'p-2 md:px-4 md:py-2' : 'px-5 py-2.5'
+        }`}
+        title="Partager"
       >
-        <Share2 className="w-5 h-5" />
-        <span>Partager</span>
+        <Share2 className={compact ? 'w-4 h-4 md:w-5 md:h-5' : 'w-5 h-5'} />
+        <span className={compact ? 'hidden md:inline text-sm' : ''}>Partager</span>
       </button>
 
       <AnimatePresence>
