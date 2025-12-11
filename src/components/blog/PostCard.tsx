@@ -42,6 +42,8 @@ export default function PostCard({ post, index = 0, variant = 'default' }: Props
                 alt={post.title}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
+                sizes="192px"
+                loading="lazy"
               />
             ) : (
               <div className="absolute inset-0 bg-gradient-to-br from-neutral-200 to-neutral-300" />
@@ -92,6 +94,8 @@ export default function PostCard({ post, index = 0, variant = 'default' }: Props
               alt={post.title}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              loading="lazy"
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-neutral-200 to-neutral-300" />

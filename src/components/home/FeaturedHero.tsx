@@ -48,6 +48,7 @@ export function FeaturedHero({ featuredRecipe, secondaryRecipes = [], locale = '
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-neutral-200 to-neutral-300" />
@@ -105,6 +106,8 @@ export function FeaturedHero({ featuredRecipe, secondaryRecipes = [], locale = '
                         alt={recipe.title}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        loading="lazy"
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-neutral-200 to-neutral-300" />

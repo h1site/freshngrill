@@ -97,8 +97,9 @@ const nextConfig: NextConfig = {
         hostname: '**',
       },
     ],
-    // Pour le mode export statique
-    unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   trailingSlash: true,
   // Mode export statique - activer une fois les recettes importées
