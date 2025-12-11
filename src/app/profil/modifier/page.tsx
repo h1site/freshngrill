@@ -42,8 +42,8 @@ export default function ModifierProfilPage() {
       .single();
 
     if (profile) {
-      setDisplayName(profile.display_name || '');
-      setAvatarUrl(profile.avatar_url || '');
+      setDisplayName((profile as { display_name?: string }).display_name || '');
+      setAvatarUrl((profile as { avatar_url?: string }).avatar_url || '');
     } else {
       // Utiliser les métadonnées de l'utilisateur
       setDisplayName(user.user_metadata?.full_name || user.user_metadata?.name || '');
