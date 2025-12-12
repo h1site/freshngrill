@@ -59,7 +59,7 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-square">
               <Image
-                src="/images/about-cooking.jpg"
+                src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80"
                 alt="Cooking"
                 fill
                 className="object-cover"

@@ -7,10 +7,10 @@ export const metadata: Metadata = {
   description:
     'Discover our complete culinary glossary with cooking terms explained. From A to Z, master the gastronomic vocabulary.',
   alternates: {
-    canonical: '/en/lexique/',
+    canonical: '/en/lexicon/',
     languages: {
       'fr-CA': '/lexique/',
-      'en-CA': '/en/lexique/',
+      'en-CA': '/en/lexicon/',
     },
   },
 };
