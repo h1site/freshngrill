@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   keywords: ['recettes', 'cuisine', 'repas', 'plats', 'desserts', 'québec'],
   authors: [{ name: siteConfig.author }],
   icons: {
-    icon: '/images/logos/favicon.ico',
-    shortcut: '/images/logos/favicon.ico',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
   },
   openGraph: {
     type: 'website',
