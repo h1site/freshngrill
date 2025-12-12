@@ -15,7 +15,6 @@ import RecipeSchema from '@/components/recipe/RecipeSchema';
 import RecipeFAQ from '@/components/recipe/RecipeFAQ';
 import RecipeComments from '@/components/recipe/RecipeComments';
 import GoogleAd from '@/components/ads/GoogleAd';
-import RecipeLanguageSwitcher from '@/components/RecipeLanguageSwitcher';
 import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 
 interface Props {
@@ -93,15 +92,6 @@ export default async function RecettePage({ params }: Props) {
             <div className="absolute inset-0 bg-black" />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
-
-          {/* Language Switcher */}
-          <div className="absolute top-4 right-4 z-10">
-            <RecipeLanguageSwitcher
-              locale="fr"
-              slugFr={recipe.slugFr || slug}
-              slugEn={recipe.slugEn}
-            />
-          </div>
 
           {/* Header superposé - padding réduit sur mobile */}
           <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-12">
