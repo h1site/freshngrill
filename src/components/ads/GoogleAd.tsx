@@ -32,10 +32,10 @@ export default function GoogleAd({
   }, []);
 
   return (
-    <div className={`ad-container ${className}`}>
+    <div className={`ad-container overflow-hidden max-w-full ${className}`}>
       <ins
         className="adsbygoogle"
-        style={{ display: 'block' }}
+        style={{ display: 'block', maxWidth: '100%', overflow: 'hidden' }}
         data-ad-format={format}
         data-ad-layout-key={format === 'fluid' ? layoutKey : undefined}
         data-ad-client="ca-pub-8781698761921917"

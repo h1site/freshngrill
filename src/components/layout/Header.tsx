@@ -5,8 +5,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensils, Globe, Cake, Soup, Coffee, Salad, Fish, Beef, Drumstick, Refrigerator, Plus, Percent } from 'lucide-react';
+import { SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
 import UserMenu from '@/components/auth/UserMenu';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { KracRadioDropdown, KracRadioNowPlaying, useKracRadio } from '@/components/KracRadio/KracRadio';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
 
@@ -135,6 +137,19 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const megaMenuRef = useRef<HTMLDivElement>(null);
   const megaMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // KracRadio
+  const {
+    musicEnabled,
+    selectedChannel,
+    showChannelSelector,
+    setShowChannelSelector,
+    nowPlaying,
+    showNowPlaying,
+    setShowNowPlaying,
+    toggleMusic,
+    changeChannel
+  } = useKracRadio('francophonie');
 
   // Mode recherche par ingrédients
   const [isIngredientMode, setIsIngredientMode] = useState(false);
@@ -371,8 +386,16 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
   const noResults = searchResults && searchResults.recipes.length === 0 && searchResults.posts.length === 0;
 
   return (
-    <header className="sticky top-0 z-50 bg-black border-b border-neutral-800">
-      <div className="container mx-auto px-4">
+    <>
+      {/* KracRadio Now Playing Popup */}
+      <KracRadioNowPlaying
+        nowPlaying={nowPlaying}
+        show={showNowPlaying}
+        onClose={() => setShowNowPlaying(false)}
+      />
+
+      <header className="sticky top-0 z-50 bg-black border-b border-neutral-800 overflow-x-hidden">
+        <div className="container mx-auto px-4">
         <div className="flex items-center h-16 md:h-20">
           {/* Logo */}
           <Link href={`${urlPrefix}/`} className="flex items-center group">
@@ -418,6 +441,27 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
+            {/* KracRadio Controls */}
+            <div className="hidden sm:flex items-center gap-1">
+              <button
+                onClick={toggleMusic}
+                className={`p-2.5 rounded-full transition-all ${
+                  musicEnabled
+                    ? 'text-pink-400 hover:text-pink-300 hover:bg-pink-500/10'
+                    : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
+                }`}
+                title={musicEnabled ? 'Couper la musique' : 'Activer la musique'}
+              >
+                {musicEnabled ? <SpeakerHigh weight="fill" className="w-5 h-5" /> : <SpeakerSlash weight="regular" className="w-5 h-5" />}
+              </button>
+              <KracRadioDropdown
+                selectedChannel={selectedChannel}
+                onChannelChange={changeChannel}
+                isOpen={showChannelSelector}
+                onToggle={() => setShowChannelSelector(!showChannelSelector)}
+              />
+            </div>
+
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2.5 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-full transition-all"
@@ -986,5 +1030,6 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
         </AnimatePresence>
       </div>
     </header>
+    </>
   );
 }

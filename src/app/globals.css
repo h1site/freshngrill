@@ -37,6 +37,7 @@ body {
   font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* Typography - Magazine Style */
@@ -47,9 +48,10 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
 }
 
-/* Smooth scrolling */
+/* Smooth scrolling & prevent horizontal overflow */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 /* Selection */
