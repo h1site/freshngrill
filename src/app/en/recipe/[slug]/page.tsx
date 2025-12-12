@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import {
   getRecipeBySlugWithLocale,
+  getAllEnglishRecipeSlugs,
   getAllRecipeSlugs,
   getSimilarRecipes,
 } from '@/lib/recipes';
@@ -21,8 +22,18 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getAllRecipeSlugs();
-  return slugs.map((slug) => ({ slug }));
+  // Générer les routes pour les slugs anglais ET français (fallback)
+  const englishSlugs = await getAllEnglishRecipeSlugs();
+  const frenchSlugs = await getAllRecipeSlugs();
+
+  // Combiner les slugs anglais avec les slugs français (pour ceux sans traduction)
+  const englishSlugSet = new Set(englishSlugs.map(s => s.slugFr));
+  const fallbackSlugs = frenchSlugs.filter(s => !englishSlugSet.has(s));
+
+  return [
+    ...englishSlugs.map(s => ({ slug: s.slugEn })),
+    ...fallbackSlugs.map(slug => ({ slug })),
+  ];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -35,14 +46,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  // Utiliser le slug anglais si disponible, sinon le slug français
+  const enSlug = recipe.slugEn || slug;
+  const frSlug = recipe.slugFr || recipe.slug;
+
   return {
     title: recipe.seoTitle || `${recipe.title} | Menu Cochon`,
     description: recipe.seoDescription || recipe.excerpt,
     alternates: {
-      canonical: `/en/recipe/${slug}/`,
+      canonical: `/en/recipe/${enSlug}/`,
       languages: {
-        'fr-CA': `/recette/${slug}/`,
-        'en-CA': `/en/recipe/${slug}/`,
+        'fr-CA': `/recette/${frSlug}/`,
+        'en-CA': `/en/recipe/${enSlug}/`,
       },
     },
     openGraph: {
@@ -50,7 +65,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: recipe.excerpt,
       images: recipe.featuredImage ? [recipe.featuredImage] : [],
       type: 'article',
-      url: `/en/recipe/${slug}/`,
+      url: `/en/recipe/${enSlug}/`,
     },
   };
 }

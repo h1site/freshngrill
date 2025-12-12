@@ -194,9 +194,14 @@ ${JSON.stringify(recipe.ingredients, null, 2)}
 Instructions (JSON array):
 ${JSON.stringify(recipe.instructions, null, 2)}
 
+Also generate an English URL slug from the translated title.
+The slug should be lowercase, use hyphens instead of spaces, and remove special characters.
+Example: "Protein Pancake Recipe" -> "protein-pancake-recipe"
+
 Respond with ONLY a valid JSON object in this exact format:
 {
   "title": "translated title",
+  "slug_en": "english-url-slug",
   "excerpt": "translated excerpt",
   "introduction": "translated introduction",
   "conclusion": "translated conclusion",
@@ -340,6 +345,16 @@ async function translateRecipes() {
       console.log('  Excerpt EN:', translation.excerpt?.substring(0, 100));
     }
 
+    // Generate slug_en from title if not provided by AI
+    const slugEn = translation.slug_en || translation.title
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
+      .replace(/\s+/g, '-') // Spaces to hyphens
+      .replace(/-+/g, '-') // Multiple hyphens to single
+      .replace(/^-|-$/g, ''); // Trim hyphens
+
     if (!DRY_RUN) {
       const { error: insertError } = await supabase
         .from('recipe_translations')
@@ -347,6 +362,7 @@ async function translateRecipes() {
           recipe_id: recipe.id,
           locale: TARGET_LOCALE,
           title: translation.title,
+          slug_en: slugEn,
           excerpt: translation.excerpt,
           introduction: translation.introduction,
           conclusion: translation.conclusion,
@@ -365,7 +381,7 @@ async function translateRecipes() {
       }
     }
 
-    console.log(`  OK: ${recipe.title} -> ${translation.title}`);
+    console.log(`  OK: ${recipe.title} -> ${translation.title} (slug: ${slugEn})`);
     successCount++;
 
     // Small delay to avoid overwhelming Ollama

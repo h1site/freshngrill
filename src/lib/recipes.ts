@@ -80,8 +80,50 @@ export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
 
 /**
  * Obtenir une recette par son slug avec traduction
+ * Supporte les slugs français ET anglais pour locale='en'
  */
-export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en' = 'fr'): Promise<Recipe | null> {
+export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en' = 'fr'): Promise<(Recipe & { slugEn?: string; slugFr?: string }) | null> {
+  // Si locale anglais, d'abord chercher par slug_en dans les traductions
+  if (locale === 'en') {
+    const { data: translationBySlug } = await supabase
+      .from('recipe_translations')
+      .select('*, recipes!inner(slug)')
+      .eq('slug_en', slug)
+      .eq('locale', 'en')
+      .single();
+
+    if (translationBySlug) {
+      // On a trouvé par le slug anglais, récupérer la recette complète
+      const frenchSlug = (translationBySlug as any).recipes?.slug;
+      const { data, error } = await supabase
+        .from('recipes_with_categories')
+        .select('*')
+        .eq('slug', frenchSlug)
+        .single();
+
+      if (!error && data) {
+        const recipe = transformRecipe(data);
+        const t = translationBySlug as any;
+        return {
+          ...recipe,
+          slugFr: recipe.slug,
+          slugEn: t.slug_en || slug,
+          title: t.title || recipe.title,
+          excerpt: t.excerpt || recipe.excerpt,
+          introduction: t.introduction || recipe.introduction,
+          conclusion: t.conclusion || recipe.conclusion,
+          content: t.content || recipe.content,
+          faq: t.faq || recipe.faq,
+          ingredients: t.ingredients || recipe.ingredients,
+          instructions: t.instructions || recipe.instructions,
+          seoTitle: t.seo_title || recipe.seoTitle,
+          seoDescription: t.seo_description || recipe.seoDescription,
+        };
+      }
+    }
+  }
+
+  // Chercher par slug français (comportement par défaut)
   const { data, error } = await supabase
     .from('recipes_with_categories')
     .select('*')
@@ -99,7 +141,7 @@ export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en
 
   // Si locale français, retourner tel quel
   if (locale === 'fr') {
-    return recipe;
+    return { ...recipe, slugFr: recipe.slug };
   }
 
   // Chercher la traduction anglaise
@@ -113,7 +155,7 @@ export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en
   if (translationError || !translation) {
     // Pas de traduction disponible, retourner la version française
     console.log(`No English translation found for recipe ${slug}`);
-    return recipe;
+    return { ...recipe, slugFr: recipe.slug };
   }
 
   // Cast translation to any to access dynamic fields from Supabase
@@ -122,6 +164,8 @@ export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en
   // Appliquer les traductions
   return {
     ...recipe,
+    slugFr: recipe.slug,
+    slugEn: t.slug_en || undefined,
     title: t.title || recipe.title,
     excerpt: t.excerpt || recipe.excerpt,
     introduction: t.introduction || recipe.introduction,
@@ -133,6 +177,27 @@ export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en
     seoTitle: t.seo_title || recipe.seoTitle,
     seoDescription: t.seo_description || recipe.seoDescription,
   };
+}
+
+/**
+ * Obtenir tous les slugs anglais (pour generateStaticParams)
+ */
+export async function getAllEnglishRecipeSlugs(): Promise<{ slugEn: string; slugFr: string }[]> {
+  const { data, error } = await supabase
+    .from('recipe_translations')
+    .select('slug_en, recipe_id, recipes!inner(slug)')
+    .eq('locale', 'en')
+    .not('slug_en', 'is', null);
+
+  if (error) {
+    console.error('Erreur getAllEnglishRecipeSlugs:', error);
+    return [];
+  }
+
+  return (data || []).map((t: any) => ({
+    slugEn: t.slug_en,
+    slugFr: t.recipes?.slug,
+  })).filter((s: { slugEn: string | null }) => s.slugEn);
 }
 
 /**

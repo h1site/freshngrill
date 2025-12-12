@@ -5,6 +5,7 @@ import {
   getRecipeBySlug,
   getAllRecipeSlugs,
   getSimilarRecipes,
+  getRecipeBySlugWithLocale,
 } from '@/lib/recipes';
 import RecipeHeader from '@/components/recipe/RecipeHeader';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
@@ -27,7 +28,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const recipe = await getRecipeBySlug(slug);
+  // Utiliser getRecipeBySlugWithLocale pour obtenir le slug anglais si disponible
+  const recipe = await getRecipeBySlugWithLocale(slug, 'en');
 
   if (!recipe) {
     return {
@@ -35,11 +37,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  // Slug anglais pour hreflang (si disponible)
+  const enSlug = recipe.slugEn || slug;
+
   return {
     title: recipe.seoTitle || `${recipe.title} | Menu Cochon`,
     description: recipe.seoDescription || recipe.excerpt,
     alternates: {
       canonical: `/recette/${slug}/`,
+      languages: {
+        'fr-CA': `/recette/${slug}/`,
+        'en-CA': `/en/recipe/${enSlug}/`,
+      },
     },
     openGraph: {
       title: recipe.title,
