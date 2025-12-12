@@ -460,12 +460,18 @@ export function KracRadioModal({
           />
           {/* Modal */}
           <motion.div
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-md bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-800 rounded-2xl shadow-2xl border border-white/10 z-[101] overflow-hidden"
-            initial={{ opacity: 0, scale: 0.9, y: '-45%', x: '-50%' }}
-            animate={{ opacity: 1, scale: 1, y: '-50%', x: '-50%' }}
-            exit={{ opacity: 0, scale: 0.9, y: '-45%', x: '-50%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="fixed inset-0 flex items-center justify-center z-[101] pointer-events-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
           >
+            <motion.div
+              className="w-[95vw] max-w-md bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-800 rounded-2xl shadow-2xl border border-white/10 overflow-hidden pointer-events-auto"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            >
             {/* Header */}
             <div className="relative p-6 pb-4 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20">
               <button
@@ -563,6 +569,7 @@ export function KracRadioModal({
                 </button>
               )}
             </div>
+            </motion.div>
           </motion.div>
         </>
       )}
