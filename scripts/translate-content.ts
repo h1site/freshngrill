@@ -77,15 +77,88 @@ function extractJSON(text: string): any {
   // Try to extract JSON from response
   const jsonMatch = text.match(/\{[\s\S]*\}/);
   if (jsonMatch) {
+    let jsonStr = jsonMatch[0];
+
+    // Clean up common Mistral JSON issues
+    jsonStr = jsonStr
+      // Remove control characters (tabs, newlines inside strings cause parsing errors)
+      .replace(/[\x00-\x1F\x7F]/g, (char) => {
+        if (char === '\n') return '\\n';
+        if (char === '\r') return '\\r';
+        if (char === '\t') return ' ';
+        return '';
+      })
+      // Fix trailing commas
+      .replace(/,\s*}/g, '}')
+      .replace(/,\s*]/g, ']')
+      // Fix single quotes to double quotes (but not inside strings)
+      .replace(/:\s*'([^']*)'/g, ': "$1"')
+      // Fix unescaped quotes inside strings
+      .replace(/": "([^"]*)"([^",}\]]+)"([^"]*)",/g, '": "$1\\"$2\\"$3",')
+      // Remove any BOM or invisible characters
+      .replace(/^\uFEFF/, '')
+      .trim();
+
     try {
-      return JSON.parse(jsonMatch[0]);
-    } catch {
-      // Try fixing common issues
-      let fixed = jsonMatch[0]
-        .replace(/,\s*}/g, '}')
-        .replace(/,\s*]/g, ']')
-        .replace(/'/g, '"');
-      return JSON.parse(fixed);
+      return JSON.parse(jsonStr);
+    } catch (e1) {
+      // Second attempt: more aggressive cleaning
+      try {
+        // Replace any remaining problematic characters
+        let cleaned = jsonStr
+          .replace(/\n/g, '\\n')
+          .replace(/\r/g, '\\r')
+          .replace(/\t/g, ' ')
+          // Fix common Mistral issues with colons in strings
+          .replace(/":\s*"/g, '": "')
+          // Remove extra whitespace
+          .replace(/\s+/g, ' ');
+
+        return JSON.parse(cleaned);
+      } catch (e2) {
+        // Third attempt: try to extract key fields manually
+        try {
+          const titleMatch = jsonStr.match(/"title"\s*:\s*"([^"]+)"/);
+          const excerptMatch = jsonStr.match(/"excerpt"\s*:\s*"([^"]+)"/);
+          const introMatch = jsonStr.match(/"introduction"\s*:\s*"([^"]+)"/);
+          const conclusionMatch = jsonStr.match(/"conclusion"\s*:\s*"([^"]+)"/);
+          const seoTitleMatch = jsonStr.match(/"seo_title"\s*:\s*"([^"]+)"/);
+          const seoDescMatch = jsonStr.match(/"seo_description"\s*:\s*"([^"]+)"/);
+
+          // Try to extract ingredients array
+          const ingredientsMatch = jsonStr.match(/"ingredients"\s*:\s*(\[[\s\S]*?\])\s*,?\s*"instructions"/);
+          // Try to extract instructions array
+          const instructionsMatch = jsonStr.match(/"instructions"\s*:\s*(\[[\s\S]*?\])\s*}/);
+
+          if (titleMatch) {
+            const result: any = {
+              title: titleMatch[1],
+            };
+            if (excerptMatch) result.excerpt = excerptMatch[1];
+            if (introMatch) result.introduction = introMatch[1];
+            if (conclusionMatch) result.conclusion = conclusionMatch[1];
+            if (seoTitleMatch) result.seo_title = seoTitleMatch[1];
+            if (seoDescMatch) result.seo_description = seoDescMatch[1];
+
+            // Try parsing arrays separately
+            if (ingredientsMatch) {
+              try {
+                result.ingredients = JSON.parse(ingredientsMatch[1].replace(/[\x00-\x1F]/g, ' '));
+              } catch { /* skip */ }
+            }
+            if (instructionsMatch) {
+              try {
+                result.instructions = JSON.parse(instructionsMatch[1].replace(/[\x00-\x1F]/g, ' '));
+              } catch { /* skip */ }
+            }
+
+            return result;
+          }
+        } catch { /* skip */ }
+
+        // If all else fails, throw the original error
+        throw e1;
+      }
     }
   }
   return null;
@@ -221,64 +294,82 @@ async function translateRecipes() {
   let errorCount = 0;
 
   for (const recipe of recipesToTranslate) {
-    try {
-      console.log(`\n[${successCount + errorCount + 1}/${recipesToTranslate.length}] Translating: ${recipe.title}`);
+    const currentIndex = successCount + errorCount + 1;
+    console.log(`\n[${currentIndex}/${recipesToTranslate.length}] Translating: ${recipe.title}`);
 
-      const prompt = getRecipeTranslationPrompt(recipe);
-      const response = await askOllama(prompt, 4000);
+    let translation = null;
+    let lastError: any = null;
+    const MAX_RETRIES = 3;
 
-      if (VERBOSE) {
-        console.log('Raw response:', response.substring(0, 500));
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const prompt = getRecipeTranslationPrompt(recipe);
+        const response = await askOllama(prompt, 4000);
+
+        if (VERBOSE) {
+          console.log(`  Attempt ${attempt} raw response:`, response.substring(0, 500));
+        }
+
+        translation = extractJSON(response);
+
+        if (translation && translation.title) {
+          break; // Success!
+        }
+
+        console.log(`  Attempt ${attempt}/${MAX_RETRIES}: Could not parse JSON, retrying...`);
+        lastError = new Error('Could not parse JSON');
+
+        // Wait before retry
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+      } catch (err) {
+        lastError = err;
+        console.log(`  Attempt ${attempt}/${MAX_RETRIES}: ${err instanceof Error ? err.message : 'Error'}, retrying...`);
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
+    }
 
-      const translation = extractJSON(response);
+    if (!translation || !translation.title) {
+      console.error(`  ERROR: Failed after ${MAX_RETRIES} attempts for ${recipe.slug}:`, lastError?.message || 'Unknown error');
+      errorCount++;
+      continue;
+    }
 
-      if (!translation || !translation.title) {
-        console.error(`  ERROR: Could not parse translation for ${recipe.slug}`);
+    if (VERBOSE) {
+      console.log('  Title EN:', translation.title);
+      console.log('  Excerpt EN:', translation.excerpt?.substring(0, 100));
+    }
+
+    if (!DRY_RUN) {
+      const { error: insertError } = await supabase
+        .from('recipe_translations')
+        .upsert({
+          recipe_id: recipe.id,
+          locale: TARGET_LOCALE,
+          title: translation.title,
+          excerpt: translation.excerpt,
+          introduction: translation.introduction,
+          conclusion: translation.conclusion,
+          seo_title: translation.seo_title,
+          seo_description: translation.seo_description,
+          ingredients: translation.ingredients,
+          instructions: translation.instructions,
+        }, {
+          onConflict: 'recipe_id,locale'
+        });
+
+      if (insertError) {
+        console.error(`  ERROR saving translation:`, insertError.message);
         errorCount++;
         continue;
       }
-
-      if (VERBOSE) {
-        console.log('  Title EN:', translation.title);
-        console.log('  Excerpt EN:', translation.excerpt?.substring(0, 100));
-      }
-
-      if (!DRY_RUN) {
-        const { error: insertError } = await supabase
-          .from('recipe_translations')
-          .upsert({
-            recipe_id: recipe.id,
-            locale: TARGET_LOCALE,
-            title: translation.title,
-            excerpt: translation.excerpt,
-            introduction: translation.introduction,
-            conclusion: translation.conclusion,
-            seo_title: translation.seo_title,
-            seo_description: translation.seo_description,
-            ingredients: translation.ingredients,
-            instructions: translation.instructions,
-          }, {
-            onConflict: 'recipe_id,locale'
-          });
-
-        if (insertError) {
-          console.error(`  ERROR saving translation:`, insertError.message);
-          errorCount++;
-          continue;
-        }
-      }
-
-      console.log(`  OK: ${recipe.title} -> ${translation.title}`);
-      successCount++;
-
-      // Small delay to avoid overwhelming Ollama
-      await new Promise(resolve => setTimeout(resolve, 500));
-
-    } catch (error) {
-      console.error(`  ERROR translating ${recipe.slug}:`, error);
-      errorCount++;
     }
+
+    console.log(`  OK: ${recipe.title} -> ${translation.title}`);
+    successCount++;
+
+    // Small delay to avoid overwhelming Ollama
+    await new Promise(resolve => setTimeout(resolve, 500));
   }
 
   console.log(`\n=== RECIPES DONE: ${successCount} success, ${errorCount} errors ===`);

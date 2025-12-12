@@ -190,22 +190,7 @@ export default async function BlogPostPageEN({ params }: Props) {
           <div className="max-w-3xl mx-auto">
             {/* Drop Cap Article Content */}
             <div
-              className="prose prose-lg lg:prose-xl max-w-none
-                prose-headings:font-display prose-headings:text-black prose-headings:font-normal
-                prose-h2:text-3xl md:prose-h2:text-4xl prose-h2:mt-16 prose-h2:mb-8 prose-h2:border-l-4 prose-h2:border-[#F77313] prose-h2:pl-6
-                prose-h3:text-2xl md:prose-h3:text-3xl prose-h3:mt-12 prose-h3:mb-6
-                prose-h4:text-xl md:prose-h4:text-2xl prose-h4:mt-10 prose-h4:mb-5
-                prose-h5:text-lg md:prose-h5:text-xl prose-h5:mt-8 prose-h5:mb-4
-                prose-h6:text-base md:prose-h6:text-lg prose-h6:mt-6 prose-h6:mb-3
-                prose-p:text-neutral-700 prose-p:leading-[1.9] prose-p:text-lg prose-p:mb-6
-                prose-a:text-[#F77313] prose-a:no-underline prose-a:font-medium hover:prose-a:underline
-                prose-strong:text-black prose-strong:font-semibold
-                prose-img:rounded-none prose-img:my-12 prose-img:shadow-xl
-                prose-blockquote:border-l-0 prose-blockquote:bg-neutral-50 prose-blockquote:p-8 prose-blockquote:my-12 prose-blockquote:relative prose-blockquote:not-italic
-                prose-blockquote:before:content-[''] prose-blockquote:before:absolute prose-blockquote:before:top-0 prose-blockquote:before:left-0 prose-blockquote:before:w-1 prose-blockquote:before:h-full prose-blockquote:before:bg-[#F77313]
-                prose-ul:my-8 prose-ul:space-y-3 prose-li:text-neutral-700 prose-li:marker:text-[#F77313]
-                prose-ol:my-8 prose-ol:space-y-3
-                first-letter:text-7xl first-letter:font-display first-letter:text-[#F77313] first-letter:float-left first-letter:mr-3 first-letter:mt-1"
+              className="blog-content first-letter:text-7xl first-letter:font-display first-letter:text-[#F77313] first-letter:float-left first-letter:mr-3 first-letter:mt-1"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
 

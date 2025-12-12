@@ -67,7 +67,7 @@ export default async function RecipePageEN({ params }: Props) {
 
   return (
     <>
-      <RecipeSchema recipe={recipe} />
+      <RecipeSchema recipe={recipe} locale="en" />
 
       <main className="min-h-screen bg-white">
         {/* Hero Image - Mobile optimized */}
