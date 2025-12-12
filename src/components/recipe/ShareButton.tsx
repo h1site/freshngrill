@@ -4,14 +4,24 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Share2, X, Check, Link2, Mail } from 'lucide-react';
 
+import type { Locale } from '@/i18n/config';
+
 interface Props {
   title: string;
   description?: string;
   image?: string;
   compact?: boolean;
+  locale?: Locale;
 }
 
-export default function ShareButton({ title, description, image, compact = false }: Props) {
+export default function ShareButton({ title, description, image, compact = false, locale = 'fr' }: Props) {
+  const isEN = locale === 'en';
+  const t = {
+    share: isEN ? 'Share' : 'Partager',
+    copyLink: isEN ? 'Copy link' : 'Copier le lien',
+    linkCopied: isEN ? 'Link copied!' : 'Lien copié!',
+    emailBody: isEN ? 'I wanted to share this recipe with you:' : 'Je voulais partager cette recette avec toi:',
+  };
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -96,7 +106,7 @@ export default function ShareButton({ title, description, image, compact = false
       color: 'bg-neutral-600 hover:bg-neutral-700',
       onClick: () => {
         const subject = encodeURIComponent(title);
-        const body = encodeURIComponent(`Je voulais partager cette recette avec toi:\n\n${title}\n${getUrl()}`);
+        const body = encodeURIComponent(`${t.emailBody}\n\n${title}\n${getUrl()}`);
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
       },
     },
@@ -123,10 +133,10 @@ export default function ShareButton({ title, description, image, compact = false
         className={`flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium rounded-full transition-colors ${
           compact ? 'p-2 md:px-4 md:py-2' : 'px-5 py-2.5'
         }`}
-        title="Partager"
+        title={t.share}
       >
         <Share2 className={compact ? 'w-4 h-4 md:w-5 md:h-5' : 'w-5 h-5'} />
-        <span className={compact ? 'hidden md:inline text-sm' : ''}>Partager</span>
+        <span className={compact ? 'hidden md:inline text-sm' : ''}>{t.share}</span>
       </button>
 
       <AnimatePresence>
@@ -149,7 +159,7 @@ export default function ShareButton({ title, description, image, compact = false
             >
               {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-100">
-              <span className="font-medium text-neutral-900">Partager</span>
+              <span className="font-medium text-neutral-900">{t.share}</span>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 hover:bg-neutral-100 rounded-full transition-colors"
@@ -190,7 +200,7 @@ export default function ShareButton({ title, description, image, compact = false
                   <Link2 className="w-5 h-5 text-neutral-600" />
                 )}
                 <span className="text-sm font-medium text-neutral-700">
-                  {copied ? 'Lien copié!' : 'Copier le lien'}
+                  {copied ? t.linkCopied : t.copyLink}
                 </span>
               </button>
             </div>

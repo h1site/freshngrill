@@ -115,11 +115,12 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
           description={recipe.excerpt}
           image={recipe.featuredImage}
           compact
+          locale={locale}
         />
 
-        <PrintButton recipe={recipe} compact />
+        <PrintButton recipe={recipe} compact locale={locale} />
 
-        <CookModeButton recipe={recipe} compact />
+        <CookModeButton recipe={recipe} compact locale={locale} />
       </div>
     </div>
   );

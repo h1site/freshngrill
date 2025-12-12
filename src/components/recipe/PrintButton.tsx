@@ -2,13 +2,29 @@
 
 import { Printer } from 'lucide-react';
 import { Recipe } from '@/types/recipe';
+import type { Locale } from '@/i18n/config';
 
 interface Props {
   recipe: Recipe;
   compact?: boolean;
+  locale?: Locale;
 }
 
-export default function PrintButton({ recipe, compact = false }: Props) {
+export default function PrintButton({ recipe, compact = false, locale = 'fr' }: Props) {
+  const isEN = locale === 'en';
+  const t = {
+    print: isEN ? 'Print' : 'Imprimer',
+    prep: isEN ? 'Prep' : 'Préparation',
+    cook: isEN ? 'Cook' : 'Cuisson',
+    servings: isEN ? 'Servings' : 'Portions',
+    difficulty: isEN ? 'Difficulty' : 'Difficulté',
+    ingredients: isEN ? 'Ingredients' : 'Ingrédients',
+    instructions: isEN ? 'Instructions' : 'Instructions',
+    tip: isEN ? 'Tip' : 'Astuce',
+    back: isEN ? 'Back' : 'Retour',
+    findMore: isEN ? 'Find this recipe and hundreds more at' : 'Retrouvez cette recette et des centaines d\'autres sur',
+    enjoyMeal: isEN ? 'Enjoy your meal!' : 'Bon appétit!',
+  };
   const handlePrint = () => {
     // Créer une nouvelle fenêtre pour l'impression
     const printWindow = window.open('', '_blank');
@@ -50,7 +66,7 @@ export default function PrintButton({ recipe, compact = false }: Props) {
           </div>
           <div style="flex: 1; padding-top: 8px;">
             <p style="margin: 0; line-height: 1.6; color: #333;">${step.content}</p>
-            ${step.tip ? `<p style="margin: 8px 0 0 0; padding: 8px 12px; background: #fff8f0; border-left: 3px solid #F77313; font-size: 13px; color: #666;"><strong>💡 Astuce:</strong> ${step.tip}</p>` : ''}
+            ${step.tip ? `<p style="margin: 8px 0 0 0; padding: 8px 12px; background: #fff8f0; border-left: 3px solid #F77313; font-size: 13px; color: #666;"><strong>💡 ${t.tip}:</strong> ${step.tip}</p>` : ''}
           </div>
         </div>
       `
@@ -60,7 +76,7 @@ export default function PrintButton({ recipe, compact = false }: Props) {
     // Créer le contenu HTML pour l'impression
     const printContent = `
       <!DOCTYPE html>
-      <html lang="fr">
+      <html lang="${locale}">
       <head>
         <meta charset="UTF-8">
         <title>${recipe.title} - Menu Cochon</title>
@@ -137,7 +153,7 @@ export default function PrintButton({ recipe, compact = false }: Props) {
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-size: 20px;">⏱️</span>
             <div>
-              <div style="font-size: 11px; color: #666; text-transform: uppercase;">Préparation</div>
+              <div style="font-size: 11px; color: #666; text-transform: uppercase;">${t.prep}</div>
               <div style="font-weight: 600;">${recipe.prepTime} min</div>
             </div>
           </div>
@@ -150,7 +166,7 @@ export default function PrintButton({ recipe, compact = false }: Props) {
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-size: 20px;">🍳</span>
             <div>
-              <div style="font-size: 11px; color: #666; text-transform: uppercase;">Cuisson</div>
+              <div style="font-size: 11px; color: #666; text-transform: uppercase;">${t.cook}</div>
               <div style="font-weight: 600;">${recipe.cookTime} min</div>
             </div>
           </div>
@@ -163,8 +179,8 @@ export default function PrintButton({ recipe, compact = false }: Props) {
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-size: 20px;">👥</span>
             <div>
-              <div style="font-size: 11px; color: #666; text-transform: uppercase;">Portions</div>
-              <div style="font-weight: 600;">${recipe.servings} ${recipe.servingsUnit || 'portions'}</div>
+              <div style="font-size: 11px; color: #666; text-transform: uppercase;">${t.servings}</div>
+              <div style="font-weight: 600;">${recipe.servings} ${recipe.servingsUnit || (isEN ? 'servings' : 'portions')}</div>
             </div>
           </div>
           `
@@ -173,7 +189,7 @@ export default function PrintButton({ recipe, compact = false }: Props) {
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-size: 20px;">👨‍🍳</span>
             <div>
-              <div style="font-size: 11px; color: #666; text-transform: uppercase;">Difficulté</div>
+              <div style="font-size: 11px; color: #666; text-transform: uppercase;">${t.difficulty}</div>
               <div style="font-weight: 600; text-transform: capitalize;">${recipe.difficulty}</div>
             </div>
           </div>
@@ -184,7 +200,7 @@ export default function PrintButton({ recipe, compact = false }: Props) {
           <!-- Ingrédients -->
           <div style="background: #fff; border: 2px solid #F77313; border-radius: 12px; padding: 24px; height: fit-content;">
             <h2 style="font-size: 18px; font-weight: 700; color: #F77313; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; text-transform: uppercase;">
-              🥗 Ingrédients
+              🥗 ${t.ingredients}
             </h2>
             ${ingredientsHTML}
           </div>
@@ -192,7 +208,7 @@ export default function PrintButton({ recipe, compact = false }: Props) {
           <!-- Instructions -->
           <div>
             <h2 style="font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #F77313; text-transform: uppercase;">
-              📝 Instructions
+              📝 ${t.instructions}
             </h2>
             ${instructionsHTML}
           </div>
@@ -208,23 +224,23 @@ export default function PrintButton({ recipe, compact = false }: Props) {
             <span style="font-size: 20px; font-weight: 700; color: #F77313;">Menu Cochon</span>
           </div>
           <p style="color: #666; font-size: 13px; margin-bottom: 8px;">
-            Retrouvez cette recette et des centaines d'autres sur
+            ${t.findMore}
           </p>
           <p style="color: #F77313; font-weight: 600; font-size: 16px;">
             🌐 www.menucochon.com
           </p>
           <p style="color: #999; font-size: 11px; margin-top: 16px;">
-            Bon appétit! 🍽️
+            ${t.enjoyMeal} 🍽️
           </p>
         </footer>
 
         <!-- Boutons (non visible à l'impression) -->
         <div class="no-print" style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 12px;">
           <button onclick="window.close()" style="background: #333; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-            ← Retour
+            ← ${t.back}
           </button>
           <button onclick="window.print()" style="background: #F77313; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(247,115,19,0.3);">
-            🖨️ Imprimer
+            🖨️ ${t.print}
           </button>
         </div>
       </body>
@@ -249,10 +265,10 @@ export default function PrintButton({ recipe, compact = false }: Props) {
       className={`flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-medium rounded-full transition-colors print:hidden ${
         compact ? 'p-2 md:px-4 md:py-2' : 'px-5 py-2.5'
       }`}
-      title="Imprimer"
+      title={t.print}
     >
       <Printer className={compact ? 'w-4 h-4 md:w-5 md:h-5' : 'w-5 h-5'} />
-      <span className={compact ? 'hidden md:inline text-sm' : ''}>Imprimer</span>
+      <span className={compact ? 'hidden md:inline text-sm' : ''}>{t.print}</span>
     </button>
   );
 }

@@ -5,13 +5,28 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Maximize2, X, ChevronLeft, ChevronRight, Check, Clock, Users } from 'lucide-react';
 import { Recipe } from '@/types/recipe';
 import Image from 'next/image';
+import type { Locale } from '@/i18n/config';
 
 interface Props {
   recipe: Recipe;
   compact?: boolean;
+  locale?: Locale;
 }
 
-export default function CookModeButton({ recipe, compact = false }: Props) {
+export default function CookModeButton({ recipe, compact = false, locale = 'fr' }: Props) {
+  const isEN = locale === 'en';
+  const t = {
+    cookMode: isEN ? 'Cook Mode' : 'Mode Cuisine',
+    ingredients: isEN ? 'Ingredients' : 'Ingrédients',
+    step: isEN ? 'Step' : 'Étape',
+    prep: isEN ? 'Prep' : 'Prép',
+    cook: isEN ? 'Cook' : 'Cuisson',
+    servings: isEN ? 'servings' : 'portions',
+    previous: isEN ? 'Previous' : 'Précédent',
+    next: isEN ? 'Next' : 'Suivant',
+    done: isEN ? 'Done!' : 'Terminé!',
+    navHint: isEN ? 'Use ← → or Space to navigate' : 'Utilisez ← → ou Espace pour naviguer',
+  };
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [checkedIngredients, setCheckedIngredients] = useState<Set<string>>(new Set());
@@ -84,10 +99,10 @@ export default function CookModeButton({ recipe, compact = false }: Props) {
         className={`flex items-center gap-2 bg-[#F77313] hover:bg-[#d45f0a] text-white font-medium rounded-full transition-colors ${
           compact ? 'p-2 md:px-4 md:py-2' : 'px-5 py-2.5'
         }`}
-        title="Mode Cuisine"
+        title={t.cookMode}
       >
         <Maximize2 className={compact ? 'w-4 h-4 md:w-5 md:h-5' : 'w-5 h-5'} />
-        <span className={compact ? 'hidden md:inline text-sm' : ''}>Mode Cuisine</span>
+        <span className={compact ? 'hidden md:inline text-sm' : ''}>{t.cookMode}</span>
       </button>
 
       <AnimatePresence>
@@ -133,19 +148,19 @@ export default function CookModeButton({ recipe, compact = false }: Props) {
                     {recipe.prepTime > 0 && (
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4" />
-                        <span className="text-sm">Prép: {recipe.prepTime} min</span>
+                        <span className="text-sm">{t.prep}: {recipe.prepTime} min</span>
                       </div>
                     )}
                     {recipe.cookTime > 0 && (
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4" />
-                        <span className="text-sm">Cuisson: {recipe.cookTime} min</span>
+                        <span className="text-sm">{t.cook}: {recipe.cookTime} min</span>
                       </div>
                     )}
                     {recipe.servings > 0 && (
                       <div className="flex items-center gap-2">
                         <Users className="w-4 h-4" />
-                        <span className="text-sm">{recipe.servings} {recipe.servingsUnit || 'portions'}</span>
+                        <span className="text-sm">{recipe.servings} {recipe.servingsUnit || t.servings}</span>
                       </div>
                     )}
                   </div>
@@ -185,7 +200,7 @@ export default function CookModeButton({ recipe, compact = false }: Props) {
                     ))}
                   </div>
                   <span className="text-sm font-medium text-neutral-500">
-                    {currentStep === 0 ? 'Ingrédients' : `Étape ${currentStep} / ${totalPages - 1}`}
+                    {currentStep === 0 ? t.ingredients : `${t.step} ${currentStep} / ${totalPages - 1}`}
                   </span>
                 </div>
 
@@ -203,7 +218,7 @@ export default function CookModeButton({ recipe, compact = false }: Props) {
                       >
                         <h2 className="text-2xl lg:text-3xl font-bold text-neutral-900 mb-6 flex items-center gap-3">
                           <span className="text-3xl">🥗</span>
-                          Ingrédients
+                          {t.ingredients}
                         </h2>
 
                         <div className="space-y-6">
@@ -303,7 +318,7 @@ export default function CookModeButton({ recipe, compact = false }: Props) {
                             <div className="mt-8 rounded-xl overflow-hidden">
                               <Image
                                 src={recipe.instructions[currentStep - 1].image!}
-                                alt={`Étape ${currentStep}`}
+                                alt={`${t.step} ${currentStep}`}
                                 width={600}
                                 height={400}
                                 className="w-full h-auto object-cover"
@@ -328,11 +343,11 @@ export default function CookModeButton({ recipe, compact = false }: Props) {
                     }`}
                   >
                     <ChevronLeft className="w-5 h-5" />
-                    <span className="hidden sm:inline">Précédent</span>
+                    <span className="hidden sm:inline">{t.previous}</span>
                   </button>
 
                   <span className="text-neutral-500 text-sm">
-                    Utilisez ← → ou Espace pour naviguer
+                    {t.navHint}
                   </span>
 
                   <button
@@ -345,7 +360,7 @@ export default function CookModeButton({ recipe, compact = false }: Props) {
                     }`}
                   >
                     <span className="hidden sm:inline">
-                      {currentStep === totalPages - 1 ? 'Terminé!' : 'Suivant'}
+                      {currentStep === totalPages - 1 ? t.done : t.next}
                     </span>
                     {currentStep === totalPages - 1 ? (
                       <Check className="w-5 h-5" />
