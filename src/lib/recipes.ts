@@ -116,19 +116,22 @@ export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en
     return recipe;
   }
 
+  // Cast translation to any to access dynamic fields from Supabase
+  const t = translation as any;
+
   // Appliquer les traductions
   return {
     ...recipe,
-    title: translation.title || recipe.title,
-    excerpt: translation.excerpt || recipe.excerpt,
-    introduction: translation.introduction || recipe.introduction,
-    conclusion: translation.conclusion || recipe.conclusion,
-    content: translation.content || recipe.content,
-    faq: translation.faq || recipe.faq,
-    ingredients: translation.ingredients || recipe.ingredients,
-    instructions: translation.instructions || recipe.instructions,
-    seoTitle: translation.seo_title || recipe.seoTitle,
-    seoDescription: translation.seo_description || recipe.seoDescription,
+    title: t.title || recipe.title,
+    excerpt: t.excerpt || recipe.excerpt,
+    introduction: t.introduction || recipe.introduction,
+    conclusion: t.conclusion || recipe.conclusion,
+    content: t.content || recipe.content,
+    faq: t.faq || recipe.faq,
+    ingredients: t.ingredients || recipe.ingredients,
+    instructions: t.instructions || recipe.instructions,
+    seoTitle: t.seo_title || recipe.seoTitle,
+    seoDescription: t.seo_description || recipe.seoDescription,
   };
 }
 
