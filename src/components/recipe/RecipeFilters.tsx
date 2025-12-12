@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Category } from '@/types/recipe';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { getCategoryName } from '@/lib/categoryTranslations';
 
 interface Props {
   categories: Category[];
@@ -147,7 +148,7 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
                     <option value="">{t.allCategories}</option>
                     {categories.map((cat) => (
                       <option key={cat.id} value={cat.slug}>
-                        {cat.name}
+                        {getCategoryName(cat.name, locale)}
                       </option>
                     ))}
                   </select>

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Category } from '@/types/recipe';
 import { ArrowRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { getCategoryName } from '@/lib/categoryTranslations';
 
 interface CategoryGridProps {
   categories: Category[];
@@ -50,7 +51,7 @@ export function CategoryGrid({ categories, locale = 'fr' }: CategoryGridProps) {
                 <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-transparent group-hover:border-[#F77313] transition-colors duration-300" />
 
                 <h3 className="font-display text-xl md:text-2xl text-black group-hover:text-[#F77313] transition-colors">
-                  {category.name}
+                  {getCategoryName(category.name, locale)}
                 </h3>
 
                 <ArrowRight className="w-4 h-4 mx-auto mt-3 text-neutral-400 opacity-0 group-hover:opacity-100 group-hover:text-[#F77313] transition-all" />

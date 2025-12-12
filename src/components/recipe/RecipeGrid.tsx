@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { RecipeCard as RecipeCardType } from '@/types/recipe';
 import RecipeCard from './RecipeCard';
@@ -15,11 +15,13 @@ interface Props {
 
 export default function RecipeGrid({ recipes, initialCount = 12, locale = 'fr' }: Props) {
   const [visibleCount, setVisibleCount] = useState(initialCount);
+  const batchStartRef = useRef(0);
 
   const visibleRecipes = recipes.slice(0, visibleCount);
   const hasMore = visibleCount < recipes.length;
 
   const loadMore = () => {
+    batchStartRef.current = visibleCount;
     setVisibleCount((prev) => Math.min(prev + 12, recipes.length));
   };
 
@@ -57,7 +59,12 @@ export default function RecipeGrid({ recipes, initialCount = 12, locale = 'fr' }
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {visibleRecipes.map((recipe, index) => (
-          <RecipeCard key={recipe.id} recipe={recipe} index={index} locale={locale} />
+          <RecipeCard
+            key={recipe.id}
+            recipe={recipe}
+            index={index >= batchStartRef.current ? index - batchStartRef.current : index}
+            locale={locale}
+          />
         ))}
       </div>
 

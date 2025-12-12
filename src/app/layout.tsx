@@ -8,6 +8,7 @@ import { siteConfig } from '@/lib/config';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/i18n/getDictionary';
 import { LocaleProvider } from '@/i18n/LocaleContext';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 import type { Locale } from '@/i18n/config';
 
 const inter = Inter({
@@ -90,10 +91,12 @@ export default async function RootLayout({
       </head>
       <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
         <LocaleProvider locale={locale} dictionary={dictionary}>
-          <ScrollToTop />
-          <Header locale={locale} dictionary={dictionary} />
-          {children}
-          <Footer locale={locale} dictionary={dictionary} />
+          <LanguageProvider>
+            <ScrollToTop />
+            <Header locale={locale} dictionary={dictionary} />
+            {children}
+            <Footer locale={locale} dictionary={dictionary} />
+          </LanguageProvider>
         </LocaleProvider>
       </body>
     </html>

@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { Globe } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { useLanguageContext } from '@/contexts/LanguageContext';
 
 interface LanguageSwitcherProps {
   locale: Locale;
@@ -90,12 +91,31 @@ function translatePath(pathname: string, fromLocale: Locale, toLocale: Locale): 
 
 export default function LanguageSwitcher({ locale: localeProp, className = '' }: LanguageSwitcherProps) {
   const pathname = usePathname() || '/';
+  const { slugFr, slugEn } = useLanguageContext();
 
   // Detect current locale from pathname (more reliable than prop)
   const currentLocale: Locale = pathname.startsWith('/en') ? 'en' : 'fr';
 
-  const frPath = currentLocale === 'fr' ? pathname : translatePath(pathname, 'en', 'fr');
-  const enPath = currentLocale === 'en' ? pathname : translatePath(pathname, 'fr', 'en');
+  // Check if this is a recipe or blog page with a slug
+  const isRecipePage = pathname.match(/^\/(en\/)?recip?e?\/[^/]+\/?$/);
+  const isBlogPage = pathname.match(/^\/(en\/)?blog\/[^/]+\/?$/);
+
+  let frPath: string;
+  let enPath: string;
+
+  if (isRecipePage && (slugFr || slugEn)) {
+    // Use the context slugs for recipe pages
+    frPath = `/recette/${slugFr || pathname.split('/').pop()?.replace(/\/$/, '')}/`;
+    enPath = `/en/recipe/${slugEn || pathname.split('/').pop()?.replace(/\/$/, '')}/`;
+  } else if (isBlogPage && (slugFr || slugEn)) {
+    // Use the context slugs for blog pages
+    frPath = `/blog/${slugFr || pathname.split('/').pop()?.replace(/\/$/, '')}/`;
+    enPath = `/en/blog/${slugEn || pathname.split('/').pop()?.replace(/\/$/, '')}/`;
+  } else {
+    // Default translation for other pages
+    frPath = currentLocale === 'fr' ? pathname : translatePath(pathname, 'en', 'fr');
+    enPath = currentLocale === 'en' ? pathname : translatePath(pathname, 'fr', 'en');
+  }
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>

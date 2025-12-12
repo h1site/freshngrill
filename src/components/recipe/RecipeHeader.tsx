@@ -7,6 +7,7 @@ import ShareButton from './ShareButton';
 import PrintButton from './PrintButton';
 import CookModeButton from './CookModeButton';
 import type { Locale } from '@/i18n/config';
+import { getCategoryName } from '@/lib/categoryTranslations';
 
 interface Props {
   recipe: Recipe;
@@ -56,7 +57,7 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
               key={cat.id}
               className="bg-white/20 backdrop-blur-sm text-white text-xs md:text-sm font-medium px-3 py-1 md:px-4 md:py-1.5 rounded-full"
             >
-              {cat.name}
+              {getCategoryName(cat.name, locale)}
             </span>
           ))}
         </div>

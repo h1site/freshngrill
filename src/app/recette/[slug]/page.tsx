@@ -16,6 +16,7 @@ import RecipeFAQ from '@/components/recipe/RecipeFAQ';
 import RecipeComments from '@/components/recipe/RecipeComments';
 import GoogleAd from '@/components/ads/GoogleAd';
 import RecipeLanguageSwitcher from '@/components/RecipeLanguageSwitcher';
+import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -73,6 +74,7 @@ export default async function RecettePage({ params }: Props) {
 
   return (
     <>
+      <SetLanguageSlugs slugFr={recipe.slugFr || recipe.slug} slugEn={recipe.slugEn} />
       <RecipeSchema recipe={recipe} />
 
       <main className="min-h-screen bg-white">

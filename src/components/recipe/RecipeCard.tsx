@@ -33,7 +33,7 @@ export default function RecipeCard({ recipe, index = 0, variant = 'default', loc
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
+      transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.3) }}
       className="group"
     >
       <Link href={`${recipeBasePath}/${recipeSlug}`} className="block">
