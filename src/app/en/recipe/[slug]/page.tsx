@@ -6,6 +6,7 @@ import {
   getAllEnglishRecipeSlugs,
   getAllRecipeSlugs,
   getSimilarRecipes,
+  enrichRecipeCardsWithEnglishSlugs,
 } from '@/lib/recipes';
 import RecipeHeader from '@/components/recipe/RecipeHeader';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
@@ -80,7 +81,21 @@ export default async function RecipePageEN({ params }: Props) {
     notFound();
   }
 
-  const similarRecipes = await getSimilarRecipes(recipe, 4);
+  const rawSimilarRecipes = await getSimilarRecipes(recipe, 4);
+  // Convert to RecipeCard format and enrich with English slugs
+  const similarRecipeCards = rawSimilarRecipes.map((r) => ({
+    id: r.id,
+    slug: r.slug,
+    title: r.title,
+    featuredImage: r.featuredImage,
+    prepTime: r.prepTime,
+    cookTime: r.cookTime,
+    totalTime: r.totalTime,
+    difficulty: r.difficulty,
+    categories: r.categories,
+    likes: r.likes,
+  }));
+  const similarRecipes = await enrichRecipeCardsWithEnglishSlugs(similarRecipeCards);
 
   return (
     <>
