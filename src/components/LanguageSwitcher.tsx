@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Globe } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
@@ -12,7 +11,7 @@ interface LanguageSwitcherProps {
 
 // Route translations between FR and EN
 const routeTranslations: Record<string, string> = {
-  // FR -> EN
+  // FR -> EN (first segment)
   'recette': 'recipe',
   'lexique': 'lexicon',
   'convertisseur': 'converter',
@@ -22,7 +21,7 @@ const routeTranslations: Record<string, string> = {
   'a-propos': 'about',
   'contact': 'contact',
   'confidentialite': 'privacy',
-  // EN -> FR (reverse)
+  // EN -> FR (reverse, first segment)
   'recipe': 'recette',
   'lexicon': 'lexique',
   'converter': 'convertisseur',
@@ -30,6 +29,21 @@ const routeTranslations: Record<string, string> = {
   'search': 'recherche',
   'about': 'a-propos',
   'privacy': 'confidentialite',
+};
+
+// Sub-route translations (for nested pages like /convertisseur/celsius-fahrenheit)
+const subRouteTranslations: Record<string, string> = {
+  // FR -> EN (converter sub-pages)
+  'celsius-fahrenheit': 'celsius-fahrenheit',
+  'metre-pied': 'meter-feet',
+  'pouce-pied': 'inch-feet',
+  'centimetre-pied': 'centimeter-feet',
+  'minuterie': 'timer',
+  // EN -> FR (converter sub-pages)
+  'meter-feet': 'metre-pied',
+  'inch-feet': 'pouce-pied',
+  'centimeter-feet': 'centimetre-pied',
+  'timer': 'minuterie',
 };
 
 function translatePath(pathname: string, fromLocale: Locale, toLocale: Locale): string {
@@ -40,9 +54,13 @@ function translatePath(pathname: string, fromLocale: Locale, toLocale: Locale): 
     // FR -> EN: translate route segments
     const segments = path.split('/');
     const translatedSegments = segments.map((segment, index) => {
-      // Only translate first path segment after the initial slash
+      // Translate first path segment (main route)
       if (index === 1 && routeTranslations[segment]) {
         return routeTranslations[segment];
+      }
+      // Translate second path segment (sub-route like converter pages)
+      if (index === 2 && subRouteTranslations[segment]) {
+        return subRouteTranslations[segment];
       }
       return segment;
     });
@@ -54,9 +72,13 @@ function translatePath(pathname: string, fromLocale: Locale, toLocale: Locale): 
     // EN -> FR: translate route segments back
     const segments = path.split('/');
     const translatedSegments = segments.map((segment, index) => {
-      // Only translate first path segment after the initial slash
+      // Translate first path segment (main route)
       if (index === 1 && routeTranslations[segment]) {
         return routeTranslations[segment];
+      }
+      // Translate second path segment (sub-route like converter pages)
+      if (index === 2 && subRouteTranslations[segment]) {
+        return subRouteTranslations[segment];
       }
       return segment;
     });
@@ -66,42 +88,41 @@ function translatePath(pathname: string, fromLocale: Locale, toLocale: Locale): 
   return path;
 }
 
-export default function LanguageSwitcher({ locale, className = '' }: LanguageSwitcherProps) {
-  const pathname = usePathname();
+export default function LanguageSwitcher({ locale: localeProp, className = '' }: LanguageSwitcherProps) {
+  const pathname = usePathname() || '/';
 
-  const getLocalePath = (targetLocale: Locale) => {
-    if (targetLocale === locale) {
-      return pathname; // Already on this locale
-    }
-    return translatePath(pathname, locale, targetLocale);
-  };
+  // Detect current locale from pathname (more reliable than prop)
+  const currentLocale: Locale = pathname.startsWith('/en') ? 'en' : 'fr';
+
+  const frPath = currentLocale === 'fr' ? pathname : translatePath(pathname, 'en', 'fr');
+  const enPath = currentLocale === 'en' ? pathname : translatePath(pathname, 'fr', 'en');
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <Globe className="w-4 h-4 text-neutral-400" />
-      <Link
-        href={getLocalePath('fr')}
+      <a
+        href={frPath}
         className={`text-sm font-medium transition-colors ${
-          locale === 'fr'
+          currentLocale === 'fr'
             ? 'text-white'
             : 'text-neutral-400 hover:text-white'
         }`}
         title="Français"
       >
         FR
-      </Link>
+      </a>
       <span className="text-neutral-600">|</span>
-      <Link
-        href={getLocalePath('en')}
+      <a
+        href={enPath}
         className={`text-sm font-medium transition-colors ${
-          locale === 'en'
+          currentLocale === 'en'
             ? 'text-white'
             : 'text-neutral-400 hover:text-white'
         }`}
         title="English"
       >
         EN
-      </Link>
+      </a>
     </div>
   );
 }

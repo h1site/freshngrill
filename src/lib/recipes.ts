@@ -139,12 +139,7 @@ export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en
 
   const recipe = transformRecipe(data);
 
-  // Si locale français, retourner tel quel
-  if (locale === 'fr') {
-    return { ...recipe, slugFr: recipe.slug };
-  }
-
-  // Chercher la traduction anglaise
+  // Toujours chercher la traduction anglaise pour avoir le slug anglais
   const { data: translation, error: translationError } = await supabase
     .from('recipe_translations')
     .select('*')
@@ -161,7 +156,16 @@ export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en
   // Cast translation to any to access dynamic fields from Supabase
   const t = translation as any;
 
-  // Appliquer les traductions
+  // Si locale français, retourner la recette FR avec le slug anglais pour la navigation
+  if (locale === 'fr') {
+    return {
+      ...recipe,
+      slugFr: recipe.slug,
+      slugEn: t.slug_en || undefined,
+    };
+  }
+
+  // Appliquer les traductions anglaises
   return {
     ...recipe,
     slugFr: recipe.slug,
@@ -420,6 +424,53 @@ export async function getAllCategories(): Promise<Category[]> {
 }
 
 /**
+ * Obtenir toutes les catégories avec traduction selon la locale
+ */
+export async function getAllCategoriesWithLocale(locale: 'fr' | 'en' = 'fr'): Promise<Category[]> {
+  // Get base categories
+  const { data: categories, error } = await supabase
+    .from('categories')
+    .select('*')
+    .order('name');
+
+  if (error) {
+    console.error('Erreur getAllCategoriesWithLocale:', error);
+    return [];
+  }
+
+  // If French, return as-is
+  if (locale === 'fr') {
+    return (categories as any[] || []).map((cat) => ({
+      id: cat.id,
+      slug: cat.slug,
+      name: cat.name,
+      parent: cat.parent_id ?? undefined,
+    }));
+  }
+
+  // Get English translations
+  const { data: translations, error: translationError } = await supabase
+    .from('category_translations')
+    .select('category_id, name')
+    .eq('locale', 'en');
+
+  if (translationError) {
+    console.error('Erreur category translations:', translationError);
+  }
+
+  // Create translation map
+  const translationMap = new Map((translations || []).map((t: any) => [t.category_id, t.name]));
+
+  // Return categories with translated names
+  return (categories as any[] || []).map((cat) => ({
+    id: cat.id,
+    slug: cat.slug,
+    name: translationMap.get(cat.id) || cat.name,
+    parent: cat.parent_id ?? undefined,
+  }));
+}
+
+/**
  * Obtenir une catégorie par son slug
  */
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
@@ -543,36 +594,54 @@ export async function getFilteredRecipeCards(filters: RecipeFilters): Promise<Re
 }
 
 /**
- * Enrichir les cartes de recettes avec les slugs anglais
+ * Enrichir les cartes de recettes avec les slugs anglais et noms de catégories traduits
  */
 export async function enrichRecipeCardsWithEnglishSlugs(cards: RecipeCard[]): Promise<RecipeCard[]> {
   if (cards.length === 0) return cards;
 
   const recipeIds = cards.map(c => c.id);
 
-  const { data: translations, error } = await supabase
-    .from('recipe_translations')
-    .select('recipe_id, slug_en, title')
-    .eq('locale', 'en')
-    .in('recipe_id', recipeIds);
+  // Get recipe translations and category translations in parallel
+  const [recipeTransResult, categoryTransResult] = await Promise.all([
+    supabase
+      .from('recipe_translations')
+      .select('recipe_id, slug_en, title')
+      .eq('locale', 'en')
+      .in('recipe_id', recipeIds),
+    supabase
+      .from('category_translations')
+      .select('category_id, name')
+      .eq('locale', 'en'),
+  ]);
 
-  if (error || !translations) {
-    console.error('Erreur enrichRecipeCardsWithEnglishSlugs:', error);
-    return cards;
+  if (recipeTransResult.error) {
+    console.error('Erreur enrichRecipeCardsWithEnglishSlugs:', recipeTransResult.error);
   }
 
-  const translationMap = new Map(translations.map((t: any) => [t.recipe_id, t]));
+  const translationMap = new Map((recipeTransResult.data || []).map((t: any) => [t.recipe_id, t]));
+  const categoryTransMap = new Map((categoryTransResult.data || []).map((t: any) => [t.category_id, t.name]));
 
   return cards.map(card => {
     const translation = translationMap.get(card.id) as any;
+
+    // Translate category names
+    const translatedCategories = card.categories.map(cat => ({
+      ...cat,
+      name: categoryTransMap.get(cat.id) || cat.name,
+    }));
+
     if (translation) {
       return {
         ...card,
         slugEn: translation.slug_en || undefined,
-        title: translation.title || card.title, // Utiliser le titre traduit
+        title: translation.title || card.title,
+        categories: translatedCategories,
       };
     }
-    return card;
+    return {
+      ...card,
+      categories: translatedCategories,
+    };
   });
 }
 

@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-import { getFilteredRecipeCards, getAllCategories, getCategoryBySlug, getAllIngredientNames, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
+import { getFilteredRecipeCards, getAllCategoriesWithLocale, getCategoryBySlug, getAllIngredientNames, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
 import RecipeGrid from '@/components/recipe/RecipeGrid';
 import RecipeFilters from '@/components/recipe/RecipeFilters';
 import FridgeSearch from '@/components/recipe/FridgeSearch';
@@ -40,7 +40,7 @@ export default async function RecipesPageEN({
       search: params.q,
       origine: params.origin,
     }),
-    getAllCategories(),
+    getAllCategoriesWithLocale('en'),
     getAllIngredientNames(),
   ]);
 

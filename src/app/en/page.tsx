@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getRecentRecipes, getAllCategories, getMostLikedRecipes, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
+import { getRecentRecipes, getAllCategoriesWithLocale, getMostLikedRecipes, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
 import { getRecentPosts } from '@/lib/posts';
 import RecipeCard from '@/components/recipe/RecipeCard';
 import { ArrowRight, Heart, BookOpen } from 'lucide-react';
@@ -14,7 +14,7 @@ export const revalidate = 60;
 export default async function EnglishHomePage() {
   const [rawRecentRecipes, allCategories, rawMostLikedRecipes, recentPosts, dictionary] = await Promise.all([
     getRecentRecipes(8),
-    getAllCategories(),
+    getAllCategoriesWithLocale('en'),
     getMostLikedRecipes(6),
     getRecentPosts(3),
     getDictionary('en'),

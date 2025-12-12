@@ -40,77 +40,84 @@ interface IngredientRecipeResult {
   totalIngredients: number;
 }
 
-// Structure du mega menu
-const megaMenuData = {
-  recettes: {
-    title: 'Recettes',
-    href: '/recette',
-    sections: [
-      {
-        title: 'Plats principaux',
-        icon: Utensils,
-        links: [
-          { name: 'Boeuf', href: '/recette?categorie=plats-principaux-boeuf', slug: 'plats-principaux-boeuf' },
-          { name: 'Volaille', href: '/recette?categorie=plats-principaux-volaille', slug: 'plats-principaux-volaille' },
-          { name: 'Porc', href: '/recette?categorie=plats-principaux-porc', slug: 'plats-principaux-porc' },
-          { name: 'Poissons', href: '/recette?categorie=plat-principaux-poissons', slug: 'plat-principaux-poissons' },
-          { name: 'Fruits de mer', href: '/recette?categorie=plats-principaux-fruits-de-mer', slug: 'plats-principaux-fruits-de-mer' },
-          { name: 'Végétariens', href: '/recette?categorie=plats-principaux-vegetariens', slug: 'plats-principaux-vegetariens' },
-        ],
-      },
-      {
-        title: 'Accompagnements',
-        icon: Salad,
-        links: [
-          { name: 'Légumes', href: '/recette?categorie=plats-daccompagnement-legumes', slug: 'plats-daccompagnement-legumes' },
-          { name: 'Salades', href: '/recette?categorie=salades', slug: 'salades' },
-          { name: 'Pâtes', href: '/recette?categorie=pates', slug: 'pates' },
-          { name: 'Riz', href: '/recette?categorie=riz', slug: 'riz' },
-          { name: 'Sauces', href: '/recette?categorie=sauces', slug: 'sauces' },
-          { name: 'Autres', href: '/recette?categorie=plats-daccompagnement-autres', slug: 'plats-daccompagnement-autres' },
-        ],
-      },
-      {
-        title: 'Repas',
-        icon: Coffee,
-        links: [
-          { name: 'Déjeuner', href: '/recette?categorie=dejeuner', slug: 'dejeuner' },
-          { name: 'Soupes', href: '/recette?categorie=soupes', slug: 'soupes' },
-          { name: 'Snacks', href: '/recette?categorie=snacks', slug: 'snacks' },
-          { name: 'Amuse-gueules', href: '/recette?categorie=amuse-gueules', slug: 'amuse-gueules' },
-          { name: 'Pizza', href: '/recette?categorie=pizza', slug: 'pizza' },
-          { name: 'Poutine', href: '/recette?categorie=poutine', slug: 'poutine' },
-        ],
-      },
-      {
-        title: 'Sucré',
-        icon: Cake,
-        links: [
-          { name: 'Desserts', href: '/recette?categorie=dessert', slug: 'dessert' },
-          { name: 'Pâtisseries', href: '/recette?categorie=patisseries', slug: 'patisseries' },
-          { name: 'Tartes', href: '/recette?categorie=tartes', slug: 'tartes' },
-          { name: 'Pains', href: '/recette?categorie=pains', slug: 'pains' },
-          { name: 'Boissons', href: '/recette?categorie=boissons', slug: 'boissons' },
-        ],
-      },
-    ],
-    featured: {
-      title: 'Cuisines du monde',
-      icon: Globe,
-      links: [
-        { name: 'Canada', href: '/recette?origine=Canada', flag: '🇨🇦' },
-        { name: 'France', href: '/recette?origine=France', flag: '🇫🇷' },
-        { name: 'Italie', href: '/recette?origine=Italie', flag: '🇮🇹' },
-        { name: 'Mexique', href: '/recette?origine=Mexique', flag: '🇲🇽' },
-        { name: 'États-Unis', href: '/recette?origine=États-Unis', flag: '🇺🇸' },
-        { name: 'Grèce', href: '/recette?origine=Grèce', flag: '🇬🇷' },
-        { name: 'Inde', href: '/recette?origine=Inde', flag: '🇮🇳' },
-        { name: 'Japon', href: '/recette?origine=Japon', flag: '🇯🇵' },
-        { name: 'Chine', href: '/recette?origine=Chine', flag: '🇨🇳' },
+// Function to get localized mega menu data
+function getMegaMenuData(locale: 'fr' | 'en', t: any) {
+  const basePath = locale === 'en' ? '/en/recipe' : '/recette';
+  const categoryParam = locale === 'en' ? 'category' : 'categorie';
+  const originParam = locale === 'en' ? 'origin' : 'origine';
+  const menu = t.header?.menu || {};
+
+  return {
+    recettes: {
+      title: t.nav?.recipes || 'Recipes',
+      href: basePath,
+      sections: [
+        {
+          title: menu.mainDishes || 'Main Dishes',
+          icon: Utensils,
+          links: [
+            { name: menu.beef || 'Beef', href: `${basePath}?${categoryParam}=plats-principaux-boeuf`, slug: 'plats-principaux-boeuf' },
+            { name: menu.poultry || 'Poultry', href: `${basePath}?${categoryParam}=plats-principaux-volaille`, slug: 'plats-principaux-volaille' },
+            { name: menu.pork || 'Pork', href: `${basePath}?${categoryParam}=plats-principaux-porc`, slug: 'plats-principaux-porc' },
+            { name: menu.fish || 'Fish', href: `${basePath}?${categoryParam}=plat-principaux-poissons`, slug: 'plat-principaux-poissons' },
+            { name: menu.seafood || 'Seafood', href: `${basePath}?${categoryParam}=plats-principaux-fruits-de-mer`, slug: 'plats-principaux-fruits-de-mer' },
+            { name: menu.vegetarian || 'Vegetarian', href: `${basePath}?${categoryParam}=plats-principaux-vegetariens`, slug: 'plats-principaux-vegetariens' },
+          ],
+        },
+        {
+          title: menu.sides || 'Side Dishes',
+          icon: Salad,
+          links: [
+            { name: menu.vegetables || 'Vegetables', href: `${basePath}?${categoryParam}=plats-daccompagnement-legumes`, slug: 'plats-daccompagnement-legumes' },
+            { name: menu.salads || 'Salads', href: `${basePath}?${categoryParam}=salades`, slug: 'salades' },
+            { name: menu.pasta || 'Pasta', href: `${basePath}?${categoryParam}=pates`, slug: 'pates' },
+            { name: menu.rice || 'Rice', href: `${basePath}?${categoryParam}=riz`, slug: 'riz' },
+            { name: menu.sauces || 'Sauces', href: `${basePath}?${categoryParam}=sauces`, slug: 'sauces' },
+            { name: menu.other || 'Other', href: `${basePath}?${categoryParam}=plats-daccompagnement-autres`, slug: 'plats-daccompagnement-autres' },
+          ],
+        },
+        {
+          title: menu.meals || 'Meals',
+          icon: Coffee,
+          links: [
+            { name: menu.breakfast || 'Breakfast', href: `${basePath}?${categoryParam}=dejeuner`, slug: 'dejeuner' },
+            { name: menu.soups || 'Soups', href: `${basePath}?${categoryParam}=soupes`, slug: 'soupes' },
+            { name: menu.snacks || 'Snacks', href: `${basePath}?${categoryParam}=snacks`, slug: 'snacks' },
+            { name: menu.appetizers || 'Appetizers', href: `${basePath}?${categoryParam}=amuse-gueules`, slug: 'amuse-gueules' },
+            { name: menu.pizza || 'Pizza', href: `${basePath}?${categoryParam}=pizza`, slug: 'pizza' },
+            { name: menu.poutine || 'Poutine', href: `${basePath}?${categoryParam}=poutine`, slug: 'poutine' },
+          ],
+        },
+        {
+          title: menu.sweet || 'Sweet',
+          icon: Cake,
+          links: [
+            { name: menu.desserts || 'Desserts', href: `${basePath}?${categoryParam}=dessert`, slug: 'dessert' },
+            { name: menu.pastries || 'Pastries', href: `${basePath}?${categoryParam}=patisseries`, slug: 'patisseries' },
+            { name: menu.pies || 'Pies', href: `${basePath}?${categoryParam}=tartes`, slug: 'tartes' },
+            { name: menu.breads || 'Breads', href: `${basePath}?${categoryParam}=pains`, slug: 'pains' },
+            { name: menu.drinks || 'Drinks', href: `${basePath}?${categoryParam}=boissons`, slug: 'boissons' },
+          ],
+        },
       ],
+      featured: {
+        title: menu.worldCuisines || 'World Cuisines',
+        icon: Globe,
+        links: [
+          { name: 'Canada', href: `${basePath}?${originParam}=Canada`, flag: '🇨🇦' },
+          { name: 'France', href: `${basePath}?${originParam}=France`, flag: '🇫🇷' },
+          { name: locale === 'en' ? 'Italy' : 'Italie', href: `${basePath}?${originParam}=${locale === 'en' ? 'Italy' : 'Italie'}`, flag: '🇮🇹' },
+          { name: locale === 'en' ? 'Mexico' : 'Mexique', href: `${basePath}?${originParam}=${locale === 'en' ? 'Mexico' : 'Mexique'}`, flag: '🇲🇽' },
+          { name: locale === 'en' ? 'United States' : 'États-Unis', href: `${basePath}?${originParam}=${locale === 'en' ? 'United States' : 'États-Unis'}`, flag: '🇺🇸' },
+          { name: locale === 'en' ? 'Greece' : 'Grèce', href: `${basePath}?${originParam}=${locale === 'en' ? 'Greece' : 'Grèce'}`, flag: '🇬🇷' },
+          { name: locale === 'en' ? 'India' : 'Inde', href: `${basePath}?${originParam}=${locale === 'en' ? 'India' : 'Inde'}`, flag: '🇮🇳' },
+          { name: locale === 'en' ? 'Japan' : 'Japon', href: `${basePath}?${originParam}=${locale === 'en' ? 'Japan' : 'Japon'}`, flag: '🇯🇵' },
+          { name: locale === 'en' ? 'China' : 'Chine', href: `${basePath}?${originParam}=${locale === 'en' ? 'China' : 'Chine'}`, flag: '🇨🇳' },
+        ],
+      },
     },
-  },
-};
+  };
+}
 
 interface HeaderProps {
   locale?: Locale;
@@ -169,6 +176,9 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
     },
     recipes: { difficulty: { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' } }
   };
+
+  // Get localized mega menu data
+  const megaMenuData = getMegaMenuData(locale, t);
 
   // Route paths based on locale
   const routes = locale === 'en' ? {
@@ -497,37 +507,37 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
                 {/* Footer du mega menu */}
                 <div className="mt-8 pt-6 border-t border-neutral-800 flex items-center justify-between">
                   <Link
-                    href="/recette"
+                    href={routes.recipe}
                     onClick={() => setIsMegaMenuOpen(false)}
                     className="text-[#F77313] hover:text-white transition-colors text-sm font-medium flex items-center gap-2"
                   >
                     <ChefHat className="w-4 h-4" />
-                    Voir toutes les recettes
+                    {t.header?.menu?.seeAllRecipes || 'See all recipes'}
                   </Link>
                   <div className="flex items-center gap-6">
                     <Link
-                      href="/lexique"
+                      href={routes.lexicon}
                       onClick={() => setIsMegaMenuOpen(false)}
                       className="text-neutral-400 hover:text-white transition-colors text-sm flex items-center gap-2"
                     >
                       <span className="text-base">📖</span>
-                      Lexique culinaire
+                      {t.header?.menu?.culinaryLexicon || 'Culinary lexicon'}
                     </Link>
                     <Link
-                      href="/recette?categorie=fetes"
+                      href={`${routes.recipe}?${locale === 'en' ? 'category' : 'categorie'}=fetes`}
                       onClick={() => setIsMegaMenuOpen(false)}
                       className="text-neutral-400 hover:text-white transition-colors text-sm flex items-center gap-2"
                     >
                       <span className="text-base">🎄</span>
-                      Recettes des fêtes
+                      {t.header?.menu?.holidayRecipes || 'Holiday recipes'}
                     </Link>
                     <Link
-                      href="/recette?categorie=mise-en-conserve-congelation"
+                      href={`${routes.recipe}?${locale === 'en' ? 'category' : 'categorie'}=mise-en-conserve-congelation`}
                       onClick={() => setIsMegaMenuOpen(false)}
                       className="text-neutral-400 hover:text-white transition-colors text-sm flex items-center gap-2"
                     >
                       <span className="text-base">🫙</span>
-                      Mise en conserve
+                      {t.header?.menu?.canning || 'Canning'}
                     </Link>
                   </div>
                 </div>

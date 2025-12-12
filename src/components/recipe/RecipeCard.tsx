@@ -21,6 +21,13 @@ export default function RecipeCard({ recipe, index = 0, variant = 'default', loc
   // Utiliser le slug anglais si disponible et locale EN, sinon slug français
   const recipeSlug = locale === 'en' && recipe.slugEn ? recipe.slugEn : recipe.slug;
 
+  // Translate difficulty labels
+  const difficultyLabels: Record<string, Record<string, string>> = {
+    fr: { facile: 'Facile', moyen: 'Moyen', difficile: 'Difficile' },
+    en: { facile: 'Easy', moyen: 'Medium', difficile: 'Hard' },
+  };
+  const difficultyLabel = difficultyLabels[locale]?.[recipe.difficulty] || recipe.difficulty;
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -72,7 +79,7 @@ export default function RecipeCard({ recipe, index = 0, variant = 'default', loc
               </span>
             )}
             <span className="w-1 h-1 rounded-full bg-neutral-300" />
-            <span>{recipe.difficulty}</span>
+            <span>{difficultyLabel}</span>
           </div>
 
           {/* Title */}

@@ -15,10 +15,10 @@ export const metadata: Metadata = {
   description:
     'Free conversion tools for cooking: temperature (Celsius/Fahrenheit), lengths (meters, feet, inches, centimeters) and online timer.',
   alternates: {
-    canonical: '/en/convertisseur/',
+    canonical: '/en/converter/',
     languages: {
       'fr-CA': '/convertisseur/',
-      'en-CA': '/en/convertisseur/',
+      'en-CA': '/en/converter/',
     },
   },
 };
@@ -27,35 +27,35 @@ const converters = [
   {
     title: 'Celsius to Fahrenheit',
     description: 'Convert temperatures between Celsius and Fahrenheit for your recipes.',
-    href: '/en/convertisseur/celsius-fahrenheit',
+    href: '/en/converter/celsius-fahrenheit',
     icon: Thermometer,
     color: 'bg-red-500',
   },
   {
     title: 'Meters to Feet',
     description: 'Easily convert meters to feet and vice versa.',
-    href: '/en/convertisseur/metre-pied',
+    href: '/en/converter/meter-feet',
     icon: Ruler,
     color: 'bg-blue-500',
   },
   {
     title: 'Inches to Feet',
     description: 'Quick conversion between inches and feet for all your measurements.',
-    href: '/en/convertisseur/pouce-pied',
+    href: '/en/converter/inch-feet',
     icon: Ruler,
     color: 'bg-green-500',
   },
   {
     title: 'Centimeters to Feet',
     description: 'Switch from metric to imperial system in one click.',
-    href: '/en/convertisseur/centimetre-pied',
+    href: '/en/converter/centimeter-feet',
     icon: Ruler,
     color: 'bg-purple-500',
   },
   {
     title: 'Online Timer',
     description: 'A convenient timer to time your cooking with precision.',
-    href: '/en/convertisseur/minuterie',
+    href: '/en/converter/timer',
     icon: Timer,
     color: 'bg-orange-500',
   },
@@ -105,7 +105,7 @@ const liquidTable = [
   { tsp: '48', tbsp: '16', cup: '1', oz: '8', ml: '250' },
 ];
 
-export default function ConvertisseurPageEN() {
+export default function ConverterPageEN() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero */}
@@ -278,7 +278,7 @@ export default function ConvertisseurPageEN() {
             Simple interface, automatic sound alert.
           </p>
           <Link
-            href="/en/convertisseur/minuterie"
+            href="/en/converter/timer"
             className="inline-flex items-center gap-2 bg-white text-[#F77313] px-6 py-3 font-medium hover:bg-neutral-100 transition-colors"
           >
             Start timer
