@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-import { getFilteredRecipeCards, getAllCategories, getCategoryBySlug, getAllIngredientNames } from '@/lib/recipes';
+import { getFilteredRecipeCards, getAllCategories, getCategoryBySlug, getAllIngredientNames, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
 import RecipeGrid from '@/components/recipe/RecipeGrid';
 import RecipeFilters from '@/components/recipe/RecipeFilters';
 import FridgeSearch from '@/components/recipe/FridgeSearch';
@@ -32,7 +32,7 @@ export default async function RecipesPageEN({
 }) {
   const params = await searchParams;
 
-  const [recipes, categories, allIngredients] = await Promise.all([
+  const [rawRecipes, categories, allIngredients] = await Promise.all([
     getFilteredRecipeCards({
       category: params.category,
       difficulty: params.difficulty,
@@ -43,6 +43,9 @@ export default async function RecipesPageEN({
     getAllCategories(),
     getAllIngredientNames(),
   ]);
+
+  // Enrichir avec les slugs et titres anglais
+  const recipes = await enrichRecipeCardsWithEnglishSlugs(rawRecipes);
 
   // Get active category name if present
   const activeCategory = params.category

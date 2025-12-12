@@ -542,6 +542,40 @@ export async function getFilteredRecipeCards(filters: RecipeFilters): Promise<Re
   return results;
 }
 
+/**
+ * Enrichir les cartes de recettes avec les slugs anglais
+ */
+export async function enrichRecipeCardsWithEnglishSlugs(cards: RecipeCard[]): Promise<RecipeCard[]> {
+  if (cards.length === 0) return cards;
+
+  const recipeIds = cards.map(c => c.id);
+
+  const { data: translations, error } = await supabase
+    .from('recipe_translations')
+    .select('recipe_id, slug_en, title')
+    .eq('locale', 'en')
+    .in('recipe_id', recipeIds);
+
+  if (error || !translations) {
+    console.error('Erreur enrichRecipeCardsWithEnglishSlugs:', error);
+    return cards;
+  }
+
+  const translationMap = new Map(translations.map((t: any) => [t.recipe_id, t]));
+
+  return cards.map(card => {
+    const translation = translationMap.get(card.id) as any;
+    if (translation) {
+      return {
+        ...card,
+        slugEn: translation.slug_en || undefined,
+        title: translation.title || card.title, // Utiliser le titre traduit
+      };
+    }
+    return card;
+  });
+}
+
 export async function filterRecipes(filters: RecipeFilters): Promise<Recipe[]> {
   let query = supabase
     .from('recipes_with_categories')

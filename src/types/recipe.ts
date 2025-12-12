@@ -102,6 +102,7 @@ export interface Category {
 export interface RecipeCard {
   id: number;
   slug: string;
+  slugEn?: string;
   title: string;
   featuredImage: string;
   prepTime: number;

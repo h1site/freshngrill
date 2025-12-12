@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getRecentRecipes, getAllCategories, getMostLikedRecipes } from '@/lib/recipes';
+import { getRecentRecipes, getAllCategories, getMostLikedRecipes, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
 import { getRecentPosts } from '@/lib/posts';
 import RecipeCard from '@/components/recipe/RecipeCard';
 import { ArrowRight, Heart, BookOpen } from 'lucide-react';
@@ -12,13 +12,29 @@ import { getDictionary } from '@/i18n/getDictionary';
 export const revalidate = 60;
 
 export default async function EnglishHomePage() {
-  const [recentRecipes, allCategories, mostLikedRecipes, recentPosts, dictionary] = await Promise.all([
+  const [rawRecentRecipes, allCategories, rawMostLikedRecipes, recentPosts, dictionary] = await Promise.all([
     getRecentRecipes(8),
     getAllCategories(),
     getMostLikedRecipes(6),
     getRecentPosts(3),
     getDictionary('en'),
   ]);
+
+  // Enrichir avec les slugs et titres anglais
+  const recentRecipesCards = rawRecentRecipes.map(r => ({
+    id: r.id,
+    slug: r.slug,
+    title: r.title,
+    featuredImage: r.featuredImage,
+    prepTime: r.prepTime,
+    cookTime: r.cookTime,
+    totalTime: r.totalTime,
+    difficulty: r.difficulty,
+    categories: r.categories,
+    likes: r.likes,
+  }));
+  const recentRecipes = await enrichRecipeCardsWithEnglishSlugs(recentRecipesCards);
+  const mostLikedRecipes = await enrichRecipeCardsWithEnglishSlugs(rawMostLikedRecipes);
 
   const t = dictionary;
   const categories = allCategories.slice(0, 8);
@@ -56,18 +72,7 @@ export default async function EnglishHomePage() {
               {recentRecipes.map((recipe, index) => (
                 <RecipeCard
                   key={recipe.id}
-                  recipe={{
-                    id: recipe.id,
-                    slug: recipe.slug,
-                    title: recipe.title,
-                    featuredImage: recipe.featuredImage,
-                    prepTime: recipe.prepTime,
-                    cookTime: recipe.cookTime,
-                    totalTime: recipe.totalTime,
-                    difficulty: recipe.difficulty,
-                    categories: recipe.categories,
-                    likes: recipe.likes,
-                  }}
+                  recipe={recipe}
                   index={index}
                   locale="en"
                 />
@@ -109,18 +114,7 @@ export default async function EnglishHomePage() {
               {mostLikedRecipes.slice(0, 6).map((recipe, index) => (
                 <RecipeCard
                   key={recipe.id}
-                  recipe={{
-                    id: recipe.id,
-                    slug: recipe.slug,
-                    title: recipe.title,
-                    featuredImage: recipe.featuredImage,
-                    prepTime: recipe.prepTime,
-                    cookTime: recipe.cookTime,
-                    totalTime: recipe.totalTime,
-                    difficulty: recipe.difficulty,
-                    categories: recipe.categories,
-                    likes: recipe.likes,
-                  }}
+                  recipe={recipe}
                   index={index}
                   variant="large"
                   locale="en"

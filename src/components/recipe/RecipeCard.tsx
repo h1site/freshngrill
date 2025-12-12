@@ -18,6 +18,8 @@ interface Props {
 export default function RecipeCard({ recipe, index = 0, variant = 'default', locale = 'fr' }: Props) {
   const isLarge = variant === 'large';
   const recipeBasePath = locale === 'en' ? '/en/recipe' : '/recette';
+  // Utiliser le slug anglais si disponible et locale EN, sinon slug français
+  const recipeSlug = locale === 'en' && recipe.slugEn ? recipe.slugEn : recipe.slug;
 
   return (
     <motion.article
@@ -27,7 +29,7 @@ export default function RecipeCard({ recipe, index = 0, variant = 'default', loc
       transition={{ duration: 0.4, delay: index * 0.05 }}
       className="group"
     >
-      <Link href={`${recipeBasePath}/${recipe.slug}`} className="block">
+      <Link href={`${recipeBasePath}/${recipeSlug}`} className="block">
         {/* Image Container */}
         <div className={`relative overflow-hidden bg-neutral-100 rounded-[5px] ${isLarge ? 'aspect-[4/5]' : 'aspect-[3/4]'}`}>
           {recipe.featuredImage ? (
