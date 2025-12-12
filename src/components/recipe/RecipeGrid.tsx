@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { RecipeCard as RecipeCardType } from '@/types/recipe';
 import RecipeCard from './RecipeCard';
 import { ArrowRight } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+
+const STORAGE_KEY = 'recipeGrid';
 
 interface Props {
   recipes: RecipeCardType[];
@@ -14,8 +16,62 @@ interface Props {
 }
 
 export default function RecipeGrid({ recipes, initialCount = 12, locale = 'fr' }: Props) {
-  const [visibleCount, setVisibleCount] = useState(initialCount);
+  const [visibleCount, setVisibleCount] = useState(() => {
+    if (typeof window === 'undefined') return initialCount;
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const { count } = JSON.parse(saved);
+      return Math.min(count, recipes.length);
+    }
+    return initialCount;
+  });
   const batchStartRef = useRef(0);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const hasRestored = useRef(false);
+
+  // Restore scroll position on mount
+  useEffect(() => {
+    if (hasRestored.current) return;
+    const saved = sessionStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const { scrollY } = JSON.parse(saved);
+      // Wait for recipes to render, then restore scroll
+      requestAnimationFrame(() => {
+        window.scrollTo(0, scrollY);
+        hasRestored.current = true;
+      });
+    }
+  }, []);
+
+  // Save state before navigating away
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+        count: visibleCount,
+        scrollY: window.scrollY,
+      }));
+    };
+
+    // Save on click (for SPA navigation)
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      if (link && (link.href.includes('/recette/') || link.href.includes('/recipe/'))) {
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+          count: visibleCount,
+          scrollY: window.scrollY,
+        }));
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('click', handleClick);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('click', handleClick);
+    };
+  }, [visibleCount]);
 
   const visibleRecipes = recipes.slice(0, visibleCount);
   const hasMore = visibleCount < recipes.length;
