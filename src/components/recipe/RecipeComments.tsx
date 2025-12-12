@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-browser';
 import { MessageSquare, Send, Trash2, User } from 'lucide-react';
+import type { Locale } from '@/i18n/config';
 
 interface Comment {
   id: number;
@@ -20,9 +21,24 @@ interface Comment {
 
 interface RecipeCommentsProps {
   recipeId: number;
+  locale?: Locale;
 }
 
-export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
+export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommentsProps) {
+  const isEN = locale === 'en';
+  const t = {
+    comments: isEN ? 'Comments' : 'Commentaires',
+    placeholder: isEN ? 'Share your thoughts on this recipe...' : 'Partagez votre avis sur cette recette...',
+    sending: isEN ? 'Sending...' : 'Envoi...',
+    publish: isEN ? 'Post' : 'Publier',
+    loginPrompt: isEN ? 'Log in to leave a comment' : 'Connectez-vous pour laisser un commentaire',
+    login: isEN ? 'Log in' : 'Se connecter',
+    noComments: isEN ? 'No comments yet' : 'Aucun commentaire pour le moment',
+    beFirst: isEN ? 'Be the first to share your thoughts!' : 'Soyez le premier à donner votre avis!',
+    deleteConfirm: isEN ? 'Delete this comment?' : 'Supprimer ce commentaire?',
+    delete: isEN ? 'Delete' : 'Supprimer',
+    user: isEN ? 'User' : 'Utilisateur',
+  };
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -86,7 +102,7 @@ export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
   };
 
   const handleDelete = async (commentId: number) => {
-    if (!confirm('Supprimer ce commentaire?')) return;
+    if (!confirm(t.deleteConfirm)) return;
 
     await supabase
       .from('comments')
@@ -100,7 +116,7 @@ export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
     <div className="bg-white border border-neutral-200 rounded-xl p-6">
       <h3 className="font-display text-xl mb-6 flex items-center gap-2">
         <MessageSquare className="w-5 h-5 text-[#F77313]" />
-        Commentaires ({comments.length})
+        {t.comments} ({comments.length})
       </h3>
 
       {/* Formulaire de commentaire */}
@@ -114,7 +130,7 @@ export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
               <textarea
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Partagez votre avis sur cette recette..."
+                placeholder={t.placeholder}
                 rows={3}
                 className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F77313] resize-none"
               />
@@ -125,7 +141,7 @@ export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
                   className="flex items-center gap-2 px-4 py-2 bg-[#F77313] text-white rounded-lg hover:bg-[#e56610] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   <Send className="w-4 h-4" />
-                  {isSubmitting ? 'Envoi...' : 'Publier'}
+                  {isSubmitting ? t.sending : t.publish}
                 </button>
               </div>
             </div>
@@ -133,12 +149,12 @@ export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
         </form>
       ) : (
         <div className="mb-8 p-4 bg-neutral-50 rounded-xl text-center">
-          <p className="text-neutral-600 mb-2">Connectez-vous pour laisser un commentaire</p>
+          <p className="text-neutral-600 mb-2">{t.loginPrompt}</p>
           <Link
-            href={`/login?redirectTo=/recette/${recipeId}`}
+            href={`/login?redirectTo=${isEN ? '/en/recipe' : '/recette'}/${recipeId}`}
             className="inline-flex items-center gap-2 px-4 py-2 bg-[#F77313] text-white rounded-lg hover:bg-[#e56610] transition-colors"
           >
-            Se connecter
+            {t.login}
           </Link>
         </div>
       )}
@@ -151,8 +167,8 @@ export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
       ) : comments.length === 0 ? (
         <div className="text-center py-8 text-neutral-400">
           <MessageSquare className="w-12 h-12 mx-auto mb-2 opacity-30" />
-          <p>Aucun commentaire pour le moment</p>
-          <p className="text-sm">Soyez le premier à donner votre avis!</p>
+          <p>{t.noComments}</p>
+          <p className="text-sm">{t.beFirst}</p>
         </div>
       ) : (
         <div className="space-y-6">
@@ -174,10 +190,10 @@ export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-medium text-neutral-900">
-                    {comment.profiles?.display_name || comment.profiles?.email?.split('@')[0] || 'Utilisateur'}
+                    {comment.profiles?.display_name || comment.profiles?.email?.split('@')[0] || t.user}
                   </span>
                   <span className="text-xs text-neutral-400">
-                    {new Date(comment.created_at).toLocaleDateString('fr-CA', {
+                    {new Date(comment.created_at).toLocaleDateString(isEN ? 'en-CA' : 'fr-CA', {
                       day: 'numeric',
                       month: 'long',
                       year: 'numeric',
@@ -187,7 +203,7 @@ export default function RecipeComments({ recipeId }: RecipeCommentsProps) {
                     <button
                       onClick={() => handleDelete(comment.id)}
                       className="ml-auto text-neutral-400 hover:text-red-500 transition-colors"
-                      title="Supprimer"
+                      title={t.delete}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
