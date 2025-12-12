@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { Globe } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 
@@ -13,7 +12,7 @@ interface RecipeLanguageSwitcherProps {
 
 /**
  * Language switcher specifically for recipe pages.
- * Uses the translated slugs to navigate between FR and EN versions.
+ * Uses <a> tags for full page reload to ensure proper locale context.
  */
 export default function RecipeLanguageSwitcher({
   locale,
@@ -21,38 +20,37 @@ export default function RecipeLanguageSwitcher({
   slugEn,
   className = '',
 }: RecipeLanguageSwitcherProps) {
-  // If no English slug, fall back to French slug
-  const effectiveSlugEn = slugEn || slugFr;
-
-  const frPath = `/recette/${slugFr}`;
-  const enPath = `/en/recipe/${effectiveSlugEn}`;
+  // Build the correct paths
+  const frPath = `/recette/${slugFr}/`;
+  // For English, use slugEn if available, otherwise fall back to slugFr
+  const enPath = `/en/recipe/${slugEn || slugFr}/`;
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <Globe className="w-4 h-4 text-neutral-400" />
-      <Link
+      <a
         href={frPath}
         className={`text-sm font-medium transition-colors ${
           locale === 'fr'
             ? 'text-[#F77313]'
             : 'text-neutral-400 hover:text-white'
         }`}
-        title="Français"
+        title="Voir en français"
       >
         FR
-      </Link>
+      </a>
       <span className="text-neutral-600">|</span>
-      <Link
+      <a
         href={enPath}
         className={`text-sm font-medium transition-colors ${
           locale === 'en'
             ? 'text-[#F77313]'
             : 'text-neutral-400 hover:text-white'
         }`}
-        title="English"
+        title="View in English"
       >
         EN
-      </Link>
+      </a>
     </div>
   );
 }
