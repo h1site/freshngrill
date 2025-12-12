@@ -79,6 +79,60 @@ export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
 }
 
 /**
+ * Obtenir une recette par son slug avec traduction
+ */
+export async function getRecipeBySlugWithLocale(slug: string, locale: 'fr' | 'en' = 'fr'): Promise<Recipe | null> {
+  const { data, error } = await supabase
+    .from('recipes_with_categories')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error) {
+    console.error('Erreur getRecipeBySlugWithLocale:', error);
+    return null;
+  }
+
+  if (!data) return null;
+
+  const recipe = transformRecipe(data);
+
+  // Si locale français, retourner tel quel
+  if (locale === 'fr') {
+    return recipe;
+  }
+
+  // Chercher la traduction anglaise
+  const { data: translation, error: translationError } = await supabase
+    .from('recipe_translations')
+    .select('*')
+    .eq('recipe_id', recipe.id)
+    .eq('locale', 'en')
+    .single();
+
+  if (translationError || !translation) {
+    // Pas de traduction disponible, retourner la version française
+    console.log(`No English translation found for recipe ${slug}`);
+    return recipe;
+  }
+
+  // Appliquer les traductions
+  return {
+    ...recipe,
+    title: translation.title || recipe.title,
+    excerpt: translation.excerpt || recipe.excerpt,
+    introduction: translation.introduction || recipe.introduction,
+    conclusion: translation.conclusion || recipe.conclusion,
+    content: translation.content || recipe.content,
+    faq: translation.faq || recipe.faq,
+    ingredients: translation.ingredients || recipe.ingredients,
+    instructions: translation.instructions || recipe.instructions,
+    seoTitle: translation.seo_title || recipe.seoTitle,
+    seoDescription: translation.seo_description || recipe.seoDescription,
+  };
+}
+
+/**
  * Obtenir une recette par son ID
  */
 export async function getRecipeById(id: number): Promise<Recipe | null> {

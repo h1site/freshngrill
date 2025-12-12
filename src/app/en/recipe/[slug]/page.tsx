@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import {
-  getRecipeBySlug,
+  getRecipeBySlugWithLocale,
   getAllRecipeSlugs,
   getSimilarRecipes,
 } from '@/lib/recipes';
@@ -27,7 +27,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const recipe = await getRecipeBySlug(slug);
+  const recipe = await getRecipeBySlugWithLocale(slug, 'en');
 
   if (!recipe) {
     return {
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function RecipePageEN({ params }: Props) {
   const { slug } = await params;
-  const recipe = await getRecipeBySlug(slug);
+  const recipe = await getRecipeBySlugWithLocale(slug, 'en');
 
   if (!recipe) {
     notFound();
