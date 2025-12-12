@@ -8,7 +8,7 @@ import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensi
 import { SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
 import UserMenu from '@/components/auth/UserMenu';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { KracRadioDropdown, KracRadioNowPlaying, useKracRadio } from '@/components/KracRadio/KracRadio';
+import { KracRadioModal, KracRadioNowPlaying, useKracRadio } from '@/components/KracRadio/KracRadio';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
 
@@ -441,29 +441,32 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            {/* KracRadio Controls */}
-            <div className="hidden sm:flex items-center gap-1">
-              <button
-                onClick={toggleMusic}
-                className={`relative p-2.5 rounded-full transition-all ${
-                  musicEnabled
-                    ? 'text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30'
-                    : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
-                }`}
-                title={musicEnabled ? 'Couper la musique' : 'Activer la musique'}
-              >
-                {musicEnabled ? <SpeakerHigh weight="fill" className="w-5 h-5" /> : <SpeakerSlash weight="regular" className="w-5 h-5" />}
-                {musicEnabled && (
-                  <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-pink-500 rounded-full animate-pulse" />
-                )}
-              </button>
-              <KracRadioDropdown
-                selectedChannel={selectedChannel}
-                onChannelChange={changeChannel}
-                isOpen={showChannelSelector}
-                onToggle={() => setShowChannelSelector(!showChannelSelector)}
-              />
-            </div>
+            {/* KracRadio Button */}
+            <button
+              onClick={() => setShowChannelSelector(true)}
+              className={`relative p-2.5 rounded-full transition-all ${
+                musicEnabled
+                  ? 'text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30'
+                  : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
+              }`}
+              title={locale === 'en' ? 'Radio' : 'Radio'}
+            >
+              {musicEnabled ? <SpeakerHigh weight="fill" className="w-5 h-5" /> : <SpeakerSlash weight="regular" className="w-5 h-5" />}
+              {musicEnabled && (
+                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-pink-500 rounded-full animate-pulse" />
+              )}
+            </button>
+
+            {/* KracRadio Modal */}
+            <KracRadioModal
+              isOpen={showChannelSelector}
+              onClose={() => setShowChannelSelector(false)}
+              selectedChannel={selectedChannel}
+              onChannelChange={changeChannel}
+              musicEnabled={musicEnabled}
+              onToggleMusic={toggleMusic}
+              locale={locale}
+            />
 
             <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}

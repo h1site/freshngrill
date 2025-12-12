@@ -417,6 +417,159 @@ export function KracRadioToggle({ musicEnabled, onToggle, showLabel = true }: Kr
   );
 }
 
+// Radio Modal Popup
+interface KracRadioModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  selectedChannel: string;
+  onChannelChange: (key: string) => void;
+  musicEnabled: boolean;
+  onToggleMusic: () => void;
+  locale?: 'fr' | 'en';
+}
+
+export function KracRadioModal({
+  isOpen,
+  onClose,
+  selectedChannel,
+  onChannelChange,
+  musicEnabled,
+  onToggleMusic,
+  locale = 'fr'
+}: KracRadioModalProps) {
+  const isEN = locale === 'en';
+
+  const handleChannelClick = (channelKey: string) => {
+    onChannelChange(channelKey);
+    if (!musicEnabled) {
+      onToggleMusic();
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+          {/* Modal */}
+          <motion.div
+            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95vw] max-w-md bg-gradient-to-br from-neutral-900 via-neutral-900 to-neutral-800 rounded-2xl shadow-2xl border border-white/10 z-[101] overflow-hidden"
+            initial={{ opacity: 0, scale: 0.9, y: '-45%', x: '-50%' }}
+            animate={{ opacity: 1, scale: 1, y: '-50%', x: '-50%' }}
+            exit={{ opacity: 0, scale: 0.9, y: '-45%', x: '-50%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+          >
+            {/* Header */}
+            <div className="relative p-6 pb-4 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20">
+              <button
+                onClick={onClose}
+                className="absolute top-4 right-4 p-2 text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-all"
+              >
+                <X weight="bold" className="w-5 h-5" />
+              </button>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Radio weight="fill" className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold text-white">KracRadio</h2>
+                  <p className="text-xs text-white/60 uppercase tracking-wider">
+                    {isEN ? 'World Music' : 'Musique du Monde'}
+                  </p>
+                </div>
+              </div>
+              <p className="text-sm text-white/80 leading-relaxed">
+                {isEN
+                  ? 'Cook and discover music from artists around the world'
+                  : 'Cuisinez et découvrez de la musique d\'artistes partout dans le monde'}
+              </p>
+            </div>
+
+            {/* Status indicator */}
+            {musicEnabled && (
+              <div className="px-6 py-3 bg-pink-500/10 border-y border-pink-500/20 flex items-center gap-3">
+                <div className="flex items-center gap-1">
+                  {[...Array(4)].map((_, i) => (
+                    <span
+                      key={i}
+                      className="w-1 bg-pink-500 rounded-full animate-pulse"
+                      style={{
+                        height: `${8 + Math.random() * 8}px`,
+                        animationDelay: `${i * 0.15}s`
+                      }}
+                    />
+                  ))}
+                </div>
+                <span className="text-sm text-pink-400 font-medium">
+                  {isEN ? 'Now playing' : 'En lecture'}: {KRACRADIO_CHANNELS.find(c => c.key === selectedChannel)?.name}
+                </span>
+              </div>
+            )}
+
+            {/* Channels Grid */}
+            <div className="p-6">
+              <h3 className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-4">
+                {isEN ? 'Choose a station' : 'Choisir une station'}
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {KRACRADIO_CHANNELS.map((channel) => (
+                  <button
+                    key={channel.key}
+                    onClick={() => handleChannelClick(channel.key)}
+                    className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${
+                      selectedChannel === channel.key
+                        ? 'border-pink-500 bg-pink-500/10'
+                        : 'border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20'
+                    }`}
+                  >
+                    {selectedChannel === channel.key && musicEnabled && (
+                      <span className="absolute top-2 right-2 w-2 h-2 bg-pink-500 rounded-full animate-pulse" />
+                    )}
+                    <span
+                      className="w-4 h-4 rounded-full shadow-lg"
+                      style={{ background: channel.color, boxShadow: `0 0 12px ${channel.color}` }}
+                    />
+                    <span className="text-sm font-semibold text-white">{channel.name}</span>
+                    <span className="text-xs text-white/50">{channel.description}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-6 py-4 bg-black/30 border-t border-white/5 flex items-center justify-between">
+              <a
+                href="https://kracradio.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-white/40 hover:text-pink-400 transition-colors"
+              >
+                {isEN ? 'Powered by kracradio.com' : 'Propulsé par kracradio.com'}
+              </a>
+              {musicEnabled && (
+                <button
+                  onClick={onToggleMusic}
+                  className="text-xs text-red-400 hover:text-red-300 flex items-center gap-1.5 transition-colors"
+                >
+                  <SpeakerSlash weight="bold" className="w-4 h-4" />
+                  {isEN ? 'Stop' : 'Arrêter'}
+                </button>
+              )}
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
 // Custom hook for using KracRadio in games
 export function useKracRadio(defaultChannel = 'francophonie') {
   const radioRef = useRef<KracRadioManager | null>(null);
@@ -500,5 +653,6 @@ export default {
   KracRadioDropdown,
   KracRadioNowPlaying,
   KracRadioToggle,
+  KracRadioModal,
   useKracRadio
 };
