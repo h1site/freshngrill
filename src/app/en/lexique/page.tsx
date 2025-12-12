@@ -1,12 +1,11 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getTermsByLetter, getAvailableLetters, countTerms } from '@/lib/lexique';
-import { Book, ArrowRight } from 'lucide-react';
+import { Book } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Culinary Glossary | Menu Cochon',
   description:
-    'Discover our complete culinary glossary with over 280 cooking terms explained. From A to Z, master the gastronomic vocabulary.',
+    'Discover our complete culinary glossary with cooking terms explained. From A to Z, master the gastronomic vocabulary.',
   alternates: {
     canonical: '/en/lexique/',
     languages: {
@@ -16,11 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function LexiquePageEN() {
-  const termsByLetter = await getTermsByLetter();
-  const availableLetters = await getAvailableLetters();
-  const totalTerms = await countTerms();
-
+export default function LexiquePageEN() {
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
   return (
@@ -39,9 +34,8 @@ export default async function LexiquePageEN() {
               Culinary Glossary
             </h1>
             <p className="text-neutral-400 text-lg md:text-xl leading-relaxed">
-              Discover our cooking dictionary with{' '}
-              <span className="text-white font-semibold">{totalTerms} terms</span>{' '}
-              clearly explained. An essential tool for mastering culinary vocabulary.
+              Discover our cooking dictionary to master culinary vocabulary.
+              An essential tool for understanding gastronomic terms.
             </p>
           </div>
         </div>
@@ -51,66 +45,37 @@ export default async function LexiquePageEN() {
       <section className="sticky top-16 md:top-20 z-40 bg-neutral-50 border-b border-neutral-200 py-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-1 md:gap-2">
-            {alphabet.map((letter) => {
-              const isAvailable = availableLetters.includes(letter);
-              return (
-                <a
-                  key={letter}
-                  href={isAvailable ? `#letter-${letter}` : undefined}
-                  className={`w-9 h-9 flex items-center justify-center font-display text-lg transition-all ${
-                    isAvailable
-                      ? 'text-black hover:bg-[#F77313] hover:text-white'
-                      : 'text-neutral-300 cursor-not-allowed'
-                  }`}
-                >
-                  {letter}
-                </a>
-              );
-            })}
+            {alphabet.map((letter) => (
+              <span
+                key={letter}
+                className="w-9 h-9 flex items-center justify-center font-display text-lg text-neutral-300 cursor-not-allowed"
+              >
+                {letter}
+              </span>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Content */}
+      {/* Content - Coming Soon */}
       <section className="container mx-auto px-4 py-12 md:py-16">
-        <div className="max-w-4xl mx-auto">
-          {termsByLetter.map(({ letter, terms }) => (
-            <div key={letter} id={`letter-${letter}`} className="mb-12 scroll-mt-32">
-              {/* Letter */}
-              <div className="flex items-center gap-4 mb-6">
-                <span className="w-16 h-16 bg-[#F77313] text-white font-display text-3xl flex items-center justify-center">
-                  {letter}
-                </span>
-                <div className="flex-1 h-px bg-neutral-200" />
-                <span className="text-sm text-neutral-500">
-                  {terms.length} term{terms.length > 1 ? 's' : ''}
-                </span>
-              </div>
-
-              {/* Terms */}
-              <div className="space-y-3">
-                {terms.map((term) => (
-                  <Link
-                    key={term.id}
-                    href={`/en/lexique/${term.slug}`}
-                    className="block group"
-                  >
-                    <div className="flex items-start gap-4 p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-all">
-                      <div className="flex-1">
-                        <h3 className="font-display text-lg text-black group-hover:text-[#F77313] transition-colors">
-                          {term.term}
-                        </h3>
-                        <p className="text-neutral-600 text-sm mt-1 line-clamp-2">
-                          {term.definition}
-                        </p>
-                      </div>
-                      <ArrowRight className="w-5 h-5 text-neutral-400 group-hover:text-[#F77313] transition-colors flex-shrink-0 mt-1" />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
+        <div className="max-w-4xl mx-auto text-center py-16">
+          <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Book className="w-10 h-10 text-neutral-400" />
+          </div>
+          <h2 className="font-display text-2xl md:text-3xl text-black mb-4">
+            Coming Soon
+          </h2>
+          <p className="text-neutral-600 text-lg mb-8 max-w-md mx-auto">
+            Our English culinary glossary is currently being prepared.
+            In the meantime, you can explore our French glossary.
+          </p>
+          <Link
+            href="/lexique/"
+            className="inline-flex items-center gap-2 bg-[#F77313] text-white px-6 py-3 font-medium hover:bg-[#d45f0a] transition-colors"
+          >
+            View French Glossary
+          </Link>
         </div>
       </section>
 
