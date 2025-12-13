@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const term = await getTermBySlug(slug);
+  const term = await getTermBySlug(slug, 'en');
 
   if (!term) {
     return {
@@ -32,31 +32,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${term.term} - Definition | Culinary Glossary | Menu Cochon`,
     description: term.definition.substring(0, 160),
     alternates: {
-      canonical: `/en/lexique/${slug}/`,
+      canonical: `/en/lexicon/${slug}/`,
       languages: {
         'fr-CA': `/lexique/${slug}/`,
-        'en-CA': `/en/lexique/${slug}/`,
+        'en-CA': `/en/lexicon/${slug}/`,
       },
     },
     openGraph: {
       title: `${term.term} - Culinary Glossary`,
       description: term.definition.substring(0, 160),
       type: 'article',
-      url: `/en/lexique/${slug}/`,
+      url: `/en/lexicon/${slug}/`,
     },
   };
 }
 
 export default async function LexiqueTermPageEN({ params }: Props) {
   const { slug } = await params;
-  const term = await getTermBySlug(slug);
+  const term = await getTermBySlug(slug, 'en');
 
   if (!term) {
     notFound();
   }
 
   const { prev, next } = await getAdjacentTerms(slug);
-  const relatedTerms = await getTermsForLetter(term.letter);
+  const relatedTerms = await getTermsForLetter(term.letter, 'en');
   const otherTerms = relatedTerms.filter((t) => t.slug !== slug).slice(0, 6);
 
   // Schema.org for SEO
@@ -88,7 +88,7 @@ export default async function LexiqueTermPageEN({ params }: Props) {
                 Home
               </Link>
               <span className="text-neutral-400">/</span>
-              <Link href="/en/lexique" className="text-neutral-500 hover:text-black">
+              <Link href="/en/lexicon" className="text-neutral-500 hover:text-black">
                 Glossary
               </Link>
               <span className="text-neutral-400">/</span>
@@ -102,7 +102,7 @@ export default async function LexiqueTermPageEN({ params }: Props) {
           <div className="max-w-3xl mx-auto">
             {/* Back to glossary */}
             <Link
-              href="/en/lexique"
+              href="/en/lexicon"
               className="inline-flex items-center gap-2 text-neutral-500 hover:text-[#F77313] transition-colors mb-8"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -137,7 +137,7 @@ export default async function LexiqueTermPageEN({ params }: Props) {
             <div className="grid grid-cols-2 gap-4 mb-12">
               {prev ? (
                 <Link
-                  href={`/en/lexique/${prev.slug}`}
+                  href={`/en/lexicon/${prev.slug}`}
                   className="group flex items-center gap-3 p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
                 >
                   <ChevronLeft className="w-5 h-5 text-neutral-400 group-hover:text-[#F77313]" />
@@ -156,7 +156,7 @@ export default async function LexiqueTermPageEN({ params }: Props) {
 
               {next ? (
                 <Link
-                  href={`/en/lexique/${next.slug}`}
+                  href={`/en/lexicon/${next.slug}`}
                   className="group flex items-center justify-end gap-3 p-4 border border-neutral-200 hover:border-[#F77313] transition-colors text-right"
                 >
                   <div>
@@ -184,7 +184,7 @@ export default async function LexiqueTermPageEN({ params }: Props) {
                   {otherTerms.map((t) => (
                     <Link
                       key={t.id}
-                      href={`/en/lexique/${t.slug}`}
+                      href={`/en/lexicon/${t.slug}`}
                       className="p-3 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-all"
                     >
                       <span className="font-display text-black hover:text-[#F77313]">
@@ -194,7 +194,7 @@ export default async function LexiqueTermPageEN({ params }: Props) {
                   ))}
                 </div>
                 <Link
-                  href={`/en/lexique#letter-${term.letter}`}
+                  href={`/en/lexicon#letter-${term.letter}`}
                   className="inline-flex items-center gap-2 mt-6 text-[#F77313] hover:text-black transition-colors text-sm font-medium"
                 >
                   See all terms starting with {term.letter}

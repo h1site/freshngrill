@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Book } from 'lucide-react';
+import { getTermsByLetter } from '@/lib/lexique';
 
 export const metadata: Metadata = {
   title: 'Culinary Glossary | Menu Cochon',
@@ -15,8 +16,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LexiquePageEN() {
+export default async function LexiquePageEN() {
+  const termsByLetter = await getTermsByLetter('en');
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const availableLetters = termsByLetter.map((g) => g.letter);
 
   return (
     <main className="min-h-screen bg-white">
@@ -45,37 +48,63 @@ export default function LexiquePageEN() {
       <section className="sticky top-16 md:top-20 z-40 bg-neutral-50 border-b border-neutral-200 py-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-1 md:gap-2">
-            {alphabet.map((letter) => (
-              <span
-                key={letter}
-                className="w-9 h-9 flex items-center justify-center font-display text-lg text-neutral-300 cursor-not-allowed"
-              >
-                {letter}
-              </span>
-            ))}
+            {alphabet.map((letter) => {
+              const isAvailable = availableLetters.includes(letter);
+              return isAvailable ? (
+                <a
+                  key={letter}
+                  href={`#letter-${letter}`}
+                  className="w-9 h-9 flex items-center justify-center font-display text-lg text-black hover:bg-[#F77313] hover:text-white transition-colors"
+                >
+                  {letter}
+                </a>
+              ) : (
+                <span
+                  key={letter}
+                  className="w-9 h-9 flex items-center justify-center font-display text-lg text-neutral-300 cursor-not-allowed"
+                >
+                  {letter}
+                </span>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Content - Coming Soon */}
+      {/* Terms by letter */}
       <section className="container mx-auto px-4 py-12 md:py-16">
-        <div className="max-w-4xl mx-auto text-center py-16">
-          <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Book className="w-10 h-10 text-neutral-400" />
-          </div>
-          <h2 className="font-display text-2xl md:text-3xl text-black mb-4">
-            Coming Soon
-          </h2>
-          <p className="text-neutral-600 text-lg mb-8 max-w-md mx-auto">
-            Our English culinary glossary is currently being prepared.
-            In the meantime, you can explore our French glossary.
-          </p>
-          <Link
-            href="/lexique/"
-            className="inline-flex items-center gap-2 bg-[#F77313] text-white px-6 py-3 font-medium hover:bg-[#d45f0a] transition-colors"
-          >
-            View French Glossary
-          </Link>
+        <div className="max-w-4xl mx-auto">
+          {termsByLetter.map((group) => (
+            <div key={group.letter} id={`letter-${group.letter}`} className="mb-12">
+              {/* Letter header */}
+              <div className="flex items-center gap-4 mb-6 pb-4 border-b border-neutral-200">
+                <span className="w-12 h-12 bg-[#F77313] text-white font-display text-2xl flex items-center justify-center">
+                  {group.letter}
+                </span>
+                <span className="text-neutral-500 text-sm">
+                  {group.terms.length} term{group.terms.length > 1 ? 's' : ''}
+                </span>
+              </div>
+
+              {/* Terms list */}
+              <div className="space-y-4">
+                {group.terms.map((term) => (
+                  <Link
+                    key={term.id}
+                    href={`/en/lexicon/${term.slug}`}
+                    className="group block p-4 md:p-5 border border-neutral-200 hover:border-[#F77313] transition-colors"
+                  >
+                    <h3 className="font-display text-xl text-black group-hover:text-[#F77313] transition-colors mb-2">
+                      {term.term}
+                    </h3>
+                    <p className="text-neutral-600 line-clamp-2">
+                      {term.definition}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

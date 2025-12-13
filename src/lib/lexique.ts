@@ -5,6 +5,8 @@ export interface LexiqueTerm {
   slug: string;
   term: string;
   definition: string;
+  termEn?: string;
+  definitionEn?: string;
   letter: string;
   relatedTerms?: string[];
   createdAt: string;
@@ -19,12 +21,15 @@ export interface LexiqueByLetter {
 /**
  * Transformer les données Supabase en LexiqueTerm
  */
-function transformTerm(data: any): LexiqueTerm {
+function transformTerm(data: any, locale: 'fr' | 'en' = 'fr'): LexiqueTerm {
+  const isEN = locale === 'en';
   return {
     id: data.id,
     slug: data.slug,
-    term: data.term,
-    definition: data.definition,
+    term: isEN && data.term_en ? data.term_en : data.term,
+    definition: isEN && data.definition_en ? data.definition_en : data.definition,
+    termEn: data.term_en,
+    definitionEn: data.definition_en,
     letter: data.letter,
     relatedTerms: data.related_terms || [],
     createdAt: data.created_at,
@@ -35,7 +40,7 @@ function transformTerm(data: any): LexiqueTerm {
 /**
  * Obtenir tous les termes du lexique
  */
-export async function getAllTerms(): Promise<LexiqueTerm[]> {
+export async function getAllTerms(locale: 'fr' | 'en' = 'fr'): Promise<LexiqueTerm[]> {
   const { data, error } = await supabase
     .from('lexique')
     .select('*')
@@ -46,14 +51,14 @@ export async function getAllTerms(): Promise<LexiqueTerm[]> {
     return [];
   }
 
-  return (data || []).map(transformTerm);
+  return (data || []).map(d => transformTerm(d, locale));
 }
 
 /**
  * Obtenir les termes groupés par lettre
  */
-export async function getTermsByLetter(): Promise<LexiqueByLetter[]> {
-  const terms = await getAllTerms();
+export async function getTermsByLetter(locale: 'fr' | 'en' = 'fr'): Promise<LexiqueByLetter[]> {
+  const terms = await getAllTerms(locale);
 
   const grouped: Record<string, LexiqueTerm[]> = {};
 
@@ -76,7 +81,7 @@ export async function getTermsByLetter(): Promise<LexiqueByLetter[]> {
 /**
  * Obtenir un terme par son slug
  */
-export async function getTermBySlug(slug: string): Promise<LexiqueTerm | null> {
+export async function getTermBySlug(slug: string, locale: 'fr' | 'en' = 'fr'): Promise<LexiqueTerm | null> {
   const { data, error } = await supabase
     .from('lexique')
     .select('*')
@@ -88,7 +93,7 @@ export async function getTermBySlug(slug: string): Promise<LexiqueTerm | null> {
     return null;
   }
 
-  return data ? transformTerm(data) : null;
+  return data ? transformTerm(data, locale) : null;
 }
 
 /**
@@ -110,7 +115,7 @@ export async function getAllTermSlugs(): Promise<string[]> {
 /**
  * Obtenir les termes d'une lettre spécifique
  */
-export async function getTermsForLetter(letter: string): Promise<LexiqueTerm[]> {
+export async function getTermsForLetter(letter: string, locale: 'fr' | 'en' = 'fr'): Promise<LexiqueTerm[]> {
   const { data, error } = await supabase
     .from('lexique')
     .select('*')
@@ -122,17 +127,22 @@ export async function getTermsForLetter(letter: string): Promise<LexiqueTerm[]> 
     return [];
   }
 
-  return (data || []).map(transformTerm);
+  return (data || []).map(d => transformTerm(d, locale));
 }
 
 /**
  * Rechercher des termes
  */
-export async function searchTerms(query: string): Promise<LexiqueTerm[]> {
+export async function searchTerms(query: string, locale: 'fr' | 'en' = 'fr'): Promise<LexiqueTerm[]> {
+  const isEN = locale === 'en';
+  const searchFields = isEN
+    ? `term.ilike.%${query}%,definition.ilike.%${query}%,term_en.ilike.%${query}%,definition_en.ilike.%${query}%`
+    : `term.ilike.%${query}%,definition.ilike.%${query}%`;
+
   const { data, error } = await supabase
     .from('lexique')
     .select('*')
-    .or(`term.ilike.%${query}%,definition.ilike.%${query}%`)
+    .or(searchFields)
     .order('term')
     .limit(20);
 
@@ -141,7 +151,7 @@ export async function searchTerms(query: string): Promise<LexiqueTerm[]> {
     return [];
   }
 
-  return (data || []).map(transformTerm);
+  return (data || []).map(d => transformTerm(d, locale));
 }
 
 /**
