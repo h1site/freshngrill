@@ -91,62 +91,80 @@ export default function RecipeIngredients({
 
       {/* Liste des ingrédients */}
       <div className="space-y-6">
-        {ingredients.map((group, groupIndex) => (
-          <div key={groupIndex}>
-            {group.title && (
-              <h3 className="text-xs font-medium text-[#F77313] uppercase tracking-widest mb-4 pb-2 border-b border-neutral-200">
-                {group.title}
-              </h3>
-            )}
+        {ingredients.map((group, groupIndex) => {
+          // Support both "title" and "group" field names
+          const groupTitle = group.title || (group as any).group;
 
-            <ul className="space-y-1">
-              {group.items.map((item, itemIndex) => {
-                const id = `${groupIndex}-${itemIndex}`;
-                const isChecked = checkedItems.has(id);
+          return (
+            <div key={groupIndex}>
+              {groupTitle && (
+                <h3 className="text-xs font-medium text-[#F77313] uppercase tracking-widest mb-4 pb-2 border-b border-neutral-200">
+                  {groupTitle}
+                </h3>
+              )}
 
-                return (
-                  <li key={id}>
-                    <button
-                      onClick={() => toggleCheck(id)}
-                      className={`w-full flex items-start gap-3 py-3 px-2 transition-all text-left border-b border-neutral-200 hover:bg-white ${
-                        isChecked ? 'opacity-40' : ''
-                      }`}
-                    >
-                      <span
-                        className={`w-5 h-5 rounded-sm flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${
-                          isChecked
-                            ? 'bg-[#F77313] text-white'
-                            : 'border border-neutral-300'
+              <ul className="space-y-1">
+                {group.items.map((item, itemIndex) => {
+                  const id = `${groupIndex}-${itemIndex}`;
+                  const isChecked = checkedItems.has(id);
+
+                  // Support both object format and string format
+                  const isStringItem = typeof item === 'string';
+                  const itemText = isStringItem ? item : null;
+                  const itemObj = isStringItem ? null : item;
+
+                  return (
+                    <li key={id}>
+                      <button
+                        onClick={() => toggleCheck(id)}
+                        className={`w-full flex items-start gap-3 py-3 px-2 transition-all text-left border-b border-neutral-200 hover:bg-white ${
+                          isChecked ? 'opacity-40' : ''
                         }`}
                       >
-                        {isChecked && <Check className="w-3 h-3" />}
-                      </span>
-
-                      <span className={`flex-1 ${isChecked ? 'line-through' : ''}`}>
-                        {item.quantity && (
-                          <span className="font-bold text-[#F77313] mr-2">
-                            {adjustQuantity(item.quantity)}
-                          </span>
-                        )}
-                        {item.unit && (
-                          <span className="text-neutral-500 mr-1">{item.unit}</span>
-                        )}
-                        <span className="text-neutral-800">
-                          {item.name}
+                        <span
+                          className={`w-5 h-5 rounded-sm flex items-center justify-center flex-shrink-0 mt-0.5 transition-colors ${
+                            isChecked
+                              ? 'bg-[#F77313] text-white'
+                              : 'border border-neutral-300'
+                          }`}
+                        >
+                          {isChecked && <Check className="w-3 h-3" />}
                         </span>
-                        {item.note && (
-                          <span className="text-sm text-neutral-400 ml-2">
-                            ({item.note})
-                          </span>
-                        )}
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ))}
+
+                        <span className={`flex-1 ${isChecked ? 'line-through' : ''}`}>
+                          {isStringItem ? (
+                            // String format: "250 g de farine tout usage"
+                            <span className="text-neutral-800">{itemText}</span>
+                          ) : (
+                            // Object format: { name, quantity, unit, note }
+                            <>
+                              {itemObj?.quantity && (
+                                <span className="font-bold text-[#F77313] mr-2">
+                                  {adjustQuantity(itemObj.quantity)}
+                                </span>
+                              )}
+                              {itemObj?.unit && (
+                                <span className="text-neutral-500 mr-1">{itemObj.unit}</span>
+                              )}
+                              <span className="text-neutral-800">
+                                {itemObj?.name}
+                              </span>
+                              {itemObj?.note && (
+                                <span className="text-sm text-neutral-400 ml-2">
+                                  ({itemObj.note})
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
