@@ -73,13 +73,13 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Ad après recettes récentes */}
+      {/* 2. Features Section - Fonctionnalités du site */}
+      <FeaturesSection locale="fr" />
+
+      {/* Ad après features */}
       <div className="container mx-auto px-4 py-8">
         <GoogleAd slot="7610644087" />
       </div>
-
-      {/* 2. Features Section - Fonctionnalités du site */}
-      <FeaturesSection locale="fr" />
 
       {/* 3. Categories Section */}
       {categories.length > 0 && (

@@ -83,13 +83,13 @@ export default async function EnglishHomePage() {
         </section>
       )}
 
-      {/* Ad */}
+      {/* 2. Features Section */}
+      <FeaturesSection locale="en" />
+
+      {/* Ad après features */}
       <div className="container mx-auto px-4 py-8">
         <GoogleAd slot="7610644087" />
       </div>
-
-      {/* 2. Features Section */}
-      <FeaturesSection locale="en" />
 
       {/* 3. Categories Section */}
       {categories.length > 0 && (
