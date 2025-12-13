@@ -76,7 +76,10 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
         {recipe.prepTime > 0 && (
           <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 bg-black/40 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2.5 rounded-md md:rounded-lg">
             <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#F77313]" />
-            <span className="font-semibold text-white text-xs sm:text-sm md:text-base">{recipe.prepTime}m</span>
+            <div className="flex flex-col leading-tight">
+              <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wide">{t.prep}</span>
+              <span className="font-semibold text-white text-xs sm:text-sm md:text-base">{recipe.prepTime} min</span>
+            </div>
           </div>
         )}
 
@@ -84,7 +87,10 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
         {recipe.cookTime > 0 && (
           <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 bg-black/40 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2.5 rounded-md md:rounded-lg">
             <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#F77313]" />
-            <span className="font-semibold text-white text-xs sm:text-sm md:text-base">{recipe.cookTime}m</span>
+            <div className="flex flex-col leading-tight">
+              <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wide">{t.cook}</span>
+              <span className="font-semibold text-white text-xs sm:text-sm md:text-base">{recipe.cookTime} min</span>
+            </div>
           </div>
         )}
 
@@ -92,20 +98,26 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
         {recipe.servings > 0 && (
           <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 bg-black/40 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2.5 rounded-md md:rounded-lg">
             <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 text-[#F77313]" />
-            <span className="font-semibold text-white text-xs sm:text-sm md:text-base">{recipe.servings}</span>
+            <div className="flex flex-col leading-tight">
+              <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wide">{t.servings}</span>
+              <span className="font-semibold text-white text-xs sm:text-sm md:text-base">{recipe.servings}</span>
+            </div>
           </div>
         )}
 
         {/* Difficulty */}
         <div className="flex items-center gap-1 sm:gap-1.5 md:gap-2 bg-black/40 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2.5 rounded-md md:rounded-lg">
           <span
-            className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full ${
+            className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full ${
               difficultyColors[recipe.difficulty] || difficultyColors.moyen
             }`}
           />
-          <span className="font-semibold text-white text-xs sm:text-sm md:text-base capitalize">
-            {difficultyTranslation[recipe.difficulty] || recipe.difficulty}
-          </span>
+          <div className="flex flex-col leading-tight">
+            <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wide">{t.difficulty}</span>
+            <span className="font-semibold text-white text-xs sm:text-sm md:text-base capitalize">
+              {difficultyTranslation[recipe.difficulty] || recipe.difficulty}
+            </span>
+          </div>
         </div>
       </div>
 
