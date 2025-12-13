@@ -10,10 +10,11 @@ import { getCategoryName } from '@/lib/categoryTranslations';
 
 interface Props {
   categories: Category[];
+  origines?: string[];
   locale?: Locale;
 }
 
-export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
+export default function RecipeFilters({ categories, origines = [], locale = 'fr' }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isEN = locale === 'en';
@@ -22,6 +23,7 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
   const categoryParam = isEN ? 'category' : 'categorie';
   const difficultyParam = isEN ? 'difficulty' : 'difficulte';
   const timeParam = isEN ? 'time' : 'temps';
+  const origineParam = isEN ? 'origin' : 'origine';
   const basePath = isEN ? '/en/recipe' : '/recette';
 
   const [search, setSearch] = useState(searchParams.get('q') || '');
@@ -32,6 +34,9 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
     searchParams.get(difficultyParam) || ''
   );
   const [maxTime, setMaxTime] = useState(searchParams.get(timeParam) || '');
+  const [selectedOrigine, setSelectedOrigine] = useState(
+    searchParams.get(origineParam) || ''
+  );
   const [showFilters, setShowFilters] = useState(false);
 
   const applyFilters = () => {
@@ -40,6 +45,7 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
     if (selectedCategory) params.set(categoryParam, selectedCategory);
     if (selectedDifficulty) params.set(difficultyParam, selectedDifficulty);
     if (maxTime) params.set(timeParam, maxTime);
+    if (selectedOrigine) params.set(origineParam, selectedOrigine);
 
     router.push(`${basePath}?${params.toString()}`);
   };
@@ -49,6 +55,7 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
     setSelectedCategory('');
     setSelectedDifficulty('');
     setMaxTime('');
+    setSelectedOrigine('');
     router.push(basePath);
   };
 
@@ -57,6 +64,8 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
     filters: 'Filters',
     category: 'Category',
     allCategories: 'All categories',
+    origine: 'Origin',
+    allOrigines: 'All cuisines',
     difficulty: 'Difficulty',
     allDifficulties: 'All',
     easy: 'Easy',
@@ -74,6 +83,8 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
     filters: 'Filtres',
     category: 'Catégorie',
     allCategories: 'Toutes les catégories',
+    origine: 'Origine',
+    allOrigines: 'Toutes les cuisines',
     difficulty: 'Difficulté',
     allDifficulties: 'Toutes',
     easy: 'Facile',
@@ -89,7 +100,7 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
   };
 
   const hasActiveFilters =
-    search || selectedCategory || selectedDifficulty || maxTime;
+    search || selectedCategory || selectedDifficulty || maxTime || selectedOrigine;
 
   return (
     <div className="mb-10">
@@ -134,7 +145,7 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
             className="overflow-hidden"
           >
             <div className="bg-neutral-50 border border-neutral-200 p-6 mb-6">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Category */}
                 <div>
                   <label className="block text-xs font-medium text-neutral-500 uppercase tracking-wide mb-2">
@@ -153,6 +164,27 @@ export default function RecipeFilters({ categories, locale = 'fr' }: Props) {
                     ))}
                   </select>
                 </div>
+
+                {/* Origine */}
+                {origines.length > 0 && (
+                  <div>
+                    <label className="block text-xs font-medium text-neutral-500 uppercase tracking-wide mb-2">
+                      {t.origine}
+                    </label>
+                    <select
+                      value={selectedOrigine}
+                      onChange={(e) => setSelectedOrigine(e.target.value)}
+                      className="w-full px-4 py-3 bg-white border border-neutral-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#F77313] focus:border-transparent"
+                    >
+                      <option value="">{t.allOrigines}</option>
+                      {origines.map((origine) => (
+                        <option key={origine} value={origine}>
+                          {origine}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 {/* Difficulty */}
                 <div>

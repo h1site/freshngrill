@@ -527,6 +527,26 @@ export async function getAllCategorySlugs(): Promise<string[]> {
 }
 
 /**
+ * Obtenir toutes les origines (pays) distinctes des recettes
+ */
+export async function getAllOrigines(): Promise<string[]> {
+  const { data, error } = await supabase
+    .from('recipes')
+    .select('origine')
+    .not('origine', 'is', null)
+    .not('origine', 'eq', '');
+
+  if (error) {
+    console.error('Erreur getAllOrigines:', error);
+    return [];
+  }
+
+  // Extraire les valeurs uniques et les trier
+  const origines = [...new Set((data as { origine: string }[]).map(r => r.origine))];
+  return origines.sort((a, b) => a.localeCompare(b, 'fr'));
+}
+
+/**
  * Filtrer les recettes
  */
 export interface RecipeFilters {

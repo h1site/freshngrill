@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-import { getFilteredRecipeCards, getAllCategoriesWithLocale, getCategoryBySlug, getAllIngredientNames, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
+import { getFilteredRecipeCards, getAllCategoriesWithLocale, getCategoryBySlug, getAllIngredientNames, getAllOrigines, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
 import RecipeGrid from '@/components/recipe/RecipeGrid';
 import RecipeFilters from '@/components/recipe/RecipeFilters';
 import FridgeSearch from '@/components/recipe/FridgeSearch';
@@ -32,7 +32,7 @@ export default async function RecipesPageEN({
 }) {
   const params = await searchParams;
 
-  const [rawRecipes, categories, allIngredients] = await Promise.all([
+  const [rawRecipes, categories, allIngredients, origines] = await Promise.all([
     getFilteredRecipeCards({
       category: params.category,
       difficulty: params.difficulty,
@@ -42,6 +42,7 @@ export default async function RecipesPageEN({
     }),
     getAllCategoriesWithLocale('en'),
     getAllIngredientNames(),
+    getAllOrigines(),
   ]);
 
   // Enrichir avec les slugs et titres anglais
@@ -97,7 +98,7 @@ export default async function RecipesPageEN({
 
         {/* Classic filters */}
         <Suspense fallback={<div className="h-16 bg-neutral-100 animate-pulse mb-8" />}>
-          <RecipeFilters categories={categories} locale="en" />
+          <RecipeFilters categories={categories} origines={origines} locale="en" />
         </Suspense>
         <RecipeGrid recipes={recipes} locale="en" />
       </section>

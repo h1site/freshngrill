@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-import { getFilteredRecipeCards, getAllCategories, getCategoryBySlug, getAllIngredientNames } from '@/lib/recipes';
+import { getFilteredRecipeCards, getAllCategories, getCategoryBySlug, getAllIngredientNames, getAllOrigines } from '@/lib/recipes';
 import RecipeGrid from '@/components/recipe/RecipeGrid';
 import RecipeFilters from '@/components/recipe/RecipeFilters';
 import FridgeSearch from '@/components/recipe/FridgeSearch';
@@ -28,7 +28,7 @@ export default async function RecettesPage({
 }) {
   const params = await searchParams;
 
-  const [recipes, categories, allIngredients] = await Promise.all([
+  const [recipes, categories, allIngredients, origines] = await Promise.all([
     getFilteredRecipeCards({
       category: params.categorie,
       difficulty: params.difficulte,
@@ -38,6 +38,7 @@ export default async function RecettesPage({
     }),
     getAllCategories(),
     getAllIngredientNames(),
+    getAllOrigines(),
   ]);
 
   // Obtenir le nom de la catégorie active si présente
@@ -90,7 +91,7 @@ export default async function RecettesPage({
 
         {/* Filtres classiques */}
         <Suspense fallback={<div className="h-16 bg-neutral-100 animate-pulse mb-8" />}>
-          <RecipeFilters categories={categories} />
+          <RecipeFilters categories={categories} origines={origines} />
         </Suspense>
         <RecipeGrid recipes={recipes} />
       </section>
