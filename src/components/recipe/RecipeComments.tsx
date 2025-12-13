@@ -16,7 +16,7 @@ interface Comment {
     display_name: string | null;
     avatar_url: string | null;
     email: string;
-  };
+  } | null;
 }
 
 interface RecipeCommentsProps {
@@ -59,23 +59,48 @@ export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommen
 
   const loadComments = async () => {
     setIsLoading(true);
-    const { data } = await supabase
+
+    // Get comments first
+    const { data: commentsData, error: commentsError } = await supabase
       .from('comments')
-      .select(`
-        id,
-        content,
-        created_at,
-        user_id,
-        profiles (
-          display_name,
-          avatar_url,
-          email
-        )
-      `)
+      .select('id, content, created_at, user_id')
       .eq('recipe_id', recipeId)
       .order('created_at', { ascending: false });
 
-    setComments((data || []) as unknown as Comment[]);
+    if (commentsError) {
+      console.error('Error loading comments:', commentsError);
+      setComments([]);
+      setIsLoading(false);
+      return;
+    }
+
+    if (!commentsData || commentsData.length === 0) {
+      setComments([]);
+      setIsLoading(false);
+      return;
+    }
+
+    // Get unique user IDs
+    const userIds = [...new Set(commentsData.map(c => c.user_id))];
+
+    // Fetch profiles for those users
+    const { data: profilesData } = await supabase
+      .from('profiles')
+      .select('id, display_name, avatar_url, email')
+      .in('id', userIds);
+
+    // Create a map of profiles by user_id
+    const profilesMap = new Map(
+      (profilesData || []).map(p => [p.id, p])
+    );
+
+    // Merge comments with profiles
+    const commentsWithProfiles = commentsData.map(comment => ({
+      ...comment,
+      profiles: profilesMap.get(comment.user_id) || null
+    }));
+
+    setComments(commentsWithProfiles as unknown as Comment[]);
     setIsLoading(false);
   };
 
@@ -85,15 +110,20 @@ export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommen
 
     setIsSubmitting(true);
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('comments')
       .insert({
         recipe_id: recipeId,
         user_id: user.id,
         content: newComment.trim(),
-      } as never);
+      } as never)
+      .select();
 
-    if (!error) {
+    if (error) {
+      console.error('Error inserting comment:', error);
+      alert(locale === 'en' ? 'Error posting comment. Please try again.' : 'Erreur lors de la publication. Veuillez réessayer.');
+    } else {
+      console.log('Comment inserted:', data);
       setNewComment('');
       await loadComments();
     }
