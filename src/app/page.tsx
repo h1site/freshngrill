@@ -3,6 +3,7 @@ import { getRecentPosts } from '@/lib/posts';
 import { MagazineHero } from '@/components/home/MagazineHero';
 import { MagazineRecipeGrid } from '@/components/home/MagazineRecipeGrid';
 import { MagazineCategorySection } from '@/components/home/MagazineCategorySection';
+import { FeaturesSection } from '@/components/home/FeaturesSection';
 import { MagazineCTA } from '@/components/home/MagazineCTA';
 import { NewsletterSection } from '@/components/home/NewsletterSection';
 import { MagazineBlogSection } from '@/components/home/MagazineBlogSection';
@@ -47,20 +48,23 @@ export default async function HomePage() {
         <MagazineRecipeGrid recipes={gridRecipes} />
       )}
 
-      {/* 3. Categories Section */}
+      {/* 3. Features Section */}
+      <FeaturesSection />
+
+      {/* 4. Categories Section */}
       {categories.length > 0 && (
         <MagazineCategorySection categories={categories} />
       )}
 
-      {/* 4. Blog Section */}
+      {/* 5. Blog Section */}
       {recentPosts.length > 0 && (
         <MagazineBlogSection posts={recentPosts} />
       )}
 
-      {/* 5. Newsletter Section */}
+      {/* 6. Newsletter Section */}
       <NewsletterSection />
 
-      {/* 6. CTA Section */}
+      {/* 7. CTA Section */}
       <MagazineCTA recipe={allRecipes[Math.floor(Math.random() * Math.min(5, allRecipes.length))]} />
     </main>
   );
