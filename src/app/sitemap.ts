@@ -5,6 +5,10 @@ import { getAllTerms } from '@/lib/lexique';
 import { getAllTermsEn } from '@/lib/lexiqueEn';
 import { siteConfig } from '@/lib/config';
 
+// Force le sitemap à être généré dynamiquement à chaque requête
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
 
