@@ -88,7 +88,10 @@ export default async function EnglishHomePage() {
         <GoogleAd slot="7610644087" />
       </div>
 
-      {/* 2. Categories Section */}
+      {/* 2. Features Section */}
+      <FeaturesSection locale="en" />
+
+      {/* 3. Categories Section */}
       {categories.length > 0 && (
         <CategoryGrid categories={categories} locale="en" />
       )}
@@ -195,9 +198,6 @@ export default async function EnglishHomePage() {
           </div>
         </section>
       )}
-
-      {/* Features Section */}
-      <FeaturesSection locale="en" />
 
       {/* Newsletter Section */}
       <NewsletterSection locale="en" />
