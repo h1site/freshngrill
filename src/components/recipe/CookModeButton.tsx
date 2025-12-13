@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Maximize2, X, ChevronLeft, ChevronRight, Check, Clock, Users, Timer, Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-react';
+import { Maximize2, X, ChevronLeft, ChevronRight, Check, Clock, Users, Timer, Play, Pause, RotateCcw, Volume2, VolumeX, Speech } from 'lucide-react';
 import { Recipe } from '@/types/recipe';
 import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
@@ -33,6 +33,8 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     reset: isEN ? 'Reset' : 'Réinitialiser',
     stopAlarm: isEN ? 'Stop Alarm' : 'Arrêter',
     timerDone: isEN ? 'Timer done!' : 'Minuterie terminée!',
+    readAloud: isEN ? 'Read aloud' : 'Lire à voix haute',
+    stopReading: isEN ? 'Stop reading' : 'Arrêter la lecture',
   };
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -49,6 +51,10 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
   const audioContextRef = useRef<AudioContext | null>(null);
   const oscillatorRef = useRef<OscillatorNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
+
+  // Speech synthesis state
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const speechSynthRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   // Total des étapes: 0 = ingrédients, 1+ = instructions
   const totalPages = recipe.instructions.length + 1;
@@ -241,6 +247,73 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     }
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
+
+  // Speech synthesis functions
+  const stopSpeaking = useCallback(() => {
+    if (typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    setIsSpeaking(false);
+  }, []);
+
+  const speakCurrentStep = useCallback(() => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return;
+
+    // Stop any current speech
+    stopSpeaking();
+
+    let textToSpeak = '';
+
+    if (currentStep === 0) {
+      // Read ingredients
+      const ingredientsList = recipe.ingredients.flatMap(group => {
+        const groupTitle = group.title ? `${group.title}: ` : '';
+        return group.items.map(item => {
+          const parts = [];
+          if (item.quantity) parts.push(item.quantity);
+          if (item.unit) parts.push(item.unit);
+          parts.push(item.name);
+          if (item.note) parts.push(`(${item.note})`);
+          return groupTitle + parts.join(' ');
+        });
+      });
+      textToSpeak = isEN
+        ? `Ingredients: ${ingredientsList.join('. ')}`
+        : `Ingrédients: ${ingredientsList.join('. ')}`;
+    } else {
+      // Read current instruction
+      const instruction = recipe.instructions[currentStep - 1];
+      const stepIntro = isEN ? `Step ${currentStep}:` : `Étape ${currentStep}:`;
+      textToSpeak = `${stepIntro} ${instruction.content}`;
+      if (instruction.tip) {
+        textToSpeak += isEN ? `. Tip: ${instruction.tip}` : `. Astuce: ${instruction.tip}`;
+      }
+    }
+
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
+    utterance.lang = isEN ? 'en-US' : 'fr-FR';
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    speechSynthRef.current = utterance;
+    setIsSpeaking(true);
+    window.speechSynthesis.speak(utterance);
+  }, [currentStep, recipe.ingredients, recipe.instructions, isEN, stopSpeaking]);
+
+  // Stop speaking when changing steps or closing
+  useEffect(() => {
+    stopSpeaking();
+  }, [currentStep, isOpen, stopSpeaking]);
+
+  // Cleanup speech on unmount
+  useEffect(() => {
+    return () => {
+      stopSpeaking();
+    };
+  }, [stopSpeaking]);
 
   return (
     <>
@@ -560,18 +633,33 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
                       <span className="hidden sm:inline">{t.previous}</span>
                     </button>
 
-                    {/* Timer button in center */}
-                    <button
-                      onClick={() => setShowTimerModal(true)}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all ${
-                        timeRemaining !== null
-                          ? 'bg-[#F77313] text-white'
-                          : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
-                      }`}
-                    >
-                      <Timer className="w-5 h-5" />
-                      <span className="hidden sm:inline">{t.timer}</span>
-                    </button>
+                    {/* Center buttons: Timer + Speech */}
+                    <div className="flex items-center gap-2">
+                      {/* Speech button */}
+                      <button
+                        onClick={isSpeaking ? stopSpeaking : speakCurrentStep}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-full font-medium transition-all ${
+                          isSpeaking
+                            ? 'bg-purple-500 text-white'
+                            : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
+                        }`}
+                        title={isSpeaking ? t.stopReading : t.readAloud}
+                      >
+                        <Speech className="w-5 h-5" />
+                      </button>
+
+                      {/* Timer button */}
+                      <button
+                        onClick={() => setShowTimerModal(true)}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-full font-medium transition-all ${
+                          timeRemaining !== null
+                            ? 'bg-[#F77313] text-white'
+                            : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
+                        }`}
+                      >
+                        <Timer className="w-5 h-5" />
+                      </button>
+                    </div>
 
                     <button
                       onClick={nextStep}
