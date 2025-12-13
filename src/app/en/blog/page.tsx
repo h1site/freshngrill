@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPostCards, getAllPostCategories } from '@/lib/posts';
+import { getPostCardsWithEnglish, getAllPostCategories } from '@/lib/posts';
 import { Calendar, Clock, ArrowRight, Newspaper } from 'lucide-react';
 import GoogleAd from '@/components/ads/GoogleAd';
 
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default async function BlogPageEN() {
   const [posts, categories] = await Promise.all([
-    getPostCards(),
+    getPostCardsWithEnglish(),
     getAllPostCategories(),
   ]);
 

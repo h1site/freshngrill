@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  getPostBySlug,
+  getPostBySlugWithEnglish,
   getAllPostSlugs,
-  getSimilarPosts,
+  getSimilarPostsWithEnglish,
 } from '@/lib/posts';
 import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Bookmark } from 'lucide-react';
 import GoogleAd from '@/components/ads/GoogleAd';
@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlugWithEnglish(slug);
 
   if (!post) {
     return {
@@ -54,13 +54,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BlogPostPageEN({ params }: Props) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const post = await getPostBySlugWithEnglish(slug);
 
   if (!post) {
     notFound();
   }
 
-  const similarPosts = await getSimilarPosts(post, 3);
+  const similarPosts = await getSimilarPostsWithEnglish(post, 3);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-CA', {

@@ -279,3 +279,131 @@ export function calculateReadingTime(content: string): number {
   const wordCount = text.split(/\s+/).length;
   return Math.ceil(wordCount / wordsPerMinute);
 }
+
+// ============================================
+// ENGLISH TRANSLATION SUPPORT
+// ============================================
+
+interface PostTranslation {
+  post_id: number;
+  locale: string;
+  title: string;
+  excerpt: string | null;
+  content: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+}
+
+/**
+ * Get all English translations for posts
+ */
+async function getPostTranslations(): Promise<Map<number, PostTranslation>> {
+  const { data, error } = await supabase
+    .from('post_translations')
+    .select('*')
+    .eq('locale', 'en');
+
+  if (error) {
+    console.error('Error fetching post translations:', error);
+    return new Map();
+  }
+
+  const map = new Map<number, PostTranslation>();
+  (data || []).forEach((t: PostTranslation) => {
+    map.set(t.post_id, t);
+  });
+  return map;
+}
+
+/**
+ * Enrich posts with English translation data
+ */
+export async function enrichPostsWithEnglishData(posts: Post[]): Promise<Post[]> {
+  const translations = await getPostTranslations();
+
+  return posts.map(post => {
+    const translation = translations.get(post.id);
+    if (translation) {
+      return {
+        ...post,
+        title: translation.title || post.title,
+        excerpt: translation.excerpt || post.excerpt,
+        content: translation.content || post.content,
+        seoTitle: translation.seo_title || post.seoTitle,
+        seoDescription: translation.seo_description || post.seoDescription,
+      };
+    }
+    return post;
+  });
+}
+
+/**
+ * Enrich post cards with English translation data
+ */
+export async function enrichPostCardsWithEnglishData(posts: PostCard[]): Promise<PostCard[]> {
+  const translations = await getPostTranslations();
+
+  return posts.map(post => {
+    const translation = translations.get(post.id);
+    if (translation) {
+      return {
+        ...post,
+        title: translation.title || post.title,
+        excerpt: translation.excerpt || post.excerpt,
+      };
+    }
+    return post;
+  });
+}
+
+/**
+ * Get a single post with English translation
+ */
+export async function getPostBySlugWithEnglish(slug: string): Promise<Post | null> {
+  const post = await getPostBySlug(slug);
+  if (!post) return null;
+
+  const { data: translation } = await supabase
+    .from('post_translations')
+    .select('*')
+    .eq('post_id', post.id)
+    .eq('locale', 'en')
+    .single() as { data: PostTranslation | null };
+
+  if (translation) {
+    return {
+      ...post,
+      title: translation.title || post.title,
+      excerpt: translation.excerpt || post.excerpt,
+      content: translation.content || post.content,
+      seoTitle: translation.seo_title || post.seoTitle,
+      seoDescription: translation.seo_description || post.seoDescription,
+    };
+  }
+
+  return post;
+}
+
+/**
+ * Get recent posts with English translations
+ */
+export async function getRecentPostsWithEnglish(limit: number = 5): Promise<PostCard[]> {
+  const posts = await getRecentPosts(limit);
+  return enrichPostCardsWithEnglishData(posts);
+}
+
+/**
+ * Get post cards with English translations
+ */
+export async function getPostCardsWithEnglish(): Promise<PostCard[]> {
+  const posts = await getPostCards();
+  return enrichPostCardsWithEnglishData(posts);
+}
+
+/**
+ * Get similar posts with English translations
+ */
+export async function getSimilarPostsWithEnglish(post: Post, limit: number = 3): Promise<PostCard[]> {
+  const posts = await getSimilarPosts(post, limit);
+  return enrichPostCardsWithEnglishData(posts);
+}

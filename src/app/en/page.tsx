@@ -1,5 +1,5 @@
 import { getAllRecipes, getMainCategoriesWithLocale, enrichRecipesWithEnglishData } from '@/lib/recipes';
-import { getRecentPosts } from '@/lib/posts';
+import { getRecentPostsWithEnglish } from '@/lib/posts';
 import { MagazineHero } from '@/components/home/MagazineHero';
 import { MagazineRecipeGrid } from '@/components/home/MagazineRecipeGrid';
 import { MagazineCategorySection } from '@/components/home/MagazineCategorySection';
@@ -14,7 +14,7 @@ export default async function EnglishHomePage() {
   const [rawRecipes, categories, recentPosts] = await Promise.all([
     getAllRecipes(),
     getMainCategoriesWithLocale('en', 10),
-    getRecentPosts(4),
+    getRecentPostsWithEnglish(4),
   ]);
 
   // Enrichir avec les données anglaises
