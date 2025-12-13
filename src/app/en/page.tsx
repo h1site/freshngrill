@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getRecentRecipes, getAllCategoriesWithLocale, getMostLikedRecipes, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
+import { getRecentRecipes, getAllCategoriesWithLocale, enrichRecipeCardsWithEnglishSlugs } from '@/lib/recipes';
 import { getRecentPosts } from '@/lib/posts';
 import RecipeCard from '@/components/recipe/RecipeCard';
-import { ArrowRight, Heart, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import { CategoryGrid } from '@/components/home/CategoryGrid';
 import { NewsletterSection } from '@/components/home/NewsletterSection';
 import { FeaturesSection } from '@/components/home/FeaturesSection';
@@ -13,10 +13,9 @@ import { getDictionary } from '@/i18n/getDictionary';
 export const revalidate = 60;
 
 export default async function EnglishHomePage() {
-  const [rawRecentRecipes, allCategories, rawMostLikedRecipes, recentPosts, dictionary] = await Promise.all([
+  const [rawRecentRecipes, allCategories, recentPosts, dictionary] = await Promise.all([
     getRecentRecipes(8),
     getAllCategoriesWithLocale('en'),
-    getMostLikedRecipes(6),
     getRecentPosts(3),
     getDictionary('en'),
   ]);
@@ -35,7 +34,6 @@ export default async function EnglishHomePage() {
     likes: r.likes,
   }));
   const recentRecipes = await enrichRecipeCardsWithEnglishSlugs(recentRecipesCards);
-  const mostLikedRecipes = await enrichRecipeCardsWithEnglishSlugs(rawMostLikedRecipes);
 
   const t = dictionary;
   const categories = allCategories.slice(0, 8);
@@ -95,44 +93,6 @@ export default async function EnglishHomePage() {
       {categories.length > 0 && (
         <CategoryGrid categories={categories} locale="en" />
       )}
-
-      {/* 3. Most Liked Recipes */}
-      {mostLikedRecipes.length > 0 && (
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest flex items-center justify-center gap-2">
-                <Heart className="w-4 h-4 fill-current" />
-                Your Favorites
-              </span>
-              <h2 className="text-4xl md:text-5xl font-display text-black mt-2">
-                {t.home.popularRecipes}
-              </h2>
-              <p className="text-neutral-500 mt-4 max-w-xl mx-auto">
-                The recipes you loved the most. Vote for your favorites!
-              </p>
-              <div className="w-16 h-1 bg-[#F77313] mx-auto mt-6" />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {mostLikedRecipes.slice(0, 6).map((recipe, index) => (
-                <RecipeCard
-                  key={recipe.id}
-                  recipe={recipe}
-                  index={index}
-                  variant="large"
-                  locale="en"
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Ad */}
-      <div className="container mx-auto px-4 py-8 bg-neutral-50">
-        <GoogleAd slot="7610644087" />
-      </div>
 
       {/* 4. Blog Section */}
       {recentPosts.length > 0 && (

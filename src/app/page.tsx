@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getRecentRecipes, getAllCategories, getMostLikedRecipes } from '@/lib/recipes';
+import { getRecentRecipes, getAllCategories } from '@/lib/recipes';
 import { getRecentPosts } from '@/lib/posts';
 import RecipeCard from '@/components/recipe/RecipeCard';
-import { ArrowRight, Heart, BookOpen } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import { CategoryGrid } from '@/components/home/CategoryGrid';
 import { NewsletterSection } from '@/components/home/NewsletterSection';
 import { FeaturesSection } from '@/components/home/FeaturesSection';
@@ -12,10 +12,9 @@ import GoogleAd from '@/components/ads/GoogleAd';
 export const revalidate = 60; // Revalider toutes les 60 secondes pour les likes
 
 export default async function HomePage() {
-  const [recentRecipes, allCategories, mostLikedRecipes, recentPosts] = await Promise.all([
+  const [recentRecipes, allCategories, recentPosts] = await Promise.all([
     getRecentRecipes(8),
     getAllCategories(),
-    getMostLikedRecipes(6),
     getRecentPosts(3),
   ]);
   const categories = allCategories.slice(0, 8);
@@ -86,54 +85,7 @@ export default async function HomePage() {
         <CategoryGrid categories={categories} />
       )}
 
-      {/* 3. Most Liked Recipes - Vos recettes favorites */}
-      {mostLikedRecipes.length > 0 && (
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest flex items-center justify-center gap-2">
-                <Heart className="w-4 h-4 fill-current" />
-                Vos coups de coeur
-              </span>
-              <h2 className="text-4xl md:text-5xl font-display text-black mt-2">
-                Recettes Favorites
-              </h2>
-              <p className="text-neutral-500 mt-4 max-w-xl mx-auto">
-                Les recettes que vous avez le plus aimées. Votez pour vos favorites!
-              </p>
-              <div className="w-16 h-1 bg-[#F77313] mx-auto mt-6" />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {mostLikedRecipes.slice(0, 6).map((recipe, index) => (
-                <RecipeCard
-                  key={recipe.id}
-                  recipe={{
-                    id: recipe.id,
-                    slug: recipe.slug,
-                    title: recipe.title,
-                    featuredImage: recipe.featuredImage,
-                    prepTime: recipe.prepTime,
-                    cookTime: recipe.cookTime,
-                    totalTime: recipe.totalTime,
-                    difficulty: recipe.difficulty,
-                    categories: recipe.categories,
-                    likes: recipe.likes,
-                  }}
-                  index={index}
-                  variant="large"
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Ad après favoris */}
-      <div className="container mx-auto px-4 py-8 bg-neutral-50">
-        <GoogleAd slot="7610644087" />
-      </div>
-
+      
       {/* 4. Blog Section - Articles */}
       {recentPosts.length > 0 && (
         <section className="py-16 md:py-24 bg-neutral-50">
