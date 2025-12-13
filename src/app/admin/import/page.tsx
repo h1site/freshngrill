@@ -255,7 +255,8 @@ export default function ImportPage() {
     .substring(0, 50);
 
   // Upload all images to get URLs (direct to Supabase)
-  const uploadImages = async (): Promise<boolean> => {
+  // Returns the updated images array with URLs
+  const uploadImages = async (): Promise<ImageUpload[] | null> => {
     const supabase = createClient();
     const updatedImages = [...images];
     let hasError = false;
@@ -311,7 +312,7 @@ export default function ImportPage() {
       setImages([...updatedImages]);
     }
 
-    return !hasError;
+    return hasError ? null : updatedImages;
   };
 
   // Import recipes
@@ -320,20 +321,20 @@ export default function ImportPage() {
     setStep('importing');
 
     try {
-      // First upload all images
-      const uploadSuccess = await uploadImages();
-      if (!uploadSuccess) {
+      // First upload all images and get updated array with URLs
+      const uploadedImages = await uploadImages();
+      if (!uploadedImages) {
         throw new Error('Certaines images n\'ont pas pu être uploadées');
       }
 
-      // Then import recipes
+      // Then import recipes with the uploaded image URLs
       const response = await fetch('/api/import/recipes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           recipesFr,
           recipesEn,
-          images: images.map(img => ({ index: img.index, url: img.url })),
+          images: uploadedImages.map(img => ({ index: img.index, url: img.url })),
         }),
       });
 
