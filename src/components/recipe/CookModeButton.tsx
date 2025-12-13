@@ -611,29 +611,51 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
                           {t.timer}
                         </h3>
 
-                        <div className="flex items-center justify-center gap-2 mb-6">
+                        <div className="flex items-center justify-center gap-4 mb-6">
+                          {/* Minutes */}
                           <div className="flex flex-col items-center">
-                            <input
-                              type="number"
-                              min="0"
-                              max="99"
-                              value={timerMinutes}
-                              onChange={(e) => setTimerMinutes(Math.max(0, Math.min(99, parseInt(e.target.value) || 0)))}
-                              className="w-20 h-20 text-4xl font-mono font-bold text-center border-2 border-neutral-200 rounded-xl focus:border-[#F77313] focus:outline-none"
-                            />
-                            <span className="text-sm text-neutral-500 mt-1">min</span>
+                            <button
+                              onClick={() => setTimerMinutes(prev => Math.min(99, prev + 1))}
+                              className="w-16 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-t-xl flex items-center justify-center transition-colors"
+                            >
+                              <ChevronLeft className="w-6 h-6 text-neutral-600 rotate-90" />
+                            </button>
+                            <div className="w-16 h-16 bg-white border-2 border-neutral-200 flex items-center justify-center">
+                              <span className="text-3xl font-mono font-bold text-neutral-800">
+                                {timerMinutes.toString().padStart(2, '0')}
+                              </span>
+                            </div>
+                            <button
+                              onClick={() => setTimerMinutes(prev => Math.max(0, prev - 1))}
+                              className="w-16 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-b-xl flex items-center justify-center transition-colors"
+                            >
+                              <ChevronLeft className="w-6 h-6 text-neutral-600 -rotate-90" />
+                            </button>
+                            <span className="text-sm text-neutral-500 mt-2">min</span>
                           </div>
-                          <span className="text-4xl font-bold text-neutral-300">:</span>
+
+                          <span className="text-3xl font-bold text-neutral-300 mb-6">:</span>
+
+                          {/* Seconds */}
                           <div className="flex flex-col items-center">
-                            <input
-                              type="number"
-                              min="0"
-                              max="59"
-                              value={timerSeconds}
-                              onChange={(e) => setTimerSeconds(Math.max(0, Math.min(59, parseInt(e.target.value) || 0)))}
-                              className="w-20 h-20 text-4xl font-mono font-bold text-center border-2 border-neutral-200 rounded-xl focus:border-[#F77313] focus:outline-none"
-                            />
-                            <span className="text-sm text-neutral-500 mt-1">sec</span>
+                            <button
+                              onClick={() => setTimerSeconds(prev => prev >= 55 ? 0 : prev + 5)}
+                              className="w-16 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-t-xl flex items-center justify-center transition-colors"
+                            >
+                              <ChevronLeft className="w-6 h-6 text-neutral-600 rotate-90" />
+                            </button>
+                            <div className="w-16 h-16 bg-white border-2 border-neutral-200 flex items-center justify-center">
+                              <span className="text-3xl font-mono font-bold text-neutral-800">
+                                {timerSeconds.toString().padStart(2, '0')}
+                              </span>
+                            </div>
+                            <button
+                              onClick={() => setTimerSeconds(prev => prev <= 0 ? 55 : prev - 5)}
+                              className="w-16 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-b-xl flex items-center justify-center transition-colors"
+                            >
+                              <ChevronLeft className="w-6 h-6 text-neutral-600 -rotate-90" />
+                            </button>
+                            <span className="text-sm text-neutral-500 mt-2">sec</span>
                           </div>
                         </div>
 
