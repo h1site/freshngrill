@@ -167,20 +167,32 @@ export async function POST(request: NextRequest) {
 
         // 2. Lier les catégories (par slug)
         if (recipeFr.categories && recipeFr.categories.length > 0) {
+          console.log(`Recipe ${recipeFr.index}: categories to link:`, recipeFr.categories);
           for (const catSlug of recipeFr.categories) {
-            const { data: category } = await supabase
+            const { data: category, error: catError } = await supabase
               .from('categories')
               .select('id')
               .eq('slug', catSlug)
               .single();
 
+            if (catError) {
+              console.log(`Category "${catSlug}" not found:`, catError.message);
+            }
+
             if (category) {
               const catId = (category as { id: number }).id;
-              await supabase
+              const { error: linkError } = await supabase
                 .from('recipe_categories')
                 .insert({ recipe_id: recipeId, category_id: catId } as never);
+              if (linkError) {
+                console.log(`Error linking category ${catSlug}:`, linkError.message);
+              } else {
+                console.log(`Linked category ${catSlug} (${catId}) to recipe ${recipeId}`);
+              }
             }
           }
+        } else {
+          console.log(`Recipe ${recipeFr.index}: no categories provided`);
         }
 
         // 3. Lier les origines (par slug)
