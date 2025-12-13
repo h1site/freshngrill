@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import { extractIngredientsFromRecipe } from '@/lib/ingredient-extractor';
+import ImageUpload from './ImageUpload';
 import type { Database } from '@/types/database';
 
 interface IngredientGroup {
@@ -283,15 +284,10 @@ export default function RecipeEditForm({
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Image (URL)</label>
-            <input
-              type="url"
-              value={form.featured_image}
-              onChange={(e) => setForm({ ...form, featured_image: e.target.value })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-            />
-          </div>
+          <ImageUpload
+            value={form.featured_image}
+            onChange={(url) => setForm({ ...form, featured_image: url })}
+          />
         </div>
       </section>
 
