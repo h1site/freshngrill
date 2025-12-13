@@ -401,9 +401,9 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
         onClose={() => setShowNowPlaying(false)}
       />
 
-      <header className="sticky top-0 z-50 bg-black border-b border-neutral-800 overflow-x-hidden">
+      <header className="sticky top-0 z-50 bg-black border-b border-neutral-800">
         <div className="container mx-auto px-4">
-        <div className="flex items-center h-16 md:h-20">
+          <div className="flex items-center h-16 md:h-20">
           {/* Logo */}
           <Link href={`${urlPrefix}/`} className="flex items-center group">
             <Image
