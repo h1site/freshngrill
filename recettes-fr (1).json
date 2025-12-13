@@ -1,0 +1,80 @@
+{
+  "recettes": [
+    {
+      "index": 1,
+      "slug": "croustade-aux-pommes-dans-une-tasse",
+      "title": "Croustade aux pommes dans une tasse",
+      "excerpt": "Une croustade aux pommes individuelle, rapide et réconfortante, prête en quelques minutes au micro-ondes.",
+      "introduction": "Cette croustade aux pommes dans une tasse est parfaite pour une envie sucrée express. Facile à préparer avec des ingrédients simples, elle offre un cœur fondant et un dessus croustillant. Idéale pour une portion individuelle sans allumer le four.",
+      "conclusion": "Servez tiède avec une boule de crème glacée à la vanille ou un filet de caramel. Vous pouvez varier avec des poires, ajouter des noix ou parfumer à la muscade.",
+      "prep_time": 5,
+      "cook_time": 2,
+      "rest_time": 1,
+      "servings": 1,
+      "servings_unit": "tasse",
+      "difficulty": "facile",
+      "cuisine": "francaise",
+      "categories": [
+        "desserts"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "croustade pommes",
+        "dessert rapide",
+        "tasse micro-ondes",
+        "recette facile"
+      ],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "1 pomme moyenne pelée et coupée en dés",
+            "1 c. à soupe de sucre",
+            "1/4 c. à thé de cannelle",
+            "1/4 c. à thé de jus de citron"
+          ]
+        },
+        {
+          "group": "Garniture croustillante",
+          "items": [
+            "2 c. à soupe de flocons d’avoine",
+            "1 c. à soupe de farine",
+            "1 c. à soupe de cassonade",
+            "1 c. à soupe de beurre fondu"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Dans une tasse allant au micro-ondes, mélanger la pomme, le sucre, la cannelle et le jus de citron.",
+          "tip": "Coupez les dés petits pour une cuisson uniforme."
+        },
+        {
+          "step": 2,
+          "content": "Dans un petit bol, mélanger les ingrédients de la garniture croustillante puis répartir sur les pommes."
+        },
+        {
+          "step": 3,
+          "content": "Cuire au micro-ondes 1 minute 30 à 2 minutes, jusqu’à ce que les pommes soient tendres."
+        },
+        {
+          "step": 4,
+          "content": "Laisser reposer 1 minute avant de déguster."
+        }
+      ],
+      "nutrition": {
+        "calories": 280,
+        "protein": 3,
+        "carbs": 45,
+        "fat": 10,
+        "fiber": 5
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on utiliser une autre pomme?</h3><p>Oui, les pommes Cortland, Gala ou Honeycrisp fonctionnent très bien.</p></div><div class=\"faq-item\"><h3>Est-ce possible au four?</h3><p>Oui, cuire dans un ramequin à 180°C pendant environ 15 minutes.</p></div><div class=\"faq-item\"><h3>Comment rendre la recette sans gluten?</h3><p>Utilisez des flocons d’avoine certifiés sans gluten et une farine sans gluten.</p></div>",
+      "seo_title": "Croustade aux pommes dans une tasse | Dessert rapide",
+      "seo_description": "Croustade aux pommes dans une tasse prête en quelques minutes. Dessert facile, rapide et réconfortant au micro-ondes. Parfait pour une envie sucrée!"
+    }
+  ]
+}

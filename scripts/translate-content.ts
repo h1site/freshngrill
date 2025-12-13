@@ -19,6 +19,7 @@
  *   --limit=N      Limiter a N items
  *   --skip=N       Sauter les N premiers items
  *   --id=N         Traduire un item specifique par ID
+ *   --force        Re-traduire meme si deja traduit (pour posts avec contenu manquant)
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -41,6 +42,7 @@ const CONTENT_TYPE = process.argv.find(arg => arg.startsWith('--type='))?.split(
 const LIMIT = parseInt(process.argv.find(arg => arg.startsWith('--limit='))?.split('=')[1] || '0');
 const SKIP = parseInt(process.argv.find(arg => arg.startsWith('--skip='))?.split('=')[1] || '0');
 const SINGLE_ID = parseInt(process.argv.find(arg => arg.startsWith('--id='))?.split('=')[1] || '0');
+const FORCE = process.argv.includes('--force');
 
 // ============================================
 // OLLAMA HELPER
@@ -82,11 +84,14 @@ function extractJSON(text: string): any {
 
     // Clean up common Mistral JSON issues
     jsonStr = jsonStr
-      // Remove control characters (tabs, newlines inside strings cause parsing errors)
+      // First: convert literal \n sequences to actual newlines so we can handle them uniformly
+      .replace(/\\n/g, '\n')
+      .replace(/\\r/g, '\r')
+      // Then: convert actual newlines back to escaped sequences for JSON
       .replace(/[\x00-\x1F\x7F]/g, (char) => {
         if (char === '\n') return '\\n';
         if (char === '\r') return '\\r';
-        if (char === '\t') return ' ';
+        if (char === '\t') return '\\t';
         return '';
       })
       // Fix trailing commas
@@ -126,6 +131,9 @@ function extractJSON(text: string): any {
           const seoTitleMatch = jsonStr.match(/"seo_title"\s*:\s*"([^"]+)"/);
           const seoDescMatch = jsonStr.match(/"seo_description"\s*:\s*"([^"]+)"/);
 
+          // Try to extract content field (for posts) - handle HTML content with newlines
+          const contentMatch = jsonStr.match(/"content"\s*:\s*"([\s\S]*?)"\s*,\s*"seo_/);
+
           // Try to extract ingredients array
           const ingredientsMatch = jsonStr.match(/"ingredients"\s*:\s*(\[[\s\S]*?\])\s*,?\s*"instructions"/);
           // Try to extract instructions array
@@ -138,6 +146,13 @@ function extractJSON(text: string): any {
             if (excerptMatch) result.excerpt = excerptMatch[1];
             if (introMatch) result.introduction = introMatch[1];
             if (conclusionMatch) result.conclusion = conclusionMatch[1];
+            if (contentMatch) {
+              // Clean up the content - unescape and restore HTML
+              result.content = contentMatch[1]
+                .replace(/\\n/g, '\n')
+                .replace(/\\"/g, '"')
+                .replace(/\\\\/g, '\\');
+            }
             if (seoTitleMatch) result.seo_title = seoTitleMatch[1];
             if (seoDescMatch) result.seo_description = seoDescMatch[1];
 
@@ -231,26 +246,79 @@ French: "${category.name}"
 Respond with ONLY the English translation, nothing else.`;
 }
 
-function getPostTranslationPrompt(post: any): string {
-  return `You are a professional French to English translator.
-Translate this blog post from French to English.
+/**
+ * Split HTML content into chunks, trying to break at logical points
+ */
+function splitContentIntoChunks(content: string, maxChunkSize: number): string[] {
+  const chunks: string[] = [];
 
-IMPORTANT: Translate ONLY, do not invent or add content.
+  // Try to split at major HTML elements first
+  const splitPatterns = [
+    /(<\/h[1-6]>)/gi,  // After headings
+    /(<\/p>)/gi,        // After paragraphs
+    /(<\/div>)/gi,      // After divs
+    /(<\/figure>)/gi,   // After figures
+  ];
 
-POST TO TRANSLATE:
+  let remaining = content;
+
+  while (remaining.length > 0) {
+    if (remaining.length <= maxChunkSize) {
+      chunks.push(remaining);
+      break;
+    }
+
+    // Find a good split point within maxChunkSize
+    let splitAt = -1;
+    const searchArea = remaining.substring(0, maxChunkSize);
+
+    for (const pattern of splitPatterns) {
+      const matches = [...searchArea.matchAll(pattern)];
+      if (matches.length > 0) {
+        // Get the last match within the search area
+        const lastMatch = matches[matches.length - 1];
+        const matchEnd = lastMatch.index! + lastMatch[0].length;
+        if (matchEnd > splitAt) {
+          splitAt = matchEnd;
+        }
+      }
+    }
+
+    // If no good split point found, split at maxChunkSize
+    if (splitAt <= 0) {
+      splitAt = maxChunkSize;
+    }
+
+    chunks.push(remaining.substring(0, splitAt));
+    remaining = remaining.substring(splitAt);
+  }
+
+  return chunks;
+}
+
+function getPostMetadataPrompt(post: any): string {
+  return `Translate this French blog post metadata to English.
+
 Title: ${post.title}
 Excerpt: ${post.excerpt || ''}
-Content:
-${post.content?.substring(0, 8000) || ''}
 
 Respond with ONLY a valid JSON object:
 {
-  "title": "translated title",
-  "excerpt": "translated excerpt",
-  "content": "translated content (full HTML preserved)",
-  "seo_title": "translated SEO title (max 60 chars)",
-  "seo_description": "translated meta description (max 160 chars)"
+  "title": "English title",
+  "excerpt": "English excerpt",
+  "seo_title": "SEO title max 60 chars",
+  "seo_description": "meta description max 160 chars"
 }`;
+}
+
+function getPostContentPrompt(content: string): string {
+  return `Translate this French HTML content to English.
+Preserve ALL HTML tags exactly. Only translate the French text between tags.
+
+HTML to translate:
+${content}
+
+Return ONLY the translated HTML, nothing else.`;
 }
 
 function getLexiqueTranslationPrompt(item: any): string {
@@ -490,12 +558,20 @@ async function translatePosts() {
   // Get existing translations
   const { data: existingTranslations } = await supabase
     .from('post_translations')
-    .select('post_id')
+    .select('post_id, content')
     .eq('locale', TARGET_LOCALE);
 
+  // With --force, re-translate posts that have no content or very short content
+  const translatedWithContent = new Set(
+    existingTranslations
+      ?.filter(t => t.content && t.content.length > 100)
+      .map(t => t.post_id) || []
+  );
   const translatedIds = new Set(existingTranslations?.map(t => t.post_id) || []);
 
-  let postsToTranslate = posts.filter(p => !translatedIds.has(p.id));
+  let postsToTranslate = FORCE
+    ? posts.filter(p => !translatedWithContent.has(p.id)) // Re-translate if missing content
+    : posts.filter(p => !translatedIds.has(p.id)); // Only translate new posts
 
   if (SKIP > 0) postsToTranslate = postsToTranslate.slice(SKIP);
   if (LIMIT > 0) postsToTranslate = postsToTranslate.slice(0, LIMIT);
@@ -506,14 +582,55 @@ async function translatePosts() {
     try {
       console.log(`Translating post: ${post.title}`);
 
-      const prompt = getPostTranslationPrompt(post);
-      const response = await askOllama(prompt, 8000);
+      // Step 1: Translate metadata (title, excerpt, seo)
+      console.log(`  Step 1: Translating metadata...`);
+      const metadataPrompt = getPostMetadataPrompt(post);
+      const metadataResponse = await askOllama(metadataPrompt, 1000);
+      const metadata = extractJSON(metadataResponse);
 
-      const translation = extractJSON(response);
-
-      if (!translation || !translation.title) {
-        console.error(`  ERROR: Could not parse translation`);
+      if (!metadata || !metadata.title) {
+        console.error(`  ERROR: Could not parse metadata translation`);
         continue;
+      }
+
+      if (VERBOSE) {
+        console.log(`  Metadata: ${metadata.title}`);
+      }
+
+      // Step 2: Translate content in chunks if needed
+      console.log(`  Step 2: Translating content...`);
+      let translatedContent = '';
+      const contentLength = post.content?.length || 0;
+
+      if (contentLength > 0) {
+        // For long content, split into manageable chunks
+        const maxChunkSize = 6000;
+        const content = post.content || '';
+
+        if (contentLength <= maxChunkSize) {
+          // Single chunk translation
+          const contentPrompt = getPostContentPrompt(content);
+          translatedContent = await askOllama(contentPrompt, 12000);
+          translatedContent = translatedContent.trim();
+        } else {
+          // Multi-chunk translation - split by HTML paragraphs/sections
+          console.log(`  Content is ${contentLength} chars, translating in chunks...`);
+          const chunks = splitContentIntoChunks(content, maxChunkSize);
+          console.log(`  Split into ${chunks.length} chunks`);
+
+          for (let i = 0; i < chunks.length; i++) {
+            console.log(`  Translating chunk ${i + 1}/${chunks.length}...`);
+            const chunkPrompt = getPostContentPrompt(chunks[i]);
+            const translatedChunk = await askOllama(chunkPrompt, 12000);
+            translatedContent += translatedChunk.trim() + '\n\n';
+            // Small delay between chunks
+            await new Promise(resolve => setTimeout(resolve, 500));
+          }
+        }
+      }
+
+      if (VERBOSE) {
+        console.log(`  Content translated: ${translatedContent.length} chars`);
       }
 
       if (!DRY_RUN) {
@@ -522,11 +639,11 @@ async function translatePosts() {
           .upsert({
             post_id: post.id,
             locale: TARGET_LOCALE,
-            title: translation.title,
-            excerpt: translation.excerpt,
-            content: translation.content,
-            seo_title: translation.seo_title,
-            seo_description: translation.seo_description,
+            title: metadata.title,
+            excerpt: metadata.excerpt,
+            content: translatedContent || null,
+            seo_title: metadata.seo_title,
+            seo_description: metadata.seo_description,
           }, {
             onConflict: 'post_id,locale'
           });
@@ -537,7 +654,7 @@ async function translatePosts() {
         }
       }
 
-      console.log(`  OK: ${post.title} -> ${translation.title}`);
+      console.log(`  OK: ${post.title} -> ${metadata.title} (${translatedContent.length} chars content)`);
 
       await new Promise(resolve => setTimeout(resolve, 1000));
 
@@ -699,6 +816,7 @@ async function main() {
   if (LIMIT) console.log(`Limit: ${LIMIT}`);
   if (SKIP) console.log(`Skip: ${SKIP}`);
   if (SINGLE_ID) console.log(`Single ID: ${SINGLE_ID}`);
+  if (FORCE) console.log(`Force: Re-translate posts with missing content`);
 
   // Check Ollama connection
   try {
