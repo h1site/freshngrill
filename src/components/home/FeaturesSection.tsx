@@ -22,8 +22,8 @@ export function FeaturesSection({ locale = 'fr' }: FeaturesSectionProps) {
       icon: <ChefHat className="w-6 h-6" />,
       title: isEN ? 'Cooking Mode' : 'Mode Cuisine',
       description: isEN
-        ? 'Step-by-step instructions with timers and voice commands. Keep your screen on and follow the recipe hands-free.'
-        : 'Instructions étape par étape avec minuteries et commandes vocales. Gardez votre écran allumé et suivez la recette les mains libres.',
+        ? 'Step-by-step instructions with built-in timers. Keep your screen on and follow the recipe at your own pace.'
+        : 'Instructions étape par étape avec minuteries intégrées. Gardez votre écran allumé et suivez la recette à votre rythme.',
       color: 'from-[#F77313] to-[#d45f0a]',
     },
     {
