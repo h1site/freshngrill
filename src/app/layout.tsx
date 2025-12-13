@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/layout/ScrollToTop';
+import MobileRadioBar from '@/components/KracRadio/MobileRadioBar';
 import { siteConfig } from '@/lib/config';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/i18n/getDictionary';
@@ -96,7 +97,8 @@ export default async function RootLayout({
             <Header locale={locale} dictionary={dictionary} />
             {children}
             <Footer locale={locale} dictionary={dictionary} />
-                      </LanguageProvider>
+            <MobileRadioBar locale={locale} />
+          </LanguageProvider>
         </LocaleProvider>
       </body>
     </html>

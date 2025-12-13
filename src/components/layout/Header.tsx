@@ -401,8 +401,8 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
         onClose={() => setShowNowPlaying(false)}
       />
 
-      <header className="sticky top-0 z-50 bg-black border-b border-neutral-800">
-        <div className="container mx-auto px-4">
+      <header className="sticky top-0 z-50 bg-black border-b border-neutral-800 overflow-x-hidden">
+        <div className="container mx-auto px-4 overflow-hidden">
           <div className="flex items-center h-16 md:h-20">
           {/* Logo */}
           <Link href={`${urlPrefix}/`} className="flex items-center group">
@@ -447,9 +447,9 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
           <div className="flex-1" />
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
-            {/* KracRadio Controls */}
-            <div className="flex items-center">
+          <div className="flex items-center gap-1 sm:gap-2">
+            {/* KracRadio Controls - Hidden on mobile, shown on tablet+ */}
+            <div className="hidden md:flex items-center">
               {/* Radio Button - opens modal */}
               <button
                 onClick={() => setShowChannelSelector(true)}

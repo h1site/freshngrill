@@ -83,7 +83,7 @@ export default function Footer({ locale = 'fr', dictionary }: FooterProps) {
   };
 
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-black text-white pb-16 md:pb-0">
       <div className="container mx-auto px-4 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
           {/* Brand */}
