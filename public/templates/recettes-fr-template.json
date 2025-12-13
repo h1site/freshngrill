@@ -1,0 +1,62 @@
+{
+  "description": "Template pour importer des recettes en français. Chaque recette doit avoir un index correspondant au fichier anglais.",
+  "recettes": [
+    {
+      "index": 1,
+      "slug": "poulet-roti-aux-herbes",
+      "title": "Poulet roti aux herbes de Provence",
+      "excerpt": "Un classique de la cuisine familiale, ce poulet roti aux herbes de Provence est juteux et parfume.",
+      "content": "Description detaillee de la recette...",
+      "introduction": "Le poulet roti est un incontournable des dimanches en famille.",
+      "conclusion": "Servez ce poulet avec des pommes de terre roties et une salade verte.",
+      "prep_time": 20,
+      "cook_time": 75,
+      "rest_time": 10,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "facile",
+      "cuisine": "francaise",
+      "tags": ["poulet", "roti", "herbes", "familial"],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "1 poulet entier de 1.5 kg",
+            "3 c. a soupe d'huile d'olive",
+            "2 c. a soupe d'herbes de Provence",
+            "4 gousses d'ail",
+            "1 citron",
+            "Sel et poivre au gout"
+          ]
+        },
+        {
+          "group": "Pour la garniture",
+          "items": [
+            "500g de pommes de terre",
+            "2 oignons",
+            "2 carottes"
+          ]
+        }
+      ],
+      "instructions": [
+        "Prechauffer le four a 200°C (400°F).",
+        "Melanger l'huile d'olive avec les herbes de Provence, le sel et le poivre.",
+        "Badigeonner le poulet avec ce melange, a l'interieur et a l'exterieur.",
+        "Placer l'ail et le demi-citron a l'interieur de la cavite du poulet.",
+        "Disposer les legumes autour du poulet dans un plat allant au four.",
+        "Enfourner pendant 1h15, en arrosant regulierement avec le jus de cuisson.",
+        "Verifier la cuisson en piquant la cuisse - le jus doit etre clair.",
+        "Laisser reposer 10 minutes avant de decouper et servir."
+      ],
+      "nutrition": {
+        "calories": 450,
+        "protein": 42,
+        "carbs": 15,
+        "fat": 25,
+        "fiber": 3
+      },
+      "seo_title": "Poulet Roti aux Herbes de Provence | Recette Facile",
+      "seo_description": "Decouvrez notre recette de poulet roti aux herbes de Provence, juteux et parfume. Une recette familiale facile a preparer."
+    }
+  ]
+}
