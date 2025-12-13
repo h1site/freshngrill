@@ -6,6 +6,7 @@ import RecipeCard from '@/components/recipe/RecipeCard';
 import { ArrowRight, Heart, BookOpen } from 'lucide-react';
 import { CategoryGrid } from '@/components/home/CategoryGrid';
 import { NewsletterSection } from '@/components/home/NewsletterSection';
+import { FeaturesSection } from '@/components/home/FeaturesSection';
 import GoogleAd from '@/components/ads/GoogleAd';
 import { getDictionary } from '@/i18n/getDictionary';
 
@@ -194,6 +195,9 @@ export default async function EnglishHomePage() {
           </div>
         </section>
       )}
+
+      {/* Features Section */}
+      <FeaturesSection locale="en" />
 
       {/* Newsletter Section */}
       <NewsletterSection locale="en" />

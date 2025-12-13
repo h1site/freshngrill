@@ -449,16 +449,17 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
             {/* KracRadio Button */}
             <button
               onClick={() => setShowChannelSelector(true)}
-              className={`relative p-2.5 rounded-full transition-all ${
+              className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all text-sm font-medium ${
                 musicEnabled
-                  ? 'text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30'
-                  : 'text-neutral-400 hover:text-white hover:bg-neutral-800'
+                  ? 'text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/30'
+                  : 'text-neutral-400 hover:text-white bg-neutral-800/50 hover:bg-neutral-800 border border-neutral-700'
               }`}
-              title={locale === 'en' ? 'Radio' : 'Radio'}
+              title={locale === 'en' ? 'Listen to music while cooking' : 'Écouter de la musique en cuisinant'}
             >
-              {musicEnabled ? <SpeakerHigh weight="fill" className="w-5 h-5" /> : <SpeakerSlash weight="regular" className="w-5 h-5" />}
+              {musicEnabled ? <SpeakerHigh weight="fill" className="w-4 h-4" /> : <SpeakerSlash weight="regular" className="w-4 h-4" />}
+              <span className="hidden sm:inline">{locale === 'en' ? 'Radio' : 'Radio'}</span>
               {musicEnabled && (
-                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-pink-500 rounded-full animate-pulse" />
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-pink-500 rounded-full animate-pulse" />
               )}
             </button>
 
