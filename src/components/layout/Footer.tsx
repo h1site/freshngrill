@@ -161,9 +161,9 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="/rss.xml"
+                href={locale === 'en' ? '/en/rss/recipes' : '/rss/recettes'}
                 className="w-10 h-10 bg-neutral-800 hover:bg-[#F77313] rounded-full flex items-center justify-center transition-colors"
-                aria-label="Flux RSS"
+                aria-label={locale === 'en' ? 'RSS Feed' : 'Flux RSS'}
               >
                 <Rss className="w-5 h-5" />
               </a>
