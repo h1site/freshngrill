@@ -110,3 +110,105 @@ export function extractIngredientsFromRecipe(ingredients: Array<{ group?: string
 
   return detectKnownIngredients(allText);
 }
+
+// Interface pour les ingrédients structurés
+export interface ParsedIngredient {
+  quantity?: string;
+  unit?: string;
+  name: string;
+  note?: string;
+}
+
+// Unités de mesure françaises et anglaises
+const UNITS = [
+  // Volume
+  'ml', 'cl', 'dl', 'l', 'litre', 'litres',
+  'c\\. à soupe', 'c\\.à soupe', 'cuillère à soupe', 'cuillères à soupe', 'c\\. soupe',
+  'c\\. à thé', 'c\\.à thé', 'cuillère à thé', 'cuillères à thé', 'c\\. thé',
+  'c\\. à café', 'cuillère à café', 'cuillères à café',
+  'tasse', 'tasses', 'cup', 'cups',
+  'verre', 'verres',
+  // Poids
+  'g', 'kg', 'gramme', 'grammes', 'kilogramme', 'kilogrammes',
+  'oz', 'once', 'onces', 'lb', 'livre', 'livres',
+  // Autres
+  'pincée', 'pincées', 'goutte', 'gouttes',
+  'tranche', 'tranches', 'morceau', 'morceaux',
+  'feuille', 'feuilles', 'brin', 'brins',
+  'gousse', 'gousses', 'tige', 'tiges',
+  'boîte', 'boîtes', 'pot', 'pots', 'sachet', 'sachets',
+  'paquet', 'paquets', 'bouteille', 'bouteilles',
+];
+
+/**
+ * Parse une string d'ingrédient en objet structuré
+ * Ex: "250 g de farine tout usage" -> { quantity: "250", unit: "g", name: "farine tout usage" }
+ * Ex: "3 œufs" -> { quantity: "3", name: "œufs" }
+ * Ex: "30 g de beurre fondu (tiède)" -> { quantity: "30", unit: "g", name: "beurre fondu", note: "tiède" }
+ */
+export function parseIngredientString(ingredientStr: string): ParsedIngredient {
+  let str = ingredientStr.trim();
+  let note: string | undefined;
+
+  // Extraire les notes entre parenthèses à la fin
+  const noteMatch = str.match(/\(([^)]+)\)\s*$/);
+  if (noteMatch) {
+    note = noteMatch[1].trim();
+    str = str.replace(/\(([^)]+)\)\s*$/, '').trim();
+  }
+
+  // Pattern pour quantité (nombres, fractions, décimaux)
+  const quantityPattern = /^([\d.,\/]+(?:\s*[-à]\s*[\d.,\/]+)?)\s*/;
+  const quantityMatch = str.match(quantityPattern);
+
+  let quantity: string | undefined;
+  let remaining = str;
+
+  if (quantityMatch) {
+    quantity = quantityMatch[1].trim();
+    remaining = str.slice(quantityMatch[0].length).trim();
+  }
+
+  // Chercher l'unité au début du reste
+  let unit: string | undefined;
+  const unitsPattern = new RegExp(`^(${UNITS.join('|')})\\s+`, 'i');
+  const unitMatch = remaining.match(unitsPattern);
+
+  if (unitMatch) {
+    unit = unitMatch[1].trim();
+    remaining = remaining.slice(unitMatch[0].length).trim();
+  }
+
+  // Retirer "de ", "d'", "du ", "des " au début du nom (peut apparaître plusieurs fois)
+  remaining = remaining.replace(/^(de\s+|d'|du\s+|des\s+)+/i, '').trim();
+
+  return {
+    ...(quantity && { quantity }),
+    ...(unit && { unit }),
+    name: remaining || ingredientStr,
+    ...(note && { note }),
+  };
+}
+
+/**
+ * Transforme un groupe d'ingrédients avec des strings en objets structurés
+ */
+export function parseIngredientGroup(group: { group?: string; items: string[] }): {
+  title?: string;
+  items: ParsedIngredient[];
+} {
+  return {
+    ...(group.group && { title: group.group }),
+    items: group.items.map(item => parseIngredientString(item)),
+  };
+}
+
+/**
+ * Transforme tous les groupes d'ingrédients
+ */
+export function parseAllIngredients(ingredients: Array<{ group?: string; items: string[] }>): Array<{
+  title?: string;
+  items: ParsedIngredient[];
+}> {
+  return ingredients.map(parseIngredientGroup);
+}

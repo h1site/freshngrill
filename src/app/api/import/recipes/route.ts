@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
-import { extractIngredientsFromRecipe } from '@/lib/ingredient-extractor';
+import { extractIngredientsFromRecipe, parseAllIngredients } from '@/lib/ingredient-extractor';
 
 interface InstructionStep {
   step: number;
@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
             difficulty: recipeFr.difficulty,
             cuisine: recipeFr.cuisine || null,
             tags: recipeFr.tags || null,
-            ingredients: recipeFr.ingredients,
+            ingredients: parseAllIngredients(recipeFr.ingredients),
             instructions: recipeFr.instructions,
             nutrition: recipeFr.nutrition || null,
             faq: recipeFr.faq || null,
@@ -265,7 +265,7 @@ export async function POST(request: NextRequest) {
             excerpt: recipeEn.excerpt || null,
             introduction: recipeEn.introduction || null,
             conclusion: recipeEn.conclusion || null,
-            ingredients: recipeEn.ingredients,
+            ingredients: parseAllIngredients(recipeEn.ingredients),
             instructions: recipeEn.instructions,
             faq: recipeEn.faq || null,
             seo_title: recipeEn.seo_title || null,
