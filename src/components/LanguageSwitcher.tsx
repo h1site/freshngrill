@@ -97,7 +97,8 @@ export default function LanguageSwitcher({ locale: localeProp, className = '' }:
   const currentLocale: Locale = pathname.startsWith('/en') ? 'en' : 'fr';
 
   // Check if this is a recipe or blog page with a slug
-  const isRecipePage = pathname.match(/^\/(en\/)?recip?e?\/[^/]+\/?$/);
+  // Match /recette/slug/ (French) or /en/recipe/slug/ (English)
+  const isRecipePage = pathname.match(/^\/recette\/[^/]+\/?$/) || pathname.match(/^\/en\/recipe\/[^/]+\/?$/);
   const isBlogPage = pathname.match(/^\/(en\/)?blog\/[^/]+\/?$/);
 
   let frPath: string;
