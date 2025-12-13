@@ -626,14 +626,16 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
                               <ChevronLeft className="w-5 h-5 text-neutral-600 rotate-90" />
                             </button>
                             <input
-                              type="text"
-                              inputMode="numeric"
-                              value={timerHours.toString().padStart(2, '0')}
+                              type="number"
+                              min="0"
+                              max="23"
+                              value={timerHours}
                               onChange={(e) => {
                                 const val = parseInt(e.target.value) || 0;
                                 setTimerHours(Math.min(23, Math.max(0, val)));
                               }}
-                              className="w-14 h-14 text-2xl font-mono font-bold text-center bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none"
+                              onKeyDown={(e) => e.stopPropagation()}
+                              className="w-14 h-14 text-2xl font-mono font-bold text-center bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
                             <button
                               onClick={() => setTimerHours(prev => Math.max(0, prev - 1))}
@@ -655,14 +657,16 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
                               <ChevronLeft className="w-5 h-5 text-neutral-600 rotate-90" />
                             </button>
                             <input
-                              type="text"
-                              inputMode="numeric"
-                              value={timerMinutes.toString().padStart(2, '0')}
+                              type="number"
+                              min="0"
+                              max="59"
+                              value={timerMinutes}
                               onChange={(e) => {
                                 const val = parseInt(e.target.value) || 0;
                                 setTimerMinutes(Math.min(59, Math.max(0, val)));
                               }}
-                              className="w-14 h-14 text-2xl font-mono font-bold text-center bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none"
+                              onKeyDown={(e) => e.stopPropagation()}
+                              className="w-14 h-14 text-2xl font-mono font-bold text-center bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
                             <button
                               onClick={() => setTimerMinutes(prev => Math.max(0, prev - 1))}
@@ -684,14 +688,16 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
                               <ChevronLeft className="w-5 h-5 text-neutral-600 rotate-90" />
                             </button>
                             <input
-                              type="text"
-                              inputMode="numeric"
-                              value={timerSeconds.toString().padStart(2, '0')}
+                              type="number"
+                              min="0"
+                              max="59"
+                              value={timerSeconds}
                               onChange={(e) => {
                                 const val = parseInt(e.target.value) || 0;
                                 setTimerSeconds(Math.min(59, Math.max(0, val)));
                               }}
-                              className="w-14 h-14 text-2xl font-mono font-bold text-center bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none"
+                              onKeyDown={(e) => e.stopPropagation()}
+                              className="w-14 h-14 text-2xl font-mono font-bold text-center bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                             />
                             <button
                               onClick={() => setTimerSeconds(prev => prev <= 0 ? 55 : prev - 5)}
