@@ -1,7 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { Recipe } from '@/types/recipe';
-import { Clock, Users, ChefHat } from 'lucide-react';
+import { Clock, Users } from 'lucide-react';
 import LikeButton from './LikeButton';
 import ShareButton from './ShareButton';
 import PrintButton from './PrintButton';
@@ -49,16 +50,17 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
 
   return (
     <div className="text-white max-w-4xl">
-      {/* Categories - hidden on small mobile */}
+      {/* Categories - clickable links */}
       {recipe.categories.length > 0 && (
         <div className="hidden sm:flex flex-wrap gap-2 mb-3 md:mb-4">
-          {recipe.categories.slice(0, 2).map((cat) => (
-            <span
+          {recipe.categories.map((cat) => (
+            <Link
               key={cat.id}
-              className="bg-white/20 backdrop-blur-sm text-white text-xs md:text-sm font-medium px-3 py-1 md:px-4 md:py-1.5 rounded-full"
+              href={isEN ? `/en/category/${cat.slug}` : `/categorie/${cat.slug}`}
+              className="bg-white/20 backdrop-blur-sm text-white text-xs md:text-sm font-medium px-3 py-1 md:px-4 md:py-1.5 rounded-full hover:bg-[#F77313] transition-colors duration-200"
             >
               {getCategoryName(cat.name, locale)}
-            </span>
+            </Link>
           ))}
         </div>
       )}
