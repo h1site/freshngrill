@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Maximize2, X, ChevronLeft, ChevronRight, Check, Clock, Users, Timer, Play, Pause, RotateCcw, Volume2, VolumeX, Speech } from 'lucide-react';
+import { Maximize2, X, ChevronLeft, ChevronRight, Check, Clock, Users, Timer, Play, Pause, RotateCcw, Volume2, VolumeX, Speech, Mic, MicOff } from 'lucide-react';
 import { Recipe } from '@/types/recipe';
 import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
@@ -35,6 +35,8 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     timerDone: isEN ? 'Timer done!' : 'Minuterie terminée!',
     readAloud: isEN ? 'Read aloud' : 'Lire à voix haute',
     stopReading: isEN ? 'Stop reading' : 'Arrêter la lecture',
+    voiceControl: isEN ? 'Voice control' : 'Contrôle vocal',
+    listening: isEN ? 'Listening...' : 'Écoute...',
   };
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -55,6 +57,10 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
   // Speech synthesis state
   const [isSpeaking, setIsSpeaking] = useState(false);
   const speechSynthRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  // Voice recognition state
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
 
   // Total des étapes: 0 = ingrédients, 1+ = instructions
   const totalPages = recipe.instructions.length + 1;
@@ -248,6 +254,56 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Expand unit abbreviations for speech
+  const expandUnitsForSpeech = useCallback((text: string): string => {
+    const unitMap: Record<string, { fr: string; en: string }> = {
+      // Weight
+      'g': { fr: 'grammes', en: 'grams' },
+      'kg': { fr: 'kilogrammes', en: 'kilograms' },
+      'mg': { fr: 'milligrammes', en: 'milligrams' },
+      'oz': { fr: 'onces', en: 'ounces' },
+      'lb': { fr: 'livres', en: 'pounds' },
+      'lbs': { fr: 'livres', en: 'pounds' },
+      // Volume
+      'ml': { fr: 'millilitres', en: 'milliliters' },
+      'cl': { fr: 'centilitres', en: 'centiliters' },
+      'dl': { fr: 'décilitres', en: 'deciliters' },
+      'l': { fr: 'litres', en: 'liters' },
+      'L': { fr: 'litres', en: 'liters' },
+      // Spoons/cups
+      'c. à soupe': { fr: 'cuillères à soupe', en: 'tablespoons' },
+      'c. à café': { fr: 'cuillères à café', en: 'teaspoons' },
+      'c. à thé': { fr: 'cuillères à thé', en: 'teaspoons' },
+      'càs': { fr: 'cuillères à soupe', en: 'tablespoons' },
+      'càc': { fr: 'cuillères à café', en: 'teaspoons' },
+      'tbsp': { fr: 'cuillères à soupe', en: 'tablespoons' },
+      'tsp': { fr: 'cuillères à thé', en: 'teaspoons' },
+      'tasse': { fr: 'tasse', en: 'cup' },
+      'tasses': { fr: 'tasses', en: 'cups' },
+      // Other
+      'pincée': { fr: 'pincée', en: 'pinch' },
+      'pincées': { fr: 'pincées', en: 'pinches' },
+      'gousse': { fr: 'gousse', en: 'clove' },
+      'gousses': { fr: 'gousses', en: 'cloves' },
+      'tranche': { fr: 'tranche', en: 'slice' },
+      'tranches': { fr: 'tranches', en: 'slices' },
+    };
+
+    let result = text;
+
+    // Sort by length (longest first) to avoid partial replacements
+    const sortedUnits = Object.keys(unitMap).sort((a, b) => b.length - a.length);
+
+    for (const unit of sortedUnits) {
+      // Match unit with word boundaries (after a number or space, before space or end)
+      const regex = new RegExp(`(\\d+\\s*)${unit.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?=\\s|$|,|\\))`, 'gi');
+      const replacement = unitMap[unit][isEN ? 'en' : 'fr'];
+      result = result.replace(regex, `$1${replacement}`);
+    }
+
+    return result;
+  }, [isEN]);
+
   // Speech synthesis functions
   const stopSpeaking = useCallback(() => {
     if (typeof window !== 'undefined' && window.speechSynthesis) {
@@ -256,43 +312,51 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     setIsSpeaking(false);
   }, []);
 
-  const speakCurrentStep = useCallback(() => {
+  // Speak a specific step (pass step number, or use current if not provided)
+  const speakStep = useCallback((stepToSpeak?: number) => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
 
+    const step = stepToSpeak ?? currentStep;
+
     // Stop any current speech
-    stopSpeaking();
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
 
     let textToSpeak = '';
 
-    if (currentStep === 0) {
-      // Read ingredients
+    if (step === 0) {
+      // Read recipe title first, then ingredients
       const ingredientsList = recipe.ingredients.flatMap(group => {
-        const groupTitle = group.title ? `${group.title}: ` : '';
         return group.items.map(item => {
           const parts = [];
           if (item.quantity) parts.push(item.quantity);
           if (item.unit) parts.push(item.unit);
           parts.push(item.name);
           if (item.note) parts.push(`(${item.note})`);
-          return groupTitle + parts.join(' ');
+          return parts.join(' ');
         });
       });
-      textToSpeak = isEN
-        ? `Ingredients: ${ingredientsList.join('. ')}`
-        : `Ingrédients: ${ingredientsList.join('. ')}`;
+      textToSpeak = `${recipe.title}... ${ingredientsList.join('... ')}`;
     } else {
-      // Read current instruction
-      const instruction = recipe.instructions[currentStep - 1];
-      const stepIntro = isEN ? `Step ${currentStep}:` : `Étape ${currentStep}:`;
-      textToSpeak = `${stepIntro} ${instruction.content}`;
-      if (instruction.tip) {
-        textToSpeak += isEN ? `. Tip: ${instruction.tip}` : `. Astuce: ${instruction.tip}`;
+      // Read specified instruction
+      const instruction = recipe.instructions[step - 1];
+      if (instruction) {
+        textToSpeak = instruction.content;
+        if (instruction.tip) {
+          textToSpeak += isEN ? `. Tip: ${instruction.tip}` : `. Astuce: ${instruction.tip}`;
+        }
       }
     }
 
+    if (!textToSpeak) return;
+
+    // Expand unit abbreviations for better speech
+    textToSpeak = expandUnitsForSpeech(textToSpeak);
+
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.lang = isEN ? 'en-US' : 'fr-FR';
-    utterance.rate = 0.9;
+    utterance.rate = 0.75;
     utterance.pitch = 1;
 
     utterance.onend = () => setIsSpeaking(false);
@@ -301,12 +365,19 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     speechSynthRef.current = utterance;
     setIsSpeaking(true);
     window.speechSynthesis.speak(utterance);
-  }, [currentStep, recipe.ingredients, recipe.instructions, isEN, stopSpeaking]);
+  }, [currentStep, recipe.ingredients, recipe.instructions, isEN, expandUnitsForSpeech]);
 
-  // Stop speaking when changing steps or closing
+  // Convenience function to speak current step
+  const speakCurrentStep = useCallback(() => {
+    speakStep();
+  }, [speakStep]);
+
+  // Stop speaking when closing (but not when changing steps - voice command handles that)
   useEffect(() => {
-    stopSpeaking();
-  }, [currentStep, isOpen, stopSpeaking]);
+    if (!isOpen) {
+      stopSpeaking();
+    }
+  }, [isOpen, stopSpeaking]);
 
   // Cleanup speech on unmount
   useEffect(() => {
@@ -314,6 +385,142 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       stopSpeaking();
     };
   }, [stopSpeaking]);
+
+  // Voice recognition - process commands
+  const processVoiceCommand = useCallback((transcript: string) => {
+    const text = transcript.toLowerCase().trim();
+
+    // Navigation commands - go to ingredients and read them
+    if (text.includes('ingrédient') || text.includes('ingredient')) {
+      setCurrentStep(0);
+      speakStep(0);
+      return;
+    }
+
+    if (text.includes('suivant') || text.includes('next') || text.includes('prochain')) {
+      if (currentStep < totalPages - 1) {
+        const newStep = currentStep + 1;
+        setCurrentStep(newStep);
+        speakStep(newStep);
+      }
+      return;
+    }
+
+    if (text.includes('précédent') || text.includes('previous') || text.includes('retour') || text.includes('back')) {
+      if (currentStep > 0) {
+        const newStep = currentStep - 1;
+        setCurrentStep(newStep);
+        speakStep(newStep);
+      }
+      return;
+    }
+
+    // Go to specific step - "étape 3", "step 3", etc.
+    const stepMatch = text.match(/(?:étape|step|go to)\s*(\d+)/i);
+    if (stepMatch) {
+      const stepNum = parseInt(stepMatch[1]);
+      if (stepNum >= 1 && stepNum <= totalPages - 1) {
+        setCurrentStep(stepNum);
+        speakStep(stepNum);
+      }
+      return;
+    }
+
+    // Read commands
+    if (text.includes('lire') || text.includes('lis') || text.includes('read')) {
+      speakStep();
+      return;
+    }
+
+    // Stop reading
+    if (text.includes('stop') || text.includes('arrête') || text.includes('silence')) {
+      stopSpeaking();
+      return;
+    }
+
+    // Repeat current step
+    if (text.includes('répète') || text.includes('repeat') || text.includes('encore')) {
+      speakStep();
+      return;
+    }
+  }, [currentStep, totalPages, speakStep, stopSpeaking]);
+
+  // Voice recognition - start/stop listening
+  const toggleListening = useCallback(() => {
+    if (typeof window === 'undefined') return;
+
+    const SpeechRecognition = window.SpeechRecognition || (window as typeof window & { webkitSpeechRecognition: typeof window.SpeechRecognition }).webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      console.error('Speech recognition not supported');
+      return;
+    }
+
+    if (isListening && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.lang = isEN ? 'en-US' : 'fr-FR';
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const last = event.results.length - 1;
+      const transcript = event.results[last][0].transcript;
+      console.log('Voice command:', transcript);
+      processVoiceCommand(transcript);
+    };
+
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      console.error('Speech recognition error:', event.error);
+      if (event.error !== 'no-speech') {
+        setIsListening(false);
+      }
+    };
+
+    recognition.onend = () => {
+      // Restart if still supposed to be listening
+      if (isListening && recognitionRef.current) {
+        try {
+          recognitionRef.current.start();
+        } catch {
+          setIsListening(false);
+        }
+      }
+    };
+
+    recognitionRef.current = recognition;
+
+    try {
+      recognition.start();
+    } catch (e) {
+      console.error('Error starting recognition:', e);
+    }
+  }, [isListening, isEN, processVoiceCommand]);
+
+  // Stop listening when closing cook mode
+  useEffect(() => {
+    if (!isOpen && recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    }
+  }, [isOpen]);
+
+  // Cleanup recognition on unmount
+  useEffect(() => {
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -633,8 +840,21 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
                       <span className="hidden sm:inline">{t.previous}</span>
                     </button>
 
-                    {/* Center buttons: Timer + Speech */}
+                    {/* Center buttons: Mic + Speech + Timer */}
                     <div className="flex items-center gap-2">
+                      {/* Microphone button */}
+                      <button
+                        onClick={toggleListening}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-full font-medium transition-all ${
+                          isListening
+                            ? 'bg-red-500 text-white animate-pulse'
+                            : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
+                        }`}
+                        title={isListening ? t.listening : t.voiceControl}
+                      >
+                        {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                      </button>
+
                       {/* Speech button */}
                       <button
                         onClick={isSpeaking ? stopSpeaking : speakCurrentStep}
