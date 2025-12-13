@@ -16,6 +16,8 @@
       "servings_unit": "portions",
       "difficulty": "facile",
       "cuisine": "francaise",
+      "categories": ["plats-principaux", "volaille"],
+      "origines": ["france"],
       "tags": ["poulet", "rôti", "herbes", "familial"],
       "ingredients": [
         {

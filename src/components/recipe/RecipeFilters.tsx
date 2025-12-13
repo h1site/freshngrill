@@ -8,9 +8,15 @@ import { Search, SlidersHorizontal, X } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 import { getCategoryName } from '@/lib/categoryTranslations';
 
+interface Origine {
+  id: number;
+  slug: string;
+  name: string;
+}
+
 interface Props {
   categories: Category[];
-  origines?: string[];
+  origines?: Origine[];
   locale?: Locale;
 }
 
@@ -178,8 +184,8 @@ export default function RecipeFilters({ categories, origines = [], locale = 'fr'
                     >
                       <option value="">{t.allOrigines}</option>
                       {origines.map((origine) => (
-                        <option key={origine} value={origine}>
-                          {origine}
+                        <option key={origine.id} value={origine.slug}>
+                          {origine.name}
                         </option>
                       ))}
                     </select>

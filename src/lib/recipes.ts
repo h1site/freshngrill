@@ -529,21 +529,18 @@ export async function getAllCategorySlugs(): Promise<string[]> {
 /**
  * Obtenir toutes les origines (pays) distinctes des recettes
  */
-export async function getAllOrigines(): Promise<string[]> {
+export async function getAllOrigines(): Promise<{ id: number; slug: string; name: string }[]> {
   const { data, error } = await supabase
-    .from('recipes')
-    .select('origine')
-    .not('origine', 'is', null)
-    .not('origine', 'eq', '');
+    .from('origines')
+    .select('id, slug, name')
+    .order('name');
 
   if (error) {
     console.error('Erreur getAllOrigines:', error);
     return [];
   }
 
-  // Extraire les valeurs uniques et les trier
-  const origines = [...new Set((data as { origine: string }[]).map(r => r.origine))];
-  return origines.sort((a, b) => a.localeCompare(b, 'fr'));
+  return (data || []) as { id: number; slug: string; name: string }[];
 }
 
 /**
@@ -561,9 +558,34 @@ export interface RecipeFilters {
  * Obtenir les cartes de recettes filtrées
  */
 export async function getFilteredRecipeCards(filters: RecipeFilters): Promise<RecipeCard[]> {
+  // Si on filtre par origine, on doit d'abord récupérer les IDs des recettes concernées
+  let recipeIdsFromOrigine: number[] | null = null;
+
+  if (filters.origine) {
+    // Chercher l'origine par slug
+    const { data: origineData } = await supabase
+      .from('origines')
+      .select('id')
+      .eq('slug', filters.origine)
+      .single();
+
+    if (origineData) {
+      const origineId = (origineData as { id: number }).id;
+      const { data: recipeOrigines } = await supabase
+        .from('recipe_origines')
+        .select('recipe_id')
+        .eq('origine_id', origineId);
+
+      recipeIdsFromOrigine = (recipeOrigines as { recipe_id: number }[] || []).map(r => r.recipe_id);
+    } else {
+      // Origine non trouvée, retourner vide
+      return [];
+    }
+  }
+
   let query = supabase
     .from('recipes_with_categories')
-    .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes, origine');
+    .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes');
 
   if (filters.difficulty) {
     query = query.eq('difficulty', filters.difficulty);
@@ -578,9 +600,12 @@ export async function getFilteredRecipeCards(filters: RecipeFilters): Promise<Re
     query = query.or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm}`);
   }
 
-  // Filtrer par origine (pays)
-  if (filters.origine) {
-    query = query.eq('origine', filters.origine);
+  // Filtrer par IDs si origine spécifiée
+  if (recipeIdsFromOrigine !== null) {
+    if (recipeIdsFromOrigine.length === 0) {
+      return [];
+    }
+    query = query.in('id', recipeIdsFromOrigine);
   }
 
   const { data, error } = await query.order('published_at', { ascending: false });

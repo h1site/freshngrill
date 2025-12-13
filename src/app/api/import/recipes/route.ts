@@ -22,6 +22,8 @@ interface RecipeFr {
   servings_unit?: string;
   difficulty: 'facile' | 'moyen' | 'difficile';
   cuisine?: string;
+  categories?: string[];
+  origines?: string[];
   tags?: string[];
   ingredients: { group?: string; items: string[] }[];
   instructions: InstructionStep[] | string[];
@@ -162,7 +164,43 @@ export async function POST(request: NextRequest) {
 
         const recipeId = (insertedRecipe as { id: number }).id;
 
-        // 2. Insérer la traduction anglaise
+        // 2. Lier les catégories (par slug)
+        if (recipeFr.categories && recipeFr.categories.length > 0) {
+          for (const catSlug of recipeFr.categories) {
+            const { data: category } = await supabase
+              .from('categories')
+              .select('id')
+              .eq('slug', catSlug)
+              .single();
+
+            if (category) {
+              const catId = (category as { id: number }).id;
+              await supabase
+                .from('recipe_categories')
+                .insert({ recipe_id: recipeId, category_id: catId } as never);
+            }
+          }
+        }
+
+        // 3. Lier les origines (par slug)
+        if (recipeFr.origines && recipeFr.origines.length > 0) {
+          for (const origineSlug of recipeFr.origines) {
+            const { data: origine } = await supabase
+              .from('origines')
+              .select('id')
+              .eq('slug', origineSlug)
+              .single();
+
+            if (origine) {
+              const origineId = (origine as { id: number }).id;
+              await supabase
+                .from('recipe_origines')
+                .insert({ recipe_id: recipeId, origine_id: origineId } as never);
+            }
+          }
+        }
+
+        // 4. Insérer la traduction anglaise
         const { error: translationError } = await supabase
           .from('recipe_translations')
           .insert({
