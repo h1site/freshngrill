@@ -311,16 +311,16 @@ export default function ImportPage() {
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <h3 className="font-medium text-blue-800 mb-2">Télécharger les templates</h3>
             <div className="flex flex-wrap gap-3">
-              <a href="/templates/recettes-fr-template.json" download className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-blue-300 rounded text-sm text-blue-700 hover:bg-blue-50">
+              <a href="/api/templates/recettes-fr-template.json" download="recettes-fr-template.json" className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-blue-300 rounded text-sm text-blue-700 hover:bg-blue-50">
                 <FileJson className="w-4 h-4" /> Template FR (JSON)
               </a>
-              <a href="/templates/recipes-en-template.json" download className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-blue-300 rounded text-sm text-blue-700 hover:bg-blue-50">
+              <a href="/api/templates/recipes-en-template.json" download="recipes-en-template.json" className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-blue-300 rounded text-sm text-blue-700 hover:bg-blue-50">
                 <FileJson className="w-4 h-4" /> Template EN (JSON)
               </a>
-              <a href="/templates/recettes-fr-template.csv" download className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-blue-300 rounded text-sm text-blue-700 hover:bg-blue-50">
+              <a href="/api/templates/recettes-fr-template.csv" download="recettes-fr-template.csv" className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-blue-300 rounded text-sm text-blue-700 hover:bg-blue-50">
                 <FileText className="w-4 h-4" /> Template FR (CSV)
               </a>
-              <a href="/templates/recipes-en-template.csv" download className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-blue-300 rounded text-sm text-blue-700 hover:bg-blue-50">
+              <a href="/api/templates/recipes-en-template.csv" download="recipes-en-template.csv" className="inline-flex items-center gap-2 px-3 py-2 bg-white border border-blue-300 rounded text-sm text-blue-700 hover:bg-blue-50">
                 <FileText className="w-4 h-4" /> Template EN (CSV)
               </a>
             </div>
