@@ -1,5 +1,5 @@
 {
-  "description": "Template for importing English recipes. Each recipe must have an index matching the French file.",
+  "description": "Template for importing English recipe translations. Each recipe must have an index matching the French file.",
   "recipes": [
     {
       "index": 1,
@@ -30,15 +30,44 @@
         }
       ],
       "instructions": [
-        "Preheat the oven to 400°F (200°C).",
-        "Mix the olive oil with the Provence herbs, salt and pepper.",
-        "Brush the chicken with this mixture, inside and out.",
-        "Place the garlic and half lemon inside the chicken cavity.",
-        "Arrange the vegetables around the chicken in an oven-safe dish.",
-        "Roast for 1 hour 15 minutes, basting regularly with the cooking juices.",
-        "Check doneness by piercing the thigh - the juices should run clear.",
-        "Let rest for 10 minutes before carving and serving."
+        {
+          "step": 1,
+          "content": "Preheat the oven to 400°F (200°C).",
+          "tip": "Take the chicken out of the refrigerator 30 minutes before for even cooking."
+        },
+        {
+          "step": 2,
+          "content": "Mix the olive oil with the Provence herbs, salt and pepper."
+        },
+        {
+          "step": 3,
+          "content": "Brush the chicken with this mixture, inside and out.",
+          "tip": "Feel free to slide some butter under the skin for extra moisture."
+        },
+        {
+          "step": 4,
+          "content": "Place the garlic and half lemon inside the chicken cavity."
+        },
+        {
+          "step": 5,
+          "content": "Arrange the vegetables around the chicken in an oven-safe dish."
+        },
+        {
+          "step": 6,
+          "content": "Roast for 1 hour 15 minutes, basting regularly with the cooking juices.",
+          "tip": "Baste every 20 minutes for a golden, crispy skin."
+        },
+        {
+          "step": 7,
+          "content": "Check doneness by piercing the thigh - the juices should run clear."
+        },
+        {
+          "step": 8,
+          "content": "Let rest for 10 minutes before carving and serving.",
+          "tip": "Resting allows the juices to redistribute throughout the meat."
+        }
       ],
+      "faq": "<div class=\"faq-item\"><h3>Can I prepare the chicken ahead of time?</h3><p>Yes, you can season the chicken the day before and keep it refrigerated. Take it out 30 minutes before cooking.</p></div><div class=\"faq-item\"><h3>How do I know if the chicken is fully cooked?</h3><p>The internal temperature should reach 165°F (74°C) at the thickest part of the thigh. The juices should run clear.</p></div><div class=\"faq-item\"><h3>Can I freeze the leftovers?</h3><p>Yes, cooked chicken keeps 3-4 days in the refrigerator and up to 3 months in the freezer.</p></div>",
       "seo_title": "Herb Roasted Chicken | Easy Recipe",
       "seo_description": "Discover our juicy and fragrant herb roasted chicken recipe. An easy family recipe to prepare."
     }

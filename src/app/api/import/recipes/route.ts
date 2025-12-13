@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
 
+interface InstructionStep {
+  step: number;
+  content: string;
+  tip?: string;
+}
+
 interface RecipeFr {
   index: number;
   slug: string;
@@ -18,7 +24,7 @@ interface RecipeFr {
   cuisine?: string;
   tags?: string[];
   ingredients: { group?: string; items: string[] }[];
-  instructions: string[];
+  instructions: InstructionStep[] | string[];
   nutrition?: {
     calories?: number;
     protein?: number;
@@ -26,6 +32,7 @@ interface RecipeFr {
     fat?: number;
     fiber?: number;
   };
+  faq?: string;
   seo_title?: string;
   seo_description?: string;
 }
@@ -38,7 +45,8 @@ interface RecipeEn {
   introduction?: string;
   conclusion?: string;
   ingredients: { group?: string; items: string[] }[];
-  instructions: string[];
+  instructions: InstructionStep[] | string[];
+  faq?: string;
   seo_title?: string;
   seo_description?: string;
 }
@@ -135,6 +143,7 @@ export async function POST(request: NextRequest) {
             ingredients: recipeFr.ingredients,
             instructions: recipeFr.instructions,
             nutrition: recipeFr.nutrition || null,
+            faq: recipeFr.faq || null,
             seo_title: recipeFr.seo_title || null,
             seo_description: recipeFr.seo_description || null,
             author: 'Menu Cochon',
@@ -166,6 +175,7 @@ export async function POST(request: NextRequest) {
             conclusion: recipeEn.conclusion || null,
             ingredients: recipeEn.ingredients,
             instructions: recipeEn.instructions,
+            faq: recipeEn.faq || null,
             seo_title: recipeEn.seo_title || null,
             seo_description: recipeEn.seo_description || null,
             translated_at: new Date().toISOString(),

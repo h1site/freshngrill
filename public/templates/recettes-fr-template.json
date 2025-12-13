@@ -4,11 +4,11 @@
     {
       "index": 1,
       "slug": "poulet-roti-aux-herbes",
-      "title": "Poulet roti aux herbes de Provence",
-      "excerpt": "Un classique de la cuisine familiale, ce poulet roti aux herbes de Provence est juteux et parfume.",
-      "content": "Description detaillee de la recette...",
-      "introduction": "Le poulet roti est un incontournable des dimanches en famille.",
-      "conclusion": "Servez ce poulet avec des pommes de terre roties et une salade verte.",
+      "title": "Poulet rôti aux herbes de Provence",
+      "excerpt": "Un classique de la cuisine familiale, ce poulet rôti aux herbes de Provence est juteux et parfumé.",
+      "content": "Description détaillée de la recette...",
+      "introduction": "Le poulet rôti est un incontournable des dimanches en famille.",
+      "conclusion": "Servez ce poulet avec des pommes de terre rôties et une salade verte.",
       "prep_time": 20,
       "cook_time": 75,
       "rest_time": 10,
@@ -16,17 +16,17 @@
       "servings_unit": "portions",
       "difficulty": "facile",
       "cuisine": "francaise",
-      "tags": ["poulet", "roti", "herbes", "familial"],
+      "tags": ["poulet", "rôti", "herbes", "familial"],
       "ingredients": [
         {
           "group": "",
           "items": [
             "1 poulet entier de 1.5 kg",
-            "3 c. a soupe d'huile d'olive",
-            "2 c. a soupe d'herbes de Provence",
+            "3 c. à soupe d'huile d'olive",
+            "2 c. à soupe d'herbes de Provence",
             "4 gousses d'ail",
             "1 citron",
-            "Sel et poivre au gout"
+            "Sel et poivre au goût"
           ]
         },
         {
@@ -39,14 +39,42 @@
         }
       ],
       "instructions": [
-        "Prechauffer le four a 200°C (400°F).",
-        "Melanger l'huile d'olive avec les herbes de Provence, le sel et le poivre.",
-        "Badigeonner le poulet avec ce melange, a l'interieur et a l'exterieur.",
-        "Placer l'ail et le demi-citron a l'interieur de la cavite du poulet.",
-        "Disposer les legumes autour du poulet dans un plat allant au four.",
-        "Enfourner pendant 1h15, en arrosant regulierement avec le jus de cuisson.",
-        "Verifier la cuisson en piquant la cuisse - le jus doit etre clair.",
-        "Laisser reposer 10 minutes avant de decouper et servir."
+        {
+          "step": 1,
+          "content": "Préchauffer le four à 200°C (400°F).",
+          "tip": "Sortez le poulet du réfrigérateur 30 minutes avant pour une cuisson uniforme."
+        },
+        {
+          "step": 2,
+          "content": "Mélanger l'huile d'olive avec les herbes de Provence, le sel et le poivre."
+        },
+        {
+          "step": 3,
+          "content": "Badigeonner le poulet avec ce mélange, à l'intérieur et à l'extérieur.",
+          "tip": "N'hésitez pas à glisser du beurre sous la peau pour plus de moelleux."
+        },
+        {
+          "step": 4,
+          "content": "Placer l'ail et le demi-citron à l'intérieur de la cavité du poulet."
+        },
+        {
+          "step": 5,
+          "content": "Disposer les légumes autour du poulet dans un plat allant au four."
+        },
+        {
+          "step": 6,
+          "content": "Enfourner pendant 1h15, en arrosant régulièrement avec le jus de cuisson.",
+          "tip": "Arrosez toutes les 20 minutes pour une peau bien dorée et croustillante."
+        },
+        {
+          "step": 7,
+          "content": "Vérifier la cuisson en piquant la cuisse - le jus doit être clair."
+        },
+        {
+          "step": 8,
+          "content": "Laisser reposer 10 minutes avant de découper et servir.",
+          "tip": "Le repos permet aux jus de se redistribuer dans la viande."
+        }
       ],
       "nutrition": {
         "calories": 450,
@@ -55,8 +83,9 @@
         "fat": 25,
         "fiber": 3
       },
-      "seo_title": "Poulet Roti aux Herbes de Provence | Recette Facile",
-      "seo_description": "Decouvrez notre recette de poulet roti aux herbes de Provence, juteux et parfume. Une recette familiale facile a preparer."
+      "faq": "<div class=\"faq-item\"><h3>Puis-je préparer le poulet à l'avance?</h3><p>Oui, vous pouvez assaisonner le poulet la veille et le conserver au réfrigérateur. Sortez-le 30 minutes avant la cuisson.</p></div><div class=\"faq-item\"><h3>Comment savoir si le poulet est bien cuit?</h3><p>La température interne doit atteindre 74°C (165°F) à la partie la plus épaisse de la cuisse. Le jus qui s'écoule doit être clair.</p></div><div class=\"faq-item\"><h3>Peut-on congeler les restes?</h3><p>Oui, le poulet cuit se conserve 3-4 jours au réfrigérateur et jusqu'à 3 mois au congélateur.</p></div>",
+      "seo_title": "Poulet Rôti aux Herbes de Provence | Recette Facile",
+      "seo_description": "Découvrez notre recette de poulet rôti aux herbes de Provence, juteux et parfumé. Une recette familiale facile à préparer."
     }
   ]
 }
