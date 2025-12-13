@@ -2,11 +2,11 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
-  getTermBySlug,
-  getAllTermSlugs,
-  getAdjacentTerms,
-  getTermsForLetter,
-} from '@/lib/lexique';
+  getTermBySlugEn,
+  getAllTermSlugsEn,
+  getAdjacentTermsEn,
+  getTermsForLetterEn,
+} from '@/lib/lexiqueEn';
 import { Book, ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react';
 
 interface Props {
@@ -14,13 +14,13 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getAllTermSlugs();
+  const slugs = await getAllTermSlugsEn();
   return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const term = await getTermBySlug(slug, 'en');
+  const term = await getTermBySlugEn(slug);
 
   if (!term) {
     return {
@@ -34,7 +34,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `/en/lexicon/${slug}/`,
       languages: {
-        'fr-CA': `/lexique/${slug}/`,
         'en-CA': `/en/lexicon/${slug}/`,
       },
     },
@@ -47,16 +46,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function LexiqueTermPageEN({ params }: Props) {
+export default async function LexiconTermPageEN({ params }: Props) {
   const { slug } = await params;
-  const term = await getTermBySlug(slug, 'en');
+  const term = await getTermBySlugEn(slug);
 
   if (!term) {
     notFound();
   }
 
-  const { prev, next } = await getAdjacentTerms(slug);
-  const relatedTerms = await getTermsForLetter(term.letter, 'en');
+  const { prev, next } = await getAdjacentTermsEn(slug);
+  const relatedTerms = await getTermsForLetterEn(term.letter);
   const otherTerms = relatedTerms.filter((t) => t.slug !== slug).slice(0, 6);
 
   // Schema.org for SEO
@@ -68,7 +67,7 @@ export default async function LexiqueTermPageEN({ params }: Props) {
     inDefinedTermSet: {
       '@type': 'DefinedTermSet',
       name: 'Menu Cochon Culinary Glossary',
-      url: 'https://menucochon.com/en/lexique/',
+      url: 'https://menucochon.com/en/lexicon/',
     },
   };
 

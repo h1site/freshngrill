@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { Book } from 'lucide-react';
-import { getTermsByLetter } from '@/lib/lexique';
+import { getTermsByLetterEn } from '@/lib/lexiqueEn';
 
 export const metadata: Metadata = {
   title: 'Culinary Glossary | Menu Cochon',
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function LexiquePageEN() {
-  const termsByLetter = await getTermsByLetter('en');
+export default async function LexiconPageEN() {
+  const termsByLetter = await getTermsByLetterEn();
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   const availableLetters = termsByLetter.map((g) => g.letter);
 
