@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
+import { extractIngredientsFromRecipe } from '@/lib/ingredient-extractor';
 
 interface InstructionStep {
   step: number;
@@ -200,7 +201,48 @@ export async function POST(request: NextRequest) {
           }
         }
 
-        // 4. Insérer la traduction anglaise
+        // 4. Extraire et lier les ingrédients
+        const detectedIngredients = extractIngredientsFromRecipe(recipeFr.ingredients);
+        for (const ingredientName of detectedIngredients) {
+          const slug = ingredientName
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+
+          // Upsert ingredient (insert if not exists)
+          const { data: existingIngredient } = await supabase
+            .from('ingredients')
+            .select('id')
+            .eq('slug', slug)
+            .single();
+
+          let ingredientId: number;
+
+          if (existingIngredient) {
+            ingredientId = (existingIngredient as { id: number }).id;
+          } else {
+            const { data: newIngredient, error: ingredientError } = await supabase
+              .from('ingredients')
+              .insert({ slug, name: ingredientName } as never)
+              .select('id')
+              .single();
+
+            if (ingredientError || !newIngredient) {
+              console.error(`Erreur insertion ingrédient ${ingredientName}:`, ingredientError);
+              continue;
+            }
+            ingredientId = (newIngredient as { id: number }).id;
+          }
+
+          // Link ingredient to recipe
+          await supabase
+            .from('recipe_ingredients')
+            .insert({ recipe_id: recipeId, ingredient_id: ingredientId } as never);
+        }
+
+        // 5. Insérer la traduction anglaise
         const { error: translationError } = await supabase
           .from('recipe_translations')
           .insert({
