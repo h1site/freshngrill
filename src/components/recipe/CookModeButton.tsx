@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Maximize2, X, ChevronLeft, ChevronRight, Check, Clock, Users } from 'lucide-react';
+import { Maximize2, X, ChevronLeft, ChevronRight, Check, Clock, Users, Timer, Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { Recipe } from '@/types/recipe';
 import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
@@ -26,10 +26,28 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     next: isEN ? 'Next' : 'Suivant',
     done: isEN ? 'Done!' : 'Terminé!',
     navHint: isEN ? 'Use ← → or Space to navigate' : 'Utilisez ← → ou Espace pour naviguer',
+    timer: isEN ? 'Timer' : 'Minuterie',
+    setTimer: isEN ? 'Set Timer' : 'Régler',
+    start: isEN ? 'Start' : 'Démarrer',
+    pause: isEN ? 'Pause' : 'Pause',
+    reset: isEN ? 'Reset' : 'Réinitialiser',
+    stopAlarm: isEN ? 'Stop Alarm' : 'Arrêter',
+    timerDone: isEN ? 'Timer done!' : 'Minuterie terminée!',
   };
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [checkedIngredients, setCheckedIngredients] = useState<Set<string>>(new Set());
+
+  // Timer states
+  const [showTimerModal, setShowTimerModal] = useState(false);
+  const [timerMinutes, setTimerMinutes] = useState(5);
+  const [timerSeconds, setTimerSeconds] = useState(0);
+  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [isAlarmPlaying, setIsAlarmPlaying] = useState(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const oscillatorRef = useRef<OscillatorNode | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
 
   // Total des étapes: 0 = ingrédients, 1+ = instructions
   const totalPages = recipe.instructions.length + 1;
@@ -90,6 +108,133 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
   const resetAndClose = () => {
     setIsOpen(false);
     setCurrentStep(0);
+    stopAlarm();
+  };
+
+  // Timer functions
+  const playAlarm = useCallback(() => {
+    if (typeof window === 'undefined') return;
+
+    try {
+      // Create audio context if not exists
+      if (!audioContextRef.current) {
+        audioContextRef.current = new (window.AudioContext || (window as typeof window & { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+      }
+
+      const ctx = audioContextRef.current;
+
+      // Create oscillator for beeping sound
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(800, ctx.currentTime);
+      gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+
+      oscillatorRef.current = oscillator;
+      gainNodeRef.current = gainNode;
+
+      oscillator.start();
+      setIsAlarmPlaying(true);
+
+      // Create beeping pattern
+      const beepPattern = () => {
+        if (!gainNodeRef.current || !audioContextRef.current) return;
+        const now = audioContextRef.current.currentTime;
+        gainNodeRef.current.gain.setValueAtTime(0.3, now);
+        gainNodeRef.current.gain.setValueAtTime(0, now + 0.2);
+        gainNodeRef.current.gain.setValueAtTime(0.3, now + 0.4);
+        gainNodeRef.current.gain.setValueAtTime(0, now + 0.6);
+        gainNodeRef.current.gain.setValueAtTime(0.3, now + 0.8);
+        gainNodeRef.current.gain.setValueAtTime(0, now + 1);
+      };
+
+      beepPattern();
+      const intervalId = setInterval(beepPattern, 1500);
+
+      // Store interval ID to clear later
+      (oscillator as OscillatorNode & { intervalId: NodeJS.Timeout }).intervalId = intervalId;
+    } catch (e) {
+      console.error('Error playing alarm:', e);
+    }
+  }, []);
+
+  const stopAlarm = useCallback(() => {
+    if (oscillatorRef.current) {
+      const osc = oscillatorRef.current as OscillatorNode & { intervalId?: NodeJS.Timeout };
+      if (osc.intervalId) {
+        clearInterval(osc.intervalId);
+      }
+      try {
+        oscillatorRef.current.stop();
+      } catch {
+        // Already stopped
+      }
+      oscillatorRef.current = null;
+    }
+    setIsAlarmPlaying(false);
+  }, []);
+
+  const startTimer = () => {
+    const totalSeconds = timerMinutes * 60 + timerSeconds;
+    if (totalSeconds > 0) {
+      setTimeRemaining(totalSeconds);
+      setIsTimerRunning(true);
+      setShowTimerModal(false);
+    }
+  };
+
+  const pauseTimer = () => {
+    setIsTimerRunning(false);
+  };
+
+  const resumeTimer = () => {
+    if (timeRemaining && timeRemaining > 0) {
+      setIsTimerRunning(true);
+    }
+  };
+
+  const resetTimer = () => {
+    setIsTimerRunning(false);
+    setTimeRemaining(null);
+    stopAlarm();
+  };
+
+  // Timer countdown effect
+  useEffect(() => {
+    if (!isTimerRunning || timeRemaining === null) return;
+
+    const interval = setInterval(() => {
+      setTimeRemaining(prev => {
+        if (prev === null || prev <= 0) {
+          setIsTimerRunning(false);
+          playAlarm();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isTimerRunning, timeRemaining, playAlarm]);
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      stopAlarm();
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+    };
+  }, [stopAlarm]);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   return (
@@ -331,44 +476,202 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
                   </AnimatePresence>
                 </div>
 
-                {/* Navigation */}
-                <div className="flex items-center justify-between px-6 lg:px-10 py-4 border-t border-neutral-200 bg-white">
-                  <button
-                    onClick={prevStep}
-                    disabled={currentStep === 0}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all ${
-                      currentStep === 0
-                        ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
-                        : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
-                    }`}
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                    <span className="hidden sm:inline">{t.previous}</span>
-                  </button>
+                {/* Navigation with Timer */}
+                <div className="border-t border-neutral-200 bg-white">
+                  {/* Timer bar - shows when timer is active or alarm is playing */}
+                  {(timeRemaining !== null || isAlarmPlaying) && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      className={`px-6 lg:px-10 py-3 flex items-center justify-center gap-4 ${
+                        isAlarmPlaying
+                          ? 'bg-red-500'
+                          : timeRemaining === 0
+                          ? 'bg-green-500'
+                          : 'bg-neutral-100'
+                      }`}
+                    >
+                      {isAlarmPlaying ? (
+                        <>
+                          <motion.div
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ repeat: Infinity, duration: 0.5 }}
+                          >
+                            <Volume2 className="w-6 h-6 text-white" />
+                          </motion.div>
+                          <span className="text-white font-bold text-lg">{t.timerDone}</span>
+                          <button
+                            onClick={stopAlarm}
+                            className="flex items-center gap-2 px-4 py-2 bg-white text-red-500 rounded-full font-medium hover:bg-red-50 transition-colors"
+                          >
+                            <VolumeX className="w-5 h-5" />
+                            {t.stopAlarm}
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Timer className={`w-5 h-5 ${timeRemaining === 0 ? 'text-white' : 'text-[#F77313]'}`} />
+                          <span className={`font-mono text-2xl font-bold ${timeRemaining === 0 ? 'text-white' : 'text-neutral-800'}`}>
+                            {formatTime(timeRemaining || 0)}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            {timeRemaining && timeRemaining > 0 && (
+                              <button
+                                onClick={isTimerRunning ? pauseTimer : resumeTimer}
+                                className="p-2 bg-white rounded-full hover:bg-neutral-50 transition-colors shadow-sm"
+                              >
+                                {isTimerRunning ? (
+                                  <Pause className="w-5 h-5 text-neutral-700" />
+                                ) : (
+                                  <Play className="w-5 h-5 text-[#F77313]" />
+                                )}
+                              </button>
+                            )}
+                            <button
+                              onClick={resetTimer}
+                              className="p-2 bg-white rounded-full hover:bg-neutral-50 transition-colors shadow-sm"
+                            >
+                              <RotateCcw className="w-5 h-5 text-neutral-700" />
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </motion.div>
+                  )}
 
-                  <span className="text-neutral-500 text-sm">
-                    {t.navHint}
-                  </span>
+                  {/* Main navigation */}
+                  <div className="flex items-center justify-between px-6 lg:px-10 py-4">
+                    <button
+                      onClick={prevStep}
+                      disabled={currentStep === 0}
+                      className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-full font-medium transition-all ${
+                        currentStep === 0
+                          ? 'bg-neutral-100 text-neutral-400 cursor-not-allowed'
+                          : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
+                      }`}
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                      <span className="hidden sm:inline">{t.previous}</span>
+                    </button>
 
-                  <button
-                    onClick={nextStep}
-                    disabled={currentStep === totalPages - 1}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all ${
-                      currentStep === totalPages - 1
-                        ? 'bg-green-500 text-white'
-                        : 'bg-[#F77313] hover:bg-[#d45f0a] text-white'
-                    }`}
-                  >
-                    <span className="hidden sm:inline">
-                      {currentStep === totalPages - 1 ? t.done : t.next}
-                    </span>
-                    {currentStep === totalPages - 1 ? (
-                      <Check className="w-5 h-5" />
-                    ) : (
-                      <ChevronRight className="w-5 h-5" />
-                    )}
-                  </button>
+                    {/* Timer button in center */}
+                    <button
+                      onClick={() => setShowTimerModal(true)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full font-medium transition-all ${
+                        timeRemaining !== null
+                          ? 'bg-[#F77313] text-white'
+                          : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
+                      }`}
+                    >
+                      <Timer className="w-5 h-5" />
+                      <span className="hidden sm:inline">{t.timer}</span>
+                    </button>
+
+                    <button
+                      onClick={nextStep}
+                      disabled={currentStep === totalPages - 1}
+                      className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-full font-medium transition-all ${
+                        currentStep === totalPages - 1
+                          ? 'bg-green-500 text-white'
+                          : 'bg-[#F77313] hover:bg-[#d45f0a] text-white'
+                      }`}
+                    >
+                      <span className="hidden sm:inline">
+                        {currentStep === totalPages - 1 ? t.done : t.next}
+                      </span>
+                      {currentStep === totalPages - 1 ? (
+                        <Check className="w-5 h-5" />
+                      ) : (
+                        <ChevronRight className="w-5 h-5" />
+                      )}
+                    </button>
+                  </div>
                 </div>
+
+                {/* Timer Modal */}
+                <AnimatePresence>
+                  {showTimerModal && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 bg-black/50 flex items-center justify-center z-10"
+                      onClick={() => setShowTimerModal(false)}
+                    >
+                      <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.9, opacity: 0 }}
+                        className="bg-white rounded-2xl p-6 w-[90%] max-w-sm shadow-xl"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <h3 className="text-xl font-bold text-neutral-800 mb-6 flex items-center gap-2">
+                          <Timer className="w-6 h-6 text-[#F77313]" />
+                          {t.timer}
+                        </h3>
+
+                        <div className="flex items-center justify-center gap-2 mb-6">
+                          <div className="flex flex-col items-center">
+                            <input
+                              type="number"
+                              min="0"
+                              max="99"
+                              value={timerMinutes}
+                              onChange={(e) => setTimerMinutes(Math.max(0, Math.min(99, parseInt(e.target.value) || 0)))}
+                              className="w-20 h-20 text-4xl font-mono font-bold text-center border-2 border-neutral-200 rounded-xl focus:border-[#F77313] focus:outline-none"
+                            />
+                            <span className="text-sm text-neutral-500 mt-1">min</span>
+                          </div>
+                          <span className="text-4xl font-bold text-neutral-300">:</span>
+                          <div className="flex flex-col items-center">
+                            <input
+                              type="number"
+                              min="0"
+                              max="59"
+                              value={timerSeconds}
+                              onChange={(e) => setTimerSeconds(Math.max(0, Math.min(59, parseInt(e.target.value) || 0)))}
+                              className="w-20 h-20 text-4xl font-mono font-bold text-center border-2 border-neutral-200 rounded-xl focus:border-[#F77313] focus:outline-none"
+                            />
+                            <span className="text-sm text-neutral-500 mt-1">sec</span>
+                          </div>
+                        </div>
+
+                        {/* Quick presets */}
+                        <div className="flex flex-wrap gap-2 mb-6 justify-center">
+                          {[1, 3, 5, 10, 15, 30].map((mins) => (
+                            <button
+                              key={mins}
+                              onClick={() => {
+                                setTimerMinutes(mins);
+                                setTimerSeconds(0);
+                              }}
+                              className="px-4 py-2 bg-neutral-100 hover:bg-neutral-200 rounded-full text-sm font-medium text-neutral-700 transition-colors"
+                            >
+                              {mins} min
+                            </button>
+                          ))}
+                        </div>
+
+                        <div className="flex gap-3">
+                          <button
+                            onClick={() => setShowTimerModal(false)}
+                            className="flex-1 py-3 bg-neutral-100 hover:bg-neutral-200 rounded-xl font-medium text-neutral-700 transition-colors"
+                          >
+                            {isEN ? 'Cancel' : 'Annuler'}
+                          </button>
+                          <button
+                            onClick={startTimer}
+                            className="flex-1 py-3 bg-[#F77313] hover:bg-[#d45f0a] rounded-xl font-medium text-white transition-colors flex items-center justify-center gap-2"
+                          >
+                            <Play className="w-5 h-5" />
+                            {t.start}
+                          </button>
+                        </div>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             </div>
           </motion.div>
