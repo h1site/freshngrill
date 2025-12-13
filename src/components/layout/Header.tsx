@@ -134,6 +134,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
   const [searchResults, setSearchResults] = useState<SearchResult | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const searchButtonRef = useRef<HTMLButtonElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const megaMenuRef = useRef<HTMLDivElement>(null);
   const megaMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -221,6 +222,10 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
   // Fermer la recherche quand on clique en dehors
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
+      // Ignorer le clic sur le bouton search lui-même
+      if (searchButtonRef.current && searchButtonRef.current.contains(event.target as Node)) {
+        return;
+      }
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setIsSearchOpen(false);
         setSearchResults(null);
@@ -469,6 +474,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
             />
 
             <button
+              ref={searchButtonRef}
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2.5 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-full transition-all"
             >
