@@ -40,6 +40,7 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
 
   // Timer states
   const [showTimerModal, setShowTimerModal] = useState(false);
+  const [timerHours, setTimerHours] = useState(0);
   const [timerMinutes, setTimerMinutes] = useState(5);
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
@@ -179,7 +180,7 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
   }, []);
 
   const startTimer = () => {
-    const totalSeconds = timerMinutes * 60 + timerSeconds;
+    const totalSeconds = timerHours * 3600 + timerMinutes * 60 + timerSeconds;
     if (totalSeconds > 0) {
       setTimeRemaining(totalSeconds);
       setIsTimerRunning(true);
@@ -232,8 +233,12 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
   }, [stopAlarm]);
 
   const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
+    if (hrs > 0) {
+      return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
@@ -611,66 +616,111 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
                           {t.timer}
                         </h3>
 
-                        <div className="flex items-center justify-center gap-4 mb-6">
+                        <div className="flex items-center justify-center gap-2 mb-6">
+                          {/* Hours */}
+                          <div className="flex flex-col items-center">
+                            <button
+                              onClick={() => setTimerHours(prev => Math.min(23, prev + 1))}
+                              className="w-14 h-8 bg-neutral-100 hover:bg-neutral-200 rounded-t-xl flex items-center justify-center transition-colors"
+                            >
+                              <ChevronLeft className="w-5 h-5 text-neutral-600 rotate-90" />
+                            </button>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={timerHours.toString().padStart(2, '0')}
+                              onChange={(e) => {
+                                const val = parseInt(e.target.value) || 0;
+                                setTimerHours(Math.min(23, Math.max(0, val)));
+                              }}
+                              className="w-14 h-14 text-2xl font-mono font-bold text-center bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none"
+                            />
+                            <button
+                              onClick={() => setTimerHours(prev => Math.max(0, prev - 1))}
+                              className="w-14 h-8 bg-neutral-100 hover:bg-neutral-200 rounded-b-xl flex items-center justify-center transition-colors"
+                            >
+                              <ChevronLeft className="w-5 h-5 text-neutral-600 -rotate-90" />
+                            </button>
+                            <span className="text-xs text-neutral-500 mt-1">{isEN ? 'hrs' : 'h'}</span>
+                          </div>
+
+                          <span className="text-2xl font-bold text-neutral-300 mb-4">:</span>
+
                           {/* Minutes */}
                           <div className="flex flex-col items-center">
                             <button
-                              onClick={() => setTimerMinutes(prev => Math.min(99, prev + 1))}
-                              className="w-16 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-t-xl flex items-center justify-center transition-colors"
+                              onClick={() => setTimerMinutes(prev => Math.min(59, prev + 1))}
+                              className="w-14 h-8 bg-neutral-100 hover:bg-neutral-200 rounded-t-xl flex items-center justify-center transition-colors"
                             >
-                              <ChevronLeft className="w-6 h-6 text-neutral-600 rotate-90" />
+                              <ChevronLeft className="w-5 h-5 text-neutral-600 rotate-90" />
                             </button>
-                            <div className="w-16 h-16 bg-white border-2 border-neutral-200 flex items-center justify-center">
-                              <span className="text-3xl font-mono font-bold text-neutral-800">
-                                {timerMinutes.toString().padStart(2, '0')}
-                              </span>
-                            </div>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={timerMinutes.toString().padStart(2, '0')}
+                              onChange={(e) => {
+                                const val = parseInt(e.target.value) || 0;
+                                setTimerMinutes(Math.min(59, Math.max(0, val)));
+                              }}
+                              className="w-14 h-14 text-2xl font-mono font-bold text-center bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none"
+                            />
                             <button
                               onClick={() => setTimerMinutes(prev => Math.max(0, prev - 1))}
-                              className="w-16 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-b-xl flex items-center justify-center transition-colors"
+                              className="w-14 h-8 bg-neutral-100 hover:bg-neutral-200 rounded-b-xl flex items-center justify-center transition-colors"
                             >
-                              <ChevronLeft className="w-6 h-6 text-neutral-600 -rotate-90" />
+                              <ChevronLeft className="w-5 h-5 text-neutral-600 -rotate-90" />
                             </button>
-                            <span className="text-sm text-neutral-500 mt-2">min</span>
+                            <span className="text-xs text-neutral-500 mt-1">min</span>
                           </div>
 
-                          <span className="text-3xl font-bold text-neutral-300 mb-6">:</span>
+                          <span className="text-2xl font-bold text-neutral-300 mb-4">:</span>
 
                           {/* Seconds */}
                           <div className="flex flex-col items-center">
                             <button
                               onClick={() => setTimerSeconds(prev => prev >= 55 ? 0 : prev + 5)}
-                              className="w-16 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-t-xl flex items-center justify-center transition-colors"
+                              className="w-14 h-8 bg-neutral-100 hover:bg-neutral-200 rounded-t-xl flex items-center justify-center transition-colors"
                             >
-                              <ChevronLeft className="w-6 h-6 text-neutral-600 rotate-90" />
+                              <ChevronLeft className="w-5 h-5 text-neutral-600 rotate-90" />
                             </button>
-                            <div className="w-16 h-16 bg-white border-2 border-neutral-200 flex items-center justify-center">
-                              <span className="text-3xl font-mono font-bold text-neutral-800">
-                                {timerSeconds.toString().padStart(2, '0')}
-                              </span>
-                            </div>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={timerSeconds.toString().padStart(2, '0')}
+                              onChange={(e) => {
+                                const val = parseInt(e.target.value) || 0;
+                                setTimerSeconds(Math.min(59, Math.max(0, val)));
+                              }}
+                              className="w-14 h-14 text-2xl font-mono font-bold text-center bg-white border-2 border-neutral-200 focus:border-[#F77313] focus:outline-none"
+                            />
                             <button
                               onClick={() => setTimerSeconds(prev => prev <= 0 ? 55 : prev - 5)}
-                              className="w-16 h-10 bg-neutral-100 hover:bg-neutral-200 rounded-b-xl flex items-center justify-center transition-colors"
+                              className="w-14 h-8 bg-neutral-100 hover:bg-neutral-200 rounded-b-xl flex items-center justify-center transition-colors"
                             >
-                              <ChevronLeft className="w-6 h-6 text-neutral-600 -rotate-90" />
+                              <ChevronLeft className="w-5 h-5 text-neutral-600 -rotate-90" />
                             </button>
-                            <span className="text-sm text-neutral-500 mt-2">sec</span>
+                            <span className="text-xs text-neutral-500 mt-1">sec</span>
                           </div>
                         </div>
 
                         {/* Quick presets */}
                         <div className="flex flex-wrap gap-2 mb-6 justify-center">
-                          {[1, 3, 5, 10, 15, 30].map((mins) => (
+                          {[1, 5, 10, 15, 30, 60].map((mins) => (
                             <button
                               key={mins}
                               onClick={() => {
-                                setTimerMinutes(mins);
+                                if (mins >= 60) {
+                                  setTimerHours(Math.floor(mins / 60));
+                                  setTimerMinutes(mins % 60);
+                                } else {
+                                  setTimerHours(0);
+                                  setTimerMinutes(mins);
+                                }
                                 setTimerSeconds(0);
                               }}
-                              className="px-4 py-2 bg-neutral-100 hover:bg-neutral-200 rounded-full text-sm font-medium text-neutral-700 transition-colors"
+                              className="px-3 py-1.5 bg-neutral-100 hover:bg-neutral-200 rounded-full text-sm font-medium text-neutral-700 transition-colors"
                             >
-                              {mins} min
+                              {mins >= 60 ? `${mins / 60}h` : `${mins}m`}
                             </button>
                           ))}
                         </div>
