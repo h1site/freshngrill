@@ -294,6 +294,12 @@ interface PostTranslation {
   seo_description: string | null;
 }
 
+interface PostCategoryTranslation {
+  category_id: number;
+  locale: string;
+  name: string;
+}
+
 /**
  * Get all English translations for posts
  */
@@ -316,13 +322,49 @@ async function getPostTranslations(): Promise<Map<number, PostTranslation>> {
 }
 
 /**
- * Enrich posts with English translation data
+ * Get all English translations for post categories
+ */
+async function getPostCategoryTranslations(): Promise<Map<number, string>> {
+  const { data, error } = await supabase
+    .from('post_category_translations')
+    .select('*')
+    .eq('locale', 'en');
+
+  if (error) {
+    console.error('Error fetching post category translations:', error);
+    return new Map();
+  }
+
+  const map = new Map<number, string>();
+  (data || []).forEach((t: PostCategoryTranslation) => {
+    map.set(t.category_id, t.name);
+  });
+  return map;
+}
+
+/**
+ * Translate category names using translation map
+ */
+function translateCategories(categories: PostCategory[], translations: Map<number, string>): PostCategory[] {
+  return categories.map(cat => ({
+    ...cat,
+    name: translations.get(cat.id) || cat.name,
+  }));
+}
+
+/**
+ * Enrich posts with English translation data (including categories)
  */
 export async function enrichPostsWithEnglishData(posts: Post[]): Promise<Post[]> {
-  const translations = await getPostTranslations();
+  const [translations, categoryTranslations] = await Promise.all([
+    getPostTranslations(),
+    getPostCategoryTranslations(),
+  ]);
 
   return posts.map(post => {
     const translation = translations.get(post.id);
+    const translatedCategories = translateCategories(post.categories, categoryTranslations);
+
     if (translation) {
       return {
         ...post,
@@ -331,44 +373,63 @@ export async function enrichPostsWithEnglishData(posts: Post[]): Promise<Post[]>
         content: translation.content || post.content,
         seoTitle: translation.seo_title || post.seoTitle,
         seoDescription: translation.seo_description || post.seoDescription,
+        categories: translatedCategories,
       };
     }
-    return post;
+    return {
+      ...post,
+      categories: translatedCategories,
+    };
   });
 }
 
 /**
- * Enrich post cards with English translation data
+ * Enrich post cards with English translation data (including categories)
  */
 export async function enrichPostCardsWithEnglishData(posts: PostCard[]): Promise<PostCard[]> {
-  const translations = await getPostTranslations();
+  const [translations, categoryTranslations] = await Promise.all([
+    getPostTranslations(),
+    getPostCategoryTranslations(),
+  ]);
 
   return posts.map(post => {
     const translation = translations.get(post.id);
+    const translatedCategories = translateCategories(post.categories, categoryTranslations);
+
     if (translation) {
       return {
         ...post,
         title: translation.title || post.title,
         excerpt: translation.excerpt || post.excerpt,
+        categories: translatedCategories,
       };
     }
-    return post;
+    return {
+      ...post,
+      categories: translatedCategories,
+    };
   });
 }
 
 /**
- * Get a single post with English translation
+ * Get a single post with English translation (including categories)
  */
 export async function getPostBySlugWithEnglish(slug: string): Promise<Post | null> {
   const post = await getPostBySlug(slug);
   if (!post) return null;
 
-  const { data: translation } = await supabase
-    .from('post_translations')
-    .select('*')
-    .eq('post_id', post.id)
-    .eq('locale', 'en')
-    .single() as { data: PostTranslation | null };
+  const [translationResult, categoryTranslations] = await Promise.all([
+    supabase
+      .from('post_translations')
+      .select('*')
+      .eq('post_id', post.id)
+      .eq('locale', 'en')
+      .single(),
+    getPostCategoryTranslations(),
+  ]);
+
+  const translation = translationResult.data as PostTranslation | null;
+  const translatedCategories = translateCategories(post.categories, categoryTranslations);
 
   if (translation) {
     return {
@@ -378,10 +439,14 @@ export async function getPostBySlugWithEnglish(slug: string): Promise<Post | nul
       content: translation.content || post.content,
       seoTitle: translation.seo_title || post.seoTitle,
       seoDescription: translation.seo_description || post.seoDescription,
+      categories: translatedCategories,
     };
   }
 
-  return post;
+  return {
+    ...post,
+    categories: translatedCategories,
+  };
 }
 
 /**
@@ -406,4 +471,16 @@ export async function getPostCardsWithEnglish(): Promise<PostCard[]> {
 export async function getSimilarPostsWithEnglish(post: Post, limit: number = 3): Promise<PostCard[]> {
   const posts = await getSimilarPosts(post, limit);
   return enrichPostCardsWithEnglishData(posts);
+}
+
+/**
+ * Get all post categories with English translations
+ */
+export async function getAllPostCategoriesWithEnglish(): Promise<PostCategory[]> {
+  const [categories, translations] = await Promise.all([
+    getAllPostCategories(),
+    getPostCategoryTranslations(),
+  ]);
+
+  return translateCategories(categories, translations);
 }

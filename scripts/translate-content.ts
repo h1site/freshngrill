@@ -9,6 +9,7 @@
  *   npx tsx scripts/translate-content.ts --type=recipes      # Traduire recettes
  *   npx tsx scripts/translate-content.ts --type=categories   # Traduire categories
  *   npx tsx scripts/translate-content.ts --type=posts        # Traduire posts
+ *   npx tsx scripts/translate-content.ts --type=post-categories  # Traduire catégories de posts
  *   npx tsx scripts/translate-content.ts --type=lexique      # Traduire lexique
  *   npx tsx scripts/translate-content.ts --type=all          # Tout traduire
  *
@@ -215,6 +216,15 @@ Respond with ONLY a valid JSON object in this exact format:
 function getCategoryTranslationPrompt(category: any): string {
   return `Translate this French recipe category name to English.
 Keep it short and natural for a recipe website.
+
+French: "${category.name}"
+
+Respond with ONLY the English translation, nothing else.`;
+}
+
+function getPostCategoryTranslationPrompt(category: any): string {
+  return `Translate this French blog category name to English.
+Keep it short and natural for a blog/magazine website.
 
 French: "${category.name}"
 
@@ -539,6 +549,72 @@ async function translatePosts() {
   console.log('\n=== POSTS DONE ===');
 }
 
+async function translatePostCategories() {
+  console.log('\n=== TRANSLATING POST CATEGORIES ===\n');
+
+  const { data: categories, error } = await supabase
+    .from('post_categories')
+    .select('id, slug, name')
+    .order('name');
+
+  if (error || !categories) {
+    console.error('Error fetching post categories:', error);
+    return;
+  }
+
+  // Get existing translations
+  const { data: existingTranslations } = await supabase
+    .from('post_category_translations')
+    .select('category_id')
+    .eq('locale', TARGET_LOCALE);
+
+  const translatedIds = new Set(existingTranslations?.map(t => t.category_id) || []);
+
+  let categoriesToTranslate = categories.filter(c => !translatedIds.has(c.id));
+
+  console.log(`Found ${categoriesToTranslate.length} post categories to translate (${categories.length} total, ${translatedIds.size} already translated)`);
+
+  for (const category of categoriesToTranslate) {
+    try {
+      console.log(`Translating post category: ${category.name}`);
+
+      const prompt = getPostCategoryTranslationPrompt(category);
+      const translation = await askOllama(prompt, 100);
+
+      const translatedName = translation.trim().replace(/^["']|["']$/g, '');
+
+      if (!translatedName) {
+        console.error(`  ERROR: Empty translation for ${category.name}`);
+        continue;
+      }
+
+      if (!DRY_RUN) {
+        const { error: insertError } = await supabase
+          .from('post_category_translations')
+          .upsert({
+            category_id: category.id,
+            locale: TARGET_LOCALE,
+            name: translatedName,
+          }, {
+            onConflict: 'category_id,locale'
+          });
+
+        if (insertError) {
+          console.error(`  ERROR saving:`, insertError.message);
+          continue;
+        }
+      }
+
+      console.log(`  OK: ${category.name} -> ${translatedName}`);
+
+    } catch (error) {
+      console.error(`  ERROR:`, error);
+    }
+  }
+
+  console.log('\n=== POST CATEGORIES DONE ===');
+}
+
 async function translateLexique() {
   console.log('\n=== TRANSLATING LEXIQUE ===\n');
 
@@ -644,18 +720,22 @@ async function main() {
     case 'posts':
       await translatePosts();
       break;
+    case 'post-categories':
+      await translatePostCategories();
+      break;
     case 'lexique':
       await translateLexique();
       break;
     case 'all':
       await translateCategories();
+      await translatePostCategories();
       await translateRecipes();
       await translatePosts();
       await translateLexique();
       break;
     default:
       console.error(`Unknown content type: ${CONTENT_TYPE}`);
-      console.log('Valid types: recipes, categories, posts, lexique, all');
+      console.log('Valid types: recipes, categories, posts, post-categories, lexique, all');
   }
 
   console.log('\nDone!');
