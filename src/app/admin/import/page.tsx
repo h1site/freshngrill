@@ -4,6 +4,7 @@ import { useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Upload, FileJson, FileText, X, Check, AlertCircle, Loader2, Download } from 'lucide-react';
+import { createClient } from '@/lib/supabase-browser';
 
 interface RecipeFr {
   index: number;
@@ -190,8 +191,72 @@ export default function ImportPage() {
     setImages(newImages.map((img, idx) => ({ ...img, index: idx + 1 })));
   };
 
-  // Upload all images to get URLs
+  // Resize image using canvas (client-side)
+  const resizeImage = async (file: File, maxWidth: number, maxHeight: number): Promise<Blob> => {
+    return new Promise((resolve, reject) => {
+      const img = document.createElement('img');
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      img.onload = () => {
+        // Calculate new dimensions maintaining aspect ratio with cover fit
+        let width = img.width;
+        let height = img.height;
+        const aspectRatio = width / height;
+        const targetRatio = maxWidth / maxHeight;
+
+        if (aspectRatio > targetRatio) {
+          // Image is wider - crop sides
+          height = maxHeight;
+          width = height * aspectRatio;
+        } else {
+          // Image is taller - crop top/bottom
+          width = maxWidth;
+          height = width / aspectRatio;
+        }
+
+        // Set canvas to target dimensions
+        canvas.width = maxWidth;
+        canvas.height = maxHeight;
+
+        // Calculate crop position (center)
+        const offsetX = (width - maxWidth) / 2;
+        const offsetY = (height - maxHeight) / 2;
+
+        // Draw scaled and cropped image
+        ctx?.drawImage(img, -offsetX, -offsetY, width, height);
+
+        // Convert to WebP blob
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(blob);
+            } else {
+              reject(new Error('Failed to create blob'));
+            }
+          },
+          'image/webp',
+          0.85
+        );
+      };
+
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  // Slugify text for filename
+  const slugify = (text: string) => text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 50);
+
+  // Upload all images to get URLs (direct to Supabase)
   const uploadImages = async (): Promise<boolean> => {
+    const supabase = createClient();
     const updatedImages = [...images];
     let hasError = false;
 
@@ -203,26 +268,35 @@ export default function ImportPage() {
       setImages([...updatedImages]);
 
       try {
-        const formData = new FormData();
-        formData.append('file', img.file);
-        formData.append('index', String(img.index));
-        // Ajouter le titre de la recette pour nommer le fichier
+        // Resize image client-side
+        const resizedBlob = await resizeImage(img.file, 1200, 800);
+
+        // Generate filename with recipe title
         const recipeTitle = recipesFr[i]?.title || `recette-${img.index}`;
-        formData.append('title', recipeTitle);
+        const timestamp = Date.now();
+        const baseName = slugify(recipeTitle);
+        const fileName = `recipes/${timestamp}-${baseName}.webp`;
 
-        const response = await fetch('/api/upload/webp', {
-          method: 'POST',
-          body: formData,
-        });
+        // Upload directly to Supabase Storage
+        const { data, error } = await supabase.storage
+          .from('recipe-images')
+          .upload(fileName, resizedBlob, {
+            contentType: 'image/webp',
+            cacheControl: '31536000',
+            upsert: false,
+          });
 
-        const data = await response.json();
-        console.log(`Image ${img.index} upload response:`, response.status, data);
-
-        if (!response.ok) {
-          throw new Error(data.error || `Erreur upload (${response.status})`);
+        if (error) {
+          throw new Error(`Erreur upload: ${error.message}`);
         }
 
-        updatedImages[i] = { ...img, uploading: false, url: data.url };
+        // Get public URL
+        const { data: publicUrlData } = supabase.storage
+          .from('recipe-images')
+          .getPublicUrl(data.path);
+
+        console.log(`Image ${img.index} uploaded:`, publicUrlData.publicUrl);
+        updatedImages[i] = { ...img, uploading: false, url: publicUrlData.publicUrl };
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : 'Erreur inconnue';
         console.error(`Image ${img.index} upload error:`, errorMsg);
