@@ -64,9 +64,9 @@ export async function POST(request: Request) {
       } as never);
 
     if (insertError) {
-      console.error('Erreur insertion message contact:', insertError);
+      console.error('Erreur insertion message contact:', JSON.stringify(insertError, null, 2));
       return NextResponse.json(
-        { error: 'Erreur lors de l\'envoi du message' },
+        { error: `Erreur: ${insertError.message || 'Erreur lors de l\'envoi du message'}` },
         { status: 500 }
       );
     }

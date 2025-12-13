@@ -14,11 +14,13 @@ export default function ContactPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
+    setErrorMessage('');
 
     try {
       const response = await fetch('/api/contact', {
@@ -43,9 +45,11 @@ export default function ContactPage() {
         });
       } else {
         setSubmitStatus('error');
+        setErrorMessage(data.error || 'Une erreur est survenue');
       }
     } catch {
       setSubmitStatus('error');
+      setErrorMessage('Erreur de connexion au serveur');
     } finally {
       setIsSubmitting(false);
     }
@@ -108,7 +112,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-semibold text-red-800 mb-1">Erreur d&apos;envoi</h3>
                   <p className="text-red-700">
-                    Une erreur est survenue. Veuillez réessayer ou nous contacter directement par email.
+                    {errorMessage || 'Une erreur est survenue. Veuillez réessayer ou nous contacter directement par email.'}
                   </p>
                 </div>
               </div>

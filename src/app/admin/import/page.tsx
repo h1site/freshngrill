@@ -206,6 +206,9 @@ export default function ImportPage() {
         const formData = new FormData();
         formData.append('file', img.file);
         formData.append('index', String(img.index));
+        // Ajouter le titre de la recette pour nommer le fichier
+        const recipeTitle = recipesFr[i]?.title || `recette-${img.index}`;
+        formData.append('title', recipeTitle);
 
         const response = await fetch('/api/upload/webp', {
           method: 'POST',
@@ -213,17 +216,20 @@ export default function ImportPage() {
         });
 
         const data = await response.json();
+        console.log(`Image ${img.index} upload response:`, response.status, data);
 
         if (!response.ok) {
-          throw new Error(data.error || 'Erreur upload');
+          throw new Error(data.error || `Erreur upload (${response.status})`);
         }
 
         updatedImages[i] = { ...img, uploading: false, url: data.url };
       } catch (err) {
+        const errorMsg = err instanceof Error ? err.message : 'Erreur inconnue';
+        console.error(`Image ${img.index} upload error:`, errorMsg);
         updatedImages[i] = {
           ...img,
           uploading: false,
-          error: err instanceof Error ? err.message : 'Erreur'
+          error: errorMsg
         };
         hasError = true;
       }

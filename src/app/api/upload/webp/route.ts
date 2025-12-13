@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const index = formData.get('index') as string;
+    const title = formData.get('title') as string;
 
     if (!file) {
       return NextResponse.json({ error: 'Aucun fichier fourni' }, { status: 400 });
@@ -56,14 +57,22 @@ export async function POST(request: NextRequest) {
       })
       .toBuffer();
 
-    // Générer un nom unique
+    // Générer un nom unique basé sur le titre si fourni
     const timestamp = Date.now();
-    const randomStr = Math.random().toString(36).substring(2, 8);
-    const fileName = `recipes/${timestamp}-${randomStr}${index ? `-${index}` : ''}.webp`;
+    const slugify = (text: string) => text
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .substring(0, 50);
 
-    // Upload vers Supabase Storage
+    const baseName = title ? slugify(title) : Math.random().toString(36).substring(2, 8);
+    const fileName = `recipes/${timestamp}-${baseName}.webp`;
+
+    // Upload vers Supabase Storage (bucket recipe-images)
     const { data, error } = await supabase.storage
-      .from('images')
+      .from('recipe-images')
       .upload(fileName, webpBuffer, {
         contentType: 'image/webp',
         cacheControl: '31536000', // 1 an
@@ -80,7 +89,7 @@ export async function POST(request: NextRequest) {
 
     // Obtenir l'URL publique
     const { data: publicUrlData } = supabase.storage
-      .from('images')
+      .from('recipe-images')
       .getPublicUrl(data.path);
 
     return NextResponse.json({

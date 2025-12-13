@@ -401,8 +401,8 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
         onClose={() => setShowNowPlaying(false)}
       />
 
-      <header className="sticky top-0 z-50 bg-black border-b border-neutral-800 overflow-x-hidden">
-        <div className="container mx-auto px-4 overflow-hidden">
+      <header className="sticky top-0 z-50 bg-black border-b border-neutral-800">
+        <div className="container mx-auto px-4">
           <div className="flex items-center h-16 md:h-20">
           {/* Logo */}
           <Link href={`${urlPrefix}/`} className="flex items-center group">
@@ -641,9 +641,9 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="overflow-visible border-t border-neutral-800"
+              className="border-t border-neutral-800"
             >
-              <div className="py-4 px-2 md:px-0 relative">
+              <div className="py-4 px-4 md:px-0 container mx-auto relative">
                 {/* Mode Toggle */}
                 <div className="flex justify-center gap-2 mb-4 max-w-2xl mx-auto">
                   <button
@@ -677,7 +677,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
                   </button>
                 </div>
 
-                {/* Search Input */}
+                {/* Search Input and Results Container */}
                 <div className="relative max-w-2xl mx-auto">
                   {isIngredientMode ? (
                     <Refrigerator className="absolute left-4 md:left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-500" />
@@ -712,7 +712,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
 
                 {/* Selected Ingredients Tags */}
                 {isIngredientMode && selectedIngredients.length > 0 && (
-                  <div className="flex flex-wrap gap-2 justify-center mt-3 max-w-2xl mx-auto px-2 md:px-0">
+                  <div className="flex flex-wrap gap-2 justify-center mt-3 max-w-2xl mx-auto">
                     {selectedIngredients.map((ingredient) => (
                       <span
                         key={ingredient}
@@ -740,6 +740,8 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
                   </div>
                 )}
 
+                {/* Dropdowns Container */}
+                <div className="max-w-2xl mx-auto mt-2">
                 {/* Ingredient Suggestions Dropdown */}
                 <AnimatePresence>
                   {isIngredientMode && ingredientSuggestions.length > 0 && (
@@ -747,7 +749,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute left-2 right-2 md:left-0 md:right-0 top-full mt-2 max-w-2xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden z-50"
+                      className="bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden"
                     >
                       <div className="p-2">
                         {ingredientSuggestions.map((suggestion) => (
@@ -772,7 +774,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute left-2 right-2 md:left-0 md:right-0 top-full mt-2 max-w-2xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden z-50"
+                      className="bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden"
                     >
                       {isLoadingIngredients ? (
                         <div className="p-6 flex justify-center">
@@ -856,7 +858,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="absolute left-2 right-2 md:left-0 md:right-0 top-full mt-2 max-w-2xl mx-auto bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden z-50"
+                      className="bg-neutral-900 rounded-2xl shadow-2xl border border-neutral-800 overflow-hidden"
                     >
                       {noResults && (
                         <div className="p-6 text-center text-neutral-400">
@@ -973,6 +975,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
                     </motion.div>
                   )}
                 </AnimatePresence>
+                </div>
               </div>
             </motion.div>
           )}
