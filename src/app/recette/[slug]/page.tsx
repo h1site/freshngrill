@@ -28,8 +28,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  // Utiliser getRecipeBySlugWithLocale pour obtenir le slug anglais si disponible
-  const recipe = await getRecipeBySlugWithLocale(slug, 'en');
+  // Utiliser getRecipeBySlugWithLocale pour obtenir les données FR et le slug anglais
+  const recipe = await getRecipeBySlugWithLocale(slug, 'fr');
 
   if (!recipe) {
     return {
