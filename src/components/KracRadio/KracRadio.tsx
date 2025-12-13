@@ -424,7 +424,9 @@ interface KracRadioModalProps {
   selectedChannel: string;
   onChannelChange: (key: string) => void;
   musicEnabled: boolean;
+  isPlaying?: boolean;
   onToggleMusic: () => void;
+  onTogglePlayPause?: () => void;
   locale?: 'fr' | 'en';
 }
 
@@ -434,7 +436,9 @@ export function KracRadioModal({
   selectedChannel,
   onChannelChange,
   musicEnabled,
+  isPlaying = false,
   onToggleMusic,
+  onTogglePlayPause,
   locale = 'fr'
 }: KracRadioModalProps) {
   const isEN = locale === 'en';
@@ -500,22 +504,44 @@ export function KracRadioModal({
 
             {/* Status indicator */}
             {musicEnabled && (
-              <div className="px-6 py-3 bg-pink-500/10 border-y border-pink-500/20 flex items-center gap-3">
-                <div className="flex items-center gap-1">
-                  {[...Array(4)].map((_, i) => (
-                    <span
-                      key={i}
-                      className="w-1 bg-pink-500 rounded-full animate-pulse"
-                      style={{
-                        height: `${8 + Math.random() * 8}px`,
-                        animationDelay: `${i * 0.15}s`
-                      }}
-                    />
-                  ))}
+              <div className="px-6 py-3 bg-pink-500/10 border-y border-pink-500/20 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  {isPlaying ? (
+                    <div className="flex items-center gap-1">
+                      {[...Array(4)].map((_, i) => (
+                        <span
+                          key={i}
+                          className="w-1 bg-pink-500 rounded-full animate-pulse"
+                          style={{
+                            height: `${8 + Math.random() * 8}px`,
+                            animationDelay: `${i * 0.15}s`
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="w-4 h-4 rounded-full border-2 border-pink-500/50" />
+                  )}
+                  <span className="text-sm text-pink-400 font-medium">
+                    {isPlaying
+                      ? (isEN ? 'Now playing' : 'En lecture')
+                      : (isEN ? 'Paused' : 'En pause')
+                    }: {KRACRADIO_CHANNELS.find(c => c.key === selectedChannel)?.name}
+                  </span>
                 </div>
-                <span className="text-sm text-pink-400 font-medium">
-                  {isEN ? 'Now playing' : 'En lecture'}: {KRACRADIO_CHANNELS.find(c => c.key === selectedChannel)?.name}
-                </span>
+                {onTogglePlayPause && (
+                  <button
+                    onClick={onTogglePlayPause}
+                    className="p-2 text-pink-400 hover:text-pink-300 hover:bg-pink-500/20 rounded-full transition-all"
+                    title={isPlaying ? (isEN ? 'Pause' : 'Pause') : (isEN ? 'Play' : 'Lecture')}
+                  >
+                    {isPlaying ? (
+                      <SpeakerSlash weight="bold" className="w-4 h-4" />
+                    ) : (
+                      <SpeakerHigh weight="fill" className="w-4 h-4" />
+                    )}
+                  </button>
+                )}
               </div>
             )}
 
@@ -585,6 +611,41 @@ export function useKracRadio(defaultChannel = 'francophonie') {
   const [showChannelSelector, setShowChannelSelector] = useState(false);
   const [nowPlaying, setNowPlaying] = useState<NowPlayingData | null>(null);
   const [showNowPlaying, setShowNowPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const hasInitialized = useRef(false);
+
+  // Restore state from localStorage on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !hasInitialized.current) {
+      hasInitialized.current = true;
+      const savedChannel = localStorage.getItem('kracradio-channel');
+      const wasPlaying = localStorage.getItem('kracradio-playing') === 'true';
+
+      if (savedChannel) {
+        setSelectedChannel(savedChannel);
+      }
+
+      // Auto-resume if was playing before navigation
+      if (wasPlaying) {
+        setMusicEnabled(true);
+        setIsPlaying(true);
+        // Small delay to let the component mount properly
+        setTimeout(() => {
+          if (radioRef.current) {
+            radioRef.current.startMusic(savedChannel || defaultChannel);
+          }
+        }, 100);
+      }
+    }
+  }, [defaultChannel]);
+
+  // Save state to localStorage when it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined' && hasInitialized.current) {
+      localStorage.setItem('kracradio-channel', selectedChannel);
+      localStorage.setItem('kracradio-playing', String(musicEnabled && isPlaying));
+    }
+  }, [selectedChannel, musicEnabled, isPlaying]);
 
   const handleNowPlayingUpdate = useCallback((data: NowPlayingData, isNewSong: boolean) => {
     setNowPlaying(data);
@@ -607,33 +668,77 @@ export function useKracRadio(defaultChannel = 'francophonie') {
   }, [handleNowPlayingUpdate]);
 
   const startMusic = useCallback(() => {
-    if (radioRef.current && musicEnabled) {
+    if (radioRef.current) {
       radioRef.current.startMusic(selectedChannel);
+      setMusicEnabled(true);
+      setIsPlaying(true);
     }
-  }, [musicEnabled, selectedChannel]);
+  }, [selectedChannel]);
 
   const stopMusic = useCallback(() => {
     if (radioRef.current) {
       radioRef.current.stopMusic();
+      setMusicEnabled(false);
+      setIsPlaying(false);
     }
   }, []);
 
+  const pauseMusic = useCallback(() => {
+    if (radioRef.current) {
+      radioRef.current.stopMusic();
+      setIsPlaying(false);
+      // Keep musicEnabled true so UI shows it's paused, not stopped
+    }
+  }, []);
+
+  const resumeMusic = useCallback(() => {
+    if (radioRef.current && musicEnabled) {
+      radioRef.current.startMusic(selectedChannel);
+      setIsPlaying(true);
+    }
+  }, [musicEnabled, selectedChannel]);
+
   const toggleMusic = useCallback(() => {
     if (radioRef.current) {
-      const isPlaying = radioRef.current.toggleMusic(selectedChannel);
-      setMusicEnabled(isPlaying);
-      return isPlaying;
+      if (isPlaying) {
+        radioRef.current.stopMusic();
+        setIsPlaying(false);
+        setMusicEnabled(false);
+      } else {
+        radioRef.current.startMusic(selectedChannel);
+        setIsPlaying(true);
+        setMusicEnabled(true);
+      }
+      return !isPlaying;
     }
     return false;
-  }, [selectedChannel]);
+  }, [selectedChannel, isPlaying]);
+
+  const togglePlayPause = useCallback(() => {
+    if (radioRef.current) {
+      if (isPlaying) {
+        radioRef.current.stopMusic();
+        setIsPlaying(false);
+      } else {
+        radioRef.current.startMusic(selectedChannel);
+        setIsPlaying(true);
+        setMusicEnabled(true);
+      }
+      return !isPlaying;
+    }
+    return false;
+  }, [selectedChannel, isPlaying]);
 
   const changeChannel = useCallback((channelKey: string) => {
     setSelectedChannel(channelKey);
     if (radioRef.current) {
       radioRef.current.changeChannel(channelKey);
+      if (musicEnabled) {
+        setIsPlaying(true);
+      }
     }
     setShowChannelSelector(false);
-  }, []);
+  }, [musicEnabled]);
 
   return {
     musicEnabled,
@@ -645,9 +750,13 @@ export function useKracRadio(defaultChannel = 'francophonie') {
     nowPlaying,
     showNowPlaying,
     setShowNowPlaying,
+    isPlaying,
     startMusic,
     stopMusic,
+    pauseMusic,
+    resumeMusic,
     toggleMusic,
+    togglePlayPause,
     changeChannel,
     radioManager: radioRef.current
   };

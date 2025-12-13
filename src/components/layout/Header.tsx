@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensils, Globe, Cake, Soup, Coffee, Salad, Fish, Beef, Drumstick, Refrigerator, Plus, Percent } from 'lucide-react';
+import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensils, Globe, Cake, Soup, Coffee, Salad, Fish, Beef, Drumstick, Refrigerator, Plus, Percent, Play, Pause, Square } from 'lucide-react';
 import { SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
 import UserMenu from '@/components/auth/UserMenu';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -148,7 +148,9 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
     nowPlaying,
     showNowPlaying,
     setShowNowPlaying,
+    isPlaying,
     toggleMusic,
+    togglePlayPause,
     changeChannel
   } = useKracRadio('francophonie');
 
@@ -462,15 +464,29 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
                 <span className="hidden sm:inline">{locale === 'en' ? 'Radio' : 'Radio'}</span>
               </button>
 
-              {/* Play/Pause Button - only shows when music is enabled */}
+              {/* Play/Pause and Stop Buttons - shows when music has been started */}
               {musicEnabled && (
-                <button
-                  onClick={toggleMusic}
-                  className="flex items-center justify-center w-8 h-8 text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/30 border-l-0 rounded-r-full transition-all"
-                  title={locale === 'en' ? 'Stop music' : 'Arrêter la musique'}
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
+                <>
+                  {/* Play/Pause Button */}
+                  <button
+                    onClick={togglePlayPause}
+                    className="flex items-center justify-center w-8 h-8 text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/30 border-l-0 transition-all"
+                    title={isPlaying
+                      ? (locale === 'en' ? 'Pause' : 'Pause')
+                      : (locale === 'en' ? 'Play' : 'Lecture')
+                    }
+                  >
+                    {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
+                  </button>
+                  {/* Stop Button */}
+                  <button
+                    onClick={toggleMusic}
+                    className="flex items-center justify-center w-8 h-8 text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/30 border-l-0 rounded-r-full transition-all"
+                    title={locale === 'en' ? 'Stop' : 'Arrêter'}
+                  >
+                    <Square className="w-3 h-3 fill-current" />
+                  </button>
+                </>
               )}
             </div>
 
@@ -481,7 +497,9 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
               selectedChannel={selectedChannel}
               onChannelChange={changeChannel}
               musicEnabled={musicEnabled}
+              isPlaying={isPlaying}
               onToggleMusic={toggleMusic}
+              onTogglePlayPause={togglePlayPause}
               locale={locale}
             />
 
