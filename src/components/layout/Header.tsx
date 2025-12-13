@@ -446,22 +446,33 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            {/* KracRadio Button */}
-            <button
-              onClick={() => setShowChannelSelector(true)}
-              className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all text-sm font-medium ${
-                musicEnabled
-                  ? 'text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/30'
-                  : 'text-neutral-400 hover:text-white bg-neutral-800/50 hover:bg-neutral-800 border border-neutral-700'
-              }`}
-              title={locale === 'en' ? 'Listen to music while cooking' : 'Écouter de la musique en cuisinant'}
-            >
-              {musicEnabled ? <SpeakerHigh weight="fill" className="w-4 h-4" /> : <SpeakerSlash weight="regular" className="w-4 h-4" />}
-              <span className="hidden sm:inline">{locale === 'en' ? 'Radio' : 'Radio'}</span>
+            {/* KracRadio Controls */}
+            <div className="flex items-center">
+              {/* Radio Button - opens modal */}
+              <button
+                onClick={() => setShowChannelSelector(true)}
+                className={`relative flex items-center gap-1.5 px-3 py-1.5 transition-all text-sm font-medium ${
+                  musicEnabled
+                    ? 'text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/30 rounded-l-full border-r-0'
+                    : 'text-neutral-400 hover:text-white bg-neutral-800/50 hover:bg-neutral-800 border border-neutral-700 rounded-full'
+                }`}
+                title={locale === 'en' ? 'Choose a station' : 'Choisir une station'}
+              >
+                {musicEnabled ? <SpeakerHigh weight="fill" className="w-4 h-4" /> : <SpeakerSlash weight="regular" className="w-4 h-4" />}
+                <span className="hidden sm:inline">{locale === 'en' ? 'Radio' : 'Radio'}</span>
+              </button>
+
+              {/* Play/Pause Button - only shows when music is enabled */}
               {musicEnabled && (
-                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-pink-500 rounded-full animate-pulse" />
+                <button
+                  onClick={toggleMusic}
+                  className="flex items-center justify-center w-8 h-8 text-pink-400 hover:text-pink-300 bg-pink-500/20 hover:bg-pink-500/30 border border-pink-500/30 border-l-0 rounded-r-full transition-all"
+                  title={locale === 'en' ? 'Stop music' : 'Arrêter la musique'}
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
               )}
-            </button>
+            </div>
 
             {/* KracRadio Modal */}
             <KracRadioModal
