@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensils, Globe, Cake, Soup, Coffee, Salad, Fish, Beef, Drumstick, Refrigerator, Plus, Percent, Play, Pause, Square } from 'lucide-react';
 import { SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
@@ -124,12 +125,38 @@ function getMegaMenuData(locale: 'fr' | 'en', t: any) {
 interface HeaderProps {
   locale?: Locale;
   dictionary?: Dictionary;
+  transparent?: boolean;
 }
 
-export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
+export default function Header({ locale: localeProp = 'fr', dictionary, transparent = false }: HeaderProps) {
+  const pathname = usePathname();
+
+  // Detect actual locale from pathname (client-side, always up-to-date)
+  const locale: Locale = useMemo(() => {
+    return pathname?.startsWith('/en') ? 'en' : 'fr';
+  }, [pathname]);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Detect scroll for transparent header
+  useEffect(() => {
+    if (!transparent) return;
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [transparent]);
+
+  // Header background classes
+  const headerBg = transparent && !isScrolled && !isMenuOpen && !isSearchOpen
+    ? 'bg-transparent border-transparent'
+    : 'bg-black/95 backdrop-blur-md border-neutral-800';
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult | null>(null);
   const [isSearching, setIsSearching] = useState(false);
@@ -164,36 +191,70 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
   // Préfixe URL pour la locale
   const urlPrefix = locale === 'en' ? '/en' : '';
 
-  // Traductions avec fallback FR
-  const t = dictionary || {
-    nav: { home: 'Accueil', recipes: 'Recettes', lexicon: 'Lexique', converter: 'Convertisseur', blog: 'Blog' },
-    header: {
-      search: 'Rechercher',
-      searchPlaceholder: 'Rechercher une recette, un article...',
-      ingredientMode: 'Dans mon frigo',
-      ingredientPlaceholder: 'Tapez un ingrédient (ex: poulet, tomate...)',
-      clearAll: 'Tout effacer',
-      noResults: 'Aucun résultat pour "{query}"',
-      noIngredientResults: 'Aucune recette trouvée avec ces ingrédients.',
-      tryMoreIngredients: "Essayez d'ajouter d'autres ingrédients!",
-      viewAllResults: 'Voir tous les résultats',
-      articles: 'Articles',
-      mobileCategories: 'Catégories populaires',
-      menu: {
-        mainDishes: 'Plats principaux', beef: 'Boeuf', poultry: 'Volaille', pork: 'Porc',
-        fish: 'Poissons', seafood: 'Fruits de mer', vegetarian: 'Végétariens',
-        sides: 'Accompagnements', vegetables: 'Légumes', salads: 'Salades', pasta: 'Pâtes',
-        rice: 'Riz', sauces: 'Sauces', other: 'Autres',
-        meals: 'Repas', breakfast: 'Déjeuner', soups: 'Soupes', snacks: 'Snacks',
-        appetizers: 'Amuse-gueules', pizza: 'Pizza', poutine: 'Poutine',
-        sweet: 'Sucré', desserts: 'Desserts', pastries: 'Pâtisseries', pies: 'Tartes',
-        breads: 'Pains', drinks: 'Boissons', worldCuisines: 'Cuisines du monde',
-        seeAllRecipes: 'Voir toutes les recettes', culinaryLexicon: 'Lexique culinaire',
-        holidayRecipes: 'Recettes des fêtes', canning: 'Mise en conserve'
-      }
+  // Traductions inline pour chaque locale (client-side, always up-to-date)
+  const translations = {
+    fr: {
+      nav: { home: 'Accueil', recipes: 'Recettes', lexicon: 'Lexique', converter: 'Convertisseur', blog: 'Blog' },
+      header: {
+        search: 'Rechercher',
+        searchPlaceholder: 'Rechercher une recette, un article...',
+        ingredientMode: 'Dans mon frigo',
+        ingredientPlaceholder: 'Tapez un ingrédient (ex: poulet, tomate...)',
+        clearAll: 'Tout effacer',
+        noResults: 'Aucun résultat pour "{query}"',
+        noIngredientResults: 'Aucune recette trouvée avec ces ingrédients.',
+        tryMoreIngredients: "Essayez d'ajouter d'autres ingrédients!",
+        viewAllResults: 'Voir tous les résultats',
+        articles: 'Articles',
+        mobileCategories: 'Catégories populaires',
+        menu: {
+          mainDishes: 'Plats principaux', beef: 'Boeuf', poultry: 'Volaille', pork: 'Porc',
+          fish: 'Poissons', seafood: 'Fruits de mer', vegetarian: 'Végétariens',
+          sides: 'Accompagnements', vegetables: 'Légumes', salads: 'Salades', pasta: 'Pâtes',
+          rice: 'Riz', sauces: 'Sauces', other: 'Autres',
+          meals: 'Repas', breakfast: 'Déjeuner', soups: 'Soupes', snacks: 'Snacks',
+          appetizers: 'Amuse-gueules', pizza: 'Pizza', poutine: 'Poutine',
+          sweet: 'Sucré', desserts: 'Desserts', pastries: 'Pâtisseries', pies: 'Tartes',
+          breads: 'Pains', drinks: 'Boissons', worldCuisines: 'Cuisines du monde',
+          seeAllRecipes: 'Voir toutes les recettes', culinaryLexicon: 'Lexique culinaire',
+          holidayRecipes: 'Recettes des fêtes', canning: 'Mise en conserve'
+        }
+      },
+      recipes: { difficulty: { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' } }
     },
-    recipes: { difficulty: { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' } }
+    en: {
+      nav: { home: 'Home', recipes: 'Recipes', lexicon: 'Lexicon', converter: 'Converter', blog: 'Blog' },
+      header: {
+        search: 'Search',
+        searchPlaceholder: 'Search for a recipe, an article...',
+        ingredientMode: 'In my fridge',
+        ingredientPlaceholder: 'Type an ingredient (e.g., chicken, tomato...)',
+        clearAll: 'Clear all',
+        noResults: 'No results for "{query}"',
+        noIngredientResults: 'No recipes found with these ingredients.',
+        tryMoreIngredients: 'Try adding more ingredients!',
+        viewAllResults: 'View all results',
+        articles: 'Articles',
+        mobileCategories: 'Popular Categories',
+        menu: {
+          mainDishes: 'Main Dishes', beef: 'Beef', poultry: 'Poultry', pork: 'Pork',
+          fish: 'Fish', seafood: 'Seafood', vegetarian: 'Vegetarian',
+          sides: 'Side Dishes', vegetables: 'Vegetables', salads: 'Salads', pasta: 'Pasta',
+          rice: 'Rice', sauces: 'Sauces', other: 'Other',
+          meals: 'Meals', breakfast: 'Breakfast', soups: 'Soups', snacks: 'Snacks',
+          appetizers: 'Appetizers', pizza: 'Pizza', poutine: 'Poutine',
+          sweet: 'Sweet', desserts: 'Desserts', pastries: 'Pastries', pies: 'Pies',
+          breads: 'Breads', drinks: 'Drinks', worldCuisines: 'World Cuisines',
+          seeAllRecipes: 'See all recipes', culinaryLexicon: 'Culinary Lexicon',
+          holidayRecipes: 'Holiday Recipes', canning: 'Canning'
+        }
+      },
+      recipes: { difficulty: { easy: 'Easy', medium: 'Medium', hard: 'Hard' } }
+    }
   };
+
+  // Use the correct translations based on detected locale
+  const t = translations[locale];
 
   // Get localized mega menu data
   const megaMenuData = getMegaMenuData(locale, t);
@@ -401,17 +462,17 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
         onClose={() => setShowNowPlaying(false)}
       />
 
-      <header className="sticky top-0 z-50 bg-black border-b border-neutral-800">
+      <header className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${headerBg}`}>
         <div className="container mx-auto px-4">
-          <div className="flex items-center h-16 md:h-20">
+          <div className="flex items-center h-14 md:h-16">
           {/* Logo */}
           <Link href={`${urlPrefix}/`} className="flex items-center group">
             <Image
               src="/images/logos/menucochon-blanc.svg"
               alt="Menu Cochon"
-              width={250}
-              height={56}
-              className="h-10 md:h-14 w-auto"
+              width={180}
+              height={40}
+              className="h-8 md:h-10 w-auto"
               priority
             />
           </Link>
@@ -427,7 +488,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
               >
                 <Link
                   href={item.href}
-                  className={`relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-neutral-400 hover:text-white transition-colors uppercase tracking-wide group ${
+                  className={`relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wide group ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'text-white' : ''
                   }`}
                 >
@@ -506,7 +567,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
             <button
               ref={searchButtonRef}
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-2.5 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-full transition-all"
+              className="p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all"
             >
               <Search className="w-5 h-5" />
             </button>
@@ -522,7 +583,7 @@ export default function Header({ locale = 'fr', dictionary }: HeaderProps) {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2.5 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-full transition-all"
+              className="lg:hidden p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all"
             >
               {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>

@@ -1,5 +1,9 @@
+'use client';
+
+import { useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Facebook, Instagram, Rss } from 'lucide-react';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import type { Locale } from '@/i18n/config';
@@ -10,7 +14,14 @@ interface FooterProps {
   dictionary?: Dictionary;
 }
 
-export default function Footer({ locale = 'fr', dictionary }: FooterProps) {
+export default function Footer({ locale: localeProp = 'fr', dictionary }: FooterProps) {
+  const pathname = usePathname();
+
+  // Detect actual locale from pathname (client-side, always up-to-date)
+  const locale: Locale = useMemo(() => {
+    return pathname?.startsWith('/en') ? 'en' : 'fr';
+  }, [pathname]);
+
   const currentYear = new Date().getFullYear();
 
   // Préfixe URL pour la locale
@@ -31,31 +42,60 @@ export default function Footer({ locale = 'fr', dictionary }: FooterProps) {
     privacy: '/confidentialite',
   };
 
-  // Traductions avec fallback FR
-  const t = dictionary?.footer || {
-    tagline: 'Des recettes gourmandes et faciles à réaliser pour tous les jours. Découvrez notre collection de plats délicieux.',
-    recipes: 'Recettes',
-    allRecipes: 'Toutes les recettes',
-    popularRecipes: 'Recettes populaires',
-    quickRecipes: 'Recettes rapides',
-    easyRecipes: 'Recettes faciles',
-    categories: 'Catégories',
-    starters: 'Entrées',
-    mainDishes: 'Plats principaux',
-    desserts: 'Desserts',
-    vegetarian: 'Végétarien',
-    blog: 'Blog',
-    allArticles: 'Tous les articles',
-    cookingTips: 'Conseils cuisine',
-    news: 'Actualités',
-    info: 'Informations',
-    about: 'À propos',
-    contact: 'Contact',
-    privacy: 'Confidentialité',
-    copyright: '© {year} Menu Cochon. Tous droits réservés.',
-    madeWith: 'Fait avec',
-    inQuebec: 'au Québec'
+  // Traductions inline pour chaque locale (client-side, always up-to-date)
+  const translations = {
+    fr: {
+      tagline: 'Des recettes gourmandes et faciles à réaliser pour tous les jours. Découvrez notre collection de plats délicieux.',
+      recipes: 'Recettes',
+      allRecipes: 'Toutes les recettes',
+      popularRecipes: 'Recettes populaires',
+      quickRecipes: 'Recettes rapides',
+      easyRecipes: 'Recettes faciles',
+      categories: 'Catégories',
+      starters: 'Entrées',
+      mainDishes: 'Plats principaux',
+      desserts: 'Desserts',
+      vegetarian: 'Végétarien',
+      blog: 'Blog',
+      allArticles: 'Tous les articles',
+      cookingTips: 'Conseils cuisine',
+      news: 'Actualités',
+      info: 'Informations',
+      about: 'À propos',
+      contact: 'Contact',
+      privacy: 'Confidentialité',
+      copyright: '© {year} Menu Cochon. Tous droits réservés.',
+      madeWith: 'Fait avec',
+      inQuebec: 'au Québec'
+    },
+    en: {
+      tagline: 'Delicious and easy-to-make recipes for every day. Discover our collection of tasty dishes.',
+      recipes: 'Recipes',
+      allRecipes: 'All Recipes',
+      popularRecipes: 'Popular Recipes',
+      quickRecipes: 'Quick Recipes',
+      easyRecipes: 'Easy Recipes',
+      categories: 'Categories',
+      starters: 'Starters',
+      mainDishes: 'Main Dishes',
+      desserts: 'Desserts',
+      vegetarian: 'Vegetarian',
+      blog: 'Blog',
+      allArticles: 'All Articles',
+      cookingTips: 'Cooking Tips',
+      news: 'News',
+      info: 'Information',
+      about: 'About',
+      contact: 'Contact',
+      privacy: 'Privacy',
+      copyright: '© {year} Menu Cochon. All rights reserved.',
+      madeWith: 'Made with',
+      inQuebec: 'in Quebec'
+    }
   };
+
+  // Use the correct translations based on detected locale
+  const t = translations[locale];
 
   const links = {
     recettes: [

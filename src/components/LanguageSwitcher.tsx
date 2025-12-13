@@ -118,27 +118,37 @@ export default function LanguageSwitcher({ locale: localeProp, className = '' }:
     enPath = currentLocale === 'en' ? pathname : translatePath(pathname, 'fr', 'en');
   }
 
+  // Force full page reload to ensure server-side locale detection works
+  const handleLanguageChange = (e: React.MouseEvent<HTMLAnchorElement>, targetPath: string, targetLocale: Locale) => {
+    if (currentLocale !== targetLocale) {
+      e.preventDefault();
+      window.location.href = targetPath;
+    }
+  };
+
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <Globe className="w-4 h-4 text-neutral-400" />
+      <Globe className="w-4 h-4 text-white/70" />
       <a
         href={frPath}
+        onClick={(e) => handleLanguageChange(e, frPath, 'fr')}
         className={`text-sm font-medium transition-colors ${
           currentLocale === 'fr'
             ? 'text-white'
-            : 'text-neutral-400 hover:text-white'
+            : 'text-white/70 hover:text-white'
         }`}
         title="Français"
       >
         FR
       </a>
-      <span className="text-neutral-600">|</span>
+      <span className="text-white/40">|</span>
       <a
         href={enPath}
+        onClick={(e) => handleLanguageChange(e, enPath, 'en')}
         className={`text-sm font-medium transition-colors ${
           currentLocale === 'en'
             ? 'text-white'
-            : 'text-neutral-400 hover:text-white'
+            : 'text-white/70 hover:text-white'
         }`}
         title="English"
       >

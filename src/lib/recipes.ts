@@ -423,6 +423,112 @@ export async function getAllCategories(): Promise<Category[]> {
   }));
 }
 
+// List of main category slugs to show on homepage (curated list - no ingredients or origins)
+const MAIN_CATEGORY_SLUGS = [
+  'plats-principaux-boeuf',
+  'plats-principaux-volaille',
+  'plats-principaux-porc',
+  'plat-principaux-poissons',
+  'plats-principaux-fruits-de-mer',
+  'plats-principaux-vegetariens',
+  'dessert',
+  'soupes',
+  'salades',
+  'dejeuner',
+  'pates',
+  'pizza',
+  'snacks',
+  'amuse-gueules',
+  'patisseries',
+  'boissons',
+];
+
+/**
+ * Obtenir les catégories principales pour la page d'accueil (pas les ingrédients ou origines)
+ */
+export async function getMainCategories(limit: number = 10): Promise<Category[]> {
+  const { data, error } = await supabase
+    .from('categories')
+    .select('*')
+    .in('slug', MAIN_CATEGORY_SLUGS)
+    .order('name');
+
+  if (error) {
+    console.error('Erreur getMainCategories:', error);
+    return [];
+  }
+
+  // Sort by the order in MAIN_CATEGORY_SLUGS to have a consistent order
+  const slugOrder = new Map(MAIN_CATEGORY_SLUGS.map((slug, index) => [slug, index]));
+  const sorted = (data as any[] || []).sort((a, b) => {
+    const orderA = slugOrder.get(a.slug) ?? 999;
+    const orderB = slugOrder.get(b.slug) ?? 999;
+    return orderA - orderB;
+  });
+
+  return sorted.slice(0, limit).map((cat) => ({
+    id: cat.id,
+    slug: cat.slug,
+    name: cat.name,
+    parent: cat.parent_id ?? undefined,
+  }));
+}
+
+/**
+ * Obtenir les catégories principales avec traduction selon la locale
+ */
+export async function getMainCategoriesWithLocale(locale: 'fr' | 'en' = 'fr', limit: number = 10): Promise<Category[]> {
+  const { data: categories, error } = await supabase
+    .from('categories')
+    .select('*')
+    .in('slug', MAIN_CATEGORY_SLUGS);
+
+  if (error) {
+    console.error('Erreur getMainCategoriesWithLocale:', error);
+    return [];
+  }
+
+  // Sort by the order in MAIN_CATEGORY_SLUGS
+  const slugOrder = new Map(MAIN_CATEGORY_SLUGS.map((slug, index) => [slug, index]));
+  const sorted = (categories as any[] || []).sort((a, b) => {
+    const orderA = slugOrder.get(a.slug) ?? 999;
+    const orderB = slugOrder.get(b.slug) ?? 999;
+    return orderA - orderB;
+  });
+
+  // If French, return as-is
+  if (locale === 'fr') {
+    return sorted.slice(0, limit).map((cat) => ({
+      id: cat.id,
+      slug: cat.slug,
+      name: cat.name,
+      parent: cat.parent_id ?? undefined,
+    }));
+  }
+
+  // Get English translations
+  const categoryIds = sorted.map(c => c.id);
+  const { data: translations, error: translationError } = await supabase
+    .from('category_translations')
+    .select('category_id, name')
+    .eq('locale', 'en')
+    .in('category_id', categoryIds);
+
+  if (translationError) {
+    console.error('Erreur category translations:', translationError);
+  }
+
+  // Create translation map
+  const translationMap = new Map((translations || []).map((t: any) => [t.category_id, t.name]));
+
+  return sorted.slice(0, limit).map((cat) => ({
+    id: cat.id,
+    slug: cat.slug,
+    name: translationMap.get(cat.id) || cat.name,
+    parent: cat.parent_id ?? undefined,
+  }));
+}
+
 /**
  * Obtenir toutes les catégories avec traduction selon la locale
  */
@@ -685,6 +791,56 @@ export async function enrichRecipeCardsWithEnglishSlugs(cards: RecipeCard[]): Pr
     }
     return {
       ...card,
+      categories: translatedCategories,
+    };
+  });
+}
+
+/**
+ * Enrichir les recettes complètes avec les données anglaises (slug, titre, catégories traduites)
+ */
+export async function enrichRecipesWithEnglishData(recipes: Recipe[]): Promise<(Recipe & { slugEn?: string })[]> {
+  if (recipes.length === 0) return recipes;
+
+  const recipeIds = recipes.map(r => r.id);
+
+  const [recipeTransResult, categoryTransResult] = await Promise.all([
+    supabase
+      .from('recipe_translations')
+      .select('recipe_id, slug_en, title')
+      .eq('locale', 'en')
+      .in('recipe_id', recipeIds),
+    supabase
+      .from('category_translations')
+      .select('category_id, name')
+      .eq('locale', 'en'),
+  ]);
+
+  if (recipeTransResult.error) {
+    console.error('Erreur enrichRecipesWithEnglishData:', recipeTransResult.error);
+  }
+
+  const translationMap = new Map((recipeTransResult.data || []).map((t: any) => [t.recipe_id, t]));
+  const categoryTransMap = new Map((categoryTransResult.data || []).map((t: any) => [t.category_id, t.name]));
+
+  return recipes.map(recipe => {
+    const translation = translationMap.get(recipe.id) as any;
+
+    const translatedCategories = recipe.categories.map(cat => ({
+      ...cat,
+      name: categoryTransMap.get(cat.id) || cat.name,
+    }));
+
+    if (translation) {
+      return {
+        ...recipe,
+        slugEn: translation.slug_en || undefined,
+        title: translation.title || recipe.title,
+        categories: translatedCategories,
+      };
+    }
+    return {
+      ...recipe,
       categories: translatedCategories,
     };
   });

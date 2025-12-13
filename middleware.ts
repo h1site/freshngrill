@@ -6,7 +6,8 @@ const ADMIN_EMAIL = 'info@h1site.com';
 export async function middleware(request: NextRequest) {
   // Add pathname header for locale detection in layout
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-pathname', request.nextUrl.pathname);
+  const currentPathname = request.nextUrl.pathname;
+  requestHeaders.set('x-pathname', currentPathname);
 
   let supabaseResponse = NextResponse.next({
     request: {
@@ -68,6 +69,11 @@ export async function middleware(request: NextRequest) {
     url.searchParams.delete('redirectTo');
     return NextResponse.redirect(url);
   }
+
+  // Set locale cookie AFTER all other middleware logic
+  // This ensures it's on the final response
+  const locale = currentPathname.startsWith('/en') ? 'en' : 'fr';
+  supabaseResponse.cookies.set('x-locale', locale, { path: '/', sameSite: 'lax' });
 
   return supabaseResponse;
 }

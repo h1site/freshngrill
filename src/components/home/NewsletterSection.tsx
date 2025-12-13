@@ -72,7 +72,7 @@ export function NewsletterSection({ locale = 'fr' }: NewsletterSectionProps) {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[#F77313]">
+    <section className="py-16 md:py-24 bg-[#faf8f5]">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -81,11 +81,13 @@ export function NewsletterSection({ locale = 'fr' }: NewsletterSectionProps) {
           transition={{ duration: 0.5 }}
           className="max-w-2xl mx-auto text-center"
         >
-          <Mail className="w-10 h-10 text-white/80 mx-auto mb-6" />
-          <h2 className="text-3xl md:text-4xl font-display text-white mb-4">
+          <div className="w-16 h-16 bg-[#F77313]/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Mail className="w-8 h-8 text-[#F77313]" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-display text-black mb-4">
             {t.title}
           </h2>
-          <p className="text-white/80 mb-8">
+          <p className="text-neutral-600 mb-8">
             {t.subtitle}
           </p>
 
@@ -93,10 +95,10 @@ export function NewsletterSection({ locale = 'fr' }: NewsletterSectionProps) {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center justify-center gap-3 bg-white/20 backdrop-blur px-6 py-4 rounded-lg max-w-md mx-auto"
+              className="flex items-center justify-center gap-3 bg-green-50 border border-green-200 px-6 py-4 rounded-lg max-w-md mx-auto"
             >
-              <Check className="w-6 h-6 text-white" />
-              <span className="text-white font-medium">{message}</span>
+              <Check className="w-6 h-6 text-green-600" />
+              <span className="text-green-700 font-medium">{message}</span>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3 max-w-md mx-auto">
@@ -110,12 +112,12 @@ export function NewsletterSection({ locale = 'fr' }: NewsletterSectionProps) {
                   }}
                   placeholder={t.placeholder}
                   disabled={status === 'loading'}
-                  className="flex-1 px-5 py-3.5 bg-white/10 border border-white/20 text-white placeholder:text-white/50 focus:outline-none focus:border-white transition-colors disabled:opacity-50"
+                  className="flex-1 px-5 py-3.5 bg-white border border-neutral-200 text-black placeholder:text-neutral-400 focus:outline-none focus:border-[#F77313] transition-colors disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-black text-white font-medium uppercase tracking-wide text-sm hover:bg-neutral-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#F77313] text-white font-medium uppercase tracking-wide text-sm hover:bg-[#d45f0a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {status === 'loading' ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -132,7 +134,7 @@ export function NewsletterSection({ locale = 'fr' }: NewsletterSectionProps) {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center justify-center gap-2 text-white/90 text-sm"
+                  className="flex items-center justify-center gap-2 text-red-600 text-sm"
                 >
                   <AlertCircle className="w-4 h-4" />
                   <span>{message}</span>
@@ -141,7 +143,7 @@ export function NewsletterSection({ locale = 'fr' }: NewsletterSectionProps) {
             </form>
           )}
 
-          <p className="text-white/50 text-xs mt-4">
+          <p className="text-neutral-400 text-xs mt-4">
             {t.noSpam}
           </p>
         </motion.div>
