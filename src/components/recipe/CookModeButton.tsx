@@ -84,6 +84,7 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
 
   // Speech synthesis state
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [voicesLoaded, setVoicesLoaded] = useState(false);
   const speechSynthRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   // Voice recognition state
@@ -92,6 +93,28 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
 
   // Total des étapes: 0 = ingrédients, 1+ = instructions
   const totalPages = recipe.instructions.length + 1;
+
+  // Preload voices (they may not be available immediately)
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return;
+
+    const loadVoices = () => {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length > 0) {
+        setVoicesLoaded(true);
+      }
+    };
+
+    // Try to load immediately
+    loadVoices();
+
+    // Also listen for voiceschanged event (Chrome loads voices async)
+    window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+
+    return () => {
+      window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
+    };
+  }, []);
 
   // Bloquer le scroll du body quand le mode est ouvert
   useEffect(() => {
@@ -340,6 +363,74 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     setIsSpeaking(false);
   }, []);
 
+  // Get the best available voice for a language
+  const getBestVoice = useCallback((lang: 'fr' | 'en'): SpeechSynthesisVoice | null => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return null;
+
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length === 0) return null;
+
+    // Priority keywords for natural/premium voices (in order of preference)
+    const premiumKeywords = ['premium', 'neural', 'enhanced', 'natural', 'wavenet'];
+
+    // Preferred voice names by platform
+    const preferredVoices = lang === 'fr' ? {
+      // French voices - prefer Canadian French, then France French
+      preferred: [
+        'Amélie',           // macOS Canadian French (very natural)
+        'Thomas',           // macOS France French
+        'Audrey',           // macOS France French
+        'Google français',  // Chrome
+        'Microsoft Claude', // Windows
+        'Microsoft Paul',   // Windows
+      ],
+      langCodes: ['fr-CA', 'fr-FR', 'fr'],
+    } : {
+      // English voices - prefer natural sounding ones
+      preferred: [
+        'Samantha',         // macOS (very natural)
+        'Karen',            // macOS Australian
+        'Daniel',           // macOS British
+        'Google US English', // Chrome
+        'Microsoft Zira',   // Windows
+        'Microsoft David',  // Windows
+      ],
+      langCodes: ['en-US', 'en-CA', 'en-GB', 'en-AU', 'en'],
+    };
+
+    // Filter voices by language
+    const langVoices = voices.filter(v =>
+      preferredVoices.langCodes.some(code =>
+        v.lang.startsWith(code) || v.lang.toLowerCase().includes(lang)
+      )
+    );
+
+    if (langVoices.length === 0) return null;
+
+    // 1. Try to find a preferred voice by name
+    for (const prefName of preferredVoices.preferred) {
+      const match = langVoices.find(v =>
+        v.name.toLowerCase().includes(prefName.toLowerCase())
+      );
+      if (match) return match;
+    }
+
+    // 2. Try to find a premium/neural voice
+    for (const keyword of premiumKeywords) {
+      const match = langVoices.find(v =>
+        v.name.toLowerCase().includes(keyword)
+      );
+      if (match) return match;
+    }
+
+    // 3. Prefer local voices over remote (usually better quality)
+    const localVoice = langVoices.find(v => v.localService);
+    if (localVoice) return localVoice;
+
+    // 4. Return the first available voice for this language
+    return langVoices[0];
+  }, []);
+
   // Speak a specific step (pass step number, or use current if not provided)
   const speakStep = useCallback((stepToSpeak?: number) => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
@@ -383,9 +474,17 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     textToSpeak = expandUnitsForSpeech(textToSpeak);
 
     const utterance = new SpeechSynthesisUtterance(textToSpeak);
-    utterance.lang = isEN ? 'en-US' : 'fr-FR';
-    utterance.rate = 0.75;
+    utterance.lang = isEN ? 'en-US' : 'fr-CA';
+    utterance.rate = 0.9;  // Slightly slower for clarity
     utterance.pitch = 1;
+
+    // Select the best available voice
+    const bestVoice = getBestVoice(isEN ? 'en' : 'fr');
+    if (bestVoice) {
+      utterance.voice = bestVoice;
+      // Adjust lang to match voice for better pronunciation
+      utterance.lang = bestVoice.lang;
+    }
 
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
@@ -393,7 +492,7 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     speechSynthRef.current = utterance;
     setIsSpeaking(true);
     window.speechSynthesis.speak(utterance);
-  }, [currentStep, recipe.ingredients, recipe.instructions, isEN, expandUnitsForSpeech]);
+  }, [currentStep, recipe.ingredients, recipe.instructions, isEN, expandUnitsForSpeech, getBestVoice]);
 
   // Convenience function to speak current step
   const speakCurrentStep = useCallback(() => {
@@ -414,18 +513,138 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     };
   }, [stopSpeaking]);
 
-  // Voice recognition - process commands
+  // Voice recognition - process commands with intent-based matching
+  // Handles: cleaning filler words, spoken numbers, implicit commands
   const processVoiceCommand = useCallback((transcript: string) => {
-    const text = transcript.toLowerCase().trim();
+    let text = transcript.toLowerCase().trim();
 
-    // Navigation commands - go to ingredients and read them
-    if (text.includes('ingrédient') || text.includes('ingredient')) {
+    // ===== STEP 1: Clean filler/politeness words =====
+    const fillerWords = [
+      // French politeness
+      'peux-tu', 'peux tu', 'pouvez-vous', 'pouvez vous',
+      'est-ce que tu peux', 'est ce que tu peux',
+      's\'il te plaît', 's\'il vous plaît', 'sil te plait', 'sil vous plait',
+      'je veux', 'je voudrais', 'j\'aimerais', 'j aimerais',
+      'merci de', 'merci', 'svp', 's.v.p.',
+      // English politeness
+      'can you', 'could you', 'would you', 'will you',
+      'please', 'kindly', 'i want to', 'i would like to',
+      'i\'d like to', 'i want you to', 'thank you',
+      // Common intros
+      'ok ', 'okay ', 'hey ', 'dis ', 'euh ', 'um ', 'uh ',
+    ];
+    for (const filler of fillerWords) {
+      text = text.replace(new RegExp(filler, 'gi'), ' ');
+    }
+    text = text.replace(/\s+/g, ' ').trim();
+
+    // ===== STEP 2: Convert spoken numbers to digits =====
+    const spokenNumbers: Record<string, number> = {
+      // French
+      'un': 1, 'une': 1, 'premier': 1, 'première': 1,
+      'deux': 2, 'deuxième': 2, 'second': 2, 'seconde': 2,
+      'trois': 3, 'troisième': 3,
+      'quatre': 4, 'quatrième': 4,
+      'cinq': 5, 'cinquième': 5,
+      'six': 6, 'sixième': 6,
+      'sept': 7, 'septième': 7,
+      'huit': 8, 'huitième': 8,
+      'neuf': 9, 'neuvième': 9,
+      'dix': 10, 'dixième': 10,
+      'onze': 11, 'onzième': 11,
+      'douze': 12, 'douzième': 12,
+      // English
+      'one': 1, 'first': 1,
+      'two': 2, 'second': 2,
+      'three': 3, 'third': 3,
+      'four': 4, 'fourth': 4,
+      'five': 5, 'fifth': 5,
+      'six': 6, 'sixth': 6,
+      'seven': 7, 'seventh': 7,
+      'eight': 8, 'eighth': 8,
+      'nine': 9, 'ninth': 9,
+      'ten': 10, 'tenth': 10,
+      'eleven': 11, 'eleventh': 11,
+      'twelve': 12, 'twelfth': 12,
+    };
+
+    // Helper: check if any word in the list is found
+    const matchesAny = (words: string[]) => words.some(w => text.includes(w));
+
+    // Helper: extract step number from text (handles spoken and digit numbers)
+    const extractStepNumber = (): number | null => {
+      // First check for digit
+      const digitMatch = text.match(/(\d+)/);
+      if (digitMatch) {
+        return parseInt(digitMatch[1]);
+      }
+      // Then check for spoken numbers
+      for (const [word, num] of Object.entries(spokenNumbers)) {
+        if (text.includes(word)) {
+          return num;
+        }
+      }
+      return null;
+    };
+
+    // ===== INTENT: INGREDIENTS =====
+    const ingredientWords = [
+      // French
+      'ingrédient', 'ingredient', 'ingrédients', 'ingredients',
+      'ingredien', 'ingrédi', 'ingrédian', 'ingrediant',
+      'les ingrédients', 'aux ingrédients', 'voir ingrédients',
+      'montre ingrédients', 'affiche ingrédients', 'liste ingrédients',
+      'quels ingrédients', 'qu\'est-ce qu\'il faut', 'il faut quoi',
+      'de quoi j\'ai besoin', 'besoin de quoi',
+      // English
+      'show ingredients', 'go to ingredients', 'ingredients please',
+      'ingredient list', 'show me ingredients', 'the ingredients',
+      'ingredients list', 'what ingredients', 'see ingredients',
+      'what do i need', 'what\'s needed', 'shopping list',
+    ];
+    if (matchesAny(ingredientWords)) {
       setCurrentStep(0);
       speakStep(0);
       return;
     }
 
-    if (text.includes('suivant') || text.includes('next') || text.includes('prochain')) {
+    // ===== INTENT: GO TO SPECIFIC STEP (check before next/previous) =====
+    const stepTriggers = [
+      'étape', 'etape', 'step', 'numéro', 'numero', 'number',
+      'aller à', 'aller a', 'va à', 'va a', 'go to', 'jump to',
+    ];
+    if (matchesAny(stepTriggers)) {
+      const stepNum = extractStepNumber();
+      if (stepNum !== null && stepNum >= 1 && stepNum <= totalPages - 1) {
+        setCurrentStep(stepNum);
+        speakStep(stepNum);
+        return;
+      }
+    }
+
+    // ===== INTENT: NEXT STEP =====
+    const nextWords = [
+      // French
+      'suivant', 'suivante', 'suivan', 'savant', 'servant', 'suivre',
+      'prochain', 'prochaine', 'prochai', 'proche',
+      'après', 'apres', 'ensuite', 'puis',
+      'continuer', 'continue', 'continué', 'continuez',
+      'avancer', 'avance', 'avancé', 'avancez',
+      'passer', 'passe', 'passé',
+      'étape suivante', 'prochaine étape',
+      // English
+      'next', 'nex', 'necks', 'nets',
+      'forward', 'forwards', 'foward',
+      'go on', 'move on', 'proceed',
+      'next step', 'next one', 'go next', 'move forward',
+      'keep going', 'carry on', 'advance',
+      // Implicit confirmations (user understood, moving on)
+      'c\'est bon', 'c est bon', 'compris', 'j\'ai compris',
+      'd\'accord', 'd accord', 'parfait', 'super',
+      'got it', 'okay next', 'alright', 'done',
+      'understood', 'i got it', 'yep', 'yes',
+    ];
+    if (matchesAny(nextWords)) {
       if (currentStep < totalPages - 1) {
         const newStep = currentStep + 1;
         setCurrentStep(newStep);
@@ -434,7 +653,24 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return;
     }
 
-    if (text.includes('précédent') || text.includes('previous') || text.includes('retour') || text.includes('back')) {
+    // ===== INTENT: PREVIOUS STEP =====
+    const prevWords = [
+      // French
+      'précédent', 'précédente', 'précéden', 'preceden', 'presidant', 'président',
+      'retour', 'retourne', 'revenir', 'reviens',
+      'en arrière', 'arrière', 'derrière',
+      'reculer', 'recule', 'reculé',
+      'étape précédente', 'étape d\'avant', 'étape avant',
+      'juste avant', 'celle d\'avant',
+      // English
+      'previous', 'previus', 'previou', 'previews',
+      'back', 'bac', 'beck',
+      'go back', 'step back', 'one back',
+      'backwards', 'backward', 'backword',
+      'before', 'prior', 'the one before',
+      'previous step', 'one before', 'go backwards',
+    ];
+    if (matchesAny(prevWords)) {
       if (currentStep > 0) {
         const newStep = currentStep - 1;
         setCurrentStep(newStep);
@@ -443,34 +679,123 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return;
     }
 
-    // Go to specific step - "étape 3", "step 3", etc.
-    const stepMatch = text.match(/(?:étape|step|go to)\s*(\d+)/i);
-    if (stepMatch) {
-      const stepNum = parseInt(stepMatch[1]);
-      if (stepNum >= 1 && stepNum <= totalPages - 1) {
-        setCurrentStep(stepNum);
-        speakStep(stepNum);
-      }
-      return;
-    }
-
-    // Read commands
-    if (text.includes('lire') || text.includes('lis') || text.includes('read')) {
+    // ===== INTENT: READ / SPEAK =====
+    const readWords = [
+      // French
+      'lire', 'lis', 'lit', 'lise', 'lisez',
+      'parle', 'parler', 'parlé', 'parlez',
+      'dis', 'dire', 'dites',
+      'lecture', 'lis-moi', 'dis-moi',
+      'récite', 'réciter', 'recite',
+      'énonce', 'énoncer', 'annonce',
+      'c\'est quoi', 'qu\'est-ce que', 'ça dit quoi',
+      // English
+      'read', 'reed', 'reading',
+      'speak', 'speaking',
+      'tell me', 'say it',
+      'read out', 'read aloud', 'out loud',
+      'read this', 'read it', 'speak up',
+      'what does it say', 'read to me',
+      'what\'s this step', 'what is this',
+    ];
+    if (matchesAny(readWords)) {
       speakStep();
       return;
     }
 
-    // Stop reading
-    if (text.includes('stop') || text.includes('arrête') || text.includes('silence')) {
+    // ===== INTENT: STOP =====
+    const stopWords = [
+      // French
+      'stop', 'stoppe', 'stoppé', 'stopper',
+      'arrête', 'arrete', 'arrêter', 'arreter', 'arrêté',
+      'tais-toi', 'tais toi', 'tait toi', 'taisez-vous',
+      'silence', 'silencieux',
+      'pause', 'pauser', 'pausé',
+      'chut', 'chuut', 'assez', 'suffit', 'ça suffit',
+      'ferme-la', 'la ferme', 'ferme la',
+      'taire', 'se taire', 'ok j\'ai compris',
+      // English
+      'stop', 'stob', 'stopp',
+      'quiet', 'be quiet',
+      'silence', 'silent',
+      'shut up', 'hush', 'shush',
+      'pause', 'paus',
+      'enough', 'stop reading', 'stop talking',
+      'be silent', 'stop speaking', 'that\'s enough',
+      'okay i got it', 'ok i understand',
+    ];
+    if (matchesAny(stopWords)) {
       stopSpeaking();
       return;
     }
 
-    // Repeat current step
-    if (text.includes('répète') || text.includes('repeat') || text.includes('encore')) {
+    // ===== INTENT: REPEAT =====
+    const repeatWords = [
+      // French
+      'répète', 'repete', 'répéter', 'repeter', 'répété',
+      'encore', 'encore une fois', 'une fois encore',
+      'recommence', 'recommencer', 'recommencé',
+      'redis', 'redis-moi', 'redit', 'redire',
+      'refais', 'refaire', 'refait',
+      'relis', 'relire', 'relu',
+      'à nouveau', 'de nouveau',
+      'j\'ai pas compris', 'j\'ai pas entendu',
+      'tu peux répéter', 'quoi',
+      // English
+      'repeat', 'repea', 'repeate', 'repeated',
+      'again', 'one more', 'one more time', 'once more',
+      'say again', 'say that again', 'repeat that',
+      'do it again', 'pardon', 'sorry', 'huh',
+      'come again', 'i didn\'t catch that', 'repeat please',
+      'what was that', 'didn\'t hear', 'say it again',
+    ];
+    if (matchesAny(repeatWords)) {
       speakStep();
       return;
     }
+
+    // ===== INTENT: FIRST STEP =====
+    const firstWords = [
+      // French
+      'début', 'debut', 'au début', 'le début',
+      'première étape', 'premiere etape', 'étape un', 'etape un',
+      'commencer', 'commence', 'on commence',
+      'retour au début', 'depuis le début',
+      // English
+      'first step', 'step one', 'step 1',
+      'beginning', 'from the start', 'from the beginning',
+      'start over', 'restart', 'go to start',
+      'back to the beginning',
+    ];
+    if (matchesAny(firstWords)) {
+      setCurrentStep(1);
+      speakStep(1);
+      return;
+    }
+
+    // ===== INTENT: LAST STEP =====
+    const lastWords = [
+      // French
+      'fin', 'la fin', 'à la fin',
+      'dernière étape', 'derniere etape', 'dernière', 'dernier',
+      'terminer', 'termine', 'étape finale',
+      'aller à la fin', 'sauter à la fin',
+      // English
+      'last step', 'final step', 'last one',
+      'the end', 'go to end', 'jump to end',
+      'final', 'finale', 'last',
+      'skip to end', 'go to last',
+    ];
+    if (matchesAny(lastWords)) {
+      const lastStep = totalPages - 1;
+      setCurrentStep(lastStep);
+      speakStep(lastStep);
+      return;
+    }
+
+    // ===== INTENT: HELP (could add in future) =====
+    // For now, log unrecognized commands for debugging
+    console.log('Unrecognized voice command:', text);
   }, [currentStep, totalPages, speakStep, stopSpeaking]);
 
   // Voice recognition - start/stop listening
