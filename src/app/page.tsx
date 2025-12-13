@@ -196,7 +196,7 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* Features Section */}
+      {/* Features Section - Fonctionnalités du site */}
       <FeaturesSection locale="fr" />
 
       {/* Newsletter Section */}
