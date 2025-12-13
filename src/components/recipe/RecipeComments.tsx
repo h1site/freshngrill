@@ -62,10 +62,13 @@ export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommen
 
     // Get comments first
     const { data: commentsData, error: commentsError } = await supabase
-      .from('comments')
+      .from('comments' as never)
       .select('id, content, created_at, user_id')
       .eq('recipe_id', recipeId)
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false }) as unknown as {
+        data: { id: number; content: string; created_at: string; user_id: string }[] | null;
+        error: { message: string } | null;
+      };
 
     if (commentsError) {
       console.error('Error loading comments:', commentsError);
@@ -85,9 +88,11 @@ export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommen
 
     // Fetch profiles for those users
     const { data: profilesData } = await supabase
-      .from('profiles')
+      .from('profiles' as never)
       .select('id, display_name, avatar_url, email')
-      .in('id', userIds);
+      .in('id', userIds) as unknown as {
+        data: { id: string; display_name: string | null; avatar_url: string | null; email: string }[] | null;
+      };
 
     // Create a map of profiles by user_id
     const profilesMap = new Map(
