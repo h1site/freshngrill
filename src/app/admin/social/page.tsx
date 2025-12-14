@@ -8,7 +8,7 @@ import {
   Instagram,
   Copy,
   Check,
-  ExternalLink,
+  Download,
   Search,
   Send,
   Loader2,
@@ -293,7 +293,7 @@ ${hashtags} ${baseHashtags}`;
                       }
                       className="w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors flex items-center justify-center gap-2"
                     >
-                      <ExternalLink className="w-4 h-4" />
+                      <Download className="w-4 h-4" />
                       Télécharger l'image
                     </button>
                   </div>
@@ -413,7 +413,7 @@ ${hashtags} ${baseHashtags}`;
 
                   {!selectedRecipe.featured_image && (
                     <p className="text-sm text-amber-600">
-                      ⚠️ Une image est requise pour publier sur Instagram
+                      Une image est requise pour publier sur Instagram
                     </p>
                   )}
 
@@ -433,7 +433,7 @@ ${hashtags} ${baseHashtags}`;
 
                 <div className="mt-4 p-3 bg-pink-50 rounded-lg">
                   <p className="text-sm text-pink-800">
-                    <strong>💡 Rappel:</strong> Mettez le lien dans votre bio Instagram:
+                    <strong>Rappel:</strong> Mettez le lien dans votre bio Instagram:
                   </p>
                   <div className="mt-2 flex items-center gap-2">
                     <code className="flex-1 p-2 bg-white rounded text-xs break-all">
@@ -470,25 +470,17 @@ ${hashtags} ${baseHashtags}`;
 
       {/* Configuration notice */}
       <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-        <h3 className="font-semibold text-amber-800 mb-2">⚙️ Configuration requise</h3>
+        <h3 className="font-semibold text-amber-800 mb-2">Configuration requise</h3>
         <p className="text-sm text-amber-700 mb-2">
           Pour publier directement, ajoutez ces variables dans votre fichier <code>.env.local</code>:
         </p>
         <pre className="text-xs bg-white p-3 rounded border border-amber-200 overflow-x-auto">
 {`FACEBOOK_PAGE_ID=votre_page_id
-FACEBOOK_PAGE_ACCESS_TOKEN=votre_access_token
+FACEBOOK_PAGE_ACCESS_TOKEN=votre_page_access_token
 INSTAGRAM_BUSINESS_ACCOUNT_ID=votre_ig_account_id`}
         </pre>
         <p className="text-xs text-amber-600 mt-2">
-          Obtenez ces informations via{' '}
-          <a
-            href="https://developers.facebook.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline"
-          >
-            Facebook Developers
-          </a>
+          Pour obtenir le Page Access Token: developers.facebook.com/tools/explorer → Get Page Access Token
         </p>
       </div>
     </div>

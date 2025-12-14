@@ -18,6 +18,7 @@ import RecipeFAQ from '@/components/recipe/RecipeFAQ';
 import RecipeComments from '@/components/recipe/RecipeComments';
 import GoogleAd from '@/components/ads/GoogleAd';
 import SetLanguageSlugs from '@/components/SetLanguageSlugs';
+import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -238,6 +239,16 @@ export default async function RecipePageEN({ params }: Props) {
                 {recipe.nutrition && (
                   <RecipeNutrition nutrition={recipe.nutrition} locale="en" />
                 )}
+              </div>
+
+              {/* Amazon Products */}
+              <div className="print:hidden">
+                <AmazonKitchenProducts
+                  products={['thermometer', 'skillet', 'chefKnife']}
+                  title="Recommended Equipment"
+                  locale="en"
+                  variant="sidebar"
+                />
               </div>
 
               {/* Ad in sidebar */}

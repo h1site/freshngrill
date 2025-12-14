@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, ShoppingCart, ArrowRight, Calendar, Clock } from 'lucide-react';
+import { ShoppingCart, ArrowRight, Calendar, Clock } from 'lucide-react';
 import { getPostCardsWithEnglish } from '@/lib/posts';
 import GoogleAd from '@/components/ads/GoogleAd';
 
@@ -42,17 +42,6 @@ export default async function BuyingGuidePage() {
       {/* Hero Header */}
       <header className="bg-black text-white">
         <div className="container mx-auto px-4">
-          {/* Navigation */}
-          <div className="py-4 border-b border-white/10">
-            <Link
-              href="/en/blog"
-              className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Back to blog
-            </Link>
-          </div>
-
           {/* Hero Content */}
           <div className="py-12 md:py-20 max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-[#F77313] text-white text-xs font-bold uppercase tracking-[0.15em] px-4 py-1.5 mb-6">
@@ -203,20 +192,12 @@ export default async function BuyingGuidePage() {
           <p className="text-neutral-400 max-w-xl mx-auto mb-6">
             Discover our recipes and put your new equipment to the test!
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/en/recipes"
-              className="inline-flex items-center justify-center gap-2 bg-[#F77313] text-white px-6 py-3 font-medium uppercase tracking-wide hover:bg-[#d45f0a] transition-colors"
-            >
-              Explore recipes
-            </Link>
-            <Link
-              href="/en/blog"
-              className="inline-flex items-center justify-center gap-2 bg-white/10 text-white px-6 py-3 font-medium uppercase tracking-wide hover:bg-white/20 transition-colors"
-            >
-              Back to blog
-            </Link>
-          </div>
+          <Link
+            href="/en/recipes"
+            className="inline-flex items-center justify-center gap-2 bg-[#F77313] text-white px-6 py-3 font-medium uppercase tracking-wide hover:bg-[#d45f0a] transition-colors"
+          >
+            Explore recipes
+          </Link>
         </div>
       </section>
     </main>

@@ -194,7 +194,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   // Traductions inline pour chaque locale (client-side, always up-to-date)
   const translations = {
     fr: {
-      nav: { home: 'Accueil', recipes: 'Recettes', lexicon: 'Lexique', converter: 'Convertisseur', blog: 'Blog' },
+      nav: { home: 'Accueil', recipes: 'Recettes', lexicon: 'Lexique', converter: 'Outils', blog: 'Blog', guide: 'Guide' },
       header: {
         search: 'Rechercher',
         searchPlaceholder: 'Rechercher une recette, un article...',
@@ -223,7 +223,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
       recipes: { difficulty: { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' } }
     },
     en: {
-      nav: { home: 'Home', recipes: 'Recipes', lexicon: 'Lexicon', converter: 'Converter', blog: 'Blog' },
+      nav: { home: 'Home', recipes: 'Recipes', lexicon: 'Lexicon', converter: 'Tools', blog: 'Blog', guide: 'Guide' },
       header: {
         search: 'Search',
         searchPlaceholder: 'Search for a recipe, an article...',
@@ -265,12 +265,14 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
     lexicon: '/en/lexicon',
     converter: '/en/converter',
     blog: '/en/blog',
+    guide: '/en/buying-guide',
     search: '/en/search',
   } : {
     recipe: '/recette',
     lexicon: '/lexique',
     converter: '/convertisseur',
     blog: '/blog',
+    guide: '/guide-achat',
     search: '/recherche',
   };
 
@@ -280,6 +282,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
     { name: t.nav.lexicon, href: routes.lexicon, hasMegaMenu: false },
     { name: t.nav.converter, href: routes.converter, hasMegaMenu: false },
     { name: t.nav.blog, href: routes.blog, hasMegaMenu: false },
+    { name: t.nav.guide, href: routes.guide, hasMegaMenu: false },
   ];
 
   // Fermer la recherche quand on clique en dehors
@@ -478,7 +481,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
           </Link>
 
           {/* Navigation Desktop */}
-          <nav className="hidden lg:flex items-center gap-1 ml-10">
+          <nav className="hidden lg:flex items-center gap-0 ml-6 xl:ml-10">
             {navigation.map((item) => (
               <div
                 key={item.name}
@@ -488,7 +491,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               >
                 <Link
                   href={item.href}
-                  className={`relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wide group ${
+                  className={`relative flex items-center gap-1 px-2 xl:px-4 py-2 text-xs xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wide group ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'text-white' : ''
                   }`}
                 >
@@ -496,7 +499,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                   {item.hasMegaMenu && (
                     <ChevronDown className={`w-4 h-4 transition-transform ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
                   )}
-                  <span className={`absolute bottom-0 left-4 right-4 h-0.5 bg-[#F77313] transition-all duration-300 ${
+                  <span className={`absolute bottom-0 left-2 right-2 xl:left-4 xl:right-4 h-0.5 bg-[#F77313] transition-all duration-300 ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </Link>
