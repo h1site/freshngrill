@@ -3,41 +3,34 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  getPostBySlugWithEnglish,
-  getAllPostSlugs,
-  getSimilarPostsWithEnglish,
+  getPostBySlug,
+  getSimilarPosts,
 } from '@/lib/posts';
-import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Bookmark } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Bookmark, ShoppingCart } from 'lucide-react';
 import GoogleAd from '@/components/ads/GoogleAd';
-import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  const slugs = await getAllPostSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPostBySlugWithEnglish(slug);
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     return {
-      title: 'Article not found',
+      title: 'Article non trouvé',
     };
   }
 
   return {
-    title: post.seoTitle || `${post.title} | Menu Cochon`,
+    title: post.seoTitle || `${post.title} | Guide d'achat | Menu Cochon`,
     description: post.seoDescription || post.excerpt,
     alternates: {
-      canonical: `/en/blog/${slug}/`,
+      canonical: `/guide-achat/${slug}/`,
       languages: {
-        'fr-CA': `/blog/${slug}/`,
-        'en-CA': `/en/blog/${slug}/`,
+        'fr-CA': `/guide-achat/${slug}/`,
+        'en-CA': `/en/buying-guide/${slug}/`,
       },
     },
     openGraph: {
@@ -45,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.excerpt,
       images: post.featuredImage ? [post.featuredImage] : [],
       type: 'article',
-      url: `/en/blog/${slug}/`,
+      url: `/guide-achat/${slug}/`,
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
       authors: [post.author.name],
@@ -53,18 +46,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogPostPageEN({ params }: Props) {
+export default async function GuideAchatPostPage({ params }: Props) {
   const { slug } = await params;
-  const post = await getPostBySlugWithEnglish(slug);
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     notFound();
   }
 
-  const similarPosts = await getSimilarPostsWithEnglish(post, 3);
+  // Verify post is in guide-achat category
+  const isGuideAchat = post.categories.some((cat) => cat.slug === 'guide-achat');
+  if (!isGuideAchat) {
+    notFound();
+  }
+
+  // Get similar posts and filter to only guide-achat category
+  const allSimilarPosts = await getSimilarPosts(post, 10);
+  const similarPosts = allSimilarPosts
+    .filter((p) => p.categories.some((cat) => cat.slug === 'guide-achat'))
+    .slice(0, 3);
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-CA', {
+    return new Date(dateString).toLocaleDateString('fr-CA', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -79,11 +82,11 @@ export default async function BlogPostPageEN({ params }: Props) {
           {/* Navigation Bar */}
           <div className="py-4 flex items-center justify-between border-b border-white/10">
             <Link
-              href="/en/blog"
+              href="/guide-achat"
               className="inline-flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to blog
+              Retour au guide d&apos;achat
             </Link>
             <div className="flex items-center gap-4">
               <button className="p-2 text-neutral-400 hover:text-white transition-colors">
@@ -97,19 +100,11 @@ export default async function BlogPostPageEN({ params }: Props) {
 
           {/* Article Header */}
           <div className="py-12 md:py-16 lg:py-20 max-w-4xl mx-auto text-center">
-            {/* Categories */}
-            {post.categories.length > 0 && (
-              <div className="flex flex-wrap justify-center gap-2 mb-6">
-                {post.categories.map((category) => (
-                  <span
-                    key={category.id}
-                    className="bg-[#F77313] text-white text-xs font-bold uppercase tracking-[0.15em] px-4 py-1.5"
-                  >
-                    {category.name}
-                  </span>
-                ))}
-              </div>
-            )}
+            {/* Category Badge */}
+            <div className="inline-flex items-center gap-2 bg-[#F77313] text-white text-xs font-bold uppercase tracking-[0.15em] px-4 py-1.5 mb-6">
+              <ShoppingCart className="w-4 h-4" />
+              Guide d&apos;achat
+            </div>
 
             {/* Title */}
             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display leading-tight">
@@ -138,7 +133,7 @@ export default async function BlogPostPageEN({ params }: Props) {
                   <span className="text-white font-medium block text-sm">
                     {post.author.name}
                   </span>
-                  <span className="text-xs text-neutral-500">Author</span>
+                  <span className="text-xs text-neutral-500">Auteur</span>
                 </div>
               </div>
 
@@ -153,7 +148,7 @@ export default async function BlogPostPageEN({ params }: Props) {
 
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="w-4 h-4" />
-                {post.readingTime} min read
+                {post.readingTime} min de lecture
               </div>
             </div>
           </div>
@@ -183,17 +178,16 @@ export default async function BlogPostPageEN({ params }: Props) {
 
         <div className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-3xl mx-auto">
+            {/* Affiliate Disclosure */}
+            <div className="bg-neutral-100 border-l-4 border-[#F77313] p-4 mb-8 text-sm text-neutral-600">
+              <strong>Divulgation:</strong> En tant que Partenaire Amazon, nous réalisons un bénéfice sur les achats remplissant les conditions requises.
+              Les liens vers les produits sont des liens affiliés.
+            </div>
+
             {/* Drop Cap Article Content */}
             <div
-              className="blog-content first-letter:text-7xl first-letter:font-display first-letter:text-[#F77313] first-letter:float-left first-letter:mr-3 first-letter:mt-1"
+              className="blog-content buying-guide-content first-letter:text-7xl first-letter:font-display first-letter:text-[#F77313] first-letter:float-left first-letter:mr-3 first-letter:mt-1"
               dangerouslySetInnerHTML={{ __html: post.content }}
-            />
-
-            {/* Amazon Products */}
-            <AmazonKitchenProducts
-              products={['instantPot', 'chefKnife', 'skillet']}
-              title="Recommended Equipment"
-              locale="en"
             />
 
             {/* Ad in article */}
@@ -226,60 +220,65 @@ export default async function BlogPostPageEN({ params }: Props) {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <span className="text-[#F77313] text-sm font-medium uppercase tracking-[0.2em]">
-                Continue reading
+                Continuez la lecture
               </span>
               <h2 className="font-display text-4xl md:text-5xl text-black mt-3">
-                Similar Articles
+                Autres Guides
               </h2>
               <div className="w-16 h-1 bg-[#F77313] mx-auto mt-6" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {similarPosts.map((similarPost) => (
-                <article key={similarPost.id} className="group">
-                  <Link href={`/en/blog/${similarPost.slug}`} className="block">
-                    {/* Image */}
-                    <div className="relative aspect-[4/3] overflow-hidden bg-neutral-200">
-                      {similarPost.featuredImage ? (
-                        <Image
-                          src={similarPost.featuredImage}
-                          alt={similarPost.title}
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 bg-gradient-to-br from-neutral-300 to-neutral-400" />
-                      )}
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                    </div>
+              {similarPosts.map((similarPost) => {
+                const isGuide = similarPost.categories.some((cat) => cat.slug === 'guide-achat');
+                const postUrl = isGuide ? `/guide-achat/${similarPost.slug}` : `/blog/${similarPost.slug}`;
 
-                    {/* Content */}
-                    <div className="pt-5">
-                      {similarPost.categories[0] && (
-                        <span className="text-[#F77313] text-xs font-medium uppercase tracking-wider">
-                          {similarPost.categories[0].name}
-                        </span>
-                      )}
-                      <h3 className="font-display text-xl md:text-2xl text-black group-hover:text-[#F77313] transition-colors leading-tight mt-2">
-                        {similarPost.title}
-                      </h3>
-                      <div className="flex items-center gap-3 mt-3 text-neutral-500 text-xs">
-                        <span>{formatDate(similarPost.publishedAt)}</span>
-                        <span className="w-1 h-1 rounded-full bg-neutral-400" />
-                        <span>{similarPost.readingTime} min</span>
+                return (
+                  <article key={similarPost.id} className="group">
+                    <Link href={postUrl} className="block">
+                      {/* Image */}
+                      <div className="relative aspect-[4/3] overflow-hidden bg-neutral-200">
+                        {similarPost.featuredImage ? (
+                          <Image
+                            src={similarPost.featuredImage}
+                            alt={similarPost.title}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 bg-gradient-to-br from-neutral-300 to-neutral-400" />
+                        )}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
                       </div>
-                    </div>
-                  </Link>
-                </article>
-              ))}
+
+                      {/* Content */}
+                      <div className="pt-5">
+                        {similarPost.categories[0] && (
+                          <span className="text-[#F77313] text-xs font-medium uppercase tracking-wider">
+                            {similarPost.categories[0].name}
+                          </span>
+                        )}
+                        <h3 className="font-display text-xl md:text-2xl text-black group-hover:text-[#F77313] transition-colors leading-tight mt-2">
+                          {similarPost.title}
+                        </h3>
+                        <div className="flex items-center gap-3 mt-3 text-neutral-500 text-xs">
+                          <span>{formatDate(similarPost.publishedAt)}</span>
+                          <span className="w-1 h-1 rounded-full bg-neutral-400" />
+                          <span>{similarPost.readingTime} min</span>
+                        </div>
+                      </div>
+                    </Link>
+                  </article>
+                );
+              })}
             </div>
 
             <div className="text-center mt-12">
               <Link
-                href="/en/blog"
+                href="/guide-achat"
                 className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-medium uppercase tracking-wide hover:bg-[#F77313] transition-colors"
               >
-                See all articles
+                Voir tous les guides
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>

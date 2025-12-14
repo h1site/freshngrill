@@ -10,6 +10,7 @@ import {
 import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Bookmark, Quote } from 'lucide-react';
 import PostCard from '@/components/blog/PostCard';
 import GoogleAd from '@/components/ads/GoogleAd';
+import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -123,19 +124,13 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="flex flex-wrap items-center justify-center gap-6 mt-8 text-neutral-500">
               {/* Author */}
               <div className="flex items-center gap-3">
-                {post.author.avatar ? (
-                  <Image
-                    src={post.author.avatar}
-                    alt={post.author.name}
-                    width={40}
-                    height={40}
-                    className="rounded-full"
-                  />
-                ) : (
-                  <div className="w-10 h-10 rounded-full bg-[#F77313] flex items-center justify-center text-white font-display text-lg">
-                    {post.author.name.charAt(0)}
-                  </div>
-                )}
+                <Image
+                  src="/images/auteurs/seb.jpg"
+                  alt={post.author.name}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
                 <div className="text-left">
                   <span className="text-white font-medium block text-sm">
                     {post.author.name}
@@ -191,6 +186,13 @@ export default async function BlogPostPage({ params }: Props) {
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
 
+            {/* Amazon Products */}
+            <AmazonKitchenProducts
+              products={['instantPot', 'chefKnife', 'skillet']}
+              title="Équipement recommandé"
+              locale="fr"
+            />
+
             {/* Ad in article */}
             <GoogleAd slot="7610644087" className="my-12" />
 
@@ -211,70 +213,6 @@ export default async function BlogPostPage({ params }: Props) {
               </div>
             )}
 
-            {/* Share Section */}
-            <div className="mt-12 p-8 bg-black text-white text-center">
-              <p className="text-sm text-neutral-400 uppercase tracking-wider mb-3">
-                Partagez cet article
-              </p>
-              <div className="flex justify-center gap-4">
-                <button className="w-12 h-12 bg-white/10 hover:bg-[#F77313] flex items-center justify-center transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-                </button>
-                <button className="w-12 h-12 bg-white/10 hover:bg-[#F77313] flex items-center justify-center transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
-                </button>
-                <button className="w-12 h-12 bg-white/10 hover:bg-[#F77313] flex items-center justify-center transition-colors">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg>
-                </button>
-                <button className="w-12 h-12 bg-white/10 hover:bg-[#F77313] flex items-center justify-center transition-colors">
-                  <Share2 className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Ad before author */}
-            <GoogleAd slot="7610644087" className="my-12" />
-
-            {/* Author Box - Magazine Style */}
-            <div className="mt-12 border border-neutral-200">
-              <div className="p-8 md:p-10">
-                <div className="flex flex-col md:flex-row items-start gap-6">
-                  {post.author.avatar ? (
-                    <Image
-                      src={post.author.avatar}
-                      alt={post.author.name}
-                      width={100}
-                      height={100}
-                      className="rounded-full flex-shrink-0"
-                    />
-                  ) : (
-                    <div className="w-24 h-24 rounded-full bg-[#F77313] flex items-center justify-center text-white text-3xl font-display flex-shrink-0">
-                      {post.author.name.charAt(0)}
-                    </div>
-                  )}
-                  <div className="flex-1">
-                    <span className="text-xs text-[#F77313] uppercase tracking-[0.15em] font-medium">
-                      À propos de l'auteur
-                    </span>
-                    <h3 className="font-display text-2xl md:text-3xl text-black mt-2">
-                      {post.author.name}
-                    </h3>
-                    {post.author.bio && (
-                      <p className="text-neutral-600 mt-3 leading-relaxed">
-                        {post.author.bio}
-                      </p>
-                    )}
-                    <Link
-                      href="/blog"
-                      className="inline-flex items-center gap-2 text-[#F77313] font-medium mt-4 hover:underline"
-                    >
-                      Voir tous ses articles
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </article>

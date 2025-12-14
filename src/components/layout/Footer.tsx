@@ -60,6 +60,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       allArticles: 'Tous les articles',
       cookingTips: 'Conseils cuisine',
       news: 'Actualités',
+      buyingGuide: "Guide d'achat",
       info: 'Informations',
       about: 'À propos',
       contact: 'Contact',
@@ -84,6 +85,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       allArticles: 'All Articles',
       cookingTips: 'Cooking Tips',
       news: 'News',
+      buyingGuide: 'Buying Guide',
       info: 'Information',
       about: 'About',
       contact: 'Contact',
@@ -114,6 +116,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       { name: t.allArticles, href: routes.blog },
       { name: t.cookingTips, href: `${routes.blog}?categorie=conseils` },
       { name: t.news, href: `${routes.blog}?categorie=actualites` },
+      { name: t.buyingGuide, href: locale === 'en' ? '/en/buying-guide' : '/guide-achat' },
     ],
     info: [
       { name: t.about, href: routes.about },
