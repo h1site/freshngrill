@@ -1055,7 +1055,8 @@ export interface RecipeWithMatchScore extends RecipeCard {
  * Retourne les recettes triées par nombre d'ingrédients matchés
  */
 export async function searchByIngredients(
-  availableIngredients: string[]
+  availableIngredients: string[],
+  locale: 'fr' | 'en' = 'fr'
 ): Promise<RecipeWithMatchScore[]> {
   if (!availableIngredients.length) return [];
 
@@ -1068,13 +1069,37 @@ export async function searchByIngredients(
     return [];
   }
 
+  // Fetch English translations if needed
+  let translationsMap = new Map<number, { title: string; slug_en: string | null; ingredients: IngredientGroup[] | null }>();
+  if (locale === 'en' && data && data.length > 0) {
+    const recipeIds = data.map((r: { id: number }) => r.id);
+    const { data: translations } = await supabase
+      .from('recipe_translations')
+      .select('recipe_id, title, slug_en, ingredients')
+      .eq('locale', 'en')
+      .in('recipe_id', recipeIds);
+
+    if (translations) {
+      for (const t of translations as { recipe_id: number; title: string; slug_en: string | null; ingredients: unknown }[]) {
+        translationsMap.set(t.recipe_id, {
+          title: t.title,
+          slug_en: t.slug_en,
+          ingredients: t.ingredients as IngredientGroup[] | null
+        });
+      }
+    }
+  }
+
   // Normaliser les ingrédients recherchés
   const normalizedSearch = availableIngredients.map(i => i.toLowerCase().trim());
 
   const results: RecipeWithMatchScore[] = [];
 
   for (const recipe of (data || []) as { id: number; slug: string; title: string; featured_image: string | null; prep_time: number | null; cook_time: number | null; total_time: number | null; difficulty: string | null; categories: Category[]; likes: number | null; ingredients: IngredientGroup[] | null }[]) {
-    const groups = recipe.ingredients;
+    const translation = translationsMap.get(recipe.id);
+
+    // Use English ingredients for matching if available, otherwise French
+    const groups = (locale === 'en' && translation?.ingredients) ? translation.ingredients : recipe.ingredients;
     if (!groups) continue;
 
     // Extraire tous les ingrédients de la recette
@@ -1105,8 +1130,8 @@ export async function searchByIngredients(
     if (matchedIngredients.length > 0) {
       results.push({
         id: recipe.id,
-        slug: recipe.slug,
-        title: recipe.title,
+        slug: (locale === 'en' && translation?.slug_en) ? translation.slug_en : recipe.slug,
+        title: (locale === 'en' && translation?.title) ? translation.title : recipe.title,
         featuredImage: recipe.featured_image || '',
         prepTime: recipe.prep_time || 0,
         cookTime: recipe.cook_time || 0,

@@ -74,7 +74,7 @@ export default function FridgeSearch({ allIngredients, onResultsChange, locale =
 
     setIsLoading(true);
     try {
-      const recipes = await searchByIngredients(selectedIngredients);
+      const recipes = await searchByIngredients(selectedIngredients, locale);
       setResults(recipes);
       onResultsChange?.(recipes.length > 0);
     } catch (error) {
@@ -82,7 +82,7 @@ export default function FridgeSearch({ allIngredients, onResultsChange, locale =
     } finally {
       setIsLoading(false);
     }
-  }, [selectedIngredients, onResultsChange]);
+  }, [selectedIngredients, onResultsChange, locale]);
 
   useEffect(() => {
     searchRecipes();
