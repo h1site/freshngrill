@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { getAllRecipes, getMainCategories } from '@/lib/recipes';
 import { getRecentPosts } from '@/lib/posts';
 import { MagazineHero } from '@/components/home/MagazineHero';
@@ -9,6 +10,43 @@ import { NewsletterSection } from '@/components/home/NewsletterSection';
 import { MagazineBlogSection } from '@/components/home/MagazineBlogSection';
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: 'Menu Cochon | Recettes gourmandes québécoises',
+  description:
+    'Découvrez notre collection de recettes gourmandes et faciles à réaliser. Des idées de repas pour tous les jours, des entrées aux desserts.',
+  alternates: {
+    canonical: '/',
+    languages: {
+      'fr-CA': '/',
+      'en-CA': '/en/',
+    },
+  },
+  openGraph: {
+    title: 'Menu Cochon | Recettes gourmandes québécoises',
+    description:
+      'Découvrez notre collection de recettes gourmandes et faciles à réaliser. Des idées de repas pour tous les jours.',
+    images: [
+      {
+        url: '/images/og-home.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Menu Cochon - Recettes gourmandes',
+      },
+    ],
+    type: 'website',
+    url: '/',
+    siteName: 'Menu Cochon',
+    locale: 'fr_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Menu Cochon | Recettes gourmandes québécoises',
+    description:
+      'Découvrez notre collection de recettes gourmandes et faciles à réaliser.',
+    images: ['/images/og-home.jpg'],
+  },
+};
 
 export default async function HomePage() {
   const [allRecipes, categories, recentPosts] = await Promise.all([

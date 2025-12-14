@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { getAllRecipes, getMainCategoriesWithLocale, enrichRecipesWithEnglishData } from '@/lib/recipes';
 import { getRecentPostsWithEnglish } from '@/lib/posts';
 import { MagazineHero } from '@/components/home/MagazineHero';
@@ -9,6 +10,43 @@ import { NewsletterSection } from '@/components/home/NewsletterSection';
 import { MagazineBlogSection } from '@/components/home/MagazineBlogSection';
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: 'Menu Cochon | Delicious Quebec Recipes',
+  description:
+    'Discover our collection of delicious and easy-to-make recipes. Meal ideas for every day, from appetizers to desserts.',
+  alternates: {
+    canonical: '/en/',
+    languages: {
+      'fr-CA': '/',
+      'en-CA': '/en/',
+    },
+  },
+  openGraph: {
+    title: 'Menu Cochon | Delicious Quebec Recipes',
+    description:
+      'Discover our collection of delicious and easy-to-make recipes. Meal ideas for every day.',
+    images: [
+      {
+        url: '/images/og-home.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Menu Cochon - Delicious Recipes',
+      },
+    ],
+    type: 'website',
+    url: '/en/',
+    siteName: 'Menu Cochon',
+    locale: 'en_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Menu Cochon | Delicious Quebec Recipes',
+    description:
+      'Discover our collection of delicious and easy-to-make recipes.',
+    images: ['/images/og-home.jpg'],
+  },
+};
 
 export default async function EnglishHomePage() {
   const [rawRecipes, categories, recentPosts] = await Promise.all([

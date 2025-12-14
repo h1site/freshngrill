@@ -16,6 +16,30 @@ export const metadata: Metadata = {
       'en-CA': '/en/buying-guide/',
     },
   },
+  openGraph: {
+    title: 'Kitchen Buying Guide | Menu Cochon',
+    description:
+      'Discover our selection of the best utensils, appliances and cookbooks to equip your kitchen like a professional chef.',
+    images: [
+      {
+        url: '/images/og-guide-achat.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Buying Guide - Menu Cochon',
+      },
+    ],
+    type: 'website',
+    url: '/en/buying-guide/',
+    siteName: 'Menu Cochon',
+    locale: 'en_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Kitchen Buying Guide | Menu Cochon',
+    description:
+      'Discover our selection of the best utensils, appliances and cookbooks.',
+    images: ['/images/og-guide-achat.jpg'],
+  },
 };
 
 export default async function BuyingGuidePage() {

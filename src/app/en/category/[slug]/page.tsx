@@ -47,6 +47,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `Discover all our delicious ${categoryName.toLowerCase()} recipes.`,
       type: 'website',
       url: `/en/category/${slug}/`,
+      siteName: 'Menu Cochon',
+      locale: 'en_CA',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${categoryName} Recipes | Menu Cochon`,
+      description: `Discover all our delicious ${categoryName.toLowerCase()} recipes.`,
     },
   };
 }

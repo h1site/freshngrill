@@ -35,6 +35,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/guide-achat`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/lexique`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
@@ -127,6 +133,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/en/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/en/buying-guide`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -266,13 +278,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // ============================================
-  // PAGES BLOG FRANÇAISES
+  // SÉPARATION BLOG VS GUIDE D'ACHAT
   // ============================================
-  const blogPagesFr: MetadataRoute.Sitemap = posts.map((post) => ({
+  const guideAchatPosts = posts.filter((post) =>
+    post.categories?.some((cat) => cat.slug === 'guide-achat')
+  );
+  const blogOnlyPosts = posts.filter((post) =>
+    !post.categories?.some((cat) => cat.slug === 'guide-achat')
+  );
+
+  // ============================================
+  // PAGES BLOG FRANÇAISES (sans guide-achat)
+  // ============================================
+  const blogPagesFr: MetadataRoute.Sitemap = blogOnlyPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post.updatedAt),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
+  }));
+
+  // ============================================
+  // PAGES GUIDE D'ACHAT FRANÇAISES
+  // ============================================
+  const guideAchatPagesFr: MetadataRoute.Sitemap = guideAchatPosts.map((post) => ({
+    url: `${baseUrl}/guide-achat/${post.slug}`,
+    lastModified: new Date(post.updatedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
+
+  // ============================================
+  // PAGES GUIDE D'ACHAT ANGLAISES
+  // ============================================
+  const guideAchatPagesEn: MetadataRoute.Sitemap = guideAchatPosts.map((post) => ({
+    url: `${baseUrl}/en/buying-guide/${post.slug}`,
+    lastModified: new Date(post.updatedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
   }));
 
   // Note: Les pages blog anglaises utilisent les mêmes slugs que le français
@@ -309,6 +351,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...categoryPagesFr,
     ...categoryPagesEn,
     ...blogPagesFr,
+    ...guideAchatPagesFr,
+    ...guideAchatPagesEn,
     ...lexiquePagesFr,
     ...lexiquePagesEn,
   ];

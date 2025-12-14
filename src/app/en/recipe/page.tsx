@@ -15,6 +15,28 @@ export const metadata: Metadata = {
       'en-CA': '/en/recipe/',
     },
   },
+  openGraph: {
+    title: 'All Recipes | Menu Cochon',
+    description: 'Discover our collection of delicious and easy-to-make recipes.',
+    images: [
+      {
+        url: '/images/og-recettes.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Recipes - Menu Cochon',
+      },
+    ],
+    type: 'website',
+    url: '/en/recipe/',
+    siteName: 'Menu Cochon',
+    locale: 'en_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'All Recipes | Menu Cochon',
+    description: 'Discover our collection of delicious and easy-to-make recipes.',
+    images: ['/images/og-recettes.jpg'],
+  },
 };
 
 interface SearchParams {

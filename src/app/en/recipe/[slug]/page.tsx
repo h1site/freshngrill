@@ -66,9 +66,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: recipe.title,
       description: recipe.excerpt,
-      images: recipe.featuredImage ? [recipe.featuredImage] : [],
+      images: recipe.featuredImage
+        ? [{ url: recipe.featuredImage, width: 1200, height: 630, alt: recipe.title }]
+        : [],
       type: 'article',
       url: `/en/recipe/${enSlug}/`,
+      siteName: 'Menu Cochon',
+      locale: 'en_CA',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: recipe.title,
+      description: recipe.excerpt,
+      images: recipe.featuredImage ? [recipe.featuredImage] : [],
     },
   };
 }

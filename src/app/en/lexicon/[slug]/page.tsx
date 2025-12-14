@@ -42,6 +42,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: term.definition.substring(0, 160),
       type: 'article',
       url: `/en/lexicon/${slug}/`,
+      siteName: 'Menu Cochon',
+      locale: 'en_CA',
+    },
+    twitter: {
+      card: 'summary',
+      title: `${term.term} - Culinary Glossary | Menu Cochon`,
+      description: term.definition.substring(0, 160),
     },
   };
 }

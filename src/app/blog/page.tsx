@@ -11,6 +11,32 @@ export const metadata: Metadata = {
   description: 'Découvrez nos articles, conseils et astuces culinaires pour devenir un chef en cuisine.',
   alternates: {
     canonical: '/blog/',
+    languages: {
+      'fr-CA': '/blog/',
+      'en-CA': '/en/blog/',
+    },
+  },
+  openGraph: {
+    title: 'Blog | Menu Cochon',
+    description: 'Découvrez nos articles, conseils et astuces culinaires pour devenir un chef en cuisine.',
+    images: [
+      {
+        url: '/images/og-blog.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Menu Cochon Blog',
+      },
+    ],
+    type: 'website',
+    url: '/blog/',
+    siteName: 'Menu Cochon',
+    locale: 'fr_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | Menu Cochon',
+    description: 'Découvrez nos articles, conseils et astuces culinaires pour devenir un chef en cuisine.',
+    images: ['/images/og-blog.jpg'],
   },
 };
 

@@ -16,6 +16,28 @@ export const metadata: Metadata = {
       'en-CA': '/en/blog/',
     },
   },
+  openGraph: {
+    title: 'Blog | Menu Cochon',
+    description: 'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
+    images: [
+      {
+        url: '/images/og-blog.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Menu Cochon Blog',
+      },
+    ],
+    type: 'website',
+    url: '/en/blog/',
+    siteName: 'Menu Cochon',
+    locale: 'en_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | Menu Cochon',
+    description: 'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
+    images: ['/images/og-blog.jpg'],
+  },
 };
 
 export default async function BlogPageEN() {

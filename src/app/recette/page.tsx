@@ -10,6 +10,32 @@ export const metadata: Metadata = {
   description: 'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
   alternates: {
     canonical: '/recette/',
+    languages: {
+      'fr-CA': '/recette/',
+      'en-CA': '/en/recipe/',
+    },
+  },
+  openGraph: {
+    title: 'Toutes nos recettes | Menu Cochon',
+    description: 'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
+    images: [
+      {
+        url: '/images/og-recettes.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Recettes - Menu Cochon',
+      },
+    ],
+    type: 'website',
+    url: '/recette/',
+    siteName: 'Menu Cochon',
+    locale: 'fr_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Toutes nos recettes | Menu Cochon',
+    description: 'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
+    images: ['/images/og-recettes.jpg'],
   },
 };
 

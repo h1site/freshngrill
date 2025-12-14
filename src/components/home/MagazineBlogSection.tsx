@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Clock } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, ShoppingCart } from 'lucide-react';
 import { PostCard } from '@/types/post';
 import type { Locale } from '@/i18n/config';
 
@@ -19,6 +19,10 @@ const translations = {
     allArticles: 'Tous les articles',
     minRead: 'min de lecture',
     min: 'min',
+    buyingGuide: "Guide d'achat",
+    buyingGuideTitle: 'Équipez Votre Cuisine',
+    buyingGuideDesc: 'Découvrez notre sélection des meilleurs ustensiles et équipements pour cuisiner comme un chef.',
+    viewGuide: 'Voir le guide',
   },
   en: {
     theBlog: 'The Blog',
@@ -26,6 +30,10 @@ const translations = {
     allArticles: 'All Articles',
     minRead: 'min read',
     min: 'min',
+    buyingGuide: 'Buying Guide',
+    buyingGuideTitle: 'Equip Your Kitchen',
+    buyingGuideDesc: 'Discover our selection of the best utensils and equipment to cook like a chef.',
+    viewGuide: 'View guide',
   },
 };
 
@@ -173,6 +181,41 @@ export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectio
             ))}
           </div>
         </div>
+
+        {/* Guide d'achat CTA */}
+        <motion.div
+          className="mt-8"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Link
+            href={locale === 'en' ? '/en/buying-guide' : '/guide-achat'}
+            className="group flex items-center justify-between bg-gradient-to-r from-[#F77313] to-[#d45f0a] p-6 md:p-8 hover:from-[#d45f0a] hover:to-[#b85209] transition-all duration-300"
+          >
+            <div className="flex items-center gap-4 md:gap-6">
+              <div className="w-12 h-12 md:w-14 md:h-14 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <ShoppingCart className="w-6 h-6 md:w-7 md:h-7 text-white" />
+              </div>
+              <div>
+                <span className="text-white/80 text-xs font-semibold uppercase tracking-widest">
+                  {t.buyingGuide}
+                </span>
+                <h3 className="font-display text-xl md:text-2xl lg:text-3xl text-white mt-1">
+                  {t.buyingGuideTitle}
+                </h3>
+                <p className="text-white/70 text-sm mt-1 hidden md:block max-w-xl">
+                  {t.buyingGuideDesc}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 text-white font-medium">
+              <span className="hidden sm:inline uppercase tracking-wide text-sm">{t.viewGuide}</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </div>
+          </Link>
+        </motion.div>
       </div>
     </section>
   );
