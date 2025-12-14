@@ -486,6 +486,34 @@ export async function getPostBySlugWithEnglish(slug: string): Promise<Post | nul
 }
 
 /**
+ * Get the English slug for a post (if it exists)
+ */
+export async function getEnglishSlugForPost(frenchSlug: string): Promise<string | null> {
+  const { data: post } = await supabase
+    .from('posts')
+    .select('id')
+    .eq('slug', frenchSlug)
+    .single();
+
+  if (!post) return null;
+
+  const postId = (post as { id: number }).id;
+  const { data: translation } = await supabase
+    .from('post_translations')
+    .select('slug_en')
+    .eq('post_id', postId)
+    .eq('locale', 'en')
+    .single();
+
+  if (translation) {
+    const slugEn = (translation as { slug_en: string | null }).slug_en;
+    return slugEn || null;
+  }
+
+  return null;
+}
+
+/**
  * Get recent posts with English translations
  */
 export async function getRecentPostsWithEnglish(limit: number = 5): Promise<PostCard[]> {

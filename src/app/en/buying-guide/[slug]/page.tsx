@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
   getPostBySlugWithEnglish,
   getSimilarPostsWithEnglish,
+  getEnglishSlugForPost,
 } from '@/lib/posts';
 import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Bookmark, ShoppingCart } from 'lucide-react';
 import GoogleAd from '@/components/ads/GoogleAd';
@@ -15,6 +16,11 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+
+  // Check if French slug should redirect to English
+  const englishSlug = await getEnglishSlugForPost(slug);
+  const finalSlug = englishSlug || slug;
+
   const post = await getPostBySlugWithEnglish(slug);
 
   if (!post) {
@@ -27,10 +33,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: post.seoTitle || `${post.title} | Buying Guide | Menu Cochon`,
     description: post.seoDescription || post.excerpt,
     alternates: {
-      canonical: `/en/buying-guide/${slug}/`,
+      canonical: `/en/buying-guide/${finalSlug}/`,
       languages: {
-        'fr-CA': `/guide-achat/${slug}/`,
-        'en-CA': `/en/buying-guide/${slug}/`,
+        'fr-CA': `/guide-achat/${post.slug}/`,
+        'en-CA': `/en/buying-guide/${finalSlug}/`,
       },
     },
     openGraph: {
@@ -40,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ? [{ url: post.featuredImage, width: 1200, height: 630, alt: post.title }]
         : [],
       type: 'article',
-      url: `/en/buying-guide/${slug}/`,
+      url: `/en/buying-guide/${finalSlug}/`,
       siteName: 'Menu Cochon',
       locale: 'en_CA',
       publishedTime: post.publishedAt,
@@ -58,6 +64,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BuyingGuidePostPage({ params }: Props) {
   const { slug } = await params;
+
+  // Check if this is a French slug that should redirect to English
+  const englishSlug = await getEnglishSlugForPost(slug);
+  if (englishSlug && englishSlug !== slug) {
+    redirect(`/en/buying-guide/${englishSlug}`);
+  }
+
   const post = await getPostBySlugWithEnglish(slug);
 
   if (!post) {
