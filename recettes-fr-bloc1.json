@@ -1,0 +1,467 @@
+{
+  "recettes": [
+    {
+      "index": 1,
+      "slug": "dinde-rotie-farcie-sauce-canneberges",
+      "title": "Dinde rôtie farcie avec sauce aux canneberges",
+      "excerpt": "Dinde rôtie juteuse, farce savoureuse et sauce aux canneberges maison.",
+      "introduction": "Plat festif incontournable au Québec, parfait pour les grandes tablées.",
+      "conclusion": "Servez avec purée et légumes rôtis.",
+      "prep_time": 40,
+      "cook_time": 180,
+      "rest_time": 20,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "canneberges",
+        "tradition"
+      ],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "1 dinde 6 kg",
+            "60 g beurre",
+            "Sel",
+            "Poivre"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préparer et farcir la dinde."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir à 165°C jusqu’à cuisson."
+        }
+      ],
+      "nutrition": {
+        "calories": 480,
+        "protein": 42,
+        "carbs": 18,
+        "fat": 26,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer d’avance?</h3><p>Oui.</p></div><div class=\"faq-item\"><h3>Temps de repos?</h3><p>20 minutes.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui.</p></div>",
+      "seo_title": "Dinde rôtie farcie aux canneberges | Menu Cochon",
+      "seo_description": "Dinde rôtie farcie tendre avec sauce aux canneberges maison, parfaite pour Noël et repas festifs traditionnels."
+    },
+    {
+      "index": 2,
+      "slug": "tourtiere-du-quebec-porc-boeuf",
+      "title": "Tourtière du Québec au porc et bœuf",
+      "excerpt": "Tourtière traditionnelle riche et parfumée.",
+      "introduction": "Classique québécois du temps des Fêtes.",
+      "conclusion": "Délicieuse réchauffée.",
+      "prep_time": 45,
+      "cook_time": 75,
+      "rest_time": 10,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "tourtiere",
+        "porc",
+        "boeuf",
+        "tradition"
+      ],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "500 g porc haché",
+            "500 g bœuf haché",
+            "Épices",
+            "2 pâtes"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Cuire la viande avec épices."
+        },
+        {
+          "step": 2,
+          "content": "Assembler et cuire."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 28,
+        "carbs": 32,
+        "fat": 30,
+        "fiber": 3
+      },
+      "faq": "<div class=\"faq-item\"><h3>Congélation?</h3><p>Oui.</p></div><div class=\"faq-item\"><h3>Pâte?</h3><p>Brisée.</p></div><div class=\"faq-item\"><h3>Service?</h3><p>Avec ketchup.</p></div>",
+      "seo_title": "Tourtière du Québec porc et bœuf | Menu Cochon",
+      "seo_description": "Tourtière du Québec authentique au porc et bœuf, savoureuse et traditionnelle pour les repas des Fêtes."
+    },
+    {
+      "index": 3,
+      "slug": "roti-porc-ail-romarin",
+      "title": "Rôti de porc à l’ail et au romarin",
+      "excerpt": "Rôti tendre et parfumé.",
+      "introduction": "Recette simple et élégante.",
+      "conclusion": "Parfait avec légumes.",
+      "prep_time": 15,
+      "cook_time": 90,
+      "rest_time": 10,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "facile",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "porc",
+        "ail",
+        "romarin",
+        "roti"
+      ],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "1 rôti de porc",
+            "Ail",
+            "Romarin"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Assaisonner."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir."
+        }
+      ],
+      "nutrition": {
+        "calories": 410,
+        "protein": 35,
+        "carbs": 6,
+        "fat": 26,
+        "fiber": 1
+      },
+      "faq": "<div class=\"faq-item\"><h3>Cuisson?</h3><p>Lente.</p></div><div class=\"faq-item\"><h3>Repos?</h3><p>10 min.</p></div><div class=\"faq-item\"><h3>Accompagnement?</h3><p>Pommes de terre.</p></div>",
+      "seo_title": "Rôti de porc à l’ail et romarin | Menu Cochon",
+      "seo_description": "Rôti de porc à l’ail et romarin, tendre et savoureux, une recette facile et parfaite pour un repas convivial."
+    },
+    {
+      "index": 4,
+      "slug": "jambon-glace-erable",
+      "title": "Jambon glacé à l’érable",
+      "excerpt": "Jambon sucré-salé à l’érable.",
+      "introduction": "Classique québécois festif.",
+      "conclusion": "Idéal pour brunch.",
+      "prep_time": 10,
+      "cook_time": 120,
+      "rest_time": 10,
+      "servings": 8,
+      "servings_unit": "portions",
+      "difficulty": "facile",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "jambon",
+        "erable",
+        "noel",
+        "fetes"
+      ],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "1 jambon",
+            "Sirop d’érable"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Glacer."
+        },
+        {
+          "step": 2,
+          "content": "Cuire."
+        }
+      ],
+      "nutrition": {
+        "calories": 390,
+        "protein": 32,
+        "carbs": 14,
+        "fat": 22,
+        "fiber": 0
+      },
+      "faq": "<div class=\"faq-item\"><h3>Glace?</h3><p>Érable.</p></div><div class=\"faq-item\"><h3>Cuisson?</h3><p>Douce.</p></div><div class=\"faq-item\"><h3>Restes?</h3><p>Oui.</p></div>",
+      "seo_title": "Jambon glacé à l’érable | Menu Cochon",
+      "seo_description": "Jambon glacé à l’érable tendre et savoureux, un grand classique québécois pour les repas festifs."
+    },
+    {
+      "index": 5,
+      "slug": "ragout-boulettes-pattes-cochon",
+      "title": "Ragoût de boulettes et pattes de cochon",
+      "excerpt": "Ragoût traditionnel riche.",
+      "introduction": "Plat d’hiver québécois.",
+      "conclusion": "Servir chaud.",
+      "prep_time": 30,
+      "cook_time": 180,
+      "rest_time": 0,
+      "servings": 8,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "ragout",
+        "tradition",
+        "hiver",
+        "boulettes"
+      ],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "Boulettes",
+            "Pattes de cochon",
+            "Épices"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Former boulettes."
+        },
+        {
+          "step": 2,
+          "content": "Mijoter."
+        }
+      ],
+      "nutrition": {
+        "calories": 560,
+        "protein": 30,
+        "carbs": 12,
+        "fat": 38,
+        "fiber": 1
+      },
+      "faq": "<div class=\"faq-item\"><h3>Long?</h3><p>Oui.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui.</p></div><div class=\"faq-item\"><h3>Épices?</h3><p>Traditionnelles.</p></div>",
+      "seo_title": "Ragoût de boulettes et pattes de cochon | Menu Cochon",
+      "seo_description": "Ragoût de boulettes et pattes de cochon, recette québécoise traditionnelle et réconfortante."
+    },
+    {
+      "index": 6,
+      "slug": "poulet-roti-herbes-provence",
+      "title": "Poulet rôti aux herbes de Provence",
+      "excerpt": "Poulet croustillant et parfumé.",
+      "introduction": "Simple et efficace.",
+      "conclusion": "Toujours gagnant.",
+      "prep_time": 10,
+      "cook_time": 75,
+      "rest_time": 10,
+      "servings": 4,
+      "servings_unit": "portions",
+      "difficulty": "facile",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux",
+        "volaille"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "poulet",
+        "roti",
+        "herbes",
+        "facile"
+      ],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "1 poulet",
+            "Herbes de Provence"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Assaisonner."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir."
+        }
+      ],
+      "nutrition": {
+        "calories": 420,
+        "protein": 36,
+        "carbs": 4,
+        "fat": 28,
+        "fiber": 0
+      },
+      "faq": "<div class=\"faq-item\"><h3>Température?</h3><p>180°C.</p></div><div class=\"faq-item\"><h3>Croustillant?</h3><p>Beurre.</p></div><div class=\"faq-item\"><h3>Repos?</h3><p>10 min.</p></div>",
+      "seo_title": "Poulet rôti aux herbes de Provence | Menu Cochon",
+      "seo_description": "Poulet rôti aux herbes de Provence, recette facile et savoureuse pour un repas familial réussi."
+    },
+    {
+      "index": 7,
+      "slug": "pate-viande-maison",
+      "title": "Pâté à la viande maison",
+      "excerpt": "Pâté réconfortant.",
+      "introduction": "Tradition québécoise.",
+      "conclusion": "Parfait réchauffé.",
+      "prep_time": 30,
+      "cook_time": 60,
+      "rest_time": 10,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "pate",
+        "viande",
+        "tradition",
+        "maison"
+      ],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "Viande hachée",
+            "Pâte"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Cuire viande."
+        },
+        {
+          "step": 2,
+          "content": "Cuire pâté."
+        }
+      ],
+      "nutrition": {
+        "calories": 480,
+        "protein": 26,
+        "carbs": 34,
+        "fat": 28,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Différence tourtière?</h3><p>Plus simple.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui.</p></div><div class=\"faq-item\"><h3>Service?</h3><p>Ketchup.</p></div>",
+      "seo_title": "Pâté à la viande maison | Menu Cochon",
+      "seo_description": "Pâté à la viande maison savoureux et traditionnel, parfait pour les repas familiaux."
+    },
+    {
+      "index": 8,
+      "slug": "cipate-six-pates-traditionnel",
+      "title": "Cipâte / six-pâtes traditionnel",
+      "excerpt": "Tourte généreuse du Lac-Saint-Jean.",
+      "introduction": "Plat mythique.",
+      "conclusion": "Idéal en groupe.",
+      "prep_time": 45,
+      "cook_time": 240,
+      "rest_time": 0,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "difficile",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "cipate",
+        "six-pates",
+        "tradition",
+        "saguenay"
+      ],
+      "ingredients": [
+        {
+          "group": "",
+          "items": [
+            "Viandes",
+            "Pommes de terre",
+            "Pâte"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Assembler couches."
+        },
+        {
+          "step": 2,
+          "content": "Cuisson longue."
+        }
+      ],
+      "nutrition": {
+        "calories": 610,
+        "protein": 34,
+        "carbs": 40,
+        "fat": 36,
+        "fiber": 3
+      },
+      "faq": "<div class=\"faq-item\"><h3>Long?</h3><p>Oui.</p></div><div class=\"faq-item\"><h3>Variantes?</h3><p>Oui.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui.</p></div>",
+      "seo_title": "Cipâte traditionnel québécois | Menu Cochon",
+      "seo_description": "Cipâte traditionnel québécois, tourte généreuse et rustique parfaite pour les grandes occasions."
+    }
+  ]
+}

@@ -278,7 +278,7 @@ export async function POST(request: NextRequest) {
           } else {
             const { data: newIngredient, error: ingredientError } = await supabase
               .from('ingredients')
-              .insert({ slug, name: ingredientName, locale: 'en' } as never)
+              .insert({ slug, name: ingredientName } as never)
               .select('id')
               .single();
 

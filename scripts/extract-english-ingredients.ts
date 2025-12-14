@@ -96,8 +96,7 @@ async function main() {
             .from('ingredients')
             .insert({
               slug,
-              name: ingredientName,
-              locale: 'en'
+              name: ingredientName
             })
             .select('id')
             .single();
