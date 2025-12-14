@@ -3,7 +3,18 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase-browser';
-import { Facebook, Instagram, Copy, Check, ExternalLink, Search } from 'lucide-react';
+import {
+  Facebook,
+  Instagram,
+  Copy,
+  Check,
+  ExternalLink,
+  Search,
+  Send,
+  Loader2,
+  AlertCircle,
+  CheckCircle,
+} from 'lucide-react';
 
 interface Recipe {
   id: number;
@@ -14,6 +25,8 @@ interface Recipe {
   categories: { id: number; name: string }[];
 }
 
+type PublishStatus = 'idle' | 'loading' | 'success' | 'error';
+
 export default function SocialPostsPage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
@@ -21,6 +34,12 @@ export default function SocialPostsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedField, setCopiedField] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  // Publishing states
+  const [fbStatus, setFbStatus] = useState<PublishStatus>('idle');
+  const [igStatus, setIgStatus] = useState<PublishStatus>('idle');
+  const [fbMessage, setFbMessage] = useState('');
+  const [igMessage, setIgMessage] = useState('');
 
   const supabase = createClient();
   const siteUrl = 'https://menucochon.com';
@@ -43,6 +62,14 @@ export default function SocialPostsPage() {
       );
     }
   }, [searchQuery, recipes]);
+
+  // Reset publish status when recipe changes
+  useEffect(() => {
+    setFbStatus('idle');
+    setIgStatus('idle');
+    setFbMessage('');
+    setIgMessage('');
+  }, [selectedRecipe]);
 
   const loadRecipes = async () => {
     const { data, error } = await supabase
@@ -107,6 +134,75 @@ ${hashtags} ${baseHashtags}`;
     return { facebookText, instagramText, recipeUrl };
   };
 
+  // Publier sur Facebook
+  const publishToFacebook = async () => {
+    if (!selectedRecipe) return;
+
+    setFbStatus('loading');
+    setFbMessage('');
+
+    const { facebookText, recipeUrl } = generateSocialTexts(selectedRecipe);
+
+    try {
+      const response = await fetch('/api/social/facebook', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: facebookText,
+          imageUrl: selectedRecipe.featured_image,
+          link: recipeUrl,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFbStatus('success');
+        setFbMessage(data.message);
+      } else {
+        setFbStatus('error');
+        setFbMessage(data.error || 'Erreur lors de la publication');
+      }
+    } catch (error) {
+      setFbStatus('error');
+      setFbMessage('Erreur de connexion');
+    }
+  };
+
+  // Publier sur Instagram
+  const publishToInstagram = async () => {
+    if (!selectedRecipe || !selectedRecipe.featured_image) return;
+
+    setIgStatus('loading');
+    setIgMessage('');
+
+    const { instagramText } = generateSocialTexts(selectedRecipe);
+
+    try {
+      const response = await fetch('/api/social/instagram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          caption: instagramText,
+          imageUrl: selectedRecipe.featured_image,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setIgStatus('success');
+        setIgMessage(data.message);
+      } else {
+        setIgStatus('error');
+        setIgMessage(data.error || 'Erreur lors de la publication');
+      }
+    } catch (error) {
+      setIgStatus('error');
+      setIgMessage('Erreur de connexion');
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -119,7 +215,7 @@ ${hashtags} ${baseHashtags}`;
     <div>
       <h1 className="text-2xl font-bold text-gray-900 mb-2">Publications Réseaux Sociaux</h1>
       <p className="text-gray-600 mb-8">
-        Sélectionnez une recette pour générer les textes pour Facebook et Instagram.
+        Sélectionnez une recette pour publier directement sur Facebook et Instagram.
       </p>
 
       <div className="grid lg:grid-cols-2 gap-8">
@@ -220,10 +316,7 @@ ${hashtags} ${baseHashtags}`;
                   />
                   <button
                     onClick={() =>
-                      copyToClipboard(
-                        generateSocialTexts(selectedRecipe).facebookText,
-                        'facebook'
-                      )
+                      copyToClipboard(generateSocialTexts(selectedRecipe).facebookText, 'facebook')
                     }
                     className="absolute top-2 right-2 p-2 bg-white rounded-lg shadow hover:bg-gray-100 transition-colors"
                     title="Copier"
@@ -234,6 +327,40 @@ ${hashtags} ${baseHashtags}`;
                       <Copy className="w-4 h-4 text-gray-500" />
                     )}
                   </button>
+                </div>
+
+                {/* Publish button */}
+                <div className="mt-4 space-y-2">
+                  <button
+                    onClick={publishToFacebook}
+                    disabled={fbStatus === 'loading'}
+                    className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+                  >
+                    {fbStatus === 'loading' ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Publication en cours...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5" />
+                        Publier sur Facebook
+                      </>
+                    )}
+                  </button>
+
+                  {fbStatus === 'success' && (
+                    <div className="flex items-center gap-2 text-green-600 text-sm">
+                      <CheckCircle className="w-4 h-4" />
+                      {fbMessage}
+                    </div>
+                  )}
+                  {fbStatus === 'error' && (
+                    <div className="flex items-center gap-2 text-red-600 text-sm">
+                      <AlertCircle className="w-4 h-4" />
+                      {fbMessage}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -251,10 +378,7 @@ ${hashtags} ${baseHashtags}`;
                   />
                   <button
                     onClick={() =>
-                      copyToClipboard(
-                        generateSocialTexts(selectedRecipe).instagramText,
-                        'instagram'
-                      )
+                      copyToClipboard(generateSocialTexts(selectedRecipe).instagramText, 'instagram')
                     }
                     className="absolute top-2 right-2 p-2 bg-white rounded-lg shadow hover:bg-gray-100 transition-colors"
                     title="Copier"
@@ -266,9 +390,50 @@ ${hashtags} ${baseHashtags}`;
                     )}
                   </button>
                 </div>
+
+                {/* Publish button */}
+                <div className="mt-4 space-y-2">
+                  <button
+                    onClick={publishToInstagram}
+                    disabled={igStatus === 'loading' || !selectedRecipe.featured_image}
+                    className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:from-gray-400 disabled:to-gray-400 text-white rounded-lg transition-colors flex items-center justify-center gap-2 font-medium"
+                  >
+                    {igStatus === 'loading' ? (
+                      <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        Publication en cours...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5" />
+                        Publier sur Instagram
+                      </>
+                    )}
+                  </button>
+
+                  {!selectedRecipe.featured_image && (
+                    <p className="text-sm text-amber-600">
+                      ⚠️ Une image est requise pour publier sur Instagram
+                    </p>
+                  )}
+
+                  {igStatus === 'success' && (
+                    <div className="flex items-center gap-2 text-green-600 text-sm">
+                      <CheckCircle className="w-4 h-4" />
+                      {igMessage}
+                    </div>
+                  )}
+                  {igStatus === 'error' && (
+                    <div className="flex items-center gap-2 text-red-600 text-sm">
+                      <AlertCircle className="w-4 h-4" />
+                      {igMessage}
+                    </div>
+                  )}
+                </div>
+
                 <div className="mt-4 p-3 bg-pink-50 rounded-lg">
                   <p className="text-sm text-pink-800">
-                    <strong>💡 Rappel:</strong> N'oubliez pas de mettre le lien dans votre bio Instagram:
+                    <strong>💡 Rappel:</strong> Mettez le lien dans votre bio Instagram:
                   </p>
                   <div className="mt-2 flex items-center gap-2">
                     <code className="flex-1 p-2 bg-white rounded text-xs break-all">
@@ -294,15 +459,37 @@ ${hashtags} ${baseHashtags}`;
           ) : (
             <div className="bg-white rounded-lg shadow p-12 text-center">
               <div className="text-6xl mb-4">👈</div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                Sélectionnez une recette
-              </h2>
+              <h2 className="text-xl font-semibold text-gray-900 mb-2">Sélectionnez une recette</h2>
               <p className="text-gray-500">
-                Choisissez une recette dans la liste pour générer les textes de publication.
+                Choisissez une recette dans la liste pour publier sur les réseaux sociaux.
               </p>
             </div>
           )}
         </div>
+      </div>
+
+      {/* Configuration notice */}
+      <div className="mt-8 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+        <h3 className="font-semibold text-amber-800 mb-2">⚙️ Configuration requise</h3>
+        <p className="text-sm text-amber-700 mb-2">
+          Pour publier directement, ajoutez ces variables dans votre fichier <code>.env.local</code>:
+        </p>
+        <pre className="text-xs bg-white p-3 rounded border border-amber-200 overflow-x-auto">
+{`FACEBOOK_PAGE_ID=votre_page_id
+FACEBOOK_PAGE_ACCESS_TOKEN=votre_access_token
+INSTAGRAM_BUSINESS_ACCOUNT_ID=votre_ig_account_id`}
+        </pre>
+        <p className="text-xs text-amber-600 mt-2">
+          Obtenez ces informations via{' '}
+          <a
+            href="https://developers.facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline"
+          >
+            Facebook Developers
+          </a>
+        </p>
       </div>
     </div>
   );
