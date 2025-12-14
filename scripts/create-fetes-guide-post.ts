@@ -522,12 +522,14 @@ async function createPost() {
     }
   }
 
-  // 6. Add/Update English translation
+  // 6. Add/Update English translation with English slug
+  const slugEn = 'essential-kitchen-tools-holiday-season';
   const { error: transError } = await supabase
     .from('post_translations')
     .upsert({
       post_id: postId,
       locale: 'en',
+      slug_en: slugEn,
       title: postEN.title,
       excerpt: postEN.excerpt,
       content: postEN.content,
@@ -543,7 +545,7 @@ async function createPost() {
 
   console.log('\n✅ Buying guide post created successfully!');
   console.log(`\nFR: /guide-achat/${postFR.slug}`);
-  console.log(`EN: /en/buying-guide/${postFR.slug}`);
+  console.log(`EN: /en/buying-guide/${slugEn}`);
 }
 
 createPost().catch(console.error);

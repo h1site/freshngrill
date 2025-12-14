@@ -413,9 +413,43 @@ export async function enrichPostCardsWithEnglishData(posts: PostCard[]): Promise
 
 /**
  * Get a single post with English translation (including categories)
+ * Supports both French slug and English slug (slug_en)
  */
 export async function getPostBySlugWithEnglish(slug: string): Promise<Post | null> {
-  const post = await getPostBySlug(slug);
+  // First try to find by French slug
+  let post = await getPostBySlug(slug);
+
+  // If not found, try to find by English slug
+  if (!post) {
+    const { data: translation } = await supabase
+      .from('post_translations')
+      .select('post_id')
+      .eq('slug_en', slug)
+      .eq('locale', 'en')
+      .single();
+
+    if (translation) {
+      const { data: postData } = await supabase
+        .from('posts')
+        .select(`
+          *,
+          author:authors(*),
+          categories:posts_categories(
+            category:post_categories(*)
+          )
+        `)
+        .eq('id', translation.post_id)
+        .single();
+
+      if (postData) {
+        const categories = (postData.categories || [])
+          .map((pc: any) => pc.category)
+          .filter(Boolean);
+        post = transformPost({ ...postData, categories });
+      }
+    }
+  }
+
   if (!post) return null;
 
   const [translationResult, categoryTranslations] = await Promise.all([
