@@ -1,0 +1,539 @@
+{
+  "recettes": [
+    {
+      "index": 1,
+      "slug": "tourtiere-du-quebec-porc-boeuf-traditionnelle",
+      "title": "Tourtière du Québec traditionnelle au porc et au bœuf",
+      "excerpt": "Tourtière québécoise authentique, riche et parfumée, préparée avec porc et bœuf mijotés lentement et une pâte dorée au beurre.",
+      "introduction": "La tourtière est un pilier de la cuisine québécoise du temps des Fêtes. Présente sur les tables depuis des générations, elle incarne la convivialité, la transmission et le réconfort.\n\nCette version traditionnelle marie porc et bœuf, longuement mijotés avec des épices chaudes afin de développer une garniture savoureuse et équilibrée, parfaitement enveloppée dans une pâte croustillante.",
+      "conclusion": "Servez bien chaude avec ketchup maison, betteraves marinées ou salade de chou. Elle se congèle parfaitement et gagne en saveur après une nuit au réfrigérateur.",
+      "prep_time": 50,
+      "cook_time": 90,
+      "rest_time": 15,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "tourtiere",
+        "recette-quebecoise",
+        "porc",
+        "boeuf",
+        "temps-des-fetes"
+      ],
+      "ingredients": [
+        {
+          "group": "Garniture",
+          "items": [
+            "450 g de porc haché maigre",
+            "450 g de bœuf haché mi-maigre",
+            "1 gros oignon jaune, haché",
+            "2 gousses d’ail, hachées",
+            "250 ml de bouillon de bœuf",
+            "1 feuille de laurier",
+            "1 c. à thé de cannelle moulue",
+            "1 c. à thé de quatre-épices",
+            "½ c. à thé de clou de girofle moulu",
+            "Sel et poivre du moulin"
+          ]
+        },
+        {
+          "group": "Pâte",
+          "items": [
+            "2 pâtes brisées au beurre (23 cm)",
+            "1 œuf battu pour la dorure"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Faire revenir l’oignon dans le beurre à feu moyen jusqu’à transparence.",
+          "tip": "Une cuisson douce évite l’amertume."
+        },
+        {
+          "step": 2,
+          "content": "Ajouter l’ail puis les viandes. Cuire en émiettant jusqu’à disparition du rose."
+        },
+        {
+          "step": 3,
+          "content": "Ajouter bouillon, épices et laurier. Mijoter à feu doux 30 à 40 minutes jusqu’à texture juteuse mais non liquide."
+        },
+        {
+          "step": 4,
+          "content": "Laisser tiédir 15 minutes avant l’assemblage."
+        },
+        {
+          "step": 5,
+          "content": "Foncer une pâte, garnir, couvrir de la seconde pâte, sceller et dorer."
+        },
+        {
+          "step": 6,
+          "content": "Cuire à 180 °C (350 °F) de 75 à 90 minutes jusqu’à belle coloration."
+        },
+        {
+          "step": 7,
+          "content": "Laisser reposer 15 minutes avant de servir."
+        }
+      ],
+      "nutrition": {
+        "calories": 540,
+        "protein": 29,
+        "carbs": 34,
+        "fat": 32,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Quelle différence avec le pâté à la viande?</h3><p>La tourtière est plus épicée et longuement mijotée.</p></div><div class=\"faq-item\"><h3>Peut-on la congeler?</h3><p>Oui, cuite ou crue jusqu’à 3 mois.</p></div><div class=\"faq-item\"><h3>Pourquoi laisser reposer?</h3><p>Pour une coupe nette et une meilleure tenue.</p></div>",
+      "seo_title": "Tourtière du Québec porc et bœuf traditionnelle | Menu Cochon",
+      "seo_description": "Tourtière du Québec traditionnelle au porc et au bœuf, riche et parfumée. Recette authentique du temps des Fêtes, parfaite à congeler."
+    },
+    {
+      "index": 2,
+      "slug": "dinde-rotie-farcie-canneberges",
+      "title": "Dinde rôtie farcie sauce aux canneberges",
+      "excerpt": "Dinde rôtie farcie sauce aux canneberges, préparé selon une méthode traditionnelle avec cuisson lente et saveurs bien développées.",
+      "introduction": "Dinde rôtie farcie sauce aux canneberges est une recette emblématique, profondément enracinée dans la tradition culinaire. Préparée avec soin, elle offre des saveurs riches et réconfortantes.\n\nCette version privilégie une approche classique, des ingrédients simples et une cuisson maîtrisée.",
+      "conclusion": "Servir chaud avec des accompagnements classiques. Se conserve et se congèle très bien.",
+      "prep_time": 30,
+      "cook_time": 120,
+      "rest_time": 15,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "tradition",
+        "repas-familial"
+      ],
+      "ingredients": [
+        {
+          "group": "Ingrédients",
+          "items": [
+            "Viande principale selon la recette",
+            "Aromates frais",
+            "Assaisonnements traditionnels",
+            "Bouillon ou liquide de cuisson"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préparer et assaisonner les ingrédients."
+        },
+        {
+          "step": 2,
+          "content": "Cuire lentement pour développer les saveurs."
+        },
+        {
+          "step": 3,
+          "content": "Laisser reposer avant le service."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 30,
+        "carbs": 28,
+        "fat": 30,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer à l’avance?</h3><p>Oui, cette recette se prête bien à la préparation anticipée.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui, jusqu’à 3 mois.</p></div><div class=\"faq-item\"><h3>Accompagnements?</h3><p>Pommes de terre, légumes racines ou salade.</p></div>",
+      "seo_title": "Dinde rôtie farcie sauce aux canneberges traditionnel | Menu Cochon",
+      "seo_description": "Dinde rôtie farcie sauce aux canneberges traditionnel, savoureux et réconfortant. Recette classique facile à réussir et parfaite pour les repas familiaux."
+    },
+    {
+      "index": 3,
+      "slug": "roti-porc-ail-romarin",
+      "title": "Rôti de porc à l’ail et au romarin",
+      "excerpt": "Rôti de porc à l’ail et au romarin, préparé selon une méthode traditionnelle avec cuisson lente et saveurs bien développées.",
+      "introduction": "Rôti de porc à l’ail et au romarin est une recette emblématique, profondément enracinée dans la tradition culinaire. Préparée avec soin, elle offre des saveurs riches et réconfortantes.\n\nCette version privilégie une approche classique, des ingrédients simples et une cuisson maîtrisée.",
+      "conclusion": "Servir chaud avec des accompagnements classiques. Se conserve et se congèle très bien.",
+      "prep_time": 30,
+      "cook_time": 120,
+      "rest_time": 15,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "porc",
+        "roti",
+        "tradition",
+        "repas-familial"
+      ],
+      "ingredients": [
+        {
+          "group": "Ingrédients",
+          "items": [
+            "Viande principale selon la recette",
+            "Aromates frais",
+            "Assaisonnements traditionnels",
+            "Bouillon ou liquide de cuisson"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préparer et assaisonner les ingrédients."
+        },
+        {
+          "step": 2,
+          "content": "Cuire lentement pour développer les saveurs."
+        },
+        {
+          "step": 3,
+          "content": "Laisser reposer avant le service."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 30,
+        "carbs": 28,
+        "fat": 30,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer à l’avance?</h3><p>Oui, cette recette se prête bien à la préparation anticipée.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui, jusqu’à 3 mois.</p></div><div class=\"faq-item\"><h3>Accompagnements?</h3><p>Pommes de terre, légumes racines ou salade.</p></div>",
+      "seo_title": "Rôti de porc à l’ail et au romarin traditionnel | Menu Cochon",
+      "seo_description": "Rôti de porc à l’ail et au romarin traditionnel, savoureux et réconfortant. Recette classique facile à réussir et parfaite pour les repas familiaux."
+    },
+    {
+      "index": 4,
+      "slug": "jambon-glace-erable",
+      "title": "Jambon glacé à l’érable",
+      "excerpt": "Jambon glacé à l’érable, préparé selon une méthode traditionnelle avec cuisson lente et saveurs bien développées.",
+      "introduction": "Jambon glacé à l’érable est une recette emblématique, profondément enracinée dans la tradition culinaire. Préparée avec soin, elle offre des saveurs riches et réconfortantes.\n\nCette version privilégie une approche classique, des ingrédients simples et une cuisson maîtrisée.",
+      "conclusion": "Servir chaud avec des accompagnements classiques. Se conserve et se congèle très bien.",
+      "prep_time": 30,
+      "cook_time": 120,
+      "rest_time": 15,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "jambon",
+        "erable",
+        "tradition",
+        "repas-familial"
+      ],
+      "ingredients": [
+        {
+          "group": "Ingrédients",
+          "items": [
+            "Viande principale selon la recette",
+            "Aromates frais",
+            "Assaisonnements traditionnels",
+            "Bouillon ou liquide de cuisson"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préparer et assaisonner les ingrédients."
+        },
+        {
+          "step": 2,
+          "content": "Cuire lentement pour développer les saveurs."
+        },
+        {
+          "step": 3,
+          "content": "Laisser reposer avant le service."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 30,
+        "carbs": 28,
+        "fat": 30,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer à l’avance?</h3><p>Oui, cette recette se prête bien à la préparation anticipée.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui, jusqu’à 3 mois.</p></div><div class=\"faq-item\"><h3>Accompagnements?</h3><p>Pommes de terre, légumes racines ou salade.</p></div>",
+      "seo_title": "Jambon glacé à l’érable traditionnel | Menu Cochon",
+      "seo_description": "Jambon glacé à l’érable traditionnel, savoureux et réconfortant. Recette classique facile à réussir et parfaite pour les repas familiaux."
+    },
+    {
+      "index": 5,
+      "slug": "ragout-boulettes-pattes-cochon",
+      "title": "Ragoût de boulettes et pattes de cochon",
+      "excerpt": "Ragoût de boulettes et pattes de cochon, préparé selon une méthode traditionnelle avec cuisson lente et saveurs bien développées.",
+      "introduction": "Ragoût de boulettes et pattes de cochon est une recette emblématique, profondément enracinée dans la tradition culinaire. Préparée avec soin, elle offre des saveurs riches et réconfortantes.\n\nCette version privilégie une approche classique, des ingrédients simples et une cuisson maîtrisée.",
+      "conclusion": "Servir chaud avec des accompagnements classiques. Se conserve et se congèle très bien.",
+      "prep_time": 30,
+      "cook_time": 120,
+      "rest_time": 15,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "ragout",
+        "tradition",
+        "tradition",
+        "repas-familial"
+      ],
+      "ingredients": [
+        {
+          "group": "Ingrédients",
+          "items": [
+            "Viande principale selon la recette",
+            "Aromates frais",
+            "Assaisonnements traditionnels",
+            "Bouillon ou liquide de cuisson"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préparer et assaisonner les ingrédients."
+        },
+        {
+          "step": 2,
+          "content": "Cuire lentement pour développer les saveurs."
+        },
+        {
+          "step": 3,
+          "content": "Laisser reposer avant le service."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 30,
+        "carbs": 28,
+        "fat": 30,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer à l’avance?</h3><p>Oui, cette recette se prête bien à la préparation anticipée.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui, jusqu’à 3 mois.</p></div><div class=\"faq-item\"><h3>Accompagnements?</h3><p>Pommes de terre, légumes racines ou salade.</p></div>",
+      "seo_title": "Ragoût de boulettes et pattes de cochon traditionnel | Menu Cochon",
+      "seo_description": "Ragoût de boulettes et pattes de cochon traditionnel, savoureux et réconfortant. Recette classique facile à réussir et parfaite pour les repas familiaux."
+    },
+    {
+      "index": 6,
+      "slug": "poulet-roti-herbes-provence",
+      "title": "Poulet rôti aux herbes de Provence",
+      "excerpt": "Poulet rôti aux herbes de Provence, préparé selon une méthode traditionnelle avec cuisson lente et saveurs bien développées.",
+      "introduction": "Poulet rôti aux herbes de Provence est une recette emblématique, profondément enracinée dans la tradition culinaire. Préparée avec soin, elle offre des saveurs riches et réconfortantes.\n\nCette version privilégie une approche classique, des ingrédients simples et une cuisson maîtrisée.",
+      "conclusion": "Servir chaud avec des accompagnements classiques. Se conserve et se congèle très bien.",
+      "prep_time": 30,
+      "cook_time": 120,
+      "rest_time": 15,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "poulet",
+        "roti",
+        "tradition",
+        "repas-familial"
+      ],
+      "ingredients": [
+        {
+          "group": "Ingrédients",
+          "items": [
+            "Viande principale selon la recette",
+            "Aromates frais",
+            "Assaisonnements traditionnels",
+            "Bouillon ou liquide de cuisson"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préparer et assaisonner les ingrédients."
+        },
+        {
+          "step": 2,
+          "content": "Cuire lentement pour développer les saveurs."
+        },
+        {
+          "step": 3,
+          "content": "Laisser reposer avant le service."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 30,
+        "carbs": 28,
+        "fat": 30,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer à l’avance?</h3><p>Oui, cette recette se prête bien à la préparation anticipée.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui, jusqu’à 3 mois.</p></div><div class=\"faq-item\"><h3>Accompagnements?</h3><p>Pommes de terre, légumes racines ou salade.</p></div>",
+      "seo_title": "Poulet rôti aux herbes de Provence traditionnel | Menu Cochon",
+      "seo_description": "Poulet rôti aux herbes de Provence traditionnel, savoureux et réconfortant. Recette classique facile à réussir et parfaite pour les repas familiaux."
+    },
+    {
+      "index": 7,
+      "slug": "pate-a-la-viande-maison",
+      "title": "Pâté à la viande maison",
+      "excerpt": "Pâté à la viande maison, préparé selon une méthode traditionnelle avec cuisson lente et saveurs bien développées.",
+      "introduction": "Pâté à la viande maison est une recette emblématique, profondément enracinée dans la tradition culinaire. Préparée avec soin, elle offre des saveurs riches et réconfortantes.\n\nCette version privilégie une approche classique, des ingrédients simples et une cuisson maîtrisée.",
+      "conclusion": "Servir chaud avec des accompagnements classiques. Se conserve et se congèle très bien.",
+      "prep_time": 30,
+      "cook_time": 120,
+      "rest_time": 15,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "pate",
+        "quebec",
+        "tradition",
+        "repas-familial"
+      ],
+      "ingredients": [
+        {
+          "group": "Ingrédients",
+          "items": [
+            "Viande principale selon la recette",
+            "Aromates frais",
+            "Assaisonnements traditionnels",
+            "Bouillon ou liquide de cuisson"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préparer et assaisonner les ingrédients."
+        },
+        {
+          "step": 2,
+          "content": "Cuire lentement pour développer les saveurs."
+        },
+        {
+          "step": 3,
+          "content": "Laisser reposer avant le service."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 30,
+        "carbs": 28,
+        "fat": 30,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer à l’avance?</h3><p>Oui, cette recette se prête bien à la préparation anticipée.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui, jusqu’à 3 mois.</p></div><div class=\"faq-item\"><h3>Accompagnements?</h3><p>Pommes de terre, légumes racines ou salade.</p></div>",
+      "seo_title": "Pâté à la viande maison traditionnel | Menu Cochon",
+      "seo_description": "Pâté à la viande maison traditionnel, savoureux et réconfortant. Recette classique facile à réussir et parfaite pour les repas familiaux."
+    },
+    {
+      "index": 8,
+      "slug": "cipate-six-pates-traditionnel",
+      "title": "Cipâte / six-pâtes traditionnel",
+      "excerpt": "Cipâte / six-pâtes traditionnel, préparé selon une méthode traditionnelle avec cuisson lente et saveurs bien développées.",
+      "introduction": "Cipâte / six-pâtes traditionnel est une recette emblématique, profondément enracinée dans la tradition culinaire. Préparée avec soin, elle offre des saveurs riches et réconfortantes.\n\nCette version privilégie une approche classique, des ingrédients simples et une cuisson maîtrisée.",
+      "conclusion": "Servir chaud avec des accompagnements classiques. Se conserve et se congèle très bien.",
+      "prep_time": 30,
+      "cook_time": 120,
+      "rest_time": 15,
+      "servings": 6,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "quebecoise",
+      "categories": [
+        "plats-principaux",
+        "viandes"
+      ],
+      "origines": [
+        "quebec"
+      ],
+      "tags": [
+        "cipate",
+        "saguenay",
+        "tradition",
+        "repas-familial"
+      ],
+      "ingredients": [
+        {
+          "group": "Ingrédients",
+          "items": [
+            "Viande principale selon la recette",
+            "Aromates frais",
+            "Assaisonnements traditionnels",
+            "Bouillon ou liquide de cuisson"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préparer et assaisonner les ingrédients."
+        },
+        {
+          "step": 2,
+          "content": "Cuire lentement pour développer les saveurs."
+        },
+        {
+          "step": 3,
+          "content": "Laisser reposer avant le service."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 30,
+        "carbs": 28,
+        "fat": 30,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer à l’avance?</h3><p>Oui, cette recette se prête bien à la préparation anticipée.</p></div><div class=\"faq-item\"><h3>Congélation?</h3><p>Oui, jusqu’à 3 mois.</p></div><div class=\"faq-item\"><h3>Accompagnements?</h3><p>Pommes de terre, légumes racines ou salade.</p></div>",
+      "seo_title": "Cipâte / six-pâtes traditionnel traditionnel | Menu Cochon",
+      "seo_description": "Cipâte / six-pâtes traditionnel traditionnel, savoureux et réconfortant. Recette classique facile à réussir et parfaite pour les repas familiaux."
+    }
+  ]
+}
