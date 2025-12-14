@@ -139,6 +139,49 @@ const nextConfig: NextConfig = {
         destination: '/convertisseur/:path*',
         permanent: true,
       },
+      // English redirects - French paths to English paths
+      {
+        source: '/en/guide-achat',
+        destination: '/en/buying-guide',
+        permanent: true,
+      },
+      {
+        source: '/en/guide-achat/:slug*',
+        destination: '/en/buying-guide/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/en/convertisseur-de-mesures',
+        destination: '/en/converter',
+        permanent: true,
+      },
+      {
+        source: '/en/convertisseur-de-mesures/:path*',
+        destination: '/en/converter/:path*',
+        permanent: true,
+      },
+      {
+        source: '/en/convertisseur',
+        destination: '/en/converter',
+        permanent: true,
+      },
+      {
+        source: '/en/convertisseur/:path*',
+        destination: '/en/converter/:path*',
+        permanent: true,
+      },
+      // Redirect type-de-cuisine to categorie
+      {
+        source: '/type-de-cuisine/:slug*',
+        destination: '/categorie/:slug*',
+        permanent: true,
+      },
+      // English rennai redirect (someone is searching for this in English)
+      {
+        source: '/en/rennai',
+        destination: '/en/blog/rennai',
+        permanent: true,
+      },
     ];
   },
 };
