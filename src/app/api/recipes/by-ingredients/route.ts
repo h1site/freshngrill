@@ -7,7 +7,7 @@ const supabase = createClient(
 );
 
 export async function POST(request: NextRequest) {
-  const { ingredientIds } = await request.json();
+  const { ingredientIds, locale = 'fr' } = await request.json();
 
   if (!ingredientIds || ingredientIds.length === 0) {
     return NextResponse.json([]);
@@ -48,6 +48,22 @@ export async function POST(request: NextRequest) {
     return NextResponse.json([], { status: 500 });
   }
 
+  // Si locale anglaise, récupérer les traductions
+  let translationsMap = new Map<number, { title: string; slug_en: string | null }>();
+  if (locale === 'en' && recipes && recipes.length > 0) {
+    const { data: translations } = await supabase
+      .from('recipe_translations')
+      .select('recipe_id, title, slug_en')
+      .eq('locale', 'en')
+      .in('recipe_id', recipeIds);
+
+    if (translations) {
+      for (const t of translations) {
+        translationsMap.set(t.recipe_id, { title: t.title, slug_en: t.slug_en });
+      }
+    }
+  }
+
   // Récupérer le nombre total d'ingrédients par recette
   const { data: allRecipeIngredients } = await supabase
     .from('recipe_ingredients')
@@ -64,11 +80,12 @@ export async function POST(request: NextRequest) {
     const matchingIngredients = recipeMatches.get(recipe.id) || 0;
     const totalIngredients = totalIngredientsMap.get(recipe.id) || 1;
     const matchPercentage = Math.round((matchingIngredients / totalIngredients) * 100);
+    const translation = translationsMap.get(recipe.id);
 
     return {
       id: recipe.id,
-      slug: recipe.slug,
-      title: recipe.title,
+      slug: locale === 'en' && translation?.slug_en ? translation.slug_en : recipe.slug,
+      title: locale === 'en' && translation?.title ? translation.title : recipe.title,
       featuredImage: recipe.featured_image,
       totalTime: recipe.total_time,
       difficulty: recipe.difficulty,

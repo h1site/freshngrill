@@ -60,7 +60,7 @@ export default function FrigoPageEN() {
         const response = await fetch('/api/recipes/by-ingredients', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ingredientIds: selectedIngredients }),
+          body: JSON.stringify({ ingredientIds: selectedIngredients, locale: 'en' }),
         });
         const data = await response.json();
         setRecipes(data);
