@@ -213,9 +213,9 @@ export async function POST(request: NextRequest) {
           }
         }
 
-        // 4. Extraire et lier les ingrédients
-        const detectedIngredients = extractIngredientsFromRecipe(recipeFr.ingredients);
-        for (const ingredientName of detectedIngredients) {
+        // 4. Extraire et lier les ingrédients (FR)
+        const detectedIngredientsFr = extractIngredientsFromRecipe(recipeFr.ingredients, 'fr');
+        for (const ingredientName of detectedIngredientsFr) {
           const slug = ingredientName
             .toLowerCase()
             .normalize('NFD')
@@ -252,6 +252,56 @@ export async function POST(request: NextRequest) {
           await supabase
             .from('recipe_ingredients')
             .insert({ recipe_id: recipeId, ingredient_id: ingredientId } as never);
+        }
+
+        // 4b. Extraire et lier les ingrédients (EN)
+        const detectedIngredientsEn = extractIngredientsFromRecipe(recipeEn.ingredients, 'en');
+        for (const ingredientName of detectedIngredientsEn) {
+          const slug = ingredientName
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+
+          // Upsert ingredient (insert if not exists)
+          const { data: existingIngredient } = await supabase
+            .from('ingredients')
+            .select('id')
+            .eq('slug', slug)
+            .single();
+
+          let ingredientId: number;
+
+          if (existingIngredient) {
+            ingredientId = (existingIngredient as { id: number }).id;
+          } else {
+            const { data: newIngredient, error: ingredientError } = await supabase
+              .from('ingredients')
+              .insert({ slug, name: ingredientName, locale: 'en' } as never)
+              .select('id')
+              .single();
+
+            if (ingredientError || !newIngredient) {
+              console.error(`Error inserting ingredient ${ingredientName}:`, ingredientError);
+              continue;
+            }
+            ingredientId = (newIngredient as { id: number }).id;
+          }
+
+          // Link ingredient to recipe (avoid duplicates)
+          const { data: existingLink } = await supabase
+            .from('recipe_ingredients')
+            .select('id')
+            .eq('recipe_id', recipeId)
+            .eq('ingredient_id', ingredientId)
+            .single();
+
+          if (!existingLink) {
+            await supabase
+              .from('recipe_ingredients')
+              .insert({ recipe_id: recipeId, ingredient_id: ingredientId } as never);
+          }
         }
 
         // 5. Insérer la traduction anglaise

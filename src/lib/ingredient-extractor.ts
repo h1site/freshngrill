@@ -1,5 +1,6 @@
 // Liste des ingrédients connus pour le pattern matching (sans AI)
-export const KNOWN_INGREDIENTS = [
+// French ingredients
+export const KNOWN_INGREDIENTS_FR = [
   // Viandes
   'boeuf', 'bœuf', 'poulet', 'porc', 'veau', 'agneau', 'dinde', 'canard',
   'jambon', 'bacon', 'saucisse', 'chorizo', 'prosciutto', 'pepperoni',
@@ -77,15 +78,98 @@ export const KNOWN_INGREDIENTS = [
   'vin', 'bière', 'rhum', 'cognac', 'marsala', 'porto',
 ];
 
-export function detectKnownIngredients(text: string): string[] {
+// English ingredients
+export const KNOWN_INGREDIENTS_EN = [
+  // Meats
+  'beef', 'chicken', 'pork', 'veal', 'lamb', 'turkey', 'duck',
+  'ham', 'bacon', 'sausage', 'chorizo', 'prosciutto', 'pepperoni',
+  'salami', 'lard', 'andouille', 'blood sausage',
+  'chop', 'cutlet', 'fillet', 'filet', 'steak', 'roast', 'leg',
+  'thigh', 'wing', 'breast', 'shoulder', 'shank',
+
+  // Fish and seafood
+  'salmon', 'tuna', 'cod', 'sole', 'trout', 'bass', 'sea bass',
+  'shrimp', 'prawn', 'lobster', 'crab', 'mussel', 'oyster', 'clam',
+  'squid', 'calamari', 'octopus', 'anchovy', 'sardine', 'mackerel', 'bream',
+  'tilapia', 'halibut', 'swordfish', 'monkfish', 'hake',
+
+  // Dairy
+  'milk', 'cream', 'butter', 'cheese', 'yogurt', 'yoghurt',
+  'mozzarella', 'parmesan', 'cheddar', 'gruyere', 'emmental',
+  'feta', 'ricotta', 'mascarpone', 'gorgonzola', 'brie', 'camembert',
+  'goat cheese', 'roquefort', 'comte', 'raclette', 'reblochon',
+
+  // Eggs
+  'egg', 'eggs',
+
+  // Vegetables
+  'tomato', 'onion', 'garlic', 'carrot', 'potato', 'potatoes',
+  'bell pepper', 'pepper', 'zucchini', 'eggplant', 'aubergine', 'cucumber', 'lettuce', 'salad',
+  'spinach', 'broccoli', 'cauliflower', 'cabbage', 'celery', 'leek',
+  'asparagus', 'green bean', 'pea', 'peas', 'corn', 'mushroom',
+  'avocado', 'beet', 'beetroot', 'turnip', 'radish', 'fennel', 'artichoke',
+  'endive', 'arugula', 'rocket', 'watercress', 'shallot',
+
+  // Fruits
+  'apple', 'pear', 'orange', 'lemon', 'lime', 'grapefruit',
+  'banana', 'strawberry', 'raspberry', 'blueberry', 'blackberry',
+  'cherry', 'peach', 'apricot', 'plum', 'grape', 'melon',
+  'watermelon', 'pineapple', 'mango', 'papaya', 'kiwi', 'pomegranate',
+  'fig', 'date', 'coconut', 'lychee',
+
+  // Herbs and spices
+  'parsley', 'cilantro', 'coriander', 'basil', 'mint', 'thyme', 'rosemary',
+  'oregano', 'tarragon', 'chives', 'dill', 'bay leaf', 'sage',
+  'salt', 'pepper', 'paprika', 'cumin', 'curry', 'turmeric',
+  'cinnamon', 'nutmeg', 'ginger', 'chili', 'cayenne',
+  'cardamom', 'clove', 'anise', 'saffron', 'vanilla',
+
+  // Grains and starches
+  'rice', 'pasta', 'spaghetti', 'penne', 'fusilli', 'tagliatelle',
+  'noodle', 'noodles', 'couscous', 'quinoa', 'bulgur', 'barley', 'oat', 'oats',
+  'bread', 'flour', 'semolina', 'polenta', 'tortilla', 'pita',
+
+  // Legumes
+  'lentil', 'lentils', 'chickpea', 'chickpeas', 'red bean', 'black bean',
+  'white bean', 'fava bean', 'soy', 'soybean', 'tofu', 'tempeh', 'edamame',
+
+  // Nuts and seeds
+  'almond', 'walnut', 'hazelnut', 'cashew', 'pistachio', 'peanut',
+  'pecan', 'pine nut', 'sesame', 'sunflower', 'flax', 'flaxseed',
+  'chia', 'pumpkin seed',
+
+  // Condiments and sauces
+  'mustard', 'ketchup', 'mayonnaise', 'mayo', 'vinegar', 'soy sauce',
+  'worcestershire', 'tabasco', 'sriracha', 'harissa', 'pesto',
+  'tapenade', 'aioli', 'remoulade', 'tzatziki',
+
+  // Oils
+  'olive oil', 'vegetable oil', 'sunflower oil', 'sesame oil',
+  'canola oil', 'peanut oil', 'walnut oil',
+
+  // Sugars and sweeteners
+  'sugar', 'honey', 'maple syrup', 'syrup', 'brown sugar', 'molasses',
+  'stevia', 'agave',
+
+  // Others
+  'broth', 'stock', 'gelatin', 'yeast', 'baking soda',
+  'baking powder', 'cocoa', 'chocolate', 'coffee', 'tea',
+  'wine', 'beer', 'rum', 'cognac', 'marsala', 'port',
+];
+
+// Legacy export for backwards compatibility
+export const KNOWN_INGREDIENTS = KNOWN_INGREDIENTS_FR;
+
+export function detectKnownIngredients(text: string, locale: 'fr' | 'en' = 'fr'): string[] {
   const normalizedText = text
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, ''); // Remove accents for matching
 
   const foundIngredients = new Set<string>();
+  const ingredientList = locale === 'en' ? KNOWN_INGREDIENTS_EN : KNOWN_INGREDIENTS_FR;
 
-  for (const ingredient of KNOWN_INGREDIENTS) {
+  for (const ingredient of ingredientList) {
     const normalizedIngredient = ingredient
       .toLowerCase()
       .normalize('NFD')
@@ -103,12 +187,15 @@ export function detectKnownIngredients(text: string): string[] {
   return Array.from(foundIngredients).sort();
 }
 
-export function extractIngredientsFromRecipe(ingredients: Array<{ group?: string; items: string[] }>): string[] {
+export function extractIngredientsFromRecipe(
+  ingredients: Array<{ group?: string; items: string[] }>,
+  locale: 'fr' | 'en' = 'fr'
+): string[] {
   const allText = ingredients
     .flatMap(group => group.items)
     .join(' ');
 
-  return detectKnownIngredients(allText);
+  return detectKnownIngredients(allText, locale);
 }
 
 // Interface pour les ingrédients structurés
@@ -122,22 +209,23 @@ export interface ParsedIngredient {
 // Unités de mesure françaises et anglaises
 const UNITS = [
   // Volume
-  'ml', 'cl', 'dl', 'l', 'litre', 'litres',
+  'ml', 'cl', 'dl', 'l', 'litre', 'litres', 'liter', 'liters',
   'c\\. à soupe', 'c\\.à soupe', 'cuillère à soupe', 'cuillères à soupe', 'c\\. soupe',
   'c\\. à thé', 'c\\.à thé', 'cuillère à thé', 'cuillères à thé', 'c\\. thé',
   'c\\. à café', 'cuillère à café', 'cuillères à café',
+  'tbsp', 'tablespoon', 'tablespoons', 'tsp', 'teaspoon', 'teaspoons',
   'tasse', 'tasses', 'cup', 'cups',
-  'verre', 'verres',
+  'verre', 'verres', 'glass', 'glasses',
   // Poids
-  'g', 'kg', 'gramme', 'grammes', 'kilogramme', 'kilogrammes',
-  'oz', 'once', 'onces', 'lb', 'livre', 'livres',
+  'g', 'kg', 'gramme', 'grammes', 'gram', 'grams', 'kilogramme', 'kilogrammes', 'kilogram', 'kilograms',
+  'oz', 'ounce', 'ounces', 'once', 'onces', 'lb', 'lbs', 'pound', 'pounds', 'livre', 'livres',
   // Autres
-  'pincée', 'pincées', 'goutte', 'gouttes',
-  'tranche', 'tranches', 'morceau', 'morceaux',
-  'feuille', 'feuilles', 'brin', 'brins',
-  'gousse', 'gousses', 'tige', 'tiges',
-  'boîte', 'boîtes', 'pot', 'pots', 'sachet', 'sachets',
-  'paquet', 'paquets', 'bouteille', 'bouteilles',
+  'pincée', 'pincées', 'pinch', 'pinches', 'goutte', 'gouttes', 'drop', 'drops',
+  'tranche', 'tranches', 'slice', 'slices', 'morceau', 'morceaux', 'piece', 'pieces',
+  'feuille', 'feuilles', 'leaf', 'leaves', 'brin', 'brins', 'sprig', 'sprigs',
+  'gousse', 'gousses', 'clove', 'cloves', 'tige', 'tiges', 'stalk', 'stalks',
+  'boîte', 'boîtes', 'can', 'cans', 'pot', 'pots', 'jar', 'jars', 'sachet', 'sachets', 'packet', 'packets',
+  'paquet', 'paquets', 'package', 'packages', 'bouteille', 'bouteilles', 'bottle', 'bottles',
 ];
 
 /**
@@ -179,8 +267,8 @@ export function parseIngredientString(ingredientStr: string): ParsedIngredient {
     remaining = remaining.slice(unitMatch[0].length).trim();
   }
 
-  // Retirer "de ", "d'", "du ", "des " au début du nom (peut apparaître plusieurs fois)
-  remaining = remaining.replace(/^(de\s+|d'|du\s+|des\s+)+/i, '').trim();
+  // Retirer "de ", "d'", "du ", "des ", "of " au début du nom (peut apparaître plusieurs fois)
+  remaining = remaining.replace(/^(de\s+|d'|du\s+|des\s+|of\s+)+/i, '').trim();
 
   return {
     ...(quantity && { quantity }),
