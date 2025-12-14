@@ -429,6 +429,7 @@ export async function getPostBySlugWithEnglish(slug: string): Promise<Post | nul
       .single();
 
     if (translation) {
+      const postId = (translation as { post_id: number }).post_id;
       const { data: postData } = await supabase
         .from('posts')
         .select(`
@@ -438,14 +439,15 @@ export async function getPostBySlugWithEnglish(slug: string): Promise<Post | nul
             category:post_categories(*)
           )
         `)
-        .eq('id', translation.post_id)
+        .eq('id', postId)
         .single();
 
       if (postData) {
-        const categories = (postData.categories || [])
+        const postDataTyped = postData as any;
+        const categories = (postDataTyped.categories || [])
           .map((pc: any) => pc.category)
           .filter(Boolean);
-        post = transformPost({ ...postData, categories });
+        post = transformPost({ ...postDataTyped, categories });
       }
     }
   }
