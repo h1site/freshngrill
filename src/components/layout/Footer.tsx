@@ -67,7 +67,9 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       privacy: 'Confidentialité',
       copyright: '© {year} Menu Cochon. Tous droits réservés.',
       madeWith: 'Fait avec',
-      inQuebec: 'au Québec'
+      inQuebec: 'au Québec',
+      createdBy: 'Création de l\'agence Web',
+      h1site: 'H1site.com'
     },
     en: {
       tagline: 'Delicious and easy-to-make recipes for every day. Discover our collection of tasty dishes.',
@@ -92,7 +94,9 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       privacy: 'Privacy',
       copyright: '© {year} Menu Cochon. All rights reserved.',
       madeWith: 'Made with',
-      inQuebec: 'in Quebec'
+      inQuebec: 'in Quebec',
+      createdBy: 'Created by Web Agency',
+      h1site: 'H1site.com'
     }
   };
 
@@ -259,10 +263,24 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
           <p className="text-neutral-500 text-sm">
             {t.copyright.replace('{year}', currentYear.toString())}
           </p>
-          <div className="flex items-center gap-2 text-neutral-500 text-sm">
-            <span>{t.madeWith}</span>
-            <span className="text-[#F77313]">♥</span>
-            <span>{t.inQuebec}</span>
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-neutral-500 text-sm">
+            <div className="flex items-center gap-2">
+              <span>{t.madeWith}</span>
+              <span className="text-[#F77313]">♥</span>
+              <span>{t.inQuebec}</span>
+            </div>
+            <span className="hidden md:inline">•</span>
+            <div className="flex items-center gap-1">
+              <span>{t.createdBy}</span>
+              <a
+                href="https://h1site.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#F77313] hover:text-white transition-colors"
+              >
+                {t.h1site}
+              </a>
+            </div>
           </div>
         </div>
       </div>
