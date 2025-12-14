@@ -548,3 +548,32 @@ export async function getAllPostCategoriesWithEnglish(): Promise<PostCategory[]>
 
   return translateCategories(categories, translations);
 }
+
+/**
+ * Get all posts with their English slugs (for sitemap)
+ */
+export async function getAllPostsWithEnglishSlugs(): Promise<Array<{ id: number; slug: string; slugEn: string | null; updatedAt: string; categories: PostCategory[] }>> {
+  const posts = await getAllPosts();
+
+  if (posts.length === 0) return [];
+
+  const postIds = posts.map(p => p.id);
+  const { data: translations } = await supabase
+    .from('post_translations')
+    .select('post_id, slug_en')
+    .eq('locale', 'en')
+    .in('post_id', postIds);
+
+  const slugMap = new Map<number, string | null>();
+  for (const t of (translations || []) as { post_id: number; slug_en: string | null }[]) {
+    slugMap.set(t.post_id, t.slug_en);
+  }
+
+  return posts.map(post => ({
+    id: post.id,
+    slug: post.slug,
+    slugEn: slugMap.get(post.id) || null,
+    updatedAt: post.updatedAt,
+    categories: post.categories,
+  }));
+}

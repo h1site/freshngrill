@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getAllRecipes, getAllEnglishRecipeSlugs, getAllCategorySlugs } from '@/lib/recipes';
-import { getAllPosts } from '@/lib/posts';
+import { getAllPosts, getAllPostsWithEnglishSlugs } from '@/lib/posts';
 import { getAllTerms } from '@/lib/lexique';
 import { getAllTermsEn } from '@/lib/lexiqueEn';
 import { siteConfig } from '@/lib/config';
@@ -225,6 +225,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     recipes,
     englishRecipeSlugs,
     posts,
+    postsWithEnglishSlugs,
     lexiqueTermsFr,
     lexiqueTermsEn,
     categorySlugs,
@@ -232,6 +233,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getAllRecipes(),
     getAllEnglishRecipeSlugs(),
     getAllPosts(),
+    getAllPostsWithEnglishSlugs(),
     getAllTerms(),
     getAllTermsEn(),
     getAllCategorySlugs(),
@@ -287,6 +289,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     !post.categories?.some((cat) => cat.slug === 'guide-achat')
   );
 
+  // Guide d'achat posts with English slugs
+  const guideAchatPostsWithSlugs = postsWithEnglishSlugs.filter((post) =>
+    post.categories?.some((cat) => cat.slug === 'guide-achat')
+  );
+
   // ============================================
   // PAGES BLOG FRANÇAISES (sans guide-achat)
   // ============================================
@@ -308,17 +315,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // ============================================
-  // PAGES GUIDE D'ACHAT ANGLAISES
+  // PAGES GUIDE D'ACHAT ANGLAISES (avec slugs anglais si disponibles)
   // ============================================
-  const guideAchatPagesEn: MetadataRoute.Sitemap = guideAchatPosts.map((post) => ({
-    url: `${baseUrl}/en/buying-guide/${post.slug}`,
+  const guideAchatPagesEn: MetadataRoute.Sitemap = guideAchatPostsWithSlugs.map((post) => ({
+    url: `${baseUrl}/en/buying-guide/${post.slugEn || post.slug}`,
     lastModified: new Date(post.updatedAt),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));
-
-  // Note: Les pages blog anglaises utilisent les mêmes slugs que le français
-  // car il n'y a pas encore de traduction des posts
 
   // ============================================
   // PAGES LEXIQUE FRANÇAISES
