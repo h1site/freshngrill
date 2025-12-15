@@ -1,15 +1,22 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Pouce en Pied : La Conversion Facile en 1 Clic | Menucochon',
+  title: 'Convertir Pouce en Pied ⚡ Calculateur Instantané (2025)',
   description:
-    'Convertissez facilement les pouces en pieds. 1 pied = 12 pouces. Calculateur en ligne gratuit pour tailles, meubles et distances.',
+    '✅ Convertissez pouces en pieds en 1 clic! 12 pouces = 1 pied. Tableau de conversion + formules + exemples pratiques. Outil 100% gratuit.',
   alternates: {
     canonical: '/convertisseur/pouce-pied/',
   },
+  keywords: ['pouce en pied', 'convertir pouce pied', 'inches to feet', 'conversion pouce', '12 pouces en pied', 'calculateur pouce pied'],
   openGraph: {
-    title: 'Conversion Pouce en Pieds',
-    description: 'Outil gratuit pour convertir les pouces en pieds',
+    title: 'Convertir Pouce en Pied ⚡ Calculateur Instantané',
+    description: '✅ Conversion instantanée pouces ↔ pieds. Tableau + formules + exemples. 100% gratuit!',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Convertir Pouce en Pied - Calculateur Gratuit',
+    description: 'Conversion instantanée pouces ↔ pieds avec tableau et formules.',
   },
 };
 

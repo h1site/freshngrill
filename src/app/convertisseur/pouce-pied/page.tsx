@@ -330,6 +330,145 @@ export default function PoucePiedPage() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="font-display text-2xl text-black mb-8">
+            Questions fréquentes
+          </h2>
+          <div className="space-y-6">
+            <div className="border border-neutral-200 p-6">
+              <h3 className="font-display text-lg text-black mb-3">
+                Combien de pouces dans un pied?
+              </h3>
+              <p className="text-neutral-600">
+                Il y a exactement <strong>12 pouces dans un pied</strong>. Cette relation est fixe dans le système impérial.
+                Par exemple, 24 pouces = 2 pieds, 36 pouces = 3 pieds, et ainsi de suite.
+              </p>
+            </div>
+            <div className="border border-neutral-200 p-6">
+              <h3 className="font-display text-lg text-black mb-3">
+                Comment convertir des pouces en pieds facilement?
+              </h3>
+              <p className="text-neutral-600">
+                Pour convertir des pouces en pieds, divisez simplement le nombre de pouces par 12.
+                Par exemple : 60 pouces ÷ 12 = 5 pieds. Vous pouvez aussi utiliser notre calculateur ci-dessus pour une conversion instantanée.
+              </p>
+            </div>
+            <div className="border border-neutral-200 p-6">
+              <h3 className="font-display text-lg text-black mb-3">
+                Pourquoi utilise-t-on encore les pouces et pieds au Canada?
+              </h3>
+              <p className="text-neutral-600">
+                Bien que le Canada utilise officiellement le système métrique, le système impérial reste courant pour les tailles personnelles,
+                la construction, et les produits importés des États-Unis. C&apos;est pourquoi la conversion entre ces systèmes reste utile au quotidien.
+              </p>
+            </div>
+            <div className="border border-neutral-200 p-6">
+              <h3 className="font-display text-lg text-black mb-3">
+                Quelle est la différence entre un pouce et un centimètre?
+              </h3>
+              <p className="text-neutral-600">
+                Un pouce équivaut à <strong>2,54 centimètres</strong> exactement. Le pouce fait partie du système impérial (utilisé aux États-Unis),
+                tandis que le centimètre fait partie du système métrique (utilisé dans la plupart des pays).
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contenu SEO additionnel */}
+      <section className="bg-neutral-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto prose prose-neutral">
+            <h2 className="font-display text-2xl text-black mb-6">
+              Tout savoir sur la conversion pouce-pied
+            </h2>
+            <p className="text-neutral-600 mb-4">
+              La conversion entre pouces et pieds est l&apos;une des plus utilisées dans le système impérial.
+              Que vous mesuriez la taille d&apos;une personne, les dimensions d&apos;un meuble, ou que vous lisiez
+              des plans de construction nord-américains, comprendre cette relation est essentiel.
+            </p>
+            <p className="text-neutral-600 mb-4">
+              Au Canada, nous vivons avec deux systèmes de mesure : le métrique (officiel) et l&apos;impérial
+              (traditionnel). Les recettes de cuisine, par exemple, utilisent souvent des tasses et cuillères,
+              tandis que les emballages affichent les quantités en millilitres et grammes.
+            </p>
+            <p className="text-neutral-600">
+              Notre convertisseur gratuit vous permet de passer instantanément d&apos;un système à l&apos;autre,
+              sans calcul mental. Que vous ayez besoin de savoir combien font 72 pouces en pieds (réponse : 6 pieds)
+              ou de convertir votre taille pour un formulaire américain, cet outil est fait pour vous.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Schema FAQ */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Combien de pouces dans un pied?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Il y a exactement 12 pouces dans un pied. Cette relation est fixe dans le système impérial."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Comment convertir des pouces en pieds?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Pour convertir des pouces en pieds, divisez le nombre de pouces par 12. Par exemple : 60 pouces ÷ 12 = 5 pieds."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Combien de centimètres dans un pouce?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Un pouce équivaut à exactement 2,54 centimètres."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
+      {/* CTA Recettes */}
+      <section className="bg-[#F77313] py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="font-display text-2xl md:text-3xl text-white mb-4">
+              Découvrez nos recettes québécoises
+            </h2>
+            <p className="text-white/90 mb-6">
+              Maintenant que vos conversions sont faites, pourquoi ne pas essayer une de nos délicieuses recettes traditionnelles?
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/recette"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#F77313] font-semibold hover:bg-neutral-100 transition-colors"
+              >
+                Voir toutes les recettes
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/convertisseur"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-white text-white font-semibold hover:bg-white/10 transition-colors"
+              >
+                Tous les convertisseurs
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Autres convertisseurs */}
       <section className="container mx-auto px-4 py-12">
         <h2 className="font-display text-2xl text-black mb-6">
@@ -338,27 +477,31 @@ export default function PoucePiedPage() {
         <div className="grid md:grid-cols-4 gap-4">
           <Link
             href="/convertisseur/celsius-fahrenheit"
-            className="p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
+            className="group p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-colors"
           >
-            <span className="font-display text-black">Celsius - Fahrenheit</span>
+            <span className="font-display text-black group-hover:text-[#F77313]">Celsius - Fahrenheit</span>
+            <p className="text-xs text-neutral-500 mt-1">Température</p>
           </Link>
           <Link
             href="/convertisseur/metre-pied"
-            className="p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
+            className="group p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-colors"
           >
-            <span className="font-display text-black">Mètre en Pieds</span>
+            <span className="font-display text-black group-hover:text-[#F77313]">Mètre en Pieds</span>
+            <p className="text-xs text-neutral-500 mt-1">Longueur</p>
           </Link>
           <Link
             href="/convertisseur/centimetre-pied"
-            className="p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
+            className="group p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-colors"
           >
-            <span className="font-display text-black">Centimètre en Pieds</span>
+            <span className="font-display text-black group-hover:text-[#F77313]">Centimètre en Pieds</span>
+            <p className="text-xs text-neutral-500 mt-1">Longueur</p>
           </Link>
           <Link
             href="/convertisseur/minuterie"
-            className="p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
+            className="group p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-colors"
           >
-            <span className="font-display text-black">Minuterie en ligne</span>
+            <span className="font-display text-black group-hover:text-[#F77313]">Minuterie en ligne</span>
+            <p className="text-xs text-neutral-500 mt-1">Temps</p>
           </Link>
         </div>
       </section>

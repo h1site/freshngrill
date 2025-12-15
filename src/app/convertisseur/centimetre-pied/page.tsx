@@ -374,6 +374,164 @@ export default function CentimetrePiedPage() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="bg-neutral-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-display text-2xl text-black mb-8">
+              Questions fréquentes
+            </h2>
+            <div className="space-y-6">
+              <div className="bg-white border border-neutral-200 p-6">
+                <h3 className="font-display text-lg text-black mb-3">
+                  Combien fait 170 cm en pieds?
+                </h3>
+                <p className="text-neutral-600">
+                  <strong>170 cm = 5&apos;7&quot;</strong> (5 pieds et 7 pouces), soit environ 5,58 pieds.
+                  C&apos;est une taille moyenne pour un adulte. Notre convertisseur vous donne le résultat
+                  exact en pieds décimaux ET en pieds et pouces.
+                </p>
+              </div>
+              <div className="bg-white border border-neutral-200 p-6">
+                <h3 className="font-display text-lg text-black mb-3">
+                  Combien fait 180 cm en pieds?
+                </h3>
+                <p className="text-neutral-600">
+                  <strong>180 cm = 5&apos;11&quot;</strong> (5 pieds et 11 pouces), soit environ 5,91 pieds.
+                  C&apos;est souvent considéré comme une &quot;grande taille&quot; pour un homme.
+                </p>
+              </div>
+              <div className="bg-white border border-neutral-200 p-6">
+                <h3 className="font-display text-lg text-black mb-3">
+                  Comment convertir sa taille en pieds et pouces?
+                </h3>
+                <p className="text-neutral-600">
+                  Pour convertir votre taille de centimètres en pieds et pouces : 1) Divisez les cm par 2,54 pour obtenir les pouces totaux.
+                  2) Divisez ce résultat par 12 pour avoir les pieds. 3) Le reste représente les pouces.
+                  Ou utilisez simplement notre calculateur ci-dessus!
+                </p>
+              </div>
+              <div className="bg-white border border-neutral-200 p-6">
+                <h3 className="font-display text-lg text-black mb-3">
+                  Pourquoi les Américains utilisent les pieds?
+                </h3>
+                <p className="text-neutral-600">
+                  Les États-Unis n&apos;ont jamais officiellement adopté le système métrique, contrairement à presque tous les autres pays.
+                  Le système impérial (pieds, pouces, livres) reste donc la norme au quotidien, ce qui explique pourquoi
+                  les Canadiens doivent souvent convertir entre les deux systèmes.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contenu SEO additionnel */}
+      <section className="container mx-auto px-4 py-12">
+        <div className="max-w-3xl mx-auto prose prose-neutral">
+          <h2 className="font-display text-2xl text-black mb-6">
+            Guide complet : convertir les centimètres en pieds
+          </h2>
+          <p className="text-neutral-600 mb-4">
+            La conversion de centimètres en pieds est particulièrement utile pour exprimer sa taille dans le format
+            nord-américain. Aux États-Unis et souvent au Canada, on exprime la taille d&apos;une personne en pieds et pouces
+            (par exemple 5&apos;10&quot; plutôt que 178 cm).
+          </p>
+          <h3 className="font-display text-xl text-black mb-4 mt-8">Tableau des tailles les plus recherchées</h3>
+          <p className="text-neutral-600 mb-4">
+            Voici les conversions les plus demandées pour les tailles humaines :
+          </p>
+          <ul className="text-neutral-600 space-y-2 mb-6">
+            <li>• <strong>160 cm</strong> = 5&apos;3&quot; (petite taille)</li>
+            <li>• <strong>165 cm</strong> = 5&apos;5&quot; (taille moyenne femme)</li>
+            <li>• <strong>170 cm</strong> = 5&apos;7&quot; (taille moyenne)</li>
+            <li>• <strong>175 cm</strong> = 5&apos;9&quot; (taille moyenne homme)</li>
+            <li>• <strong>180 cm</strong> = 5&apos;11&quot; (grande taille)</li>
+            <li>• <strong>185 cm</strong> = 6&apos;1&quot; (très grand)</li>
+            <li>• <strong>190 cm</strong> = 6&apos;3&quot; (très grand)</li>
+          </ul>
+          <p className="text-neutral-600">
+            Notre convertisseur calcule automatiquement votre taille en pieds décimaux ET en format pieds-pouces,
+            ce qui est idéal pour remplir des formulaires américains ou comparer votre taille avec des personnes
+            utilisant le système impérial.
+          </p>
+        </div>
+      </section>
+
+      {/* Schema FAQ */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Combien fait 170 cm en pieds?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "170 cm = 5'7\" (5 pieds et 7 pouces), soit environ 5,58 pieds."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Combien fait 180 cm en pieds?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "180 cm = 5'11\" (5 pieds et 11 pouces), soit environ 5,91 pieds."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Comment convertir sa taille en pieds et pouces?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Divisez les cm par 2,54 pour obtenir les pouces totaux, puis divisez par 12 pour avoir les pieds. Le reste représente les pouces."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Combien de cm dans un pied?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Un pied équivaut exactement à 30,48 centimètres."
+                }
+              }
+            ]
+          })
+        }}
+      />
+
+      {/* CTA Recettes */}
+      <section className="bg-[#F77313] py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="font-display text-2xl md:text-3xl text-white mb-4">
+              Découvrez nos recettes québécoises
+            </h2>
+            <p className="text-white/90 mb-6">
+              Maintenant que vos conversions sont faites, pourquoi ne pas essayer une de nos délicieuses recettes traditionnelles?
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/recette"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-white text-[#F77313] font-semibold hover:bg-neutral-100 transition-colors"
+              >
+                Voir toutes les recettes
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                href="/convertisseur"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-white text-white font-semibold hover:bg-white/10 transition-colors"
+              >
+                Tous les convertisseurs
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Autres convertisseurs */}
       <section className="container mx-auto px-4 py-12">
         <h2 className="font-display text-2xl text-black mb-6">
@@ -382,27 +540,31 @@ export default function CentimetrePiedPage() {
         <div className="grid md:grid-cols-4 gap-4">
           <Link
             href="/convertisseur/celsius-fahrenheit"
-            className="p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
+            className="group p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-colors"
           >
-            <span className="font-display text-black">Celsius - Fahrenheit</span>
+            <span className="font-display text-black group-hover:text-[#F77313]">Celsius - Fahrenheit</span>
+            <p className="text-xs text-neutral-500 mt-1">Température</p>
           </Link>
           <Link
             href="/convertisseur/metre-pied"
-            className="p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
+            className="group p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-colors"
           >
-            <span className="font-display text-black">Mètre en Pieds</span>
+            <span className="font-display text-black group-hover:text-[#F77313]">Mètre en Pieds</span>
+            <p className="text-xs text-neutral-500 mt-1">Longueur</p>
           </Link>
           <Link
             href="/convertisseur/pouce-pied"
-            className="p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
+            className="group p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-colors"
           >
-            <span className="font-display text-black">Pouce en Pieds</span>
+            <span className="font-display text-black group-hover:text-[#F77313]">Pouce en Pieds</span>
+            <p className="text-xs text-neutral-500 mt-1">Longueur</p>
           </Link>
           <Link
             href="/convertisseur/minuterie"
-            className="p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
+            className="group p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-colors"
           >
-            <span className="font-display text-black">Minuterie en ligne</span>
+            <span className="font-display text-black group-hover:text-[#F77313]">Minuterie en ligne</span>
+            <p className="text-xs text-neutral-500 mt-1">Temps</p>
           </Link>
         </div>
       </section>

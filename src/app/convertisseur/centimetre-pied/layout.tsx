@@ -1,15 +1,22 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Conversion Centimètre en Pieds - Outil Gratuit | Menucochon',
+  title: 'Convertir CM en Pieds ⚡ Calculateur + Tableau Tailles (2025)',
   description:
-    'Convertissez facilement les centimètres en pieds. 1 pied = 30,48 cm. Tableau de tailles humaines et outil interactif gratuit.',
+    '✅ Convertissez centimètres en pieds instantanément! 170 cm = 5\'7". Tableau des tailles humaines + formules. Outil 100% gratuit.',
   alternates: {
     canonical: '/convertisseur/centimetre-pied/',
   },
+  keywords: ['cm en pied', 'centimetre en pied', 'conversion cm pieds', 'taille en pied', '170 cm en pied', 'convertir centimetre'],
   openGraph: {
-    title: 'Conversion Centimètre en Pieds',
-    description: 'Outil gratuit pour convertir les centimètres en pieds',
+    title: 'Convertir CM en Pieds ⚡ Calculateur + Tableau Tailles',
+    description: '✅ Conversion cm ↔ pieds instantanée. Tableau tailles humaines + formules. 100% gratuit!',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Convertir CM en Pieds - Calculateur Gratuit',
+    description: 'Conversion cm ↔ pieds avec tableau des tailles humaines.',
   },
 };
 
