@@ -190,12 +190,56 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
   // Nettoyer les valeurs undefined/null
   const cleanSchema = JSON.parse(JSON.stringify(schema));
 
+  // FAQ Schema - Parse le nouveau format JSON
+  let faqSchema = null;
+  if (recipe.faq) {
+    try {
+      const faqData = JSON.parse(recipe.faq);
+      if (faqData.faq && Array.isArray(faqData.faq) && faqData.faq.length > 0) {
+        const faqItems = faqData.faq
+          .filter((item: { question_fr?: string; question_en?: string; answer_fr?: string; answer_en?: string }) => {
+            const question = locale === 'en' ? item.question_en : item.question_fr;
+            const answer = locale === 'en' ? item.answer_en : item.answer_fr;
+            return question && answer;
+          })
+          .map((item: { question_fr?: string; question_en?: string; answer_fr?: string; answer_en?: string }) => ({
+            '@type': 'Question',
+            name: locale === 'en' ? item.question_en : item.question_fr,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: locale === 'en' ? item.answer_en : item.answer_fr,
+            },
+          }));
+
+        if (faqItems.length > 0) {
+          faqSchema = {
+            '@context': 'https://schema.org',
+            '@type': 'FAQPage',
+            mainEntity: faqItems,
+          };
+        }
+      }
+    } catch {
+      // FAQ n'est pas en format JSON valide, ignorer
+    }
+  }
+
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(cleanSchema),
-      }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(cleanSchema),
+        }}
+      />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqSchema),
+          }}
+        />
+      )}
+    </>
   );
 }

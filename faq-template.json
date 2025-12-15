@@ -1,0 +1,44 @@
+{
+  "instructions": "Génère des FAQ pour chaque recette dans ce format. 3-5 questions/réponses par recette, pertinentes pour le SEO.",
+  "format": {
+    "id": "ID de la recette",
+    "title_fr": "Titre français",
+    "title_en": "Titre anglais",
+    "faq": [
+      {
+        "question_fr": "Question en français?",
+        "answer_fr": "Réponse en français.",
+        "question_en": "Question in English?",
+        "answer_en": "Answer in English."
+      }
+    ]
+  },
+  "exemple": {
+    "id": 123,
+    "title_fr": "Pâté chinois traditionnel",
+    "title_en": "Traditional Shepherd's Pie",
+    "faq": [
+      {
+        "question_fr": "Peut-on congeler le pâté chinois?",
+        "answer_fr": "Oui, le pâté chinois se congèle très bien jusqu'à 3 mois. Laissez-le refroidir complètement avant de le congeler.",
+        "question_en": "Can you freeze shepherd's pie?",
+        "answer_en": "Yes, shepherd's pie freezes very well for up to 3 months. Let it cool completely before freezing."
+      },
+      {
+        "question_fr": "Quelle viande utiliser pour le pâté chinois?",
+        "answer_fr": "Traditionnellement, on utilise du boeuf haché maigre. Vous pouvez aussi utiliser un mélange boeuf-porc ou du poulet haché.",
+        "question_en": "What meat to use for shepherd's pie?",
+        "answer_en": "Traditionally, lean ground beef is used. You can also use a beef-pork mix or ground chicken."
+      },
+      {
+        "question_fr": "Comment rendre les pommes de terre plus crémeuses?",
+        "answer_fr": "Ajoutez du beurre, de la crème et un jaune d'oeuf aux pommes de terre chaudes avant de les piler.",
+        "question_en": "How to make the mashed potatoes creamier?",
+        "answer_en": "Add butter, cream and an egg yolk to the hot potatoes before mashing."
+      }
+    ]
+  },
+  "recettes_a_traiter": [
+    { "id": 1, "title_fr": "", "title_en": "" }
+  ]
+}

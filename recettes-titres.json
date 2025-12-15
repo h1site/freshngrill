@@ -1,0 +1,822 @@
+[
+  {
+    "id": 101,
+    "title_fr": "Amaretto Sour Facile",
+    "title_en": "Easy Amaretto Sour"
+  },
+  {
+    "id": 11,
+    "title_fr": "Authentique Soupe Bortsch Ukrainien",
+    "title_en": "Authentic Ukrainian Borscht"
+  },
+  {
+    "id": 108,
+    "title_fr": "Biscuit Moelleux aux Pépites de Chocolat – Facile et Délicieux à Réaliser",
+    "title_en": "Soft Chocolate Chip Cookies - Easy and Delicious to Make"
+  },
+  {
+    "id": 85,
+    "title_fr": "Biscuits au Chocolat Moelleux",
+    "title_en": "Soft Chocolate Cookies"
+  },
+  {
+    "id": 125,
+    "title_fr": "Biscuits beurre d'arachides",
+    "title_en": "Butter Peanut Cookies"
+  },
+  {
+    "id": 103,
+    "title_fr": "Blanc Manger Traditionnel : Recette facile et savoureuse",
+    "title_en": "Traditional Blanc Manger Recipe : Easy and Delicious"
+  },
+  {
+    "id": 9,
+    "title_fr": "Blé d’Inde cuit dans l’eau et du lait",
+    "title_en": "Cooked Indian Corn in Water and Milk"
+  },
+  {
+    "id": 124,
+    "title_fr": "Boeuf Wellington",
+    "title_en": "Homemade Oven-baked Beef Wellington"
+  },
+  {
+    "id": 129,
+    "title_fr": "Bouchées à l'érable",
+    "title_en": "Homemade Maple Bites"
+  },
+  {
+    "id": 143,
+    "title_fr": "Bouillon soupe Won-Ton facile à faire",
+    "title_en": "Easy to Make Won-Ton Soup Broth"
+  },
+  {
+    "id": 150,
+    "title_fr": "Brownies Dulce: Un Délice Chocolaté à Tomber",
+    "title_en": "Brownies Dulce: A Decadent Chocolate Delight to Fall For"
+  },
+  {
+    "id": 93,
+    "title_fr": "Bruschetta Classique – Fraîche & Savoureuse",
+    "title_en": "Classic Bruschetta – Fresh & Savory"
+  },
+  {
+    "id": 86,
+    "title_fr": "Bubble Tea Maison : Comment Préparer un Bubble Tea Délicieux chez Vous",
+    "title_en": "Homemade Delicious Bubble Tea at Home"
+  },
+  {
+    "id": 71,
+    "title_fr": "Burger végétarien aux haricots rouges",
+    "title_en": "Vegetarian Red Bean Burger"
+  },
+  {
+    "id": 47,
+    "title_fr": "Cannellonis au veau gratinés",
+    "title_en": "Grilled Veal Cannellonis"
+  },
+  {
+    "id": 105,
+    "title_fr": "Caramel Frappuccino Starbucks Maison",
+    "title_en": "Homemade Caramel Frappuccino (Starbucks)"
+  },
+  {
+    "id": 98,
+    "title_fr": "Carbonara pates : la recette traditionnelle italienne",
+    "title_en": "Carbonara Pasta: The Traditional Italian Recipe"
+  },
+  {
+    "id": 144,
+    "title_fr": "Carrés aux framboises et à la noix de coco",
+    "title_en": "Squares with strawberries and coconut"
+  },
+  {
+    "id": 126,
+    "title_fr": "Casserole à déjeuner à la cochon",
+    "title_en": "Breakfast Casserole with Pork"
+  },
+  {
+    "id": 155,
+    "title_fr": "Ceviche Peruvien une véritable fraicheur et saveurs de l'océan",
+    "title_en": "Authentic Peruvian Ceviche - A True Ocean Freshness and Flavors"
+  },
+  {
+    "id": 3,
+    "title_fr": "Champignons sautés au balsamique : recette gourmande à essayer",
+    "title_en": "Sautéed Mushrooms in Balsamic Vinegar: A Tasty Recipe to Try"
+  },
+  {
+    "id": 2,
+    "title_fr": "Chili con carne recette traditionnelle mexicaine",
+    "title_en": "Traditional Mexican Chili con Carne Recipe"
+  },
+  {
+    "id": 91,
+    "title_fr": "Chocolat Chaud Maison : Un Délice Gourmand et Réconfortant",
+    "title_en": "Homemade Hot Chocolate: A Rich and Comforting Delight"
+  },
+  {
+    "id": 24,
+    "title_fr": "Coquilles Saint-Jacques",
+    "title_en": "Homemade Oven-baked Scallops"
+  },
+  {
+    "id": 16,
+    "title_fr": "Côtelettes de Porc sur le BBQ",
+    "title_en": "Pork Chops on the Grill"
+  },
+  {
+    "id": 66,
+    "title_fr": "Couscous végétarien aux pois chiches",
+    "title_en": "Vegetarian Couscous with Chickpeas"
+  },
+  {
+    "id": 135,
+    "title_fr": "Crêmage pour les gâteaux de fête",
+    "title_en": "Homemade Frosting for Party Cakes"
+  },
+  {
+    "id": 128,
+    "title_fr": "Crème de champignons et aux patates",
+    "title_en": "Cream of Mushrooms and Potatoes"
+  },
+  {
+    "id": 142,
+    "title_fr": "Crème de champignons et aux patates",
+    "title_en": "Cream of Mushrooms and Potatoes"
+  },
+  {
+    "id": 131,
+    "title_fr": "Crêpe allemande : Pfannkuchen",
+    "title_en": "German Pancake : Pfannkuchen"
+  },
+  {
+    "id": 1,
+    "title_fr": "Crêpe Protéinée : Recette Santé Riche en Protéines",
+    "title_en": "Protein Pancake Recipe: Healthy High-Protein Recipe"
+  },
+  {
+    "id": 2127,
+    "title_fr": "Crêpes de base faciles (pâte à crêpes maison)",
+    "title_en": "Easy Basic Crepes (Classic Homemade Batter)"
+  },
+  {
+    "id": 138,
+    "title_fr": "Crêpes Minces: Délicieuses Crêpes Légères",
+    "title_en": "Thin Crepes: Delicious Light Crepes"
+  },
+  {
+    "id": 130,
+    "title_fr": "Croissants aux amandes",
+    "title_en": "Almond Croissants"
+  },
+  {
+    "id": 40,
+    "title_fr": "Croustade aux pommes (Facile)",
+    "title_en": "Apple Crostada (Easy)"
+  },
+  {
+    "id": 151,
+    "title_fr": "Cube de Boeuf Mijoteuse",
+    "title_en": "Beef Cube Stew"
+  },
+  {
+    "id": 154,
+    "title_fr": "Cupcakes au chocolat – Délicieux en s'en mordre les doigts",
+    "title_en": "Chocolate Cupcakes - Delicious to Bite Fingers"
+  },
+  {
+    "id": 76,
+    "title_fr": "Curry de pois chiches et lait de coco",
+    "title_en": "Chickpea Curry and Coconut Milk"
+  },
+  {
+    "id": 104,
+    "title_fr": "Délicieuse de Queue de Castor maison",
+    "title_en": "Delicious Homemade BeaverTail"
+  },
+  {
+    "id": 32,
+    "title_fr": "Deluxe Potatoes au Four comme au McDo",
+    "title_en": "Homemade McDonald's Style Oven-baked Potatoes"
+  },
+  {
+    "id": 2134,
+    "title_fr": "Dinde rôtie farcie & sauce aux canneberges maison",
+    "title_en": "Dinde rôtie farcie & sauce aux canneberges maison"
+  },
+  {
+    "id": 23,
+    "title_fr": "Doigts de poulet croustillants au parmesan et chapelure",
+    "title_en": "Crispy Parmesan and Panko Chicken Fingers"
+  },
+  {
+    "id": 17,
+    "title_fr": "Dumplings au Poulet",
+    "title_en": "Chicken Dumplings"
+  },
+  {
+    "id": 141,
+    "title_fr": "Fajitas Mexicaines Savoureuses",
+    "title_en": "Delicious Mexican Fajitas"
+  },
+  {
+    "id": 68,
+    "title_fr": "Falafels au four et sauce tahini",
+    "title_en": "Oven-baked Falafels and Tahini Sauce"
+  },
+  {
+    "id": 53,
+    "title_fr": "Fèves au Lard Maison Traditionnelles",
+    "title_en": "Traditional Quebec-Style Baked Beans"
+  },
+  {
+    "id": 55,
+    "title_fr": "Filet de porc au four",
+    "title_en": "Roasted Pork Loin"
+  },
+  {
+    "id": 136,
+    "title_fr": "Galette à la mélasse de la famille Bilodeau 1971",
+    "title_en": "Molasses Cookie of the Bilodeau Family 1971"
+  },
+  {
+    "id": 133,
+    "title_fr": "Gâteau à l'orange",
+    "title_en": "Orange Cake"
+  },
+  {
+    "id": 118,
+    "title_fr": "Gâteau aux pommes moelleux",
+    "title_en": "Soft Apple Cake"
+  },
+  {
+    "id": 112,
+    "title_fr": "Gâteau aux Pommes Traditionnel : Recette Moelleuse et Facile",
+    "title_en": "Traditional Apple Cake Recipe: Moist and Easy"
+  },
+  {
+    "id": 132,
+    "title_fr": "Gâteau dans une tasse : astuces et conseils incontournables",
+    "title_en": "Cake in a Mug: Essential Tips and Tricks"
+  },
+  {
+    "id": 123,
+    "title_fr": "Gâteau Roulé : Un Délice Facile à Réaliser",
+    "title_en": "Rolled Cake: An Easy Delight to Make"
+  },
+  {
+    "id": 46,
+    "title_fr": "Gâteau roulé moelleux : recette maman Bilodeau",
+    "title_en": "Rolled Cake Recipe: maman Bilodeau's Soft Rolled Cake"
+  },
+  {
+    "id": 44,
+    "title_fr": "Gaufre belge au yogourt grec, miel et noix (Délicieux)",
+    "title_en": "Belgian waffle with Greek yogurt, honey and nuts (Delicious)"
+  },
+  {
+    "id": 88,
+    "title_fr": "Gaufres Maison : Moelleuses et Gourmandes",
+    "title_en": "Homemade Waffles: Soft and Delicious"
+  },
+  {
+    "id": 69,
+    "title_fr": "Gratin de chou-fleur et pommes de terre",
+    "title_en": "Cauliflower and Potato Gratin"
+  },
+  {
+    "id": 33,
+    "title_fr": "Guacamole Maison Rapide (Prêt en 5 Minutes)",
+    "title_en": "Quick Homemade Guacamole (Ready in 5 Minutes)"
+  },
+  {
+    "id": 49,
+    "title_fr": "Jambon à la bière à la mijoteuse",
+    "title_en": "Beer-Braised Ham in a Slow Cooker"
+  },
+  {
+    "id": 81,
+    "title_fr": "Jambon à la mijoteuse – Tendre et savoureux",
+    "title_en": "Tender and Savory Ham Cooked Slowly in a Crockpot"
+  },
+  {
+    "id": 2137,
+    "title_fr": "Jambon glacé à l’érable",
+    "title_en": "Jambon glacé à l’érable"
+  },
+  {
+    "id": 15,
+    "title_fr": "Ketchup Maison (Grand-Mère Bilodeau)",
+    "title_en": "Homemade Ketchup (Grand-Mère Bilodeau)"
+  },
+  {
+    "id": 77,
+    "title_fr": "Lasagnes aux légumes et ricotta",
+    "title_en": "Lasagnes with Vegetables and Ricotta"
+  },
+  {
+    "id": 25,
+    "title_fr": "Macaroni Chinois Maison",
+    "title_en": "Homemade Chinese Macaroni"
+  },
+  {
+    "id": 22,
+    "title_fr": "Mayonnaise Maison",
+    "title_en": "Homemade Mayonnaise"
+  },
+  {
+    "id": 31,
+    "title_fr": "Meringue – Facile à faire",
+    "title_en": "Meringue - Easy to Make"
+  },
+  {
+    "id": 106,
+    "title_fr": "Miche de Pain Maison Moelleux et Doré",
+    "title_en": "Homemade Soft and Golden Bread Loaf"
+  },
+  {
+    "id": 109,
+    "title_fr": "Morue au Four : La Meilleure et la plus Savoureuse",
+    "title_en": "Baked Cod: The Best and Most Flavorful"
+  },
+  {
+    "id": 35,
+    "title_fr": "Mozza Burger Maison (Style A&W)",
+    "title_en": "Homemade Mozza Burger (Style A&W)"
+  },
+  {
+    "id": 2131,
+    "title_fr": "Muffins à la banane moelleux et faciles",
+    "title_en": "Moist Banana Muffins"
+  },
+  {
+    "id": 84,
+    "title_fr": "Muffins Chocolat Banane Santé (Délicieux et Sains)",
+    "title_en": "Healthy Chocolate Banana Muffins (Delicious and Nutritious)"
+  },
+  {
+    "id": 96,
+    "title_fr": "Nachos Maison : Facile et Savoureuse",
+    "title_en": "Nachos House: Easy and Savory"
+  },
+  {
+    "id": 8,
+    "title_fr": "Nigiri au saumon – Recette japonaise authentique",
+    "title_en": "Nigiri with Salmon – Authentic Japanese Recipe"
+  },
+  {
+    "id": 149,
+    "title_fr": "Omelette au Four à la Cabane à Sucre",
+    "title_en": "Sugar Shack Style Baked Omelette"
+  },
+  {
+    "id": 148,
+    "title_fr": "Orange Julep Maison – La Magie de Montréal à la Maison",
+    "title_en": "Homemade Orange Julep - The Magic of Montreal at Home"
+  },
+  {
+    "id": 43,
+    "title_fr": "Pain aux bananes",
+    "title_en": "Banana Bread"
+  },
+  {
+    "id": 121,
+    "title_fr": "Pain de « Viande » Végétarien",
+    "title_en": "Vegetarian Meatloaf"
+  },
+  {
+    "id": 122,
+    "title_fr": "Pain de viande Mijoteuse",
+    "title_en": "Meatloaf Mijoteuse"
+  },
+  {
+    "id": 18,
+    "title_fr": "Pain doré maison moelleux et savoureux",
+    "title_en": "Golden Bread (French Toast) - Homemade Soft and Savory"
+  },
+  {
+    "id": 51,
+    "title_fr": "Pain Gumbo traditionnel revisité",
+    "title_en": "Revised Traditional Cajun-Inspired Gumbo Bread"
+  },
+  {
+    "id": 38,
+    "title_fr": "Pain naan au boeuf (style sous-marin)",
+    "title_en": "Beef Naan Bread (Submarine Style)"
+  },
+  {
+    "id": 114,
+    "title_fr": "Pain Naan tartiné de Caramel Salé avec des Fruits et des pacanes",
+    "title_en": "Grilled Naan Bread Spread with Salted Caramel, Fruits and Pecans"
+  },
+  {
+    "id": 87,
+    "title_fr": "Patates au Four Garnies au Sloppy Joe et Fromage",
+    "title_en": "Baked Potatoes Stuffed with Sloppy Joe and Cheese"
+  },
+  {
+    "id": 19,
+    "title_fr": "Pâte à Pizza Maison",
+    "title_en": "Homemade Pizza Dough"
+  },
+  {
+    "id": 134,
+    "title_fr": "Pâte à Tarte 1969 : Facile et Rapide",
+    "title_en": "Homemade Easy and Quick Pie Dough 1969"
+  },
+  {
+    "id": 58,
+    "title_fr": "Paté au poulet",
+    "title_en": "Chicken Pate"
+  },
+  {
+    "id": 2133,
+    "title_fr": "Pâté au poulet traditionnel québécois",
+    "title_en": "Quebec-Style Chicken Pot Pie"
+  },
+  {
+    "id": 119,
+    "title_fr": "Pâte au saumon",
+    "title_en": "Salmon Pasta"
+  },
+  {
+    "id": 20,
+    "title_fr": "Pâté Chinois Traditionnel",
+    "title_en": "Traditional Shepherd's Pie"
+  },
+  {
+    "id": 67,
+    "title_fr": "Pâtes à la crème d'avocat",
+    "title_en": "Pasta with Creamy Avocado Sauce"
+  },
+  {
+    "id": 94,
+    "title_fr": "Petites Patates aux Champignons et Beurre à l'Ail",
+    "title_en": "Little Potatoes with Mushrooms and Garlic Butter"
+  },
+  {
+    "id": 28,
+    "title_fr": "Pithiviers feuilleté",
+    "title_en": "Flaky Pithiviers"
+  },
+  {
+    "id": 70,
+    "title_fr": "Pizza aux légumes grillés et mozzarella",
+    "title_en": "Grilled Vegetable and Mozzarella Pizza"
+  },
+  {
+    "id": 52,
+    "title_fr": "Poitrine de Poulet à l’Air Fryer",
+    "title_en": "Chicken Breast in Air Fryer"
+  },
+  {
+    "id": 41,
+    "title_fr": "Poitrine de poulet au four (Délicieux)",
+    "title_en": "Oven-Baked Chicken Breast (Delicious)"
+  },
+  {
+    "id": 80,
+    "title_fr": "Poitrine de Poulet aux Pommes, Prosciutto et Fromage",
+    "title_en": "Chicken Breast with Apples, Prosciutto and Cheese"
+  },
+  {
+    "id": 116,
+    "title_fr": "Poitrine Poulet Mijoteuse Crème Champignon",
+    "title_en": "Slow-Cooked Chicken Breast Cream Mushroom Recipe"
+  },
+  {
+    "id": 146,
+    "title_fr": "Poivrons farcis de boeuf, peperoni et bacon",
+    "title_en": "Stuffed Bell Peppers with Beef, Pepperoni and Bacon"
+  },
+  {
+    "id": 156,
+    "title_fr": "Potage aux Asperges",
+    "title_en": "Soup with Fresh Asparagus"
+  },
+  {
+    "id": 2132,
+    "title_fr": "Potage aux carottes onctueux et réconfortant",
+    "title_en": "Creamy Carrot Soup"
+  },
+  {
+    "id": 79,
+    "title_fr": "Potage aux poireaux onctueux et savoureux",
+    "title_en": "Oniony and Savory Leek Soup"
+  },
+  {
+    "id": 115,
+    "title_fr": "Potage Carotte Patate Douce",
+    "title_en": "Carrot Sweet Potato Soup"
+  },
+  {
+    "id": 117,
+    "title_fr": "Potage de Courge Butternut",
+    "title_en": "Butternut Squash Soup"
+  },
+  {
+    "id": 30,
+    "title_fr": "Poulet au curry",
+    "title_en": "Chicken Curry"
+  },
+  {
+    "id": 62,
+    "title_fr": "Poulet au lait de coco",
+    "title_en": "Chicken in Coconut Milk"
+  },
+  {
+    "id": 95,
+    "title_fr": "Poulet aux canneberges",
+    "title_en": "Chicken with Cranberries"
+  },
+  {
+    "id": 64,
+    "title_fr": "Poulet BBQ Parfait",
+    "title_en": "Perfect BBQ Chicken"
+  },
+  {
+    "id": 14,
+    "title_fr": "Poulet et chorizo crémeux au basilic et citron",
+    "title_en": "Creamy Chicken and Chorizo with Basil and Lemon"
+  },
+  {
+    "id": 99,
+    "title_fr": "Poulet Général Tao Maison facile et rapide",
+    "title_en": "Homemade General Tao Chicken Easy and Quick"
+  },
+  {
+    "id": 10,
+    "title_fr": "Poulet Mole (Mole Poblano Mexicain)",
+    "title_en": "Chicken Mole (Mexican Mole Poblano)"
+  },
+  {
+    "id": 83,
+    "title_fr": "Poutine mexicaine épicée",
+    "title_en": "Spicy Mexican Poutine"
+  },
+  {
+    "id": 82,
+    "title_fr": "Quesadillas au poulet et fromage en grain",
+    "title_en": "Chicken and Cheese Grain Quesadillas"
+  },
+  {
+    "id": 37,
+    "title_fr": "Ramen au poulet, champignons et œuf coulant",
+    "title_en": "Ramen with Chicken, Mushrooms and Running Egg"
+  },
+  {
+    "id": 56,
+    "title_fr": "Recette crêpe maison traditionnelle comme en famille",
+    "title_en": "Traditional Homemade Crepe Recipe"
+  },
+  {
+    "id": 50,
+    "title_fr": "Recette de pouding aux bleuets maison facile",
+    "title_en": "Recipe for Blueberry Pudding at Home Easy"
+  },
+  {
+    "id": 90,
+    "title_fr": "Recette Pain de Viande : Un Plat Savoureux et Réconfortant",
+    "title_en": "Recipe for Meatloaf: A Savory and Comforting Dish"
+  },
+  {
+    "id": 111,
+    "title_fr": "Relish Maison Rapide : L'Inoubliable Condiment Facile",
+    "title_en": "Quick Homemade Relish : The Unforgettable Easy Condiment"
+  },
+  {
+    "id": 102,
+    "title_fr": "Rice Krispies",
+    "title_en": "Timeless Delight: Rice Krispies"
+  },
+  {
+    "id": 75,
+    "title_fr": "Risotto aux champignons crémeux",
+    "title_en": "Creamy Mushroom Risotto"
+  },
+  {
+    "id": 120,
+    "title_fr": "Riz Basmati Épicé et Parfumé",
+    "title_en": "Spiced and Fragrant Basmati Rice"
+  },
+  {
+    "id": 54,
+    "title_fr": "Rôti de palette à la dijon et ail",
+    "title_en": "Roast Pork Shoulder with Dijon and Garlic"
+  },
+  {
+    "id": 2136,
+    "title_fr": "Rôti de porc à l’ail et au romarin",
+    "title_en": "Rôti de porc à l’ail et au romarin"
+  },
+  {
+    "id": 36,
+    "title_fr": "Salade César au Poulet BBQ – Un délice!",
+    "title_en": "Homemade BBQ Chicken Caesar Salad - A Delight!"
+  },
+  {
+    "id": 57,
+    "title_fr": "Salade de brocoli",
+    "title_en": "Broccoli Salad"
+  },
+  {
+    "id": 21,
+    "title_fr": "Salade de chou rouge croquante",
+    "title_en": "Crisp Red Cabbage Salad"
+  },
+  {
+    "id": 4,
+    "title_fr": "Salade de cocombre maison : la recette idéale",
+    "title_en": "Easy recipe for cucumber salad: the ideal recipe"
+  },
+  {
+    "id": 7,
+    "title_fr": "Salade de kale aux raisins",
+    "title_en": "Kale Salad with Raisins"
+  },
+  {
+    "id": 6,
+    "title_fr": "Salade de Macaroni (version maman Ginette Bilodeau)",
+    "title_en": "Salad of Macaroni (version maman Ginette Bilodeau)"
+  },
+  {
+    "id": 60,
+    "title_fr": "Salade de macaroni jambon",
+    "title_en": "Macaroni Ham Salad"
+  },
+  {
+    "id": 74,
+    "title_fr": "Salade de quinoa et légumes croquants",
+    "title_en": "Quinoa and Crunchy Vegetable Salad"
+  },
+  {
+    "id": 137,
+    "title_fr": "Salade Grecque délicieuse",
+    "title_en": "Delicious Greek Salad"
+  },
+  {
+    "id": 145,
+    "title_fr": "Sandwitch de Poulet Pesto",
+    "title_en": "Chicken Pesto Sandwich"
+  },
+  {
+    "id": 45,
+    "title_fr": "Sauce Barbecue Maison Facile et Rapide",
+    "title_en": "Easy and Quick Homemade Barbecue Sauce"
+  },
+  {
+    "id": 110,
+    "title_fr": "Sauce béchamel facile et traditionnelle.",
+    "title_en": "Easy and Traditional Homemade Béchamel Sauce"
+  },
+  {
+    "id": 34,
+    "title_fr": "Sauce crémeuse à la lime",
+    "title_en": "Creamy Lime Sauce"
+  },
+  {
+    "id": 107,
+    "title_fr": "Sauce Piquante Habanero Maison : Facile pour Crevettes",
+    "title_en": "Homemade Spicy Habanero Sauce: Easy for Shrimp"
+  },
+  {
+    "id": 13,
+    "title_fr": "Sauce Pizza Maison – Recette simple avec tomates du jardin",
+    "title_en": "Homemade Pizza Sauce Recipe - Simple with Garden Tomatoes"
+  },
+  {
+    "id": 92,
+    "title_fr": "Saucisses dans le sirop – Saveur cabane à sucre",
+    "title_en": "Sausages in Maple Syrup – Cabin Sugar Flavor"
+  },
+  {
+    "id": 63,
+    "title_fr": "Saumon à la crème",
+    "title_en": "Salmon in Cream"
+  },
+  {
+    "id": 5,
+    "title_fr": "Sloppy Joe Recette Maison (boeuf ou porc haché)",
+    "title_en": "Sloppy Joe Home-made Recipe (beef or pork ground)"
+  },
+  {
+    "id": 27,
+    "title_fr": "Smash Burgers Maison",
+    "title_en": "Smash Burgers House Style"
+  },
+  {
+    "id": 153,
+    "title_fr": "Soupe à l'oignon française maison – Simple et délicieuse",
+    "title_en": "French Onion Soup at Home - Simple and Delicious"
+  },
+  {
+    "id": 97,
+    "title_fr": "Soupe au chou : la recette traditionnelle et savoureuse",
+    "title_en": "Traditional and Flavorful Cabbage Soup"
+  },
+  {
+    "id": 100,
+    "title_fr": "Soupe aux légumes facile – Un classique réconfortant",
+    "title_en": "Easy Vegetable Soup – A Comforting Classic"
+  },
+  {
+    "id": 61,
+    "title_fr": "Soupe aux pois",
+    "title_en": "Pea Soup"
+  },
+  {
+    "id": 139,
+    "title_fr": "Soupe aux Pois à la Mijoteuse",
+    "title_en": "Pea Soup with Ham Hock"
+  },
+  {
+    "id": 73,
+    "title_fr": "Soupe de lentilles corail épicée",
+    "title_en": "Spiced Coral Lentil Soup"
+  },
+  {
+    "id": 12,
+    "title_fr": "Soupe de Tomates Rôties",
+    "title_en": "Roasted Tomato Soup"
+  },
+  {
+    "id": 152,
+    "title_fr": "Soupe Minestrone Traditionnelle Italienne",
+    "title_en": "Traditional Italian Minestrone Soup"
+  },
+  {
+    "id": 59,
+    "title_fr": "Soupe poulet et nouilles",
+    "title_en": "Chicken and Noodle Soup"
+  },
+  {
+    "id": 65,
+    "title_fr": "Soupe won ton",
+    "title_en": "Wonton Soup"
+  },
+  {
+    "id": 26,
+    "title_fr": "Sucre d'orge maison",
+    "title_en": "Homemade Caramel Corn Syrup"
+  },
+  {
+    "id": 72,
+    "title_fr": "Tarte aux légumes du soleil",
+    "title_en": "Sun-Kissed Vegetable Tart"
+  },
+  {
+    "id": 127,
+    "title_fr": "Tarte de Noël",
+    "title_en": "Christmas Tart"
+  },
+  {
+    "id": 48,
+    "title_fr": "Tartelettes aux pommes maison",
+    "title_en": "Homemade Apple Tartlettes"
+  },
+  {
+    "id": 2135,
+    "title_fr": "Tourtière du Québec traditionnelle au porc et au bœuf",
+    "title_en": "Tourtière du Québec traditionnelle au porc et au bœuf"
+  },
+  {
+    "id": 78,
+    "title_fr": "Tourtière Québécoise",
+    "title_en": "Québécois Pie"
+  },
+  {
+    "id": 113,
+    "title_fr": "Traditionnelle de Croustade aux Pommes",
+    "title_en": "Traditional Apple Crostade"
+  },
+  {
+    "id": 140,
+    "title_fr": "Traditionnelle Rwandaise : Brochettes de viandes grillées",
+    "title_en": "Traditional Rwandan: Grilled Meat Skewers"
+  },
+  {
+    "id": 29,
+    "title_fr": "Trempette (Fromage à la crème, légumes & Salsa)",
+    "title_en": "Homemade Creamy Dip (Veggies & Salsa)"
+  },
+  {
+    "id": 39,
+    "title_fr": "Trempette au Ketchup (Délicieux)",
+    "title_en": "Delicious Ketchup Dip"
+  },
+  {
+    "id": 89,
+    "title_fr": "Trempette aux Épinards : Crémeuse et Savoureuse",
+    "title_en": "Spinach Dip: Creamy and Savory"
+  },
+  {
+    "id": 147,
+    "title_fr": "Une belle recette de gâteau blanc facile de Maman 1967",
+    "title_en": "Beautiful Easy Homemade White Cake Recipe by Maman 1967"
+  },
+  {
+    "id": 42,
+    "title_fr": "Vol-au-Vent au Poulet",
+    "title_en": "Chicken in Vol-au-Vent Pastry"
+  }
+]
