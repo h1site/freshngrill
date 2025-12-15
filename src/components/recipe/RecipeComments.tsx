@@ -38,12 +38,13 @@ export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommen
     deleteConfirm: isEN ? 'Delete this comment?' : 'Supprimer ce commentaire?',
     delete: isEN ? 'Delete' : 'Supprimer',
     user: isEN ? 'User' : 'Utilisateur',
+    banned: isEN ? 'Your account has been suspended and you cannot post comments.' : 'Votre compte a été suspendu et vous ne pouvez pas publier de commentaires.',
   };
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [user, setUser] = useState<{ id: string; email: string } | null>(null);
+  const [user, setUser] = useState<{ id: string; email: string; isBanned?: boolean } | null>(null);
 
   const supabase = createClient();
 
@@ -53,8 +54,24 @@ export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommen
   }, [recipeId]);
 
   const checkUser = async () => {
-    const { data: { user } } = await supabase.auth.getUser();
-    setUser(user ? { id: user.id, email: user.email || '' } : null);
+    const { data: { user: authUser } } = await supabase.auth.getUser();
+    if (!authUser) {
+      setUser(null);
+      return;
+    }
+
+    // Check if user is banned
+    const { data: profile } = await supabase
+      .from('profiles' as never)
+      .select('is_banned')
+      .eq('id', authUser.id)
+      .single() as unknown as { data: { is_banned: boolean } | null };
+
+    setUser({
+      id: authUser.id,
+      email: authUser.email || '',
+      isBanned: profile?.is_banned || false,
+    });
   };
 
   const loadComments = async () => {
@@ -156,32 +173,38 @@ export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommen
 
       {/* Formulaire de commentaire */}
       {user ? (
-        <form onSubmit={handleSubmit} className="mb-8">
-          <div className="flex gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#F77313] flex items-center justify-center text-white font-bold flex-shrink-0">
-              {user.email.charAt(0).toUpperCase()}
-            </div>
-            <div className="flex-1">
-              <textarea
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder={t.placeholder}
-                rows={3}
-                className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F77313] resize-none"
-              />
-              <div className="flex justify-end mt-2">
-                <button
-                  type="submit"
-                  disabled={isSubmitting || !newComment.trim()}
-                  className="flex items-center gap-2 px-4 py-2 bg-[#F77313] text-white rounded-lg hover:bg-[#e56610] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <Send className="w-4 h-4" />
-                  {isSubmitting ? t.sending : t.publish}
-                </button>
+        user.isBanned ? (
+          <div className="mb-8 p-4 bg-red-50 border border-red-200 rounded-xl text-center">
+            <p className="text-red-600">{t.banned}</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="mb-8">
+            <div className="flex gap-3">
+              <div className="w-10 h-10 rounded-full bg-[#F77313] flex items-center justify-center text-white font-bold flex-shrink-0">
+                {user.email.charAt(0).toUpperCase()}
+              </div>
+              <div className="flex-1">
+                <textarea
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder={t.placeholder}
+                  rows={3}
+                  className="w-full px-4 py-3 border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F77313] resize-none"
+                />
+                <div className="flex justify-end mt-2">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting || !newComment.trim()}
+                    className="flex items-center gap-2 px-4 py-2 bg-[#F77313] text-white rounded-lg hover:bg-[#e56610] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  >
+                    <Send className="w-4 h-4" />
+                    {isSubmitting ? t.sending : t.publish}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
+        )
       ) : (
         <div className="mb-8 p-4 bg-neutral-50 rounded-xl text-center">
           <p className="text-neutral-600 mb-2">{t.loginPrompt}</p>

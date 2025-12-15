@@ -1,7 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { Mail, Phone, Building2, User, MessageSquare, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Mail, Phone, Building2, User, MessageSquare, Send, CheckCircle, AlertCircle, ShieldCheck } from 'lucide-react';
+
+// Generate a simple math captcha
+function generateCaptcha() {
+  const num1 = Math.floor(Math.random() * 10) + 1;
+  const num2 = Math.floor(Math.random() * 10) + 1;
+  return { num1, num2, answer: num1 + num2 };
+}
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -15,9 +22,26 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [captcha, setCaptcha] = useState({ num1: 0, num2: 0, answer: 0 });
+  const [captchaInput, setCaptchaInput] = useState('');
+  const [captchaError, setCaptchaError] = useState(false);
+
+  useEffect(() => {
+    setCaptcha(generateCaptcha());
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setCaptchaError(false);
+
+    // Validate captcha
+    if (parseInt(captchaInput) !== captcha.answer) {
+      setCaptchaError(true);
+      setCaptcha(generateCaptcha());
+      setCaptchaInput('');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
     setErrorMessage('');
@@ -43,6 +67,8 @@ export default function ContactPage() {
           subject: '',
           message: '',
         });
+        setCaptchaInput('');
+        setCaptcha(generateCaptcha());
       } else {
         setSubmitStatus('error');
         setErrorMessage(data.error || 'Une erreur est survenue');
@@ -238,6 +264,37 @@ export default function ContactPage() {
                     placeholder="Votre message..."
                   />
                 </div>
+              </div>
+
+              {/* Captcha */}
+              <div>
+                <label htmlFor="captcha" className="block text-sm font-medium text-neutral-700 mb-2">
+                  Vérification anti-robot *
+                </label>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 bg-neutral-100 px-4 py-3 rounded-xl">
+                    <ShieldCheck className="w-5 h-5 text-[#F77313]" />
+                    <span className="font-medium text-neutral-800">
+                      {captcha.num1} + {captcha.num2} = ?
+                    </span>
+                  </div>
+                  <input
+                    type="number"
+                    id="captcha"
+                    value={captchaInput}
+                    onChange={(e) => setCaptchaInput(e.target.value)}
+                    required
+                    className={`w-24 px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#F77313] focus:border-transparent transition-all ${
+                      captchaError ? 'border-red-500 bg-red-50' : 'border-neutral-300'
+                    }`}
+                    placeholder="?"
+                  />
+                </div>
+                {captchaError && (
+                  <p className="mt-2 text-sm text-red-600">
+                    Réponse incorrecte. Veuillez réessayer.
+                  </p>
+                )}
               </div>
 
               {/* Submit */}

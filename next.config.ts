@@ -182,6 +182,33 @@ const nextConfig: NextConfig = {
         destination: '/en/blog/rennai',
         permanent: true,
       },
+      // Common 404 redirects
+      {
+        source: '/en/dairy-queen-recipe',
+        destination: '/en/blog/dairy-queen',
+        permanent: true,
+      },
+      {
+        source: '/conversion-pouce-en-pied',
+        destination: '/convertisseur/pouce-pied',
+        permanent: true,
+      },
+      {
+        source: '/en/homemade-sorbet',
+        destination: '/en/blog/sorbet-maison',
+        permanent: true,
+      },
+      {
+        source: '/en/steak-a-la-perfection',
+        destination: '/en/blog/steak-a-la-perfection',
+        permanent: true,
+      },
+      // English blog posts without /blog/ prefix
+      {
+        source: '/en/:slug(dairy-queen|sorbet-maison|steak-a-la-perfection|ramen-authentique|air-fryer|big-mac)',
+        destination: '/en/blog/:slug',
+        permanent: true,
+      },
     ];
   },
 };
