@@ -103,10 +103,12 @@ export async function GET(request: Request) {
   const searchVariants = generateAccentVariants(query);
 
   // Construire la condition OR pour toutes les variantes
+  // Pour les recettes: chercher dans title, excerpt, introduction, content, conclusion
   const recipeConditions = searchVariants
-    .map(variant => `title.ilike.%${variant}%,excerpt.ilike.%${variant}%`)
+    .map(variant => `title.ilike.%${variant}%,excerpt.ilike.%${variant}%,introduction.ilike.%${variant}%,content.ilike.%${variant}%,conclusion.ilike.%${variant}%`)
     .join(',');
 
+  // Pour les posts: chercher dans title, excerpt, content
   const postConditions = searchVariants
     .map(variant => `title.ilike.%${variant}%,excerpt.ilike.%${variant}%,content.ilike.%${variant}%`)
     .join(',');
