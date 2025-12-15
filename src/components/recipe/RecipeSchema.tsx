@@ -3,9 +3,13 @@ import { Recipe } from '@/types/recipe';
 interface Props {
   recipe: Recipe;
   locale?: 'fr' | 'en';
+  rating?: {
+    averageRating: number;
+    ratingCount: number;
+  };
 }
 
-export default function RecipeSchema({ recipe, locale = 'fr' }: Props) {
+export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
   const baseUrl = 'https://menucochon.com';
   const recipePath = locale === 'en' ? `/en/recipe/${recipe.slug}/` : `/recette/${recipe.slug}/`;
   const recipeUrl = `${baseUrl}${recipePath}`;
@@ -170,6 +174,17 @@ export default function RecipeSchema({ recipe, locale = 'fr' }: Props) {
   const video = getVideo();
   if (video) {
     schema.video = video;
+  }
+
+  // Add aggregate rating if available (for Google rich snippets stars)
+  if (rating && rating.ratingCount > 0) {
+    schema.aggregateRating = {
+      '@type': 'AggregateRating',
+      ratingValue: rating.averageRating,
+      ratingCount: rating.ratingCount,
+      bestRating: 5,
+      worstRating: 1,
+    };
   }
 
   // Nettoyer les valeurs undefined/null

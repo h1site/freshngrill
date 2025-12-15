@@ -16,6 +16,7 @@ import RecipeSimilar from '@/components/recipe/RecipeSimilar';
 import RecipeSchema from '@/components/recipe/RecipeSchema';
 import RecipeFAQ from '@/components/recipe/RecipeFAQ';
 import RecipeComments from '@/components/recipe/RecipeComments';
+import RecipeRating from '@/components/recipe/RecipeRating';
 import GoogleAd from '@/components/ads/GoogleAd';
 import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
@@ -232,6 +233,16 @@ export default async function RecipePageEN({ params }: Props) {
               {recipe.faq && (
                 <RecipeFAQ faq={recipe.faq} locale="en" />
               )}
+
+              {/* Rating */}
+              <div className="bg-neutral-50 p-8 rounded-lg text-center">
+                <h3 className="font-display text-xl mb-4">Have you tried this recipe?</h3>
+                <RecipeRating
+                  recipeId={recipe.id}
+                  recipeSlug={recipe.slug}
+                  locale="en"
+                />
+              </div>
 
               {/* Comments */}
               <div className="mt-12">
