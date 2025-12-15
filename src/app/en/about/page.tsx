@@ -99,15 +99,15 @@ export default function AboutPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="font-display text-3xl md:text-4xl mb-6">
-              My signature? Pork.
+              Why &quot;Menucochon&quot;?
             </h2>
             <p className="text-neutral-400 text-lg leading-relaxed mb-8">
-              The name &quot;Menucochon&quot; (menu + cochon/pig) is no coincidence. I prefer cooking savory
-              rather than sweet, and pork is clearly my ingredient of choice.
-              Whether it&apos;s a tourtière, a roast or ribs, I love working with
-              this meat in all its forms.
+              The name &quot;Menucochon&quot; reflects my cooking philosophy: I love hearty,
+              generous meals! No small portions here. Whether it&apos;s a well-stuffed tourtière,
+              a family roast, or ribs overflowing with sauce, I cook to satisfy big appetites.
+              In French, &quot;manger comme un cochon&quot; means to eat heartily!
             </p>
-            <div className="text-6xl">🐷</div>
+            <div className="text-6xl">🍽️</div>
           </div>
         </div>
       </section>

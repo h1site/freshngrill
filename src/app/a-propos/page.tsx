@@ -99,15 +99,15 @@ export default function AProposPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="font-display text-3xl md:text-4xl mb-6">
-              Ma signature? Le cochon.
+              Pourquoi &quot;Menucochon&quot;?
             </h2>
             <p className="text-neutral-400 text-lg leading-relaxed mb-8">
-              Le nom &quot;Menucochon&quot; n&apos;est pas un hasard. Je préfère cuisiner le salé
-              plutôt que le sucré, et le porc est clairement mon ingrédient de prédilection.
-              Que ce soit une tourtière, un rôti ou des côtes levées, j&apos;adore travailler
-              cette viande sous toutes ses formes.
+              Le nom &quot;Menucochon&quot; reflète ma philosophie culinaire : j&apos;aime les repas
+              copieux et généreux! Pas de petites portions ici. Que ce soit une tourtière
+              bien garnie, un rôti familial ou des côtes levées débordantes de sauce,
+              je cuisine pour satisfaire les gros appétits.
             </p>
-            <div className="text-6xl">🐷</div>
+            <div className="text-6xl">🍽️</div>
           </div>
         </div>
       </section>
