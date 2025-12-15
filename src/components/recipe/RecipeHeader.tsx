@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Recipe } from '@/types/recipe';
-import { Clock, Users } from 'lucide-react';
+import { Clock, Users, Calendar, User } from 'lucide-react';
 import LikeButton from './LikeButton';
 import ShareButton from './ShareButton';
 import PrintButton from './PrintButton';
@@ -119,6 +119,46 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
             </span>
           </div>
         </div>
+      </div>
+
+      {/* Author and Date - E-E-A-T for Google Discover */}
+      <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-3 md:mb-4 text-white/80 text-xs sm:text-sm">
+        {/* Author */}
+        <div className="flex items-center gap-1.5">
+          <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <span>{isEN ? 'By' : 'Par'} <strong className="text-white">{recipe.author || 'Menucochon'}</strong></span>
+        </div>
+
+        {/* Published Date */}
+        {recipe.publishedAt && (
+          <>
+            <span className="text-white/40">|</span>
+            <div className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <time dateTime={recipe.publishedAt}>
+                {new Date(recipe.publishedAt).toLocaleDateString(isEN ? 'en-CA' : 'fr-CA', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+            </div>
+          </>
+        )}
+
+        {/* Updated Date (if different from published) */}
+        {recipe.updatedAt && recipe.updatedAt !== recipe.publishedAt && (
+          <>
+            <span className="text-white/40">|</span>
+            <span className="text-white/60">
+              {isEN ? 'Updated' : 'Mis à jour'}: {new Date(recipe.updatedAt).toLocaleDateString(isEN ? 'en-CA' : 'fr-CA', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </span>
+          </>
+        )}
       </div>
 
       {/* Actions - icon only on mobile */}

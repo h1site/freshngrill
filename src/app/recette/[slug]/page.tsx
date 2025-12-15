@@ -17,6 +17,7 @@ import RecipeComments from '@/components/recipe/RecipeComments';
 import GoogleAd from '@/components/ads/GoogleAd';
 import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
+import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -73,6 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
       'max-image-preview': 'large',
     },
+    authors: [{ name: recipe.author || 'Menucochon' }],
   };
 }
 
@@ -87,10 +89,18 @@ export default async function RecettePage({ params }: Props) {
 
   const similarRecipes = await getSimilarRecipes(recipe, 4);
 
+  const breadcrumbs = [
+    { name: 'Accueil', url: '/' },
+    { name: 'Recettes', url: '/recette' },
+    ...(recipe.categories?.[0] ? [{ name: recipe.categories[0].name, url: `/categorie/${recipe.categories[0].slug}` }] : []),
+    { name: recipe.title, url: `/recette/${slug}/` },
+  ];
+
   return (
     <>
       <SetLanguageSlugs slugFr={recipe.slugFr || recipe.slug} slugEn={recipe.slugEn} />
       <RecipeSchema recipe={recipe} />
+      <BreadcrumbSchema items={breadcrumbs} />
 
       <main className="min-h-screen bg-white">
         {/* Hero Image - Optimisé mobile */}

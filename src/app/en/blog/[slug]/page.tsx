@@ -10,6 +10,8 @@ import {
 import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Bookmark } from 'lucide-react';
 import GoogleAd from '@/components/ads/GoogleAd';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
+import ArticleSchema from '@/components/schema/ArticleSchema';
+import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -86,10 +88,19 @@ export default async function BlogPostPageEN({ params }: Props) {
     });
   };
 
+  const breadcrumbs = [
+    { name: 'Home', url: '/en' },
+    { name: 'Blog', url: '/en/blog' },
+    { name: post.title, url: `/en/blog/${slug}/` },
+  ];
+
   return (
-    <main className="min-h-screen bg-white">
-      {/* Magazine Header */}
-      <header className="bg-black text-white">
+    <>
+      <ArticleSchema post={post} locale="en" />
+      <BreadcrumbSchema items={breadcrumbs} />
+      <main className="min-h-screen bg-white">
+        {/* Magazine Header */}
+        <header className="bg-black text-white">
         <div className="container mx-auto px-4">
           {/* Navigation Bar */}
           <div className="py-4 flex items-center justify-between border-b border-white/10">
@@ -301,6 +312,7 @@ export default async function BlogPostPageEN({ params }: Props) {
           </div>
         </section>
       )}
-    </main>
+      </main>
+    </>
   );
 }

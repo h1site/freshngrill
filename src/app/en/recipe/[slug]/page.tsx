@@ -19,6 +19,7 @@ import RecipeComments from '@/components/recipe/RecipeComments';
 import GoogleAd from '@/components/ads/GoogleAd';
 import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
+import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -85,6 +86,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       follow: true,
       'max-image-preview': 'large',
     },
+    authors: [{ name: recipe.author || 'Menucochon' }],
   };
 }
 
@@ -112,10 +114,18 @@ export default async function RecipePageEN({ params }: Props) {
   }));
   const similarRecipes = await enrichRecipeCardsWithEnglishSlugs(similarRecipeCards);
 
+  const breadcrumbs = [
+    { name: 'Home', url: '/en' },
+    { name: 'Recipes', url: '/en/recipe' },
+    ...(recipe.categories?.[0] ? [{ name: recipe.categories[0].name, url: `/en/category/${recipe.categories[0].slug}` }] : []),
+    { name: recipe.title, url: `/en/recipe/${slug}/` },
+  ];
+
   return (
     <>
       <SetLanguageSlugs slugFr={recipe.slugFr || recipe.slug} slugEn={recipe.slugEn || slug} />
       <RecipeSchema recipe={recipe} locale="en" />
+      <BreadcrumbSchema items={breadcrumbs} />
 
       <main className="min-h-screen bg-white">
         {/* Hero Image - Mobile optimized */}

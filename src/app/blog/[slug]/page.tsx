@@ -11,6 +11,8 @@ import { Calendar, Clock, User, ArrowLeft, ArrowRight, Share2, Bookmark, Quote }
 import PostCard from '@/components/blog/PostCard';
 import GoogleAd from '@/components/ads/GoogleAd';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
+import ArticleSchema from '@/components/schema/ArticleSchema';
+import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -87,9 +89,18 @@ export default async function BlogPostPage({ params }: Props) {
     });
   };
 
+  const breadcrumbs = [
+    { name: 'Accueil', url: '/' },
+    { name: 'Blog', url: '/blog' },
+    { name: post.title, url: `/blog/${slug}/` },
+  ];
+
   return (
-    <main className="min-h-screen bg-white">
-      {/* Magazine Header */}
+    <>
+      <ArticleSchema post={post} locale="fr" />
+      <BreadcrumbSchema items={breadcrumbs} />
+      <main className="min-h-screen bg-white">
+        {/* Magazine Header */}
       <header className="bg-black text-white">
         <div className="container mx-auto px-4">
           {/* Navigation Bar */}
@@ -302,6 +313,7 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         </section>
       )}
-    </main>
+      </main>
+    </>
   );
 }
