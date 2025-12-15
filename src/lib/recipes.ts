@@ -10,6 +10,7 @@ function transformRecipe(data: any): Recipe {
     excerpt: data.excerpt || '',
     content: data.content || '',
     featuredImage: data.featured_image || '',
+    pinterestImage: data.pinterest_image || undefined,
     images: data.images || [],
     // Champs ACF
     introduction: data.introduction || undefined,

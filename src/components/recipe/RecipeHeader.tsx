@@ -179,6 +179,7 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
           title={recipe.title}
           description={recipe.excerpt}
           image={recipe.featuredImage}
+          pinterestImage={recipe.pinterestImage}
           compact
           locale={locale}
         />

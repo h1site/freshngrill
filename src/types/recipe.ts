@@ -5,6 +5,7 @@ export interface Recipe {
   excerpt: string;
   content: string;
   featuredImage: string;
+  pinterestImage?: string; // Image verticale optimisée pour Pinterest (ratio 2:3)
   images: string[];
 
   // Contenu ACF

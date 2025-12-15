@@ -6,15 +6,19 @@ import { Share2, X, Check, Link2, Mail } from 'lucide-react';
 
 import type { Locale } from '@/i18n/config';
 
+// Image Pinterest par défaut (verticale 2:3)
+const DEFAULT_PINTEREST_IMAGE = 'https://menucochon.com/images/pinterest-default.jpg';
+
 interface Props {
   title: string;
   description?: string;
   image?: string;
+  pinterestImage?: string; // Image optimisée pour Pinterest (verticale 2:3)
   compact?: boolean;
   locale?: Locale;
 }
 
-export default function ShareButton({ title, description, image, compact = false, locale = 'fr' }: Props) {
+export default function ShareButton({ title, description, image, pinterestImage, compact = false, locale = 'fr' }: Props) {
   const isEN = locale === 'en';
   const t = {
     share: isEN ? 'Share' : 'Partager',
@@ -82,7 +86,9 @@ export default function ShareButton({ title, description, image, compact = false
       ),
       color: 'bg-[#E60023] hover:bg-[#D50C22]',
       onClick: () => {
-        const url = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(getUrl())}&media=${encodeURIComponent(image || '')}&description=${encodeURIComponent(title)}`;
+        // Priorité: pinterestImage > image > default
+        const pinImage = pinterestImage || image || DEFAULT_PINTEREST_IMAGE;
+        const url = `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(getUrl())}&media=${encodeURIComponent(pinImage)}&description=${encodeURIComponent(title)}`;
         window.open(url, '_blank', 'width=600,height=400');
       },
     },
