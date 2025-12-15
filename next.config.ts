@@ -194,6 +194,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/conversion-centimetre-en-pied',
+        destination: '/convertisseur/centimetre-pied',
+        permanent: true,
+      },
+      {
         source: '/en/homemade-sorbet',
         destination: '/en/blog/sorbet-maison',
         permanent: true,
