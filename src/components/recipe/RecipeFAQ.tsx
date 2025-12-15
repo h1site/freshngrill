@@ -10,15 +10,49 @@ interface FAQItem {
   answer: string;
 }
 
+interface JSONFaqItem {
+  question_fr: string;
+  answer_fr: string;
+  question_en: string;
+  answer_en: string;
+}
+
+interface JSONFaqData {
+  id: number;
+  title_fr: string;
+  title_en: string;
+  faq: JSONFaqItem[];
+}
+
 interface Props {
   faq: string;
   locale?: Locale;
 }
 
-function parseFAQ(html: string): FAQItem[] {
+function parseFAQ(faqString: string, locale: Locale): FAQItem[] {
   const items: FAQItem[] = [];
+  const isEN = locale === 'en';
 
-  // Parser avec regex pour éviter les problèmes SSR
+  // Essayer de parser comme JSON d'abord (nouveau format)
+  try {
+    const jsonData: JSONFaqData = JSON.parse(faqString);
+    if (jsonData.faq && Array.isArray(jsonData.faq)) {
+      jsonData.faq.forEach((item) => {
+        const question = isEN ? item.question_en : item.question_fr;
+        const answer = isEN ? item.answer_en : item.answer_fr;
+        if (question && answer) {
+          items.push({ question, answer: `<p>${answer}</p>` });
+        }
+      });
+      return items;
+    }
+  } catch {
+    // Pas du JSON, continuer avec le parsing HTML
+  }
+
+  // Fallback: parser l'ancien format HTML
+  const html = faqString;
+
   // Pattern pour h2 ou h3 comme questions
   const headerPattern = /<h[23][^>]*>([\s\S]*?)<\/h[23]>/gi;
   const matches = [...html.matchAll(headerPattern)];
@@ -121,7 +155,7 @@ export default function RecipeFAQ({ faq, locale = 'fr' }: Props) {
   };
 
   // Parser immédiatement (fonctionne côté serveur avec regex)
-  const items = parseFAQ(faq);
+  const items = parseFAQ(faq, locale);
 
   // Fallback si pas d'items parsés - afficher le HTML brut
   if (items.length === 0) {
