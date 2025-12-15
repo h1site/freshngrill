@@ -76,6 +76,7 @@ export const metadata: Metadata = {
   other: {
     'ai-content-declaration': 'human-created',
     'llms-txt': 'https://menucochon.com/llms.txt',
+    'p:domain_verify': '98ff89abeccd0f675a4b1b4659901aab',
   },
 };
 
