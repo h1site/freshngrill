@@ -21,10 +21,11 @@ interface Comment {
 
 interface RecipeCommentsProps {
   recipeId: number;
+  slug: string;
   locale?: Locale;
 }
 
-export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommentsProps) {
+export default function RecipeComments({ recipeId, slug, locale = 'fr' }: RecipeCommentsProps) {
   const isEN = locale === 'en';
   const t = {
     comments: isEN ? 'Comments' : 'Commentaires',
@@ -209,7 +210,7 @@ export default function RecipeComments({ recipeId, locale = 'fr' }: RecipeCommen
         <div className="mb-8 p-4 bg-neutral-50 rounded-xl text-center">
           <p className="text-neutral-600 mb-2">{t.loginPrompt}</p>
           <Link
-            href={`/login?redirectTo=${isEN ? '/en/recipe' : '/recette'}/${recipeId}`}
+            href={`/login?redirectTo=${encodeURIComponent(`${isEN ? '/en/recipe' : '/recette'}/${slug}/`)}`}
             className="inline-flex items-center gap-2 px-4 py-2 bg-[#F77313] text-white rounded-lg hover:bg-[#e56610] transition-colors"
           >
             {t.login}

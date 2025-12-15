@@ -221,7 +221,7 @@ export default async function RecettePage({ params }: Props) {
 
               {/* Commentaires */}
               <div className="mt-12">
-                <RecipeComments recipeId={recipe.id} />
+                <RecipeComments recipeId={recipe.id} slug={recipe.slug} />
               </div>
 
               {/* Video */}

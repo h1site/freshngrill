@@ -246,7 +246,7 @@ export default async function RecipePageEN({ params }: Props) {
 
               {/* Comments */}
               <div className="mt-12">
-                <RecipeComments recipeId={recipe.id} locale="en" />
+                <RecipeComments recipeId={recipe.id} slug={recipe.slug} locale="en" />
               </div>
 
               {/* Video */}
