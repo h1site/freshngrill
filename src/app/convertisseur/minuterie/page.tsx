@@ -181,11 +181,6 @@ export default function MinuteriePage() {
         </div>
       </section>
 
-      {/* Ad après hero */}
-      <div className="container mx-auto px-4 py-8">
-        <GoogleAd slot="7610644087" />
-      </div>
-
       {/* Minuterie */}
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-2xl mx-auto">
@@ -273,6 +268,11 @@ export default function MinuteriePage() {
           </div>
         </div>
       </section>
+
+      {/* Ad après minuterie */}
+      <div className="container mx-auto px-4 py-8">
+        <GoogleAd slot="7610644087" />
+      </div>
 
       {/* Temps prédéfinis */}
       <section className="bg-neutral-50 py-12">

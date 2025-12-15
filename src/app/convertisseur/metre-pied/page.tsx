@@ -117,11 +117,6 @@ export default function MetrePiedPage() {
         </div>
       </section>
 
-      {/* Ad après hero */}
-      <div className="container mx-auto px-4 py-8">
-        <GoogleAd slot="7610644087" />
-      </div>
-
       {/* Convertisseur */}
       <section className="container mx-auto px-4 py-12">
         <div className="max-w-2xl mx-auto">
@@ -172,6 +167,11 @@ export default function MetrePiedPage() {
           </div>
         </div>
       </section>
+
+      {/* Ad après convertisseur */}
+      <div className="container mx-auto px-4 py-8">
+        <GoogleAd slot="7610644087" />
+      </div>
 
       {/* Formules */}
       <section className="bg-neutral-50 py-12">
