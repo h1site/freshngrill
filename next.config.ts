@@ -214,6 +214,83 @@ const nextConfig: NextConfig = {
         destination: '/en/blog/:slug',
         permanent: true,
       },
+      // English type-de-cuisine to category
+      {
+        source: '/en/type-de-cuisine/:slug*',
+        destination: '/en/category/:slug*',
+        permanent: true,
+      },
+      // English type-of-kitchen to category
+      {
+        source: '/en/type-of-kitchen/:slug*',
+        destination: '/en/category/:slug*',
+        permanent: true,
+      },
+      // English recipe_categories to category
+      {
+        source: '/en/recipe_categories/:slug*',
+        destination: '/en/category/:slug*',
+        permanent: true,
+      },
+      // English recipes (plural) to recipe (singular)
+      {
+        source: '/en/recipes',
+        destination: '/en/recipe',
+        permanent: true,
+      },
+      // Remove /feed/ from recipe URLs (WordPress RSS)
+      {
+        source: '/recette/:slug/feed',
+        destination: '/recette/:slug',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/:slug/feed',
+        destination: '/en/recipe/:slug',
+        permanent: true,
+      },
+      // English blog redirects for common searches
+      {
+        source: '/en/fish-and-chip-recipe',
+        destination: '/en/blog/recette-de-fish-and-chip',
+        permanent: true,
+      },
+      {
+        source: '/en/quick-and-easy-homemade-fish-and-chip-recipe',
+        destination: '/en/blog/recette-de-fish-and-chip',
+        permanent: true,
+      },
+      {
+        source: '/en/pizza-oven',
+        destination: '/en/blog/four-a-pizza',
+        permanent: true,
+      },
+      {
+        source: '/en/easy-recipe-for-homemade-beavertail',
+        destination: '/en/blog/queue-de-castor',
+        permanent: true,
+      },
+      {
+        source: '/en/beaver-tail',
+        destination: '/en/blog/queue-de-castor',
+        permanent: true,
+      },
+      {
+        source: '/en/ricardo-cuisine',
+        destination: '/en/blog/ricardo-cuisine',
+        permanent: true,
+      },
+      {
+        source: '/en/meal-ideas-with-friends',
+        destination: '/en/blog/idees-de-repas-entre-amis',
+        permanent: true,
+      },
+      // French blog redirect
+      {
+        source: '/crepes-recette-facile',
+        destination: '/blog/recette-de-crepe-rapide',
+        permanent: true,
+      },
     ];
   },
 };
