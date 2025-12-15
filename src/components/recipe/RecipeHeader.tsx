@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Recipe } from '@/types/recipe';
-import { Clock, Users, Calendar, User } from 'lucide-react';
+import { Clock, Users, Calendar } from 'lucide-react';
 import LikeButton from './LikeButton';
 import ShareButton from './ShareButton';
 import PrintButton from './PrintButton';
@@ -123,11 +124,20 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
 
       {/* Author and Date - E-E-A-T for Google Discover */}
       <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-3 md:mb-4 text-white/80 text-xs sm:text-sm">
-        {/* Author */}
-        <div className="flex items-center gap-1.5">
-          <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+        {/* Author with photo */}
+        <Link
+          href={isEN ? '/en/about' : '/a-propos'}
+          className="flex items-center gap-2 hover:text-white transition-colors"
+        >
+          <Image
+            src="/images/auteurs/seb.jpg"
+            alt="Sébastien Ross"
+            width={28}
+            height={28}
+            className="rounded-full object-cover"
+          />
           <span>{isEN ? 'By' : 'Par'} <strong className="text-white">{recipe.author || 'Menucochon'}</strong></span>
-        </div>
+        </Link>
 
         {/* Published Date */}
         {recipe.publishedAt && (
