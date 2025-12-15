@@ -29,8 +29,8 @@ const bebasNeue = Bebas_Neue({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'Menu Cochon | Recettes gourmandes',
-    template: '%s | Menu Cochon',
+    default: 'Menucochon | Recettes gourmandes',
+    template: '%s | Menucochon',
   },
   description: siteConfig.description,
   keywords: ['recettes', 'cuisine', 'repas', 'plats', 'desserts', 'québec'],
@@ -46,25 +46,32 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     images: [
       {
-        url: '/images/og-default.jpg',
+        url: '/images/og-default.svg',
         width: 1200,
         height: 630,
-        alt: 'Menu Cochon - Recettes gourmandes',
+        alt: 'Menucochon - Recettes gourmandes',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Menu Cochon | Recettes gourmandes',
+    title: 'Menucochon | Recettes gourmandes',
     description: siteConfig.description,
-    images: ['/images/og-default.jpg'],
+    images: ['/images/og-default.svg'],
   },
   robots: {
     index: true,
     follow: true,
+    'max-image-preview': 'large',
   },
   alternates: {
     canonical: '/',
+    types: {
+      'application/rss+xml': [
+        { url: '/rss/recettes', title: 'Menucochon - Recettes RSS' },
+        { url: '/rss/blog', title: 'Menucochon - Blog RSS' },
+      ],
+    },
   },
 };
 
