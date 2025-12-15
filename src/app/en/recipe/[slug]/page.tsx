@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const frSlug = recipe.slugFr || recipe.slug;
 
   return {
-    title: recipe.seoTitle || `${recipe.title} | Menu Cochon`,
+    title: recipe.seoTitle || `${recipe.title} | Menucochon`,
     description: recipe.seoDescription || recipe.excerpt,
     alternates: {
       canonical: `/en/recipe/${enSlug}/`,
@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : [],
       type: 'article',
       url: `/en/recipe/${enSlug}/`,
-      siteName: 'Menu Cochon',
+      siteName: 'Menucochon',
       locale: 'en_CA',
     },
     twitter: {
@@ -79,6 +79,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: recipe.title,
       description: recipe.excerpt,
       images: recipe.featuredImage ? [recipe.featuredImage] : [],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
     },
   };
 }

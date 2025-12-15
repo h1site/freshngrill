@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const enSlug = recipe.slugEn || slug;
 
   return {
-    title: recipe.seoTitle || `${recipe.title} | Menu Cochon`,
+    title: recipe.seoTitle || `${recipe.title} | Menucochon`,
     description: recipe.seoDescription || recipe.excerpt,
     alternates: {
       canonical: `/recette/${slug}/`,
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : [],
       type: 'article',
       url: `/recette/${slug}/`,
-      siteName: 'Menu Cochon',
+      siteName: 'Menucochon',
       locale: 'fr_CA',
     },
     twitter: {
@@ -67,6 +67,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: recipe.title,
       description: recipe.excerpt,
       images: recipe.featuredImage ? [recipe.featuredImage] : [],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
     },
   };
 }
