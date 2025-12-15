@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: post.seoTitle || `${post.title} | Menu Cochon`,
+    title: post.seoTitle || `${post.title} | Menucochon`,
     description: post.seoDescription || post.excerpt,
     alternates: {
       canonical: `/en/blog/${slug}/`,
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         : [],
       type: 'article',
       url: `/en/blog/${slug}/`,
-      siteName: 'Menu Cochon',
+      siteName: 'Menucochon',
       locale: 'en_CA',
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
@@ -59,6 +59,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.excerpt,
       images: post.featuredImage ? [post.featuredImage] : [],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
     },
   };
 }
