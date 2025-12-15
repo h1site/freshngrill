@@ -1,10 +1,14 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Politique de confidentialité | Menu Cochon',
-  description: 'Politique de confidentialité et protection des données personnelles de Menu Cochon.',
+  title: 'Politique de confidentialité | Menucochon',
+  description: 'Politique de confidentialité et protection des données personnelles de Menucochon.',
   alternates: {
     canonical: '/confidentialite/',
+    languages: {
+      'fr-CA': '/confidentialite/',
+      'en-CA': '/en/privacy/',
+    },
   },
 };
 
@@ -32,7 +36,7 @@ export default function ConfidentialitePage() {
           <div className="max-w-3xl mx-auto prose prose-lg prose-neutral">
             <h2>Introduction</h2>
             <p>
-              Bienvenue sur Menu Cochon. Nous prenons très au sérieux la protection de vos
+              Bienvenue sur Menucochon. Nous prenons très au sérieux la protection de vos
               données personnelles. Cette politique de confidentialité explique comment nous
               collectons, utilisons et protégeons vos informations lorsque vous utilisez
               notre site web.

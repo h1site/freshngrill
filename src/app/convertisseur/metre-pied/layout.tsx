@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Conversion Mètre en Pieds - Outil Gratuit | Menu Cochon',
+  title: 'Conversion Mètre en Pieds - Outil Gratuit | Menucochon',
   description:
     'Convertissez facilement les mètres en pieds et vice-versa. 1 mètre = 3.28084 pieds. Formules, tableaux et outil interactif gratuit.',
   alternates: {

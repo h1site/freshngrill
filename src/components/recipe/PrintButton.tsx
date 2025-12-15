@@ -79,7 +79,7 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
       <html lang="${locale}">
       <head>
         <meta charset="UTF-8">
-        <title>${recipe.title} - Menu Cochon</title>
+        <title>${recipe.title} - Menucochon</title>
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -221,7 +221,7 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
               <circle cx="50" cy="50" r="45" fill="#F77313"/>
               <text x="50" y="58" text-anchor="middle" fill="white" font-size="24" font-weight="bold">MC</text>
             </svg>
-            <span style="font-size: 20px; font-weight: 700; color: #F77313;">Menu Cochon</span>
+            <span style="font-size: 20px; font-weight: 700; color: #F77313;">Menucochon</span>
           </div>
           <p style="color: #666; font-size: 13px; margin-bottom: 8px;">
             ${t.findMore}

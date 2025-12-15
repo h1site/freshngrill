@@ -65,7 +65,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       about: 'À propos',
       contact: 'Contact',
       privacy: 'Confidentialité',
-      copyright: '© {year} Menu Cochon. Tous droits réservés.',
+      copyright: '© {year} Menucochon. Tous droits réservés.',
       madeWith: 'Fait avec',
       inQuebec: 'au Québec',
       createdBy: 'Création de l\'agence Web',
@@ -92,7 +92,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       about: 'About',
       contact: 'Contact',
       privacy: 'Privacy',
-      copyright: '© {year} Menu Cochon. All rights reserved.',
+      copyright: '© {year} Menucochon. All rights reserved.',
       madeWith: 'Made with',
       inQuebec: 'in Quebec',
       createdBy: 'Created by Web Agency',
@@ -138,7 +138,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
             <Link href={`${urlPrefix}/`} className="inline-block mb-6">
               <Image
                 src="/images/logos/menucochon-blanc.svg"
-                alt="Menu Cochon"
+                alt="Menucochon"
                 width={250}
                 height={56}
                 className="h-14 w-auto"

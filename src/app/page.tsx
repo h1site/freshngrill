@@ -12,7 +12,7 @@ import { MagazineBlogSection } from '@/components/home/MagazineBlogSection';
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: 'Menu Cochon | Recettes gourmandes québécoises',
+  title: 'Menucochon | Recettes gourmandes québécoises',
   description:
     'Découvrez notre collection de recettes gourmandes et faciles à réaliser. Des idées de repas pour tous les jours, des entrées aux desserts.',
   alternates: {
@@ -23,28 +23,28 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Menu Cochon | Recettes gourmandes québécoises',
+    title: 'Menucochon | Recettes gourmandes québécoises',
     description:
       'Découvrez notre collection de recettes gourmandes et faciles à réaliser. Des idées de repas pour tous les jours.',
     images: [
       {
-        url: '/images/og-home.jpg',
+        url: '/images/og-home.svg',
         width: 1200,
         height: 630,
-        alt: 'Menu Cochon - Recettes gourmandes',
+        alt: 'Menucochon - Recettes gourmandes',
       },
     ],
     type: 'website',
     url: '/',
-    siteName: 'Menu Cochon',
+    siteName: 'Menucochon',
     locale: 'fr_CA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Menu Cochon | Recettes gourmandes québécoises',
+    title: 'Menucochon | Recettes gourmandes québécoises',
     description:
       'Découvrez notre collection de recettes gourmandes et faciles à réaliser.',
-    images: ['/images/og-home.jpg'],
+    images: ['/images/og-home.svg'],
   },
 };
 

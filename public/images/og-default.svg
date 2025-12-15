@@ -1,0 +1,14 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="250" r="80" fill="#F77313"/>
+  <text x="600" y="270" text-anchor="middle" fill="white" font-size="48" font-weight="bold" font-family="Arial, sans-serif">MC</text>
+  <text x="600" y="400" text-anchor="middle" fill="white" font-size="64" font-weight="bold" font-family="Arial, sans-serif">Menucochon</text>
+  <text x="600" y="470" text-anchor="middle" fill="#888888" font-size="32" font-family="Arial, sans-serif">Recettes gourmandes</text>
+  <rect x="520" y="510" width="160" height="4" fill="#F77313"/>
+</svg>

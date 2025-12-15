@@ -18,7 +18,7 @@ export default function RecipeSchema({ recipe, locale = 'fr' }: Props) {
       const stripped = recipe.introduction.replace(/<[^>]*>/g, '').trim();
       if (stripped) return stripped.substring(0, 300);
     }
-    return `Recette de ${recipe.title} - ${recipe.categories[0]?.name || 'Menu Cochon'}`;
+    return `Recette de ${recipe.title} - ${recipe.categories[0]?.name || 'Menucochon'}`;
   };
 
   // Keywords: combine tags, categories, and cuisine
@@ -117,17 +117,17 @@ export default function RecipeSchema({ recipe, locale = 'fr' }: Props) {
     description: getDescription(),
     image: recipe.featuredImage
       ? [recipe.featuredImage]
-      : [`${baseUrl}/images/default-recipe.jpg`],
+      : [`${baseUrl}/images/default-recipe.svg`],
     author: {
       '@type': 'Person',
-      name: recipe.author || 'Menu Cochon',
+      name: recipe.author || 'Menucochon',
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Menu Cochon',
+      name: 'Menucochon',
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/images/logos/logo.png`,
+        url: `${baseUrl}/images/logos/menucochon-blanc.svg`,
       },
     },
     datePublished: recipe.publishedAt,
@@ -145,14 +145,6 @@ export default function RecipeSchema({ recipe, locale = 'fr' }: Props) {
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': recipeUrl,
-    },
-    // Aggregate rating - always include with reasonable defaults
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: recipe.likes > 10 ? '4.7' : recipe.likes > 0 ? '4.5' : '4.3',
-      ratingCount: Math.max(recipe.likes, 1),
-      bestRating: '5',
-      worstRating: '1',
     },
   };
 

@@ -916,7 +916,7 @@ async function main() {
           cuisine: jsonLd?.recipeCuisine
             ? (Array.isArray(jsonLd.recipeCuisine) ? jsonLd.recipeCuisine[0] : jsonLd.recipeCuisine)
             : null,
-          author: 'Menu Cochon',
+          author: 'Menucochon',
           published_at: wpRecipe.date,
           updated_at: wpRecipe.modified,
           likes: 0,

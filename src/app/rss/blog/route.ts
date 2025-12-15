@@ -44,7 +44,7 @@ export async function GET() {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Menu Cochon - Blog</title>
+    <title>Menucochon - Blog</title>
     <link>${baseUrl}/blog/</link>
     <description>Articles, conseils et astuces culinaires pour devenir un chef en cuisine.</description>
     <language>fr-CA</language>
@@ -52,7 +52,7 @@ export async function GET() {
     <atom:link href="${baseUrl}/rss/blog" rel="self" type="application/rss+xml" />
     <image>
       <url>${baseUrl}/images/logos/menucochon-logo.png</url>
-      <title>Menu Cochon - Blog</title>
+      <title>Menucochon - Blog</title>
       <link>${baseUrl}/blog/</link>
     </image>
     ${rssItems}

@@ -1,10 +1,10 @@
 // Configuration du site
 export const siteConfig = {
-  name: 'Menu Cochon',
+  name: 'Menucochon',
   description: 'Découvrez notre collection de recettes gourmandes et faciles à réaliser. Des idées de repas pour tous les jours.',
   url: 'https://menucochon.com',
   locale: 'fr_CA',
-  author: 'Menu Cochon',
+  author: 'Menucochon',
 };
 
 /**

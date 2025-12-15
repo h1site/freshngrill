@@ -1,0 +1,612 @@
+{
+  "recettes": [
+    {
+      "index": 1,
+      "slug": "dinde-rotie-farcie-sauce-canneberges",
+      "title": "Dinde rôtie farcie et sauce aux canneberges maison",
+      "excerpt": "Une dinde rôtie juteuse, farcie traditionnellement et servie avec une sauce aux canneberges acidulée.",
+      "introduction": "Plat emblématique des grandes tablées, la dinde rôtie farcie est synonyme de repas festif.\n\nCette version respecte les techniques classiques pour une chair juteuse et une peau dorée.",
+      "conclusion": "Servez avec purée de pommes de terre et légumes rôtis. Variante possible avec farce aux pommes.",
+      "prep_time": 45,
+      "cook_time": 210,
+      "rest_time": 20,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "repas-festif",
+        "canneberges"
+      ],
+      "ingredients": [
+        {
+          "group": "Dinde",
+          "items": [
+            "1 dinde entière de 6 kg",
+            "60 g de beurre",
+            "10 g de sel",
+            "5 g de poivre"
+          ]
+        },
+        {
+          "group": "Farce",
+          "items": [
+            "500 g de porc haché",
+            "1 oignon",
+            "150 g de chapelure",
+            "250 ml de bouillon"
+          ]
+        },
+        {
+          "group": "Sauce",
+          "items": [
+            "300 g de canneberges",
+            "120 ml de sirop d’érable",
+            "120 ml d’eau"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préchauffer le four à 165 °C pour une cuisson lente et uniforme.",
+          "tip": "Une température modérée évite le dessèchement."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir la dinde environ 35 min/kg jusqu’à 74 °C interne."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 48,
+        "carbs": 18,
+        "fat": 28,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer la dinde à l’avance?</h3><p>Oui, la farce peut être préparée la veille.</p></div><div class=\"faq-item\"><h3>Comment garder la viande juteuse?</h3><p>Arroser régulièrement pendant la cuisson.</p></div><div class=\"faq-item\"><h3>Température interne idéale?</h3><p>74 °C à la poitrine.</p></div>",
+      "seo_title": "Dinde rôtie farcie | Recette festive",
+      "seo_description": "Dinde rôtie farcie juteuse avec sauce aux canneberges maison. Recette festive traditionnelle facile à réussir pour les grandes occasions."
+    },
+    {
+      "index": 2,
+      "slug": "dinde-rotie-farcie-sauce-canneberges-2",
+      "title": "Dinde rôtie farcie et sauce aux canneberges maison",
+      "excerpt": "Une dinde rôtie juteuse, farcie traditionnellement et servie avec une sauce aux canneberges acidulée.",
+      "introduction": "Plat emblématique des grandes tablées, la dinde rôtie farcie est synonyme de repas festif.\n\nCette version respecte les techniques classiques pour une chair juteuse et une peau dorée.",
+      "conclusion": "Servez avec purée de pommes de terre et légumes rôtis. Variante possible avec farce aux pommes.",
+      "prep_time": 45,
+      "cook_time": 210,
+      "rest_time": 20,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "repas-festif",
+        "canneberges"
+      ],
+      "ingredients": [
+        {
+          "group": "Dinde",
+          "items": [
+            "1 dinde entière de 6 kg",
+            "60 g de beurre",
+            "10 g de sel",
+            "5 g de poivre"
+          ]
+        },
+        {
+          "group": "Farce",
+          "items": [
+            "500 g de porc haché",
+            "1 oignon",
+            "150 g de chapelure",
+            "250 ml de bouillon"
+          ]
+        },
+        {
+          "group": "Sauce",
+          "items": [
+            "300 g de canneberges",
+            "120 ml de sirop d’érable",
+            "120 ml d’eau"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préchauffer le four à 165 °C pour une cuisson lente et uniforme.",
+          "tip": "Une température modérée évite le dessèchement."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir la dinde environ 35 min/kg jusqu’à 74 °C interne."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 48,
+        "carbs": 18,
+        "fat": 28,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer la dinde à l’avance?</h3><p>Oui, la farce peut être préparée la veille.</p></div><div class=\"faq-item\"><h3>Comment garder la viande juteuse?</h3><p>Arroser régulièrement pendant la cuisson.</p></div><div class=\"faq-item\"><h3>Température interne idéale?</h3><p>74 °C à la poitrine.</p></div>",
+      "seo_title": "Dinde rôtie farcie | Recette festive",
+      "seo_description": "Dinde rôtie farcie juteuse avec sauce aux canneberges maison. Recette festive traditionnelle facile à réussir pour les grandes occasions."
+    },
+    {
+      "index": 3,
+      "slug": "dinde-rotie-farcie-sauce-canneberges-3",
+      "title": "Dinde rôtie farcie et sauce aux canneberges maison",
+      "excerpt": "Une dinde rôtie juteuse, farcie traditionnellement et servie avec une sauce aux canneberges acidulée.",
+      "introduction": "Plat emblématique des grandes tablées, la dinde rôtie farcie est synonyme de repas festif.\n\nCette version respecte les techniques classiques pour une chair juteuse et une peau dorée.",
+      "conclusion": "Servez avec purée de pommes de terre et légumes rôtis. Variante possible avec farce aux pommes.",
+      "prep_time": 45,
+      "cook_time": 210,
+      "rest_time": 20,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "repas-festif",
+        "canneberges"
+      ],
+      "ingredients": [
+        {
+          "group": "Dinde",
+          "items": [
+            "1 dinde entière de 6 kg",
+            "60 g de beurre",
+            "10 g de sel",
+            "5 g de poivre"
+          ]
+        },
+        {
+          "group": "Farce",
+          "items": [
+            "500 g de porc haché",
+            "1 oignon",
+            "150 g de chapelure",
+            "250 ml de bouillon"
+          ]
+        },
+        {
+          "group": "Sauce",
+          "items": [
+            "300 g de canneberges",
+            "120 ml de sirop d’érable",
+            "120 ml d’eau"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préchauffer le four à 165 °C pour une cuisson lente et uniforme.",
+          "tip": "Une température modérée évite le dessèchement."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir la dinde environ 35 min/kg jusqu’à 74 °C interne."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 48,
+        "carbs": 18,
+        "fat": 28,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer la dinde à l’avance?</h3><p>Oui, la farce peut être préparée la veille.</p></div><div class=\"faq-item\"><h3>Comment garder la viande juteuse?</h3><p>Arroser régulièrement pendant la cuisson.</p></div><div class=\"faq-item\"><h3>Température interne idéale?</h3><p>74 °C à la poitrine.</p></div>",
+      "seo_title": "Dinde rôtie farcie | Recette festive",
+      "seo_description": "Dinde rôtie farcie juteuse avec sauce aux canneberges maison. Recette festive traditionnelle facile à réussir pour les grandes occasions."
+    },
+    {
+      "index": 4,
+      "slug": "dinde-rotie-farcie-sauce-canneberges-4",
+      "title": "Dinde rôtie farcie et sauce aux canneberges maison",
+      "excerpt": "Une dinde rôtie juteuse, farcie traditionnellement et servie avec une sauce aux canneberges acidulée.",
+      "introduction": "Plat emblématique des grandes tablées, la dinde rôtie farcie est synonyme de repas festif.\n\nCette version respecte les techniques classiques pour une chair juteuse et une peau dorée.",
+      "conclusion": "Servez avec purée de pommes de terre et légumes rôtis. Variante possible avec farce aux pommes.",
+      "prep_time": 45,
+      "cook_time": 210,
+      "rest_time": 20,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "repas-festif",
+        "canneberges"
+      ],
+      "ingredients": [
+        {
+          "group": "Dinde",
+          "items": [
+            "1 dinde entière de 6 kg",
+            "60 g de beurre",
+            "10 g de sel",
+            "5 g de poivre"
+          ]
+        },
+        {
+          "group": "Farce",
+          "items": [
+            "500 g de porc haché",
+            "1 oignon",
+            "150 g de chapelure",
+            "250 ml de bouillon"
+          ]
+        },
+        {
+          "group": "Sauce",
+          "items": [
+            "300 g de canneberges",
+            "120 ml de sirop d’érable",
+            "120 ml d’eau"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préchauffer le four à 165 °C pour une cuisson lente et uniforme.",
+          "tip": "Une température modérée évite le dessèchement."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir la dinde environ 35 min/kg jusqu’à 74 °C interne."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 48,
+        "carbs": 18,
+        "fat": 28,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer la dinde à l’avance?</h3><p>Oui, la farce peut être préparée la veille.</p></div><div class=\"faq-item\"><h3>Comment garder la viande juteuse?</h3><p>Arroser régulièrement pendant la cuisson.</p></div><div class=\"faq-item\"><h3>Température interne idéale?</h3><p>74 °C à la poitrine.</p></div>",
+      "seo_title": "Dinde rôtie farcie | Recette festive",
+      "seo_description": "Dinde rôtie farcie juteuse avec sauce aux canneberges maison. Recette festive traditionnelle facile à réussir pour les grandes occasions."
+    },
+    {
+      "index": 5,
+      "slug": "dinde-rotie-farcie-sauce-canneberges-5",
+      "title": "Dinde rôtie farcie et sauce aux canneberges maison",
+      "excerpt": "Une dinde rôtie juteuse, farcie traditionnellement et servie avec une sauce aux canneberges acidulée.",
+      "introduction": "Plat emblématique des grandes tablées, la dinde rôtie farcie est synonyme de repas festif.\n\nCette version respecte les techniques classiques pour une chair juteuse et une peau dorée.",
+      "conclusion": "Servez avec purée de pommes de terre et légumes rôtis. Variante possible avec farce aux pommes.",
+      "prep_time": 45,
+      "cook_time": 210,
+      "rest_time": 20,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "repas-festif",
+        "canneberges"
+      ],
+      "ingredients": [
+        {
+          "group": "Dinde",
+          "items": [
+            "1 dinde entière de 6 kg",
+            "60 g de beurre",
+            "10 g de sel",
+            "5 g de poivre"
+          ]
+        },
+        {
+          "group": "Farce",
+          "items": [
+            "500 g de porc haché",
+            "1 oignon",
+            "150 g de chapelure",
+            "250 ml de bouillon"
+          ]
+        },
+        {
+          "group": "Sauce",
+          "items": [
+            "300 g de canneberges",
+            "120 ml de sirop d’érable",
+            "120 ml d’eau"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préchauffer le four à 165 °C pour une cuisson lente et uniforme.",
+          "tip": "Une température modérée évite le dessèchement."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir la dinde environ 35 min/kg jusqu’à 74 °C interne."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 48,
+        "carbs": 18,
+        "fat": 28,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer la dinde à l’avance?</h3><p>Oui, la farce peut être préparée la veille.</p></div><div class=\"faq-item\"><h3>Comment garder la viande juteuse?</h3><p>Arroser régulièrement pendant la cuisson.</p></div><div class=\"faq-item\"><h3>Température interne idéale?</h3><p>74 °C à la poitrine.</p></div>",
+      "seo_title": "Dinde rôtie farcie | Recette festive",
+      "seo_description": "Dinde rôtie farcie juteuse avec sauce aux canneberges maison. Recette festive traditionnelle facile à réussir pour les grandes occasions."
+    },
+    {
+      "index": 6,
+      "slug": "dinde-rotie-farcie-sauce-canneberges-6",
+      "title": "Dinde rôtie farcie et sauce aux canneberges maison",
+      "excerpt": "Une dinde rôtie juteuse, farcie traditionnellement et servie avec une sauce aux canneberges acidulée.",
+      "introduction": "Plat emblématique des grandes tablées, la dinde rôtie farcie est synonyme de repas festif.\n\nCette version respecte les techniques classiques pour une chair juteuse et une peau dorée.",
+      "conclusion": "Servez avec purée de pommes de terre et légumes rôtis. Variante possible avec farce aux pommes.",
+      "prep_time": 45,
+      "cook_time": 210,
+      "rest_time": 20,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "repas-festif",
+        "canneberges"
+      ],
+      "ingredients": [
+        {
+          "group": "Dinde",
+          "items": [
+            "1 dinde entière de 6 kg",
+            "60 g de beurre",
+            "10 g de sel",
+            "5 g de poivre"
+          ]
+        },
+        {
+          "group": "Farce",
+          "items": [
+            "500 g de porc haché",
+            "1 oignon",
+            "150 g de chapelure",
+            "250 ml de bouillon"
+          ]
+        },
+        {
+          "group": "Sauce",
+          "items": [
+            "300 g de canneberges",
+            "120 ml de sirop d’érable",
+            "120 ml d’eau"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préchauffer le four à 165 °C pour une cuisson lente et uniforme.",
+          "tip": "Une température modérée évite le dessèchement."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir la dinde environ 35 min/kg jusqu’à 74 °C interne."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 48,
+        "carbs": 18,
+        "fat": 28,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer la dinde à l’avance?</h3><p>Oui, la farce peut être préparée la veille.</p></div><div class=\"faq-item\"><h3>Comment garder la viande juteuse?</h3><p>Arroser régulièrement pendant la cuisson.</p></div><div class=\"faq-item\"><h3>Température interne idéale?</h3><p>74 °C à la poitrine.</p></div>",
+      "seo_title": "Dinde rôtie farcie | Recette festive",
+      "seo_description": "Dinde rôtie farcie juteuse avec sauce aux canneberges maison. Recette festive traditionnelle facile à réussir pour les grandes occasions."
+    },
+    {
+      "index": 7,
+      "slug": "dinde-rotie-farcie-sauce-canneberges-7",
+      "title": "Dinde rôtie farcie et sauce aux canneberges maison",
+      "excerpt": "Une dinde rôtie juteuse, farcie traditionnellement et servie avec une sauce aux canneberges acidulée.",
+      "introduction": "Plat emblématique des grandes tablées, la dinde rôtie farcie est synonyme de repas festif.\n\nCette version respecte les techniques classiques pour une chair juteuse et une peau dorée.",
+      "conclusion": "Servez avec purée de pommes de terre et légumes rôtis. Variante possible avec farce aux pommes.",
+      "prep_time": 45,
+      "cook_time": 210,
+      "rest_time": 20,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "repas-festif",
+        "canneberges"
+      ],
+      "ingredients": [
+        {
+          "group": "Dinde",
+          "items": [
+            "1 dinde entière de 6 kg",
+            "60 g de beurre",
+            "10 g de sel",
+            "5 g de poivre"
+          ]
+        },
+        {
+          "group": "Farce",
+          "items": [
+            "500 g de porc haché",
+            "1 oignon",
+            "150 g de chapelure",
+            "250 ml de bouillon"
+          ]
+        },
+        {
+          "group": "Sauce",
+          "items": [
+            "300 g de canneberges",
+            "120 ml de sirop d’érable",
+            "120 ml d’eau"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préchauffer le four à 165 °C pour une cuisson lente et uniforme.",
+          "tip": "Une température modérée évite le dessèchement."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir la dinde environ 35 min/kg jusqu’à 74 °C interne."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 48,
+        "carbs": 18,
+        "fat": 28,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer la dinde à l’avance?</h3><p>Oui, la farce peut être préparée la veille.</p></div><div class=\"faq-item\"><h3>Comment garder la viande juteuse?</h3><p>Arroser régulièrement pendant la cuisson.</p></div><div class=\"faq-item\"><h3>Température interne idéale?</h3><p>74 °C à la poitrine.</p></div>",
+      "seo_title": "Dinde rôtie farcie | Recette festive",
+      "seo_description": "Dinde rôtie farcie juteuse avec sauce aux canneberges maison. Recette festive traditionnelle facile à réussir pour les grandes occasions."
+    },
+    {
+      "index": 8,
+      "slug": "dinde-rotie-farcie-sauce-canneberges-8",
+      "title": "Dinde rôtie farcie et sauce aux canneberges maison",
+      "excerpt": "Une dinde rôtie juteuse, farcie traditionnellement et servie avec une sauce aux canneberges acidulée.",
+      "introduction": "Plat emblématique des grandes tablées, la dinde rôtie farcie est synonyme de repas festif.\n\nCette version respecte les techniques classiques pour une chair juteuse et une peau dorée.",
+      "conclusion": "Servez avec purée de pommes de terre et légumes rôtis. Variante possible avec farce aux pommes.",
+      "prep_time": 45,
+      "cook_time": 210,
+      "rest_time": 20,
+      "servings": 10,
+      "servings_unit": "portions",
+      "difficulty": "moyen",
+      "cuisine": "francaise",
+      "categories": [
+        "plats-principaux"
+      ],
+      "origines": [
+        "france"
+      ],
+      "tags": [
+        "dinde",
+        "noel",
+        "repas-festif",
+        "canneberges"
+      ],
+      "ingredients": [
+        {
+          "group": "Dinde",
+          "items": [
+            "1 dinde entière de 6 kg",
+            "60 g de beurre",
+            "10 g de sel",
+            "5 g de poivre"
+          ]
+        },
+        {
+          "group": "Farce",
+          "items": [
+            "500 g de porc haché",
+            "1 oignon",
+            "150 g de chapelure",
+            "250 ml de bouillon"
+          ]
+        },
+        {
+          "group": "Sauce",
+          "items": [
+            "300 g de canneberges",
+            "120 ml de sirop d’érable",
+            "120 ml d’eau"
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "content": "Préchauffer le four à 165 °C pour une cuisson lente et uniforme.",
+          "tip": "Une température modérée évite le dessèchement."
+        },
+        {
+          "step": 2,
+          "content": "Rôtir la dinde environ 35 min/kg jusqu’à 74 °C interne."
+        }
+      ],
+      "nutrition": {
+        "calories": 520,
+        "protein": 48,
+        "carbs": 18,
+        "fat": 28,
+        "fiber": 2
+      },
+      "faq": "<div class=\"faq-item\"><h3>Peut-on préparer la dinde à l’avance?</h3><p>Oui, la farce peut être préparée la veille.</p></div><div class=\"faq-item\"><h3>Comment garder la viande juteuse?</h3><p>Arroser régulièrement pendant la cuisson.</p></div><div class=\"faq-item\"><h3>Température interne idéale?</h3><p>74 °C à la poitrine.</p></div>",
+      "seo_title": "Dinde rôtie farcie | Recette festive",
+      "seo_description": "Dinde rôtie farcie juteuse avec sauce aux canneberges maison. Recette festive traditionnelle facile à réussir pour les grandes occasions."
+    }
+  ]
+}

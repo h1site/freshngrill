@@ -1,10 +1,14 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Menu Cochon',
-  description: 'Privacy policy and personal data protection for Menu Cochon.',
+  title: 'Privacy Policy | Menucochon',
+  description: 'Privacy policy and personal data protection for Menucochon.',
   alternates: {
     canonical: '/en/privacy/',
+    languages: {
+      'fr-CA': '/confidentialite/',
+      'en-CA': '/en/privacy/',
+    },
   },
 };
 
@@ -32,7 +36,7 @@ export default function PrivacyPage() {
           <div className="max-w-3xl mx-auto prose prose-lg prose-neutral">
             <h2>Introduction</h2>
             <p>
-              Welcome to Menu Cochon. We take the protection of your personal data
+              Welcome to Menucochon. We take the protection of your personal data
               very seriously. This privacy policy explains how we collect, use and
               protect your information when you use our website.
             </p>

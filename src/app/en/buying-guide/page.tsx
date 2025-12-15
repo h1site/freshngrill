@@ -6,7 +6,7 @@ import { getPostCardsWithEnglish } from '@/lib/posts';
 import GoogleAd from '@/components/ads/GoogleAd';
 
 export const metadata: Metadata = {
-  title: 'Kitchen Buying Guide | Menu Cochon',
+  title: 'Kitchen Buying Guide | Menucochon',
   description:
     'Discover our selection of the best utensils, appliances and cookbooks to equip your kitchen like a professional chef.',
   alternates: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Kitchen Buying Guide | Menu Cochon',
+    title: 'Kitchen Buying Guide | Menucochon',
     description:
       'Discover our selection of the best utensils, appliances and cookbooks to equip your kitchen like a professional chef.',
     images: [
@@ -25,17 +25,17 @@ export const metadata: Metadata = {
         url: '/images/og-guide-achat.jpg',
         width: 1200,
         height: 630,
-        alt: 'Buying Guide - Menu Cochon',
+        alt: 'Buying Guide - Menucochon',
       },
     ],
     type: 'website',
     url: '/en/buying-guide/',
-    siteName: 'Menu Cochon',
+    siteName: 'Menucochon',
     locale: 'en_CA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kitchen Buying Guide | Menu Cochon',
+    title: 'Kitchen Buying Guide | Menucochon',
     description:
       'Discover our selection of the best utensils, appliances and cookbooks.',
     images: ['/images/og-guide-achat.jpg'],

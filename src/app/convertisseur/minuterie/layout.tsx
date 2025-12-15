@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Minuterie en Ligne Gratuite | Menu Cochon',
+  title: 'Minuterie en Ligne Gratuite | Menucochon',
   description:
     'Minuterie en ligne gratuite pour la cuisine. Chronométrez vos cuissons avec précision. Interface simple, alerte sonore automatique, temps prédéfinis.',
   alternates: {

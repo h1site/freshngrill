@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
             faq: recipeFr.faq || null,
             seo_title: recipeFr.seo_title || null,
             seo_description: recipeFr.seo_description || null,
-            author: 'Menu Cochon',
+            author: 'Menucochon',
             published_at: new Date().toISOString(),
           } as never)
           .select('id')

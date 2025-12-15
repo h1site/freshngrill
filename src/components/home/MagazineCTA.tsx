@@ -44,7 +44,7 @@ export function MagazineCTA({ recipe, locale = 'fr' }: MagazineCTAProps) {
           <>
             <Image
               src={recipe.featuredImage}
-              alt=""
+              alt={recipe.title || 'Image de fond'}
               fill
               className="object-cover opacity-30"
               sizes="100vw"

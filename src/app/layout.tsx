@@ -73,6 +73,10 @@ export const metadata: Metadata = {
       ],
     },
   },
+  other: {
+    'ai-content-declaration': 'human-created',
+    'llms-txt': 'https://menucochon.com/llms.txt',
+  },
 };
 
 // Force dynamic rendering to ensure headers() returns fresh values on each request

@@ -4,7 +4,7 @@ import { Book } from 'lucide-react';
 import { getTermsByLetterEn } from '@/lib/lexiqueEn';
 
 export const metadata: Metadata = {
-  title: 'Culinary Glossary | Menu Cochon',
+  title: 'Culinary Glossary | Menucochon',
   description:
     'Discover our complete culinary glossary with cooking terms explained. From A to Z, master the gastronomic vocabulary.',
   alternates: {

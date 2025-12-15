@@ -1,5 +1,5 @@
 /**
- * Regenerate English Slugs - Menu Cochon
+ * Regenerate English Slugs - Menucochon
  *
  * Ce script traduit les slugs français en slugs anglais courts et directs.
  * Exemple: "crepe-proteinee" -> "protein-pancake"

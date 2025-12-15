@@ -7,7 +7,7 @@ import GoogleAd from '@/components/ads/GoogleAd';
 import BlogCategoryTabs from '@/components/blog/BlogCategoryTabs';
 
 export const metadata: Metadata = {
-  title: 'Blog | Menu Cochon',
+  title: 'Blog | Menucochon',
   description: 'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
   alternates: {
     canonical: '/en/blog/',
@@ -17,24 +17,24 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Blog | Menu Cochon',
+    title: 'Blog | Menucochon',
     description: 'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
     images: [
       {
         url: '/images/og-blog.jpg',
         width: 1200,
         height: 630,
-        alt: 'Menu Cochon Blog',
+        alt: 'Menucochon Blog',
       },
     ],
     type: 'website',
     url: '/en/blog/',
-    siteName: 'Menu Cochon',
+    siteName: 'Menucochon',
     locale: 'en_CA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog | Menu Cochon',
+    title: 'Blog | Menucochon',
     description: 'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
     images: ['/images/og-blog.jpg'],
   },

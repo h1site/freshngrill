@@ -1,5 +1,5 @@
 /**
- * AI Recipe Optimizer - Menu Cochon
+ * AI Recipe Optimizer - Menucochon
  *
  * Utilise Ollama localement pour:
  * - JOB 1: Réviser les textes des recettes + SEO
@@ -631,7 +631,7 @@ async function main() {
   const jobArg = process.argv.find(arg => arg.startsWith('--job='));
   const job = jobArg?.split('=')[1] || 'help';
 
-  console.log('🍳 AI Recipe Optimizer - Menu Cochon');
+  console.log('🍳 AI Recipe Optimizer - Menucochon');
   console.log('====================================');
   console.log(`Model: ${MODEL}`);
   console.log(`Mode: ${DRY_RUN ? 'DRY RUN (pas de modifications)' : 'LIVE'}`);

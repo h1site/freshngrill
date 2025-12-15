@@ -12,7 +12,7 @@ import { MagazineBlogSection } from '@/components/home/MagazineBlogSection';
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: 'Menu Cochon | Delicious Quebec Recipes',
+  title: 'Menucochon | Delicious Quebec Recipes',
   description:
     'Discover our collection of delicious and easy-to-make recipes. Meal ideas for every day, from appetizers to desserts.',
   alternates: {
@@ -23,28 +23,28 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Menu Cochon | Delicious Quebec Recipes',
+    title: 'Menucochon | Delicious Quebec Recipes',
     description:
       'Discover our collection of delicious and easy-to-make recipes. Meal ideas for every day.',
     images: [
       {
-        url: '/images/og-home.jpg',
+        url: '/images/og-home.svg',
         width: 1200,
         height: 630,
-        alt: 'Menu Cochon - Delicious Recipes',
+        alt: 'Menucochon - Delicious Recipes',
       },
     ],
     type: 'website',
     url: '/en/',
-    siteName: 'Menu Cochon',
+    siteName: 'Menucochon',
     locale: 'en_CA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Menu Cochon | Delicious Quebec Recipes',
+    title: 'Menucochon | Delicious Quebec Recipes',
     description:
       'Discover our collection of delicious and easy-to-make recipes.',
-    images: ['/images/og-home.jpg'],
+    images: ['/images/og-home.svg'],
   },
 };
 

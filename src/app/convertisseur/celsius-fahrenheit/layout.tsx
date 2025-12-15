@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Conversion Celsius en Fahrenheit - Outil Gratuit | Menu Cochon',
+  title: 'Conversion Celsius en Fahrenheit - Outil Gratuit | Menucochon',
   description:
     'Convertissez facilement les températures entre Celsius et Fahrenheit. Formules, tableaux de conversion et outil interactif gratuit.',
   alternates: {

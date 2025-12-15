@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const categoryName = getCategoryName(category.name, 'en');
 
   return {
-    title: `${categoryName} Recipes | Menu Cochon`,
+    title: `${categoryName} Recipes | Menucochon`,
     description: `Discover all our delicious ${categoryName.toLowerCase()} recipes. Tasty ideas to delight the whole family.`,
     alternates: {
       canonical: `/en/category/${slug}/`,
@@ -47,12 +47,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: `Discover all our delicious ${categoryName.toLowerCase()} recipes.`,
       type: 'website',
       url: `/en/category/${slug}/`,
-      siteName: 'Menu Cochon',
+      siteName: 'Menucochon',
       locale: 'en_CA',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${categoryName} Recipes | Menu Cochon`,
+      title: `${categoryName} Recipes | Menucochon`,
       description: `Discover all our delicious ${categoryName.toLowerCase()} recipes.`,
     },
   };

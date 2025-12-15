@@ -111,7 +111,7 @@ export default async function RecipesListPage({
                     {recipe.featured_image && (
                       <img
                         src={recipe.featured_image}
-                        alt=""
+                        alt={recipe.title}
                         className="w-12 h-12 rounded object-cover mr-4"
                       />
                     )}

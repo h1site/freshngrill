@@ -11,7 +11,7 @@ import {
 import GoogleAd from '@/components/ads/GoogleAd';
 
 export const metadata: Metadata = {
-  title: 'Convertisseur de Mesures en Cuisine | Menu Cochon',
+  title: 'Convertisseur de Mesures en Cuisine | Menucochon',
   description:
     'Outils de conversion gratuits pour la cuisine : température (Celsius/Fahrenheit), longueurs (mètres, pieds, pouces, centimètres) et minuterie en ligne.',
   alternates: {

@@ -472,7 +472,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
           <Link href={`${urlPrefix}/`} className="flex items-center group">
             <Image
               src="/images/logos/menucochon-blanc.svg"
-              alt="Menu Cochon"
+              alt="Menucochon"
               width={180}
               height={40}
               className="h-8 md:h-10 w-auto"

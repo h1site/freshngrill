@@ -1,4 +1,4 @@
-# Menu Cochon - Site de Recettes Next.js
+# Menucochon - Site de Recettes Next.js
 
 Site de recettes moderne construit avec Next.js 14, TypeScript et Tailwind CSS.
 

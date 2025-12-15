@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Free Online Timer | Menu Cochon',
+  title: 'Free Online Timer | Menucochon',
   description:
     'Free online timer for cooking. Time your cooking with precision. Simple interface, automatic sound alert, preset times.',
   alternates: {

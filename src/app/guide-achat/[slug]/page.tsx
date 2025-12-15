@@ -8,6 +8,8 @@ import {
 } from '@/lib/posts';
 import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Bookmark, ShoppingCart } from 'lucide-react';
 import GoogleAd from '@/components/ads/GoogleAd';
+import ArticleSchema from '@/components/schema/ArticleSchema';
+import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -89,8 +91,17 @@ export default async function GuideAchatPostPage({ params }: Props) {
     });
   };
 
+  const breadcrumbs = [
+    { name: 'Accueil', url: '/' },
+    { name: "Guide d'achat", url: '/guide-achat' },
+    { name: post.title, url: `/guide-achat/${slug}/` },
+  ];
+
   return (
-    <main className="min-h-screen bg-white">
+    <>
+      <ArticleSchema post={post} locale="fr" />
+      <BreadcrumbSchema items={breadcrumbs} />
+      <main className="min-h-screen bg-white">
       {/* Magazine Header */}
       <header className="bg-black text-white">
         <div className="container mx-auto px-4">
@@ -300,6 +311,7 @@ export default async function GuideAchatPostPage({ params }: Props) {
           </div>
         </section>
       )}
-    </main>
+      </main>
+    </>
   );
 }

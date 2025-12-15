@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Meters to Feet Conversion - Free Tool | Menu Cochon',
+  title: 'Meters to Feet Conversion - Free Tool | Menucochon',
   description:
     'Easily convert meters to feet and vice versa. 1 meter = 3.28084 feet. Formulas, tables, and free interactive tool.',
   alternates: {

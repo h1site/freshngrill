@@ -7,7 +7,7 @@ import { Heart, ArrowLeft } from 'lucide-react';
 import FavoritesList from '@/components/profile/FavoritesList';
 
 export const metadata: Metadata = {
-  title: 'Mes favoris | Menu Cochon',
+  title: 'Mes favoris | Menucochon',
   description: 'Consultez toutes vos recettes favorites.',
 };
 

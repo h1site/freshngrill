@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Menu Cochon | Delicious Recipes",
+    "title": "Menucochon | Delicious Recipes",
     "description": "Discover our collection of delicious and easy-to-make recipes. Meal ideas for every day.",
     "keywords": "recipes, cooking, meals, dishes, desserts, quebec"
   },
@@ -80,7 +80,7 @@
     "about": "About",
     "contact": "Contact",
     "privacy": "Privacy",
-    "copyright": "© {year} Menu Cochon. All rights reserved.",
+    "copyright": "© {year} Menucochon. All rights reserved.",
     "madeWith": "Made with",
     "inQuebec": "in Quebec"
   },
@@ -276,8 +276,8 @@
     }
   },
   "about": {
-    "title": "About Menu Cochon",
-    "content": "Menu Cochon is your culinary destination to discover delicious and easy-to-make recipes."
+    "title": "About Menucochon",
+    "content": "Menucochon is your culinary destination to discover delicious and easy-to-make recipes."
   },
   "contact": {
     "title": "Contact Us",

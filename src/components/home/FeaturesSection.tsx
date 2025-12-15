@@ -73,8 +73,8 @@ export function FeaturesSection({ locale = 'fr' }: FeaturesSectionProps) {
           </h2>
           <p className="text-neutral-400 mt-4 max-w-2xl mx-auto">
             {isEN
-              ? 'Menu Cochon is designed to make your cooking experience enjoyable and stress-free.'
-              : 'Menu Cochon est conçu pour rendre votre expérience culinaire agréable et sans stress.'}
+              ? 'Menucochon is designed to make your cooking experience enjoyable and stress-free.'
+              : 'Menucochon est conçu pour rendre votre expérience culinaire agréable et sans stress.'}
           </p>
           <div className="w-16 h-1 bg-[#F77313] mx-auto mt-6" />
         </div>

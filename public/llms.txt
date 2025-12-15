@@ -1,0 +1,33 @@
+# Menucochon - Site de recettes québécoises
+
+> Menucochon est un site de recettes de cuisine québécoise et internationale. Nous proposons des recettes détaillées avec instructions étape par étape, valeurs nutritionnelles, et conseils de chef.
+
+## À propos
+- Site bilingue (français/anglais)
+- Spécialisé en cuisine québécoise traditionnelle
+- Recettes testées et approuvées
+- Guides d'achat pour équipements de cuisine
+
+## Sections principales
+- /recette - Toutes les recettes en français
+- /en/recipe - All recipes in English
+- /blog - Articles culinaires
+- /guide-achat - Guides d'achat cuisine
+- /lexique - Lexique culinaire
+- /convertisseur - Outils de conversion (température, mesures)
+
+## Contenu disponible
+- Plus de 200 recettes détaillées
+- Instructions étape par étape
+- Temps de préparation et cuisson
+- Valeurs nutritionnelles
+- FAQ pour chaque recette
+- Vidéos tutoriels
+
+## Contact
+- Site: https://menucochon.com
+- RSS Recettes: https://menucochon.com/rss/recettes
+- RSS Blog: https://menucochon.com/rss/blog
+
+## Licence
+Le contenu est protégé par droits d'auteur. Citation avec attribution permise.

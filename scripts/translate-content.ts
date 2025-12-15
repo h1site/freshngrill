@@ -1,5 +1,5 @@
 /**
- * AI Content Translator - Menu Cochon
+ * AI Content Translator - Menucochon
  *
  * Utilise Ollama localement pour traduire le contenu FR -> EN
  * - Traduction fidele sans invention de contenu
@@ -807,7 +807,7 @@ async function translateLexique() {
 
 async function main() {
   console.log('='.repeat(50));
-  console.log('Menu Cochon Content Translator');
+  console.log('Menucochon Content Translator');
   console.log('='.repeat(50));
   console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}`);
   console.log(`Target locale: ${TARGET_LOCALE}`);

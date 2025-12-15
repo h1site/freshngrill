@@ -203,15 +203,15 @@ async function importAuthors(posts: WPPost[]): Promise<Map<number, number>> {
       .from('authors')
       .upsert({
         slug: 'menu-cochon',
-        name: 'Menu Cochon',
-        bio: 'L\'équipe de Menu Cochon',
+        name: 'Menucochon',
+        bio: 'L\'équipe de Menucochon',
       }, { onConflict: 'slug' })
       .select()
       .single();
 
     if (!error && data) {
       idMap.set(0, data.id);
-      console.log(`  ✓ Menu Cochon (par défaut)`);
+      console.log(`  ✓ Menucochon (par défaut)`);
     }
   }
 

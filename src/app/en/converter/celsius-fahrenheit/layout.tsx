@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Celsius to Fahrenheit Conversion - Free Tool | Menu Cochon',
+  title: 'Celsius to Fahrenheit Conversion - Free Tool | Menucochon',
   description:
     'Easily convert temperatures between Celsius and Fahrenheit. Formulas, conversion tables, and free interactive tool.',
   alternates: {

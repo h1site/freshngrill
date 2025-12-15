@@ -11,7 +11,7 @@ import {
 import GoogleAd from '@/components/ads/GoogleAd';
 
 export const metadata: Metadata = {
-  title: 'Kitchen Measurement Converter | Menu Cochon',
+  title: 'Kitchen Measurement Converter | Menucochon',
   description:
     'Free conversion tools for cooking: temperature (Celsius/Fahrenheit), lengths (meters, feet, inches, centimeters) and online timer.',
   alternates: {

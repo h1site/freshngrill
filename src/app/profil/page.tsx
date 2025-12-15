@@ -8,7 +8,7 @@ import { Heart, MessageSquare, Calendar, Settings, LogOut } from 'lucide-react';
 import LogoutButton from '@/components/auth/LogoutButton';
 
 export const metadata: Metadata = {
-  title: 'Mon profil | Menu Cochon',
+  title: 'Mon profil | Menucochon',
   description: 'Gérez votre profil et consultez vos recettes favorites.',
 };
 

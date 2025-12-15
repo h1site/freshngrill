@@ -37,6 +37,15 @@ const translations = {
   },
 };
 
+// Helper function to get the correct URL for a post based on its category
+function getPostUrl(post: PostCard, locale: Locale): string {
+  const isGuideAchat = post.categories.some((cat) => cat.slug === 'guide-achat');
+  if (isGuideAchat) {
+    return locale === 'en' ? `/en/buying-guide/${post.slug}` : `/guide-achat/${post.slug}`;
+  }
+  return locale === 'en' ? `/en/blog/${post.slug}` : `/blog/${post.slug}`;
+}
+
 export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectionProps) {
   const t = translations[locale];
   const blogBasePath = locale === 'en' ? '/en/blog' : '/blog';
@@ -84,7 +93,7 @@ export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectio
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <Link href={`${blogBasePath}/${featuredPost.slug}`} className="group block h-full">
+            <Link href={getPostUrl(featuredPost, locale)} className="group block h-full">
               <article className="relative h-full min-h-[400px] lg:min-h-full overflow-hidden bg-white">
                 {/* Image - Full cover */}
                 <div className="absolute inset-0">
@@ -145,7 +154,7 @@ export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectio
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Link href={`${blogBasePath}/${post.slug}`} className="group block h-full">
+                <Link href={getPostUrl(post, locale)} className="group block h-full">
                   <article className="flex gap-5 h-full bg-neutral-800 p-4 border border-neutral-700 hover:border-[#F77313]/50 hover:bg-neutral-800/80 transition-all duration-300">
                     {/* Thumbnail */}
                     {post.featuredImage && (

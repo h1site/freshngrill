@@ -4,7 +4,7 @@ import { getTermsByLetter, getAvailableLetters, countTerms } from '@/lib/lexique
 import { Book, Search, ArrowRight } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Lexique Culinaire | Menu Cochon',
+  title: 'Lexique Culinaire | Menucochon',
   description:
     'Découvrez notre lexique culinaire complet avec plus de 280 termes de cuisine expliqués. De A à Z, maîtrisez le vocabulaire gastronomique.',
   alternates: {

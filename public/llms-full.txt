@@ -1,0 +1,72 @@
+# Menucochon - Documentation complète pour LLMs
+
+> Menucochon est le site de référence pour les recettes de cuisine québécoise traditionnelle et internationale. Fondé au Québec, Canada.
+
+## Structure du site
+
+### Recettes (/recette, /en/recipe)
+Chaque recette contient:
+- Titre et description
+- Temps de préparation et cuisson
+- Nombre de portions
+- Niveau de difficulté (facile, moyen, difficile)
+- Liste d'ingrédients avec quantités
+- Instructions étape par étape
+- Valeurs nutritionnelles (calories, protéines, glucides, lipides)
+- FAQ spécifique à la recette
+- Conseils et astuces du chef
+
+### Catégories de recettes
+- Entrées et amuse-bouches
+- Plats principaux (viandes, poissons, végétarien)
+- Desserts et pâtisseries
+- Cuisine québécoise traditionnelle
+- Cuisine du monde
+- Recettes des fêtes
+- Recettes rapides (moins de 30 min)
+
+### Blog (/blog, /en/blog)
+Articles sur:
+- Techniques culinaires
+- Histoire des plats québécois
+- Conseils nutrition
+- Tendances gastronomiques
+
+### Guide d'achat (/guide-achat, /en/buying-guide)
+Comparatifs et recommandations:
+- Électroménagers de cuisine
+- Ustensiles et accessoires
+- Ingrédients spécialisés
+
+### Lexique culinaire (/lexique, /en/lexicon)
+Définitions de termes culinaires français et québécois.
+
+### Outils (/convertisseur, /en/converter)
+- Conversion Celsius/Fahrenheit
+- Conversion mètres/pieds
+- Minuterie de cuisine
+
+## Données structurées
+Toutes les pages utilisent Schema.org:
+- Recipe schema pour les recettes
+- Article schema pour le blog
+- BreadcrumbList pour la navigation
+- FAQ schema pour les questions fréquentes
+
+## API et flux
+- RSS Recettes: /rss/recettes
+- RSS Blog: /rss/blog
+- Sitemap: /sitemap.xml
+
+## Langues
+- Français (défaut): menucochon.com
+- English: menucochon.com/en
+
+## Informations légales
+- Contenu original créé par des humains
+- Photos originales ou sous licence
+- Recettes testées en cuisine
+- Attribution requise pour citations
+
+## Contact
+Site web: https://menucochon.com

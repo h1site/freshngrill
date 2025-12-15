@@ -57,7 +57,7 @@ export default function RegisterPage() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h1 className="text-center text-3xl font-extrabold text-gray-900">
-            Menu Cochon
+            Menucochon
           </h1>
           <h2 className="mt-6 text-center text-xl font-bold text-gray-900">
             Créer un compte

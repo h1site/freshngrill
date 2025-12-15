@@ -6,7 +6,7 @@ import RecipeFilters from '@/components/recipe/RecipeFilters';
 import FridgeSearch from '@/components/recipe/FridgeSearch';
 
 export const metadata: Metadata = {
-  title: 'Toutes nos recettes | Menu Cochon',
+  title: 'Toutes nos recettes | Menucochon',
   description: 'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
   alternates: {
     canonical: '/recette/',
@@ -16,26 +16,26 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Toutes nos recettes | Menu Cochon',
+    title: 'Toutes nos recettes | Menucochon',
     description: 'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
     images: [
       {
-        url: '/images/og-recettes.jpg',
+        url: '/images/og-recettes.svg',
         width: 1200,
         height: 630,
-        alt: 'Recettes - Menu Cochon',
+        alt: 'Recettes - Menucochon',
       },
     ],
     type: 'website',
     url: '/recette/',
-    siteName: 'Menu Cochon',
+    siteName: 'Menucochon',
     locale: 'fr_CA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Toutes nos recettes | Menu Cochon',
+    title: 'Toutes nos recettes | Menucochon',
     description: 'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
-    images: ['/images/og-recettes.jpg'],
+    images: ['/images/og-recettes.svg'],
   },
 };
 

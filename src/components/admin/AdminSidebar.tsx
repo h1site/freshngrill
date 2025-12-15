@@ -85,7 +85,7 @@ export default function AdminSidebar() {
     <div className="flex flex-col w-64 bg-gray-900 min-h-screen">
       <div className="flex items-center justify-center h-16 bg-gray-800">
         <Link href="/admin" className="text-white text-xl font-bold">
-          Menu Cochon Admin
+          Menucochon Admin
         </Link>
       </div>
 

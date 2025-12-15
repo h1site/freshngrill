@@ -58,7 +58,7 @@ function auditRecipe(recipe: {
       type: 'error',
       field: 'seo_title',
       message: locale === 'fr' ? 'Titre SEO manquant' : 'SEO title missing',
-      recommended: `${recipe.title} | Menu Cochon`,
+      recommended: `${recipe.title} | Menucochon`,
     });
     score -= 15;
   } else {

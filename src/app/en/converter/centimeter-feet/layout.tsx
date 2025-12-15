@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Centimeters to Feet Conversion - Free Tool | Menu Cochon',
+  title: 'Centimeters to Feet Conversion - Free Tool | Menucochon',
   description:
     'Easily convert centimeters to feet. 1 foot = 30.48 cm. Human height table and free interactive tool.',
   alternates: {

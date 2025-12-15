@@ -9,6 +9,8 @@ import {
 } from '@/lib/posts';
 import { Calendar, Clock, ArrowLeft, ArrowRight, Share2, Bookmark, ShoppingCart } from 'lucide-react';
 import GoogleAd from '@/components/ads/GoogleAd';
+import ArticleSchema from '@/components/schema/ArticleSchema';
+import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -102,8 +104,17 @@ export default async function BuyingGuidePostPage({ params }: Props) {
     });
   };
 
+  const breadcrumbs = [
+    { name: 'Home', url: '/en' },
+    { name: 'Buying Guide', url: '/en/buying-guide' },
+    { name: post.title, url: `/en/buying-guide/${slug}/` },
+  ];
+
   return (
-    <main className="min-h-screen bg-white">
+    <>
+      <ArticleSchema post={post} locale="en" />
+      <BreadcrumbSchema items={breadcrumbs} />
+      <main className="min-h-screen bg-white">
       {/* Magazine Header */}
       <header className="bg-black text-white">
         <div className="container mx-auto px-4">
@@ -313,6 +324,7 @@ export default async function BuyingGuidePostPage({ params }: Props) {
           </div>
         </section>
       )}
-    </main>
+      </main>
+    </>
   );
 }

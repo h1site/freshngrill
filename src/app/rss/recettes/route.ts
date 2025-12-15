@@ -43,7 +43,7 @@ export async function GET() {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Menu Cochon - Recettes</title>
+    <title>Menucochon - Recettes</title>
     <link>${baseUrl}/recette/</link>
     <description>Découvrez nos délicieuses recettes québécoises et internationales. Des idées de repas pour tous les jours.</description>
     <language>fr-CA</language>
@@ -51,7 +51,7 @@ export async function GET() {
     <atom:link href="${baseUrl}/rss/recettes" rel="self" type="application/rss+xml" />
     <image>
       <url>${baseUrl}/images/logos/menucochon-logo.png</url>
-      <title>Menu Cochon - Recettes</title>
+      <title>Menucochon - Recettes</title>
       <link>${baseUrl}/recette/</link>
     </image>
     ${rssItems}

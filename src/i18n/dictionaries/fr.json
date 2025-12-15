@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Menu Cochon | Recettes gourmandes",
+    "title": "Menucochon | Recettes gourmandes",
     "description": "Découvrez notre collection de recettes gourmandes et faciles à réaliser. Des idées de repas pour tous les jours.",
     "keywords": "recettes, cuisine, repas, plats, desserts, québec"
   },
@@ -80,7 +80,7 @@
     "about": "À propos",
     "contact": "Contact",
     "privacy": "Confidentialité",
-    "copyright": "© {year} Menu Cochon. Tous droits réservés.",
+    "copyright": "© {year} Menucochon. Tous droits réservés.",
     "madeWith": "Fait avec",
     "inQuebec": "au Québec"
   },
@@ -276,8 +276,8 @@
     }
   },
   "about": {
-    "title": "À propos de Menu Cochon",
-    "content": "Menu Cochon est votre destination culinaire pour découvrir des recettes délicieuses et faciles à réaliser."
+    "title": "À propos de Menucochon",
+    "content": "Menucochon est votre destination culinaire pour découvrir des recettes délicieuses et faciles à réaliser."
   },
   "contact": {
     "title": "Contactez-nous",

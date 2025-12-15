@@ -3,8 +3,8 @@ import { getUser, isAdmin } from '@/lib/supabase-server';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
 export const metadata = {
-  title: 'Admin - Menu Cochon',
-  description: 'Administration de Menu Cochon',
+  title: 'Admin - Menucochon',
+  description: 'Administration de Menucochon',
   robots: {
     index: false,
     follow: false,

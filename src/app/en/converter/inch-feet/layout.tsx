@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Inches to Feet Conversion - Easy in 1 Click | Menu Cochon',
+  title: 'Inches to Feet Conversion - Easy in 1 Click | Menucochon',
   description:
     'Easily convert inches to feet. 1 foot = 12 inches. Free online calculator for heights, furniture, and distances.',
   alternates: {

@@ -6,7 +6,7 @@ import { getPostCards } from '@/lib/posts';
 import GoogleAd from '@/components/ads/GoogleAd';
 
 export const metadata: Metadata = {
-  title: "Guide d'achat Cuisine | Menu Cochon",
+  title: "Guide d'achat Cuisine | Menucochon",
   description:
     "Découvrez notre sélection des meilleurs ustensiles, électroménagers et livres de cuisine pour équiper votre cuisine comme un chef.",
   alternates: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Guide d'achat Cuisine | Menu Cochon",
+    title: "Guide d'achat Cuisine | Menucochon",
     description:
       "Découvrez notre sélection des meilleurs ustensiles, électroménagers et livres de cuisine pour équiper votre cuisine comme un chef.",
     images: [
@@ -25,17 +25,17 @@ export const metadata: Metadata = {
         url: '/images/og-guide-achat.jpg',
         width: 1200,
         height: 630,
-        alt: "Guide d'achat - Menu Cochon",
+        alt: "Guide d'achat - Menucochon",
       },
     ],
     type: 'website',
     url: '/guide-achat/',
-    siteName: 'Menu Cochon',
+    siteName: 'Menucochon',
     locale: 'fr_CA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Guide d'achat Cuisine | Menu Cochon",
+    title: "Guide d'achat Cuisine | Menucochon",
     description:
       "Découvrez notre sélection des meilleurs ustensiles, électroménagers et livres de cuisine.",
     images: ['/images/og-guide-achat.jpg'],

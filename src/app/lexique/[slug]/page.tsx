@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${term.term} - Définition | Lexique Culinaire | Menu Cochon`,
+    title: `${term.term} - Définition | Lexique Culinaire | Menucochon`,
     description: term.definition.substring(0, 160),
     alternates: {
       canonical: `/lexique/${slug}/`,
@@ -39,12 +39,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: term.definition.substring(0, 160),
       type: 'article',
       url: `/lexique/${slug}/`,
-      siteName: 'Menu Cochon',
+      siteName: 'Menucochon',
       locale: 'fr_CA',
     },
     twitter: {
       card: 'summary',
-      title: `${term.term} - Lexique Culinaire | Menu Cochon`,
+      title: `${term.term} - Lexique Culinaire | Menucochon`,
       description: term.definition.substring(0, 160),
     },
   };
@@ -70,7 +70,7 @@ export default async function LexiqueTermPage({ params }: Props) {
     description: term.definition,
     inDefinedTermSet: {
       '@type': 'DefinedTermSet',
-      name: 'Lexique Culinaire Menu Cochon',
+      name: 'Lexique Culinaire Menucochon',
       url: 'https://menucochon.com/lexique/',
     },
   };
