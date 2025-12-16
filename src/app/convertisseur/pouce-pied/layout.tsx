@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/convertisseur/pouce-pied/',
   },
-  keywords: ['pouce en pied', 'convertir pouce pied', 'inches to feet', 'conversion pouce', '12 pouces en pied', 'calculateur pouce pied'],
   openGraph: {
     title: 'Convertir Pouce en Pied ⚡ Calculateur Instantané',
     description: '✅ Conversion instantanée pouces ↔ pieds. Tableau + formules + exemples. 100% gratuit!',

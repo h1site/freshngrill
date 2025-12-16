@@ -187,11 +187,7 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
     };
   }
 
-  // Nettoyer les valeurs undefined/null
-  const cleanSchema = JSON.parse(JSON.stringify(schema));
-
-  // FAQ Schema - Parse le nouveau format JSON
-  let faqSchema = null;
+  // FAQ Schema - Parse le nouveau format JSON et ajouter au schéma principal
   if (recipe.faq) {
     try {
       const faqData = JSON.parse(recipe.faq);
@@ -212,9 +208,10 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
           }));
 
         if (faqItems.length > 0) {
-          faqSchema = {
-            '@context': 'https://schema.org',
+          // Ajouter les FAQ au schéma Recipe via hasPart pour éviter la duplication
+          schema.hasPart = {
             '@type': 'FAQPage',
+            '@id': `${recipeUrl}#faq`,
             mainEntity: faqItems,
           };
         }
@@ -224,22 +221,15 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
     }
   }
 
+  // Nettoyer les valeurs undefined/null
+  const cleanSchema = JSON.parse(JSON.stringify(schema));
+
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(cleanSchema),
-        }}
-      />
-      {faqSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(faqSchema),
-          }}
-        />
-      )}
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(cleanSchema),
+      }}
+    />
   );
 }

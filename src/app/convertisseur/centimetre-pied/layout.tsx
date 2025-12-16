@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/convertisseur/centimetre-pied/',
   },
-  keywords: ['cm en pied', 'centimetre en pied', 'conversion cm pieds', 'taille en pied', '170 cm en pied', 'convertir centimetre'],
   openGraph: {
     title: 'Convertir CM en Pieds ⚡ Calculateur + Tableau Tailles',
     description: '✅ Conversion cm ↔ pieds instantanée. Tableau tailles humaines + formules. 100% gratuit!',

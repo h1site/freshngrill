@@ -99,8 +99,20 @@ export async function GET(request: Request) {
 
   const actualLimit = Math.min(limit, 50);
 
-  // Générer les variantes de recherche (avec et sans accents)
-  const searchVariants = generateAccentVariants(query);
+  // Séparer la requête en mots individuels pour recherche multi-termes
+  const queryWords = query.trim().split(/\s+/).filter(word => word.length >= 2);
+
+  // Générer les variantes de recherche pour chaque mot (avec et sans accents)
+  const allVariants: string[] = [];
+  for (const word of queryWords) {
+    const variants = generateAccentVariants(word);
+    allVariants.push(...variants);
+  }
+  // Ajouter aussi la query complète si elle a plusieurs mots
+  if (queryWords.length > 1) {
+    allVariants.push(...generateAccentVariants(query));
+  }
+  const searchVariants = Array.from(new Set(allVariants));
 
   // Construire la condition OR pour toutes les variantes
   // Pour les recettes: chercher dans title, excerpt, introduction, content, conclusion
