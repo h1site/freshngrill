@@ -330,6 +330,17 @@ const nextConfig: NextConfig = {
         destination: '/en/',
         permanent: true,
       },
+      // Crepe slug change for SEO (recette crêpe traditionnelle)
+      {
+        source: '/recette/crepe',
+        destination: '/recette/crepe-traditionnelle',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/crepe',
+        destination: '/en/recipe/traditional-crepe',
+        permanent: true,
+      },
     ];
   },
 };
