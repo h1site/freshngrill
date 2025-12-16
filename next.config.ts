@@ -291,6 +291,45 @@ const nextConfig: NextConfig = {
         destination: '/blog/recette-de-crepe-rapide',
         permanent: true,
       },
+      // About page redirect (old WordPress)
+      {
+        source: '/en-savoir-plus-sur-menucochon',
+        destination: '/a-propos',
+        permanent: true,
+      },
+      // Old origine section redirect to homepage
+      {
+        source: '/origine/:slug*',
+        destination: '/',
+        permanent: true,
+      },
+      // English recette path to recipe path
+      {
+        source: '/en/recette/:slug*',
+        destination: '/en/recipe/:slug*',
+        permanent: true,
+      },
+      // Old lexicon paths (don't exist anymore)
+      {
+        source: '/en/culinary-lexicon/:path*',
+        destination: '/en/',
+        permanent: true,
+      },
+      {
+        source: '/en/culinary-lexicon',
+        destination: '/en/',
+        permanent: true,
+      },
+      {
+        source: '/en/lexicon/:path*',
+        destination: '/en/',
+        permanent: true,
+      },
+      {
+        source: '/en/lexicon',
+        destination: '/en/',
+        permanent: true,
+      },
     ];
   },
 };
