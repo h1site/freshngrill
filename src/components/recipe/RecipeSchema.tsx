@@ -187,39 +187,9 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
     };
   }
 
-  // FAQ Schema - Parse le nouveau format JSON et ajouter au schéma principal
-  if (recipe.faq) {
-    try {
-      const faqData = JSON.parse(recipe.faq);
-      if (faqData.faq && Array.isArray(faqData.faq) && faqData.faq.length > 0) {
-        const faqItems = faqData.faq
-          .filter((item: { question_fr?: string; question_en?: string; answer_fr?: string; answer_en?: string }) => {
-            const question = locale === 'en' ? item.question_en : item.question_fr;
-            const answer = locale === 'en' ? item.answer_en : item.answer_fr;
-            return question && answer;
-          })
-          .map((item: { question_fr?: string; question_en?: string; answer_fr?: string; answer_en?: string }) => ({
-            '@type': 'Question',
-            name: locale === 'en' ? item.question_en : item.question_fr,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: locale === 'en' ? item.answer_en : item.answer_fr,
-            },
-          }));
-
-        if (faqItems.length > 0) {
-          // Ajouter les FAQ au schéma Recipe via hasPart pour éviter la duplication
-          schema.hasPart = {
-            '@type': 'FAQPage',
-            '@id': `${recipeUrl}#faq`,
-            mainEntity: faqItems,
-          };
-        }
-      }
-    } catch {
-      // FAQ n'est pas en format JSON valide, ignorer
-    }
-  }
+  // NOTE: FAQ Schema removed to avoid Next.js RSC payload duplication issue
+  // Google was detecting 2 FAQPage schemas (one in HTML, one in RSC payload)
+  // The FAQ content is still rendered in RecipeFAQ component with proper HTML structure
 
   // Nettoyer les valeurs undefined/null
   const cleanSchema = JSON.parse(JSON.stringify(schema));
