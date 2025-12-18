@@ -341,6 +341,47 @@ const nextConfig: NextConfig = {
         destination: '/en/recipe/traditional-crepe',
         permanent: true,
       },
+      // 404 fixes from error log - Dec 18, 2025
+      {
+        source: '/en/recipe/chinese-macaroni',
+        destination: '/en/recipe/homemade-chinese-macaroni',
+        permanent: true,
+      },
+      {
+        source: '/recette/beef-naan-bread',
+        destination: '/recette/pain-naan-au-boeuf',
+        permanent: true,
+      },
+      {
+        source: '/en/festivals-gastronomiques',
+        destination: '/en/blog/festivals-gastronomiques',
+        permanent: true,
+      },
+      {
+        source: '/category/:slug*',
+        destination: '/categorie/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/saint-jean-baptist',
+        destination: '/blog/saint-jean-baptiste',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/kale-and-grape-salad',
+        destination: '/en/recipe/kale-grape-salad',
+        permanent: true,
+      },
+      {
+        source: '/en/exploring-the-world-through-cuisine',
+        destination: '/en/blog/exploration-du-monde-a-travers-la-cuisine',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/scallops',
+        destination: '/en/recipe',
+        permanent: true,
+      },
     ];
   },
 };
