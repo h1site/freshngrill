@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Pouces en Pieds - Convertisseur Gratuit | 42, 52, 70, 72 po → pi',
+  title: 'Pouce en Pied ⚡ Convertisseur GRATUIT + Tableau',
   description:
-    'Convertir pouces en pieds instantanément: 70 po = 5,83 pi, 72 po = 6 pi, 52 po = 4,33 pi. Tableau complet des conversions populaires (42, 47, 65, 68, 82, 102 pouces) + calculateur gratuit.',
+    '✓ Convertir pouce en pied instantanément! 72 po = 6 pi, 60 po = 5 pi, 48 po = 4 pi. Calculateur + tableau complet pouces en pieds. Conversion rapide po → pi.',
   alternates: {
     canonical: '/convertisseur/pouce-pied/',
   },

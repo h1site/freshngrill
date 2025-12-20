@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Convertir CM en Pieds ⚡ Calculateur + Tableau Tailles (2025)',
+  title: 'CM en Pied ⚡ Convertisseur GRATUIT | 180 cm = 5\'11"',
   description:
-    '✅ Convertissez centimètres en pieds instantanément! 170 cm = 5\'7". Tableau des tailles humaines + formules. Outil 100% gratuit.',
+    '✓ Convertir cm en pied instantanément! 180 cm = 5\'11", 170 cm = 5\'7", 160 cm = 5\'3". Tableau cm en pieds et pouces + calculateur gratuit.',
   alternates: {
     canonical: '/convertisseur/centimetre-pied/',
   },
