@@ -59,12 +59,9 @@ export default async function BlogPage() {
     });
   };
 
-  // Filtrer les posts de la catégorie "Chroniques" pour le hero
-  const chroniquePosts = posts.filter((post) =>
-    post.categories.some((cat) => cat.slug === 'chroniques' || cat.slug === 'les-recettes-rapides')
-  );
-  const featuredPost = chroniquePosts[0] || posts[0];
-  const secondaryPosts = chroniquePosts.slice(1, 5); // 4 blocs à droite
+  // Les 5 derniers articles pour le hero (automatique, sans filtre de catégorie)
+  const featuredPost = posts[0];
+  const secondaryPosts = posts.slice(1, 5); // 4 blocs à droite
 
   return (
     <main className="min-h-screen bg-white">
