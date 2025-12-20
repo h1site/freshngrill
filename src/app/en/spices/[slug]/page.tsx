@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const name = spice.name_en || spice.name_fr;
-  const title = spice.seo_title_en || `${name} | Spice Dictionary`;
+  const title = spice.seo_title_en || `${name} | The Spice Route`;
   const description = spice.seo_description_en || `Everything about ${name}: origin, taste, culinary uses and recipes. Complete guide.`;
 
   return {
@@ -223,7 +223,7 @@ export default async function SpicePage({ params }: PageProps) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
-                  Spice Dictionary
+                  The Spice Route
                 </span>
                 <h1 className="text-5xl md:text-6xl font-display mt-3 mb-4">
                   {name}
@@ -447,7 +447,7 @@ export default async function SpicePage({ params }: PageProps) {
               href="/en/spices/"
               className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white font-medium hover:bg-[#F77313] transition-colors"
             >
-              ← Back to spice dictionary
+              ← Back to The Spice Route
             </Link>
           </div>
         </section>

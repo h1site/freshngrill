@@ -82,7 +82,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     return { title: 'Épice non trouvée' };
   }
 
-  const title = spice.seo_title_fr || `${spice.name_fr} | Dictionnaire des Épices`;
+  const title = spice.seo_title_fr || `${spice.name_fr} | La Route des Épices`;
   const description = spice.seo_description_fr || `Tout sur ${spice.name_fr}: origine, goût, utilisations en cuisine et recettes. Guide complet.`;
 
   return {
@@ -225,7 +225,7 @@ export default async function SpicePage({ params }: PageProps) {
               {/* Content */}
               <div>
                 <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
-                  Dictionnaire des épices
+                  La Route des Épices
                 </span>
                 <h1 className="text-5xl md:text-6xl font-display mt-3 mb-4">
                   {spice.name_fr}
@@ -469,7 +469,7 @@ export default async function SpicePage({ params }: PageProps) {
               href="/epices/"
               className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white font-medium hover:bg-[#F77313] transition-colors"
             >
-              ← Retour au dictionnaire des épices
+              ← Retour à La Route des Épices
             </Link>
           </div>
         </section>
