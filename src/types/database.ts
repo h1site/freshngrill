@@ -491,6 +491,129 @@ export interface Database {
           name?: string;
         };
       };
+      // Spices dictionary
+      spices: {
+        Row: {
+          id: number;
+          slug: string;
+          name_fr: string;
+          name_en: string | null;
+          other_names: string[] | null;
+          definition_fr: string | null;
+          definition_en: string | null;
+          origin: string[] | null;
+          history_fr: string | null;
+          history_en: string | null;
+          taste_profile: Json | null;
+          usage_tips_fr: string | null;
+          usage_tips_en: string | null;
+          common_mistakes_fr: string | null;
+          common_mistakes_en: string | null;
+          used_with: Json | null;
+          benefits_fr: string | null;
+          benefits_en: string | null;
+          storage_fr: string | null;
+          storage_en: string | null;
+          substitutes: string[] | null;
+          seo_title_fr: string | null;
+          seo_title_en: string | null;
+          seo_description_fr: string | null;
+          seo_description_en: string | null;
+          faq: Json | null;
+          featured_image: string | null;
+          image_alt_fr: string | null;
+          image_alt_en: string | null;
+          categories: string[] | null;
+          is_published: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: number;
+          slug: string;
+          name_fr: string;
+          name_en?: string | null;
+          other_names?: string[] | null;
+          definition_fr?: string | null;
+          definition_en?: string | null;
+          origin?: string[] | null;
+          history_fr?: string | null;
+          history_en?: string | null;
+          taste_profile?: Json | null;
+          usage_tips_fr?: string | null;
+          usage_tips_en?: string | null;
+          common_mistakes_fr?: string | null;
+          common_mistakes_en?: string | null;
+          used_with?: Json | null;
+          benefits_fr?: string | null;
+          benefits_en?: string | null;
+          storage_fr?: string | null;
+          storage_en?: string | null;
+          substitutes?: string[] | null;
+          seo_title_fr?: string | null;
+          seo_title_en?: string | null;
+          seo_description_fr?: string | null;
+          seo_description_en?: string | null;
+          faq?: Json | null;
+          featured_image?: string | null;
+          image_alt_fr?: string | null;
+          image_alt_en?: string | null;
+          categories?: string[] | null;
+          is_published?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: number;
+          slug?: string;
+          name_fr?: string;
+          name_en?: string | null;
+          other_names?: string[] | null;
+          definition_fr?: string | null;
+          definition_en?: string | null;
+          origin?: string[] | null;
+          history_fr?: string | null;
+          history_en?: string | null;
+          taste_profile?: Json | null;
+          usage_tips_fr?: string | null;
+          usage_tips_en?: string | null;
+          common_mistakes_fr?: string | null;
+          common_mistakes_en?: string | null;
+          used_with?: Json | null;
+          benefits_fr?: string | null;
+          benefits_en?: string | null;
+          storage_fr?: string | null;
+          storage_en?: string | null;
+          substitutes?: string[] | null;
+          seo_title_fr?: string | null;
+          seo_title_en?: string | null;
+          seo_description_fr?: string | null;
+          seo_description_en?: string | null;
+          faq?: Json | null;
+          featured_image?: string | null;
+          image_alt_fr?: string | null;
+          image_alt_en?: string | null;
+          categories?: string[] | null;
+          is_published?: boolean;
+        };
+      };
+      recipe_spices: {
+        Row: {
+          id: number;
+          recipe_id: number;
+          spice_id: number;
+        };
+        Insert: {
+          id?: number;
+          recipe_id: number;
+          spice_id: number;
+        };
+        Update: {
+          id?: number;
+          recipe_id?: number;
+          spice_id?: number;
+        };
+      };
       // View treated as table for Supabase client compatibility
       posts_with_details: {
         Row: {

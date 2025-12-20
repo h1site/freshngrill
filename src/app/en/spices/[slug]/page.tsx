@@ -1,0 +1,457 @@
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import { createClient } from '@/lib/supabase-server';
+import { ChevronRight, Globe, Clock, Flame, Leaf, AlertTriangle, Heart, Package, ArrowLeftRight } from 'lucide-react';
+import RecipeFAQ from '@/components/recipe/RecipeFAQ';
+
+interface TasteProfile {
+  intensity?: number;
+  spicy?: number;
+  bitterness?: number;
+  sweetness?: number;
+  notes_fr?: string[];
+  notes_en?: string[];
+}
+
+interface UsedWith {
+  meat?: string[];
+  fish?: string[];
+  vegetables?: string[];
+  grains?: string[];
+  bread?: string[];
+  desserts?: string[];
+  cheese?: string[];
+  soups?: string[];
+}
+
+interface Spice {
+  id: number;
+  slug: string;
+  name_fr: string;
+  name_en: string | null;
+  other_names: string[] | null;
+  definition_fr: string | null;
+  definition_en: string | null;
+  origin: string[] | null;
+  history_fr: string | null;
+  history_en: string | null;
+  taste_profile: TasteProfile | null;
+  usage_tips_fr: string | null;
+  usage_tips_en: string | null;
+  common_mistakes_fr: string | null;
+  common_mistakes_en: string | null;
+  used_with: UsedWith | null;
+  benefits_fr: string | null;
+  benefits_en: string | null;
+  storage_fr: string | null;
+  storage_en: string | null;
+  substitutes: string[] | null;
+  seo_title_fr: string | null;
+  seo_title_en: string | null;
+  seo_description_fr: string | null;
+  seo_description_en: string | null;
+  faq: string | null;
+  featured_image: string | null;
+  image_alt_en: string | null;
+  categories: string[] | null;
+}
+
+interface SubstituteSpice {
+  slug: string;
+  name_en: string | null;
+  name_fr: string;
+}
+
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const supabase = await createClient();
+
+  const { data: spice } = await supabase
+    .from('spices')
+    .select('name_en, name_fr, seo_title_en, seo_description_en')
+    .eq('slug', slug)
+    .eq('is_published', true)
+    .single() as { data: { name_en: string | null; name_fr: string; seo_title_en: string | null; seo_description_en: string | null } | null };
+
+  if (!spice) {
+    return { title: 'Spice not found' };
+  }
+
+  const name = spice.name_en || spice.name_fr;
+  const title = spice.seo_title_en || `${name} | Spice Dictionary`;
+  const description = spice.seo_description_en || `Everything about ${name}: origin, taste, culinary uses and recipes. Complete guide.`;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/en/spices/${slug}/`,
+    },
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+    },
+  };
+}
+
+function RatingStars({ value, max = 5, icon = '⭐', emptyIcon = '☆' }: { value: number; max?: number; icon?: string; emptyIcon?: string }) {
+  return (
+    <div className="flex gap-0.5">
+      {Array.from({ length: max }).map((_, i) => (
+        <span key={i} className={i < value ? 'opacity-100' : 'opacity-30'}>
+          {i < value ? icon : emptyIcon}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function UsedWithSection({ usedWith }: { usedWith: UsedWith }) {
+  const categories = [
+    { key: 'meat' as const, label: 'Meats', emoji: '🥩' },
+    { key: 'fish' as const, label: 'Fish & Seafood', emoji: '🐟' },
+    { key: 'vegetables' as const, label: 'Vegetables', emoji: '🥕' },
+    { key: 'grains' as const, label: 'Rice, Pasta, Legumes', emoji: '🍚' },
+    { key: 'bread' as const, label: 'Breads & Pastries', emoji: '🥖' },
+    { key: 'desserts' as const, label: 'Desserts', emoji: '🍰' },
+    { key: 'cheese' as const, label: 'Cheeses', emoji: '🧀' },
+    { key: 'soups' as const, label: 'Soups & Sauces', emoji: '🥣' },
+  ];
+
+  const hasContent = categories.some(cat => usedWith[cat.key]?.length);
+  if (!hasContent) return null;
+
+  return (
+    <section className="border border-neutral-200 p-6 md:p-8">
+      <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+        <span className="text-2xl">🍽️</span>
+        What foods to use this spice with?
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {categories.map(cat => {
+          const items = usedWith[cat.key];
+          if (!items?.length) return null;
+
+          return (
+            <div key={cat.key} className="bg-neutral-50 p-4">
+              <h3 className="font-medium text-black flex items-center gap-2 mb-2">
+                <span>{cat.emoji}</span>
+                {cat.label}
+              </h3>
+              <p className="text-neutral-600 text-sm">
+                {items.join(', ')}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+export default async function SpicePage({ params }: PageProps) {
+  const { slug } = await params;
+  const supabase = await createClient();
+
+  const { data: spice } = await supabase
+    .from('spices')
+    .select('*')
+    .eq('slug', slug)
+    .eq('is_published', true)
+    .single() as { data: Spice | null };
+
+  if (!spice) {
+    notFound();
+  }
+
+  const tasteProfile = spice.taste_profile || {};
+  const usedWith = spice.used_with || {};
+  const name = spice.name_en || spice.name_fr;
+
+  let substituteSpices: SubstituteSpice[] = [];
+  if (spice.substitutes?.length) {
+    const { data: subs } = await supabase
+      .from('spices')
+      .select('slug, name_fr, name_en')
+      .in('slug', spice.substitutes)
+      .eq('is_published', true);
+    substituteSpices = (subs || []) as SubstituteSpice[];
+  }
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: name,
+    description: spice.definition_en,
+    image: spice.featured_image,
+    author: {
+      '@type': 'Organization',
+      name: 'Menucochon',
+    },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <main className="min-h-screen bg-white">
+        <div className="bg-neutral-50 border-b border-neutral-200">
+          <div className="container mx-auto px-4 py-3">
+            <nav className="flex items-center gap-2 text-sm text-neutral-500">
+              <Link href="/en/" className="hover:text-[#F77313]">Home</Link>
+              <ChevronRight className="w-4 h-4" />
+              <Link href="/en/spices/" className="hover:text-[#F77313]">Spices</Link>
+              <ChevronRight className="w-4 h-4" />
+              <span className="text-black">{name}</span>
+            </nav>
+          </div>
+        </div>
+
+        <section className="bg-black text-white py-12 md:py-20">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
+                  Spice Dictionary
+                </span>
+                <h1 className="text-5xl md:text-6xl font-display mt-3 mb-4">
+                  {name}
+                </h1>
+
+                {spice.other_names?.length ? (
+                  <p className="text-neutral-400 text-sm mb-6">
+                    Also known as: {spice.other_names.join(', ')}
+                  </p>
+                ) : null}
+
+                {spice.definition_en && (
+                  <p className="text-neutral-300 text-lg leading-relaxed">
+                    {spice.definition_en}
+                  </p>
+                )}
+
+                <div className="flex flex-wrap gap-6 mt-8">
+                  {tasteProfile.intensity && (
+                    <div>
+                      <span className="text-neutral-500 text-sm block mb-1">Intensity</span>
+                      <RatingStars value={tasteProfile.intensity} />
+                    </div>
+                  )}
+                  {tasteProfile.spicy && tasteProfile.spicy > 0 && (
+                    <div>
+                      <span className="text-neutral-500 text-sm block mb-1">Heat</span>
+                      <RatingStars value={tasteProfile.spicy} icon="🌶️" emptyIcon="🌶️" />
+                    </div>
+                  )}
+                </div>
+
+                {spice.categories?.length ? (
+                  <div className="flex flex-wrap gap-2 mt-6">
+                    {spice.categories.map(cat => (
+                      <Link
+                        key={cat}
+                        href={`/en/spices/?category=${cat}`}
+                        className="px-3 py-1 bg-white/10 text-white text-sm hover:bg-[#F77313] transition-colors"
+                      >
+                        {cat}
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+
+              <div className="relative aspect-square bg-neutral-900 overflow-hidden">
+                {spice.featured_image ? (
+                  <Image
+                    src={spice.featured_image}
+                    alt={spice.image_alt_en || name}
+                    fill
+                    className="object-cover"
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-9xl">
+                    🌶️
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <article className="container mx-auto px-4 py-12 md:py-16">
+          <div className="max-w-4xl mx-auto space-y-12">
+            {(spice.origin?.length || spice.history_en) && (
+              <section className="border border-neutral-200 p-6 md:p-8">
+                <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+                  <Globe className="w-6 h-6 text-[#F77313]" />
+                  Origin & History
+                </h2>
+
+                {spice.origin?.length ? (
+                  <div className="mb-4">
+                    <span className="text-sm text-neutral-500">Origin:</span>
+                    <p className="text-black font-medium">{spice.origin.join(', ')}</p>
+                  </div>
+                ) : null}
+
+                {spice.history_en && (
+                  <div
+                    className="prose prose-neutral max-w-none"
+                    dangerouslySetInnerHTML={{ __html: spice.history_en }}
+                  />
+                )}
+              </section>
+            )}
+
+            {tasteProfile.notes_en?.length ? (
+              <section className="border border-neutral-200 p-6 md:p-8">
+                <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+                  <Leaf className="w-6 h-6 text-[#F77313]" />
+                  Taste Profile
+                </h2>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  <div className="bg-neutral-50 p-4 text-center">
+                    <span className="text-sm text-neutral-500 block mb-1">Intensity</span>
+                    <RatingStars value={tasteProfile.intensity || 0} />
+                  </div>
+                  <div className="bg-neutral-50 p-4 text-center">
+                    <span className="text-sm text-neutral-500 block mb-1">Heat</span>
+                    <RatingStars value={tasteProfile.spicy || 0} icon="🌶️" emptyIcon="🌶️" />
+                  </div>
+                  <div className="bg-neutral-50 p-4 text-center">
+                    <span className="text-sm text-neutral-500 block mb-1">Bitterness</span>
+                    <RatingStars value={tasteProfile.bitterness || 0} />
+                  </div>
+                  <div className="bg-neutral-50 p-4 text-center">
+                    <span className="text-sm text-neutral-500 block mb-1">Sweetness</span>
+                    <RatingStars value={tasteProfile.sweetness || 0} />
+                  </div>
+                </div>
+
+                <div>
+                  <span className="text-sm text-neutral-500">Dominant notes:</span>
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {tasteProfile.notes_en.map(note => (
+                      <span key={note} className="px-3 py-1 bg-[#F77313]/10 text-[#F77313] text-sm">
+                        {note}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </section>
+            ) : null}
+
+            {spice.usage_tips_en && (
+              <section className="border border-neutral-200 p-6 md:p-8">
+                <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+                  <Clock className="w-6 h-6 text-[#F77313]" />
+                  How to use this spice
+                </h2>
+                <div
+                  className="prose prose-neutral max-w-none"
+                  dangerouslySetInnerHTML={{ __html: spice.usage_tips_en }}
+                />
+              </section>
+            )}
+
+            {spice.common_mistakes_en && (
+              <section className="border border-red-200 bg-red-50 p-6 md:p-8">
+                <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+                  <AlertTriangle className="w-6 h-6 text-red-500" />
+                  Common mistakes to avoid
+                </h2>
+                <div
+                  className="prose prose-neutral max-w-none"
+                  dangerouslySetInnerHTML={{ __html: spice.common_mistakes_en }}
+                />
+              </section>
+            )}
+
+            <UsedWithSection usedWith={usedWith} />
+
+            {spice.benefits_en && (
+              <section className="border border-green-200 bg-green-50 p-6 md:p-8">
+                <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+                  <Heart className="w-6 h-6 text-green-600" />
+                  Benefits
+                </h2>
+                <div
+                  className="prose prose-neutral max-w-none"
+                  dangerouslySetInnerHTML={{ __html: spice.benefits_en }}
+                />
+                <p className="text-xs text-neutral-500 mt-4 italic">
+                  For informational purposes only. Does not constitute medical advice.
+                </p>
+              </section>
+            )}
+
+            {spice.storage_en && (
+              <section className="border border-neutral-200 p-6 md:p-8">
+                <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+                  <Package className="w-6 h-6 text-[#F77313]" />
+                  Storage
+                </h2>
+                <div
+                  className="prose prose-neutral max-w-none"
+                  dangerouslySetInnerHTML={{ __html: spice.storage_en }}
+                />
+              </section>
+            )}
+
+            {substituteSpices.length > 0 && (
+              <section className="border border-neutral-200 p-6 md:p-8">
+                <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+                  <ArrowLeftRight className="w-6 h-6 text-[#F77313]" />
+                  Possible substitutions
+                </h2>
+                <p className="text-neutral-600 mb-4">
+                  If you don&apos;t have {name}, you can use:
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {substituteSpices.map(sub => (
+                    <Link
+                      key={sub.slug}
+                      href={`/en/spices/${sub.slug}/`}
+                      className="px-4 py-2 bg-neutral-100 text-black hover:bg-[#F77313] hover:text-white transition-colors"
+                    >
+                      {sub.name_en || sub.name_fr}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {spice.faq && (
+              <RecipeFAQ faq={typeof spice.faq === 'string' ? spice.faq : JSON.stringify(spice.faq)} locale="en" />
+            )}
+          </div>
+        </article>
+
+        <section className="bg-neutral-50 py-12">
+          <div className="container mx-auto px-4 text-center">
+            <Link
+              href="/en/spices/"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white font-medium hover:bg-[#F77313] transition-colors"
+            >
+              ← Back to spice dictionary
+            </Link>
+          </div>
+        </section>
+      </main>
+    </>
+  );
+}
