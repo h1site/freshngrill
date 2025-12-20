@@ -1,0 +1,1654 @@
+[
+  {
+    "fr": {
+      "name": "Ail",
+      "origine_histoire": "Originaire d'Asie centrale, l'ail est utilisé depuis des millénaires dans de nombreuses cuisines, de la Méditerranée à l'Asie.",
+      "utilisation_aliments": ["viandes", "volailles", "poissons", "légumes", "sauces", "marinades"],
+      "bienfaits": ["rehausse la saveur", "profil aromatique puissant", "apporte de la profondeur aux plats"],
+      "intensite": 4,
+      "conservation": "Bulbes entiers au sec, au frais et aéré, à l'abri de la lumière. Une fois coupé: réfrigérer et utiliser rapidement.",
+      "substitutions": ["ail en poudre", "échalote", "oignon"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'ail ?", "reponse": "L'ail se marie très bien avec les viandes, légumes rôtis, sauces tomate, soupes et marinades."},
+        {"question": "Comment adoucir le goût de l'ail dans une recette ?", "reponse": "Pour adoucir l'ail, fais-le cuire (rôti, mijoté) plutôt que de l'utiliser cru."}
+      ]
+    },
+    "en": {
+      "name": "Garlic",
+      "origine_histoire": "Native to Central Asia, garlic has been used for thousands of years across Mediterranean and Asian cuisines.",
+      "utilisation_aliments": ["meats", "poultry", "fish", "vegetables", "sauces", "marinades"],
+      "bienfaits": ["boosts flavor", "strong aromatic profile", "adds depth to dishes"],
+      "intensite": 4,
+      "conservation": "Store whole bulbs in a cool, dry, well-ventilated place away from light. Once cut: refrigerate and use quickly.",
+      "substitutions": ["garlic powder", "shallot", "onion"],
+      "faq": [
+        {"question": "What foods pair well with garlic?", "reponse": "Garlic pairs well with meats, roasted vegetables, tomato sauces, soups, and marinades."},
+        {"question": "How can you mellow garlic in a recipe?", "reponse": "Cooking garlic (roasting or simmering) mellows its flavor compared to using it raw."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Ail noir",
+      "origine_histoire": "L'ail noir provient d'une fermentation lente de l'ail, popularisée en Asie puis adoptée en cuisine moderne.",
+      "utilisation_aliments": ["viandes", "poissons", "purées", "vinaigrettes", "sauces"],
+      "bienfaits": ["saveur douce umami", "moins piquant que l'ail frais", "excellent en cuisine créative"],
+      "intensite": 2,
+      "conservation": "Conserver dans un contenant hermétique, au sec, à température ambiante.",
+      "substitutions": ["ail rôti", "pâte d'ail douce"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'ail noir ?", "reponse": "L'ail noir est top avec viande grillée, poisson, purées et sauces crémeuses."},
+        {"question": "L'ail noir est-il aussi fort que l'ail ?", "reponse": "Non, l'ail noir est plus doux, souvent légèrement sucré et très umami."}
+      ]
+    },
+    "en": {
+      "name": "Black garlic",
+      "origine_histoire": "Black garlic is made by slowly fermenting garlic, popularized in Asia and embraced by modern cooking.",
+      "utilisation_aliments": ["meats", "fish", "mashed dishes", "vinaigrettes", "sauces"],
+      "bienfaits": ["mild umami taste", "less pungent than fresh garlic", "great for creative dishes"],
+      "intensite": 2,
+      "conservation": "Keep in an airtight container in a cool, dry place at room temperature.",
+      "substitutions": ["roasted garlic", "mild garlic paste"],
+      "faq": [
+        {"question": "What foods pair well with black garlic?", "reponse": "Black garlic works great with grilled meats, fish, mashed dishes, and creamy sauces."},
+        {"question": "Is black garlic as strong as garlic?", "reponse": "No—black garlic is milder, often slightly sweet, and very umami."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Ajowan",
+      "origine_histoire": "Épice très présente en Inde et au Moyen-Orient, l'ajowan rappelle le thym avec une touche poivrée.",
+      "utilisation_aliments": ["pains", "currys", "légumineuses", "pommes de terre", "plats indiens"],
+      "bienfaits": ["parfum très puissant", "donne un goût \"thym/cumin\"", "super dans les pâtes à pain"],
+      "intensite": 4,
+      "conservation": "Graines en pot hermétique, à l'abri de la chaleur et de la lumière.",
+      "substitutions": ["thym", "cumin", "origan (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'ajowan ?", "reponse": "L'ajowan est parfait dans les pains, currys et plats de légumineuses."},
+        {"question": "Combien d'ajowan mettre dans une recette ?", "reponse": "Commence petit (une pincée), car l'ajowan est très aromatique."}
+      ]
+    },
+    "en": {
+      "name": "Ajwain",
+      "origine_histoire": "Common in India and the Middle East, ajwain tastes like thyme with a peppery edge.",
+      "utilisation_aliments": ["breads", "curries", "legumes", "potatoes", "Indian dishes"],
+      "bienfaits": ["very strong aroma", "thyme/cumin-like taste", "excellent in bread dough"],
+      "intensite": 4,
+      "conservation": "Store seeds airtight, away from heat and light.",
+      "substitutions": ["thyme", "cumin", "oregano (lightly)"],
+      "faq": [
+        {"question": "What foods pair well with ajwain?", "reponse": "Ajwain is great in breads, curries, and legume-based dishes."},
+        {"question": "How much ajwain should you use?", "reponse": "Start with a pinch—ajwain is very aromatic."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Amchoor",
+      "origine_histoire": "L'amchoor est une poudre de mangue verte séchée, utilisée en Inde pour apporter de l'acidité.",
+      "utilisation_aliments": ["currys", "légumes", "chutneys", "marinades", "salades"],
+      "bienfaits": ["apporte une acidité fruitée", "équilibre les plats épicés", "rehausse sans citron"],
+      "intensite": 3,
+      "conservation": "Poudre en pot hermétique, au sec. Éviter l'humidité.",
+      "substitutions": ["jus de citron", "sumac", "vinaigre doux"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'amchoor ?", "reponse": "L'amchoor est excellent dans les currys, légumes sautés et marinades."},
+        {"question": "Quand ajouter l'amchoor dans une recette ?", "reponse": "Ajoute-le en fin de cuisson pour garder son côté acidulé."}
+      ]
+    },
+    "en": {
+      "name": "Dried mango powder",
+      "origine_histoire": "Amchoor is made from dried unripe mango and is used in Indian cooking to add tangy acidity.",
+      "utilisation_aliments": ["curries", "vegetables", "chutneys", "marinades", "salads"],
+      "bienfaits": ["adds fruity tang", "balances spicy dishes", "brightens without lemon"],
+      "intensite": 3,
+      "conservation": "Keep airtight and dry. Avoid moisture.",
+      "substitutions": ["lemon juice", "sumac", "mild vinegar"],
+      "faq": [
+        {"question": "What foods pair well with dried mango powder?", "reponse": "It works well in curries, sautéed vegetables, and marinades."},
+        {"question": "When should you add dried mango powder?", "reponse": "Add it near the end of cooking to preserve its tang."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Anis vert",
+      "origine_histoire": "Utilisé depuis l'Antiquité autour de la Méditerranée, l'anis vert est connu pour son parfum réglissé.",
+      "utilisation_aliments": ["pâtisseries", "biscuits", "infusions", "plats mijotés", "sauces"],
+      "bienfaits": ["arôme doux et sucré", "parfum réglissé", "excellent en dessert"],
+      "intensite": 3,
+      "conservation": "Graines entières en pot hermétique; moudre au besoin pour garder l'arôme.",
+      "substitutions": ["fenouil", "badiane (plus forte)", "réglisse (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'anis vert ?", "reponse": "L'anis vert est parfait en pâtisserie, infusion, et certains plats mijotés."},
+        {"question": "Quelle est la différence entre anis vert et badiane ?", "reponse": "L'anis vert est plus doux; la badiane (anis étoilé) est plus intense."}
+      ]
+    },
+    "en": {
+      "name": "Green anise",
+      "origine_histoire": "Used since antiquity in the Mediterranean, green anise is known for its sweet licorice aroma.",
+      "utilisation_aliments": ["baking", "cookies", "infusions", "stews", "sauces"],
+      "bienfaits": ["sweet aroma", "licorice-like flavor", "great for desserts"],
+      "intensite": 3,
+      "conservation": "Store whole seeds airtight; grind as needed to keep aroma fresh.",
+      "substitutions": ["fennel seed", "star anise (stronger)", "licorice (light)"],
+      "faq": [
+        {"question": "What foods pair well with green anise?", "reponse": "Green anise is great in baking, teas/infusions, and some slow-cooked dishes."},
+        {"question": "What's the difference between green anise and star anise?", "reponse": "Green anise is milder; star anise is more intense."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Anis étoilé",
+      "origine_histoire": "La badiane (anis étoilé) vient d'Asie et est très utilisée dans la cuisine chinoise et vietnamienne.",
+      "utilisation_aliments": ["bouillons", "plats mijotés", "desserts", "infusions", "mélanges d'épices"],
+      "bienfaits": ["parfum chaud et puissant", "donne une note réglissée", "super en cuisson lente"],
+      "intensite": 4,
+      "conservation": "Garder les étoiles entières en pot hermétique; éviter l'humidité.",
+      "substitutions": ["anis vert (plus doux)", "fenouil", "mélange cinq-épices"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'anis étoilé ?", "reponse": "L'anis étoilé est excellent dans les bouillons, plats mijotés et infusions."},
+        {"question": "Combien d'anis étoilé mettre dans un bouillon ?", "reponse": "Souvent 1 étoile suffit, car l'anis étoilé est très puissant."}
+      ]
+    },
+    "en": {
+      "name": "Star anise",
+      "origine_histoire": "Star anise originates in Asia and is widely used in Chinese and Vietnamese cooking.",
+      "utilisation_aliments": ["broths", "stews", "desserts", "infusions", "spice blends"],
+      "bienfaits": ["warm powerful aroma", "licorice-like note", "great for slow cooking"],
+      "intensite": 4,
+      "conservation": "Store whole pods airtight; keep away from moisture.",
+      "substitutions": ["green anise (milder)", "fennel", "Chinese five-spice"],
+      "faq": [
+        {"question": "What foods pair well with star anise?", "reponse": "Star anise is excellent in broths, stews, and infusions."},
+        {"question": "How much star anise should you use in broth?", "reponse": "Usually one pod is enough because it's very strong."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Bois d'Inde",
+      "origine_histoire": "Aussi appelé \"piment de la Jamaïque\", le bois d'Inde est une baie des Caraïbes aux notes de cannelle, girofle et muscade.",
+      "utilisation_aliments": ["marinades", "ragoûts", "charcuteries", "desserts", "sauces"],
+      "bienfaits": ["profil aromatique complexe", "parfait en mélange", "donne une chaleur douce"],
+      "intensite": 3,
+      "conservation": "Baies entières en pot hermétique; moudre au besoin.",
+      "substitutions": ["mélange cannelle + muscade + girofle", "quatre-épices"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le bois d'Inde ?", "reponse": "Le bois d'Inde est top dans marinades, ragoûts, sauces et desserts."},
+        {"question": "Pourquoi le bois d'Inde s'appelle piment de la Jamaïque ?", "reponse": "Parce qu'il vient des Caraïbes et rappelle plusieurs épices à la fois."}
+      ]
+    },
+    "en": {
+      "name": "Allspice",
+      "origine_histoire": "Also called Jamaica pepper, allspice is a Caribbean berry tasting like cinnamon, clove, and nutmeg combined.",
+      "utilisation_aliments": ["marinades", "stews", "cured meats", "desserts", "sauces"],
+      "bienfaits": ["complex flavor", "great in blends", "gentle warmth"],
+      "intensite": 3,
+      "conservation": "Store whole berries airtight; grind as needed.",
+      "substitutions": ["cinnamon + nutmeg + clove mix", "four-spice blend"],
+      "faq": [
+        {"question": "What foods pair well with allspice?", "reponse": "Allspice works well in marinades, stews, sauces, and desserts."},
+        {"question": "Why is allspice called \"allspice\"?", "reponse": "Because it tastes like a blend of several spices at once."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Cannelle de Ceylan",
+      "origine_histoire": "Originaire du Sri Lanka, la cannelle de Ceylan est réputée pour sa douceur et son parfum fin.",
+      "utilisation_aliments": ["desserts", "boissons chaudes", "gruaux", "compotes", "plats mijotés"],
+      "bienfaits": ["arôme doux", "parfait en sucré", "donne une chaleur équilibrée"],
+      "intensite": 3,
+      "conservation": "Bâtons ou poudre en pot hermétique, au sec et à l'abri de la lumière.",
+      "substitutions": ["cannelle cassia (plus forte)", "quatre-épices"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la cannelle de Ceylan ?", "reponse": "Elle est idéale dans les desserts, boissons chaudes, compotes et plats mijotés."},
+        {"question": "Quelle différence entre cannelle de Ceylan et cassia ?", "reponse": "La Ceylan est plus douce; la cassia est plus corsée et plus piquante."}
+      ]
+    },
+    "en": {
+      "name": "Ceylon cinnamon",
+      "origine_histoire": "Ceylon cinnamon comes from Sri Lanka and is known for its delicate, mild aroma.",
+      "utilisation_aliments": ["desserts", "hot drinks", "oatmeal", "compotes", "stews"],
+      "bienfaits": ["mild aroma", "great for sweet dishes", "balanced warmth"],
+      "intensite": 3,
+      "conservation": "Store sticks or powder airtight, dry, and away from light.",
+      "substitutions": ["cassia cinnamon (stronger)", "four-spice blend"],
+      "faq": [
+        {"question": "What foods pair well with Ceylon cinnamon?", "reponse": "It's great in desserts, hot drinks, compotes, oatmeal, and slow-cooked dishes."},
+        {"question": "What's the difference between Ceylon cinnamon and cassia?", "reponse": "Ceylon is milder; cassia is bolder and more pungent."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Cannelle Cassia",
+      "origine_histoire": "La cannelle cassia provient principalement de Chine et d'Asie du Sud-Est. Plus corsée que la cannelle de Ceylan, elle est très répandue dans les mélanges d'épices et la pâtisserie.",
+      "utilisation_aliments": ["desserts", "biscuits", "pain", "café", "plats mijotés", "marinades"],
+      "bienfaits": ["saveur chaude et intense", "parfume rapidement", "idéale pour les mélanges d'épices"],
+      "intensite": 4,
+      "conservation": "Conserver en bâtons ou en poudre dans un pot hermétique, au sec, à l'abri de la lumière et de la chaleur.",
+      "substitutions": ["cannelle de Ceylan (plus douce)", "quatre-épices (en petite quantité)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la cannelle cassia ?", "reponse": "La cannelle cassia est parfaite dans les desserts, biscuits, boissons chaudes et certains plats mijotés."},
+        {"question": "La cannelle cassia est-elle plus forte que la cannelle de Ceylan ?", "reponse": "Oui, la cassia est généralement plus intense, plus boisée et plus piquante."}
+      ]
+    },
+    "en": {
+      "name": "Cassia cinnamon",
+      "origine_histoire": "Cassia cinnamon is mainly sourced from China and Southeast Asia. It's bolder than Ceylon cinnamon and widely used in baking and spice blends.",
+      "utilisation_aliments": ["desserts", "cookies", "bread", "coffee", "stews", "marinades"],
+      "bienfaits": ["warm, bold flavor", "quickly perfumes dishes", "great for spice blends"],
+      "intensite": 4,
+      "conservation": "Store sticks or powder airtight, dry, away from light and heat.",
+      "substitutions": ["Ceylon cinnamon (milder)", "four-spice blend (small amount)"],
+      "faq": [
+        {"question": "What foods pair well with cassia cinnamon?", "reponse": "Cassia cinnamon works well in desserts, cookies, hot drinks, and some slow-cooked dishes."},
+        {"question": "Is cassia cinnamon stronger than Ceylon cinnamon?", "reponse": "Yes—cassia is typically bolder, woodier, and more pungent."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Cardamome verte",
+      "origine_histoire": "La cardamome verte est une épice emblématique d'Inde et du Moyen-Orient. Elle est aussi très utilisée dans la pâtisserie scandinave et certains cafés épicés.",
+      "utilisation_aliments": ["currys", "riz", "desserts", "chai", "café", "pâtisseries"],
+      "bienfaits": ["arôme frais et citronné", "très parfumante", "donne une touche raffinée"],
+      "intensite": 4,
+      "conservation": "Conserver les gousses entières en pot hermétique; moudre au besoin pour un maximum d'arôme.",
+      "substitutions": ["cardamome moulue", "zeste de citron + pincée de gingembre (approx.)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la cardamome verte ?", "reponse": "La cardamome verte est excellente dans les currys, le riz parfumé, le chai et les desserts."},
+        {"question": "Doit-on ouvrir les gousses de cardamome verte ?", "reponse": "Oui, ouvrir les gousses libère les graines et intensifie l'arôme (surtout en infusion ou mouture)."}
+      ]
+    },
+    "en": {
+      "name": "Green cardamom",
+      "origine_histoire": "Green cardamom is a signature spice in Indian and Middle Eastern cuisines, and it's also popular in Scandinavian baking and spiced coffee traditions.",
+      "utilisation_aliments": ["curries", "rice", "desserts", "chai", "coffee", "pastries"],
+      "bienfaits": ["fresh citrusy aroma", "highly fragrant", "adds a refined touch"],
+      "intensite": 4,
+      "conservation": "Store whole pods airtight; grind only when needed for best aroma.",
+      "substitutions": ["ground cardamom", "lemon zest + pinch of ginger (approx.)"],
+      "faq": [
+        {"question": "What foods pair well with green cardamom?", "reponse": "Green cardamom is great in curries, fragrant rice, chai, and desserts."},
+        {"question": "Should you crack green cardamom pods?", "reponse": "Yes—cracking pods releases the seeds and boosts aroma, especially for infusions or grinding."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Cardamome noire",
+      "origine_histoire": "Plus fumée et camphrée que la verte, la cardamome noire est très utilisée en Inde du Nord et dans les plats mijotés riches.",
+      "utilisation_aliments": ["biryanis", "ragoûts", "plats mijotés", "bouillons", "viandes"],
+      "bienfaits": ["note fumée", "donne de la profondeur", "parfaite en cuisson longue"],
+      "intensite": 5,
+      "conservation": "Gousses entières en contenant hermétique, au sec, à l'abri de la chaleur.",
+      "substitutions": ["cardamome verte (différente, plus fraîche)", "pincée de paprika fumé + cardamome verte (approx.)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la cardamome noire ?", "reponse": "La cardamome noire est idéale dans les biryanis, ragoûts et plats mijotés de viande."},
+        {"question": "La cardamome noire a-t-elle le même goût que la cardamome verte ?", "reponse": "Non, la cardamome noire est plus fumée et plus intense, alors que la verte est plus fraîche et citronnée."}
+      ]
+    },
+    "en": {
+      "name": "Black cardamom",
+      "origine_histoire": "Smokier and more camphor-like than green cardamom, black cardamom is widely used in North Indian cooking and rich slow-cooked dishes.",
+      "utilisation_aliments": ["biryanis", "stews", "slow-cooked dishes", "broths", "meats"],
+      "bienfaits": ["smoky note", "adds depth", "excellent for long cooking"],
+      "intensite": 5,
+      "conservation": "Store whole pods airtight, dry, away from heat.",
+      "substitutions": ["green cardamom (different profile)", "pinch of smoked paprika + green cardamom (approx.)"],
+      "faq": [
+        {"question": "What foods pair well with black cardamom?", "reponse": "Black cardamom is ideal for biryanis, stews, and slow-cooked meat dishes."},
+        {"question": "Does black cardamom taste the same as green cardamom?", "reponse": "No—black cardamom is smokier and stronger, while green cardamom is fresher and citrusy."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Clou de girofle",
+      "origine_histoire": "Originaire des îles Moluques (Indonésie), le clou de girofle a longtemps été une épice précieuse dans le commerce des épices.",
+      "utilisation_aliments": ["plats mijotés", "marinades", "pâtisseries", "compotes", "bouillons", "vin chaud"],
+      "bienfaits": ["arôme chaud et piquant", "parfum très puissant", "excellent en petites doses"],
+      "intensite": 5,
+      "conservation": "Conserver entier en pot hermétique; moudre au besoin. Éviter chaleur et humidité.",
+      "substitutions": ["pincée de quatre-épices", "pincée de cannelle + muscade (moins piquant)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le clou de girofle ?", "reponse": "Le clou de girofle est parfait dans les plats mijotés, compotes, pâtisseries et boissons chaudes."},
+        {"question": "Combien de clou de girofle utiliser dans un plat ?", "reponse": "Souvent 1 à 3 clous suffisent : c'est une épice très puissante."}
+      ]
+    },
+    "en": {
+      "name": "Clove",
+      "origine_histoire": "Native to the Maluku Islands (Indonesia), clove was once among the most valuable spices in the global spice trade.",
+      "utilisation_aliments": ["stews", "marinades", "baking", "compotes", "broths", "mulled wine"],
+      "bienfaits": ["warm pungent aroma", "very strong", "best used sparingly"],
+      "intensite": 5,
+      "conservation": "Store whole cloves airtight; grind as needed. Keep away from heat and moisture.",
+      "substitutions": ["pinch of four-spice blend", "pinch of cinnamon + nutmeg (less pungent)"],
+      "faq": [
+        {"question": "What foods pair well with clove?", "reponse": "Clove is great in stews, compotes, baked goods, and warm drinks."},
+        {"question": "How many cloves should you use in a dish?", "reponse": "Usually 1–3 cloves are enough—clove is very potent."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Coriandre (graines)",
+      "origine_histoire": "La coriandre est cultivée depuis l'Antiquité. Les graines ont un parfum plus doux et citronné que les feuilles.",
+      "utilisation_aliments": ["currys", "marinades", "légumes rôtis", "soupes", "sauces", "mélanges d'épices"],
+      "bienfaits": ["arôme doux citronné", "polyvalente", "équilibre les épices plus fortes"],
+      "intensite": 3,
+      "conservation": "Graines entières en pot hermétique; moudre au moment d'utiliser pour garder l'arôme.",
+      "substitutions": ["cumin (plus terreux)", "carvi (plus anisé)", "poudre de coriandre"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser les graines de coriandre ?", "reponse": "Les graines de coriandre vont très bien dans les currys, marinades, légumes rôtis et soupes."},
+        {"question": "Les graines de coriandre ont-elles le même goût que les feuilles de coriandre ?", "reponse": "Non, les graines sont plus douces et citronnées, alors que les feuilles ont un goût plus vert et marqué."}
+      ]
+    },
+    "en": {
+      "name": "Coriander seed",
+      "origine_histoire": "Coriander has been grown since ancient times. The seeds taste warmer and more citrusy than the fresh leaves.",
+      "utilisation_aliments": ["curries", "marinades", "roasted vegetables", "soups", "sauces", "spice blends"],
+      "bienfaits": ["mild citrusy aroma", "versatile", "balances stronger spices"],
+      "intensite": 3,
+      "conservation": "Store whole seeds airtight; grind right before use for best aroma.",
+      "substitutions": ["cumin (earthier)", "caraway (more anise-like)", "ground coriander"],
+      "faq": [
+        {"question": "What foods pair well with coriander seed?", "reponse": "Coriander seed works well in curries, marinades, roasted vegetables, and soups."},
+        {"question": "Do coriander seeds taste like cilantro leaves?", "reponse": "Not exactly—seeds are warmer and citrusy, while leaves are greener and more distinctive."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Cumin",
+      "origine_histoire": "Le cumin est une épice ancienne très présente au Moyen-Orient, en Afrique du Nord, en Inde et au Mexique. Son goût est chaud et légèrement terreux.",
+      "utilisation_aliments": ["tacos", "chili", "houmous", "currys", "légumes", "ragoûts"],
+      "bienfaits": ["saveur chaude", "donne une note terreuse", "indispensable dans plusieurs cuisines"],
+      "intensite": 4,
+      "conservation": "Conserver les graines entières en pot hermétique; torréfier et moudre au besoin.",
+      "substitutions": ["coriandre (plus douce)", "carvi (plus anisé)", "garam masala (en petite quantité)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le cumin ?", "reponse": "Le cumin est parfait dans les tacos, chili, houmous, currys, légumes et ragoûts."},
+        {"question": "Comment intensifier le goût du cumin ?", "reponse": "Fais-le torréfier quelques secondes à sec avant de l'ajouter : son arôme ressort beaucoup plus."}
+      ]
+    },
+    "en": {
+      "name": "Cumin",
+      "origine_histoire": "Cumin is an ancient spice widely used across the Middle East, North Africa, India, and Mexico. Its flavor is warm and earthy.",
+      "utilisation_aliments": ["tacos", "chili", "hummus", "curries", "vegetables", "stews"],
+      "bienfaits": ["warm flavor", "earthy depth", "essential in many cuisines"],
+      "intensite": 4,
+      "conservation": "Store whole seeds airtight; toast and grind as needed.",
+      "substitutions": ["coriander (milder)", "caraway (more anise-like)", "garam masala (small amount)"],
+      "faq": [
+        {"question": "What foods pair well with cumin?", "reponse": "Cumin is great in tacos, chili, hummus, curries, vegetables, and stews."},
+        {"question": "How can you boost cumin's flavor?", "reponse": "Toast it briefly in a dry pan before using to make its aroma pop."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Curcuma",
+      "origine_histoire": "Originaire d'Asie du Sud, le curcuma est un rhizome utilisé depuis des siècles dans la cuisine indienne et d'autres cuisines asiatiques.",
+      "utilisation_aliments": ["currys", "riz", "soupes", "légumes", "marinades", "sauces"],
+      "bienfaits": ["couleur dorée", "goût doux et terreux", "excellent dans les mélanges d'épices"],
+      "intensite": 3,
+      "conservation": "Poudre en pot hermétique, au sec et à l'abri de la lumière (sinon la couleur et l'arôme diminuent).",
+      "substitutions": ["curry (mélange)", "safran (pour la couleur, très différent)", "gingembre (profil différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le curcuma ?", "reponse": "Le curcuma est parfait dans les currys, riz, soupes, légumes et marinades."},
+        {"question": "Pourquoi le curcuma colore autant ?", "reponse": "Le curcuma contient des pigments naturels très puissants qui teintent facilement les sauces et le riz."}
+      ]
+    },
+    "en": {
+      "name": "Turmeric",
+      "origine_histoire": "Native to South Asia, turmeric is a rhizome used for centuries in Indian and other Asian cuisines.",
+      "utilisation_aliments": ["curries", "rice", "soups", "vegetables", "marinades", "sauces"],
+      "bienfaits": ["golden color", "mild earthy taste", "great in spice blends"],
+      "intensite": 3,
+      "conservation": "Keep powder airtight, dry, and away from light (color and aroma fade otherwise).",
+      "substitutions": ["curry powder (blend)", "saffron (for color—very different)", "ginger (different profile)"],
+      "faq": [
+        {"question": "What foods pair well with turmeric?", "reponse": "Turmeric is great in curries, rice, soups, vegetables, and marinades."},
+        {"question": "Why does turmeric stain so much?", "reponse": "Turmeric contains very strong natural pigments that easily tint sauces and rice."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Fenouil (graines)",
+      "origine_histoire": "Très utilisé en Méditerranée, le fenouil a une saveur anisée douce. Ses graines parfument plats salés et tisanes.",
+      "utilisation_aliments": ["poissons", "saucisses", "pain", "légumes rôtis", "sauces", "infusions"],
+      "bienfaits": ["arôme anisé", "adoucit certains plats", "très bon en infusion"],
+      "intensite": 3,
+      "conservation": "Graines entières en pot hermétique; moudre au besoin.",
+      "substitutions": ["anis vert", "badiane (plus forte)", "carvi (plus terreux)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser les graines de fenouil ?", "reponse": "Les graines de fenouil sont parfaites avec poisson, saucisses, pain et légumes rôtis."},
+        {"question": "Les graines de fenouil sont-elles sucrées ou salées ?", "reponse": "Elles ont une note anisée naturellement douce qui fonctionne en sucré comme en salé."}
+      ]
+    },
+    "en": {
+      "name": "Fennel seed",
+      "origine_histoire": "Common in Mediterranean cooking, fennel has a gentle anise-like flavor. Its seeds are used in savory dishes and teas.",
+      "utilisation_aliments": ["fish", "sausages", "bread", "roasted vegetables", "sauces", "infusions"],
+      "bienfaits": ["anise-like aroma", "softens certain dishes", "great for infusions"],
+      "intensite": 3,
+      "conservation": "Store whole seeds airtight; grind as needed.",
+      "substitutions": ["green anise", "star anise (stronger)", "caraway (earthier)"],
+      "faq": [
+        {"question": "What foods pair well with fennel seed?", "reponse": "Fennel seed is great with fish, sausages, bread, and roasted vegetables."},
+        {"question": "Is fennel seed more sweet or savory?", "reponse": "It has a naturally sweet anise note that works in both sweet and savory dishes."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Fenugrec",
+      "origine_histoire": "Le fenugrec est utilisé depuis l'Antiquité au Moyen-Orient et en Inde. Ses graines ont une saveur chaude, légèrement amère et \"noisette\".",
+      "utilisation_aliments": ["currys", "dals", "légumes", "sauces", "mélanges d'épices", "pain"],
+      "bienfaits": ["saveur profonde et grillée", "donne une note \"curry\" authentique", "excellent en petites quantités"],
+      "intensite": 4,
+      "conservation": "Graines entières en pot hermétique, au sec. Moudre au besoin pour conserver l'arôme.",
+      "substitutions": ["poudre de curry (mélange)", "graines de moutarde (profil différent)", "sirop d'érable + cumin (approx. très légère)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le fenugrec ?", "reponse": "Le fenugrec est parfait dans les currys, dals, légumes et mélanges d'épices."},
+        {"question": "Pourquoi le fenugrec peut-il sembler amer ?", "reponse": "Le fenugrec a naturellement une amertume; une petite dose suffit pour équilibrer le plat."}
+      ]
+    },
+    "en": {
+      "name": "Fenugreek",
+      "origine_histoire": "Fenugreek has been used since antiquity in the Middle East and India. The seeds taste warm, slightly bitter, and nutty.",
+      "utilisation_aliments": ["curries", "dals", "vegetables", "sauces", "spice blends", "bread"],
+      "bienfaits": ["deep roasted flavor", "adds an authentic curry note", "best used sparingly"],
+      "intensite": 4,
+      "conservation": "Store whole seeds airtight in a dry place. Grind as needed for best aroma.",
+      "substitutions": ["curry powder (blend)", "mustard seeds (different profile)", "maple syrup + cumin (very light approximation)"],
+      "faq": [
+        {"question": "What foods pair well with fenugreek?", "reponse": "Fenugreek is great in curries, dals, vegetables, and spice blends."},
+        {"question": "Why can fenugreek taste bitter?", "reponse": "Fenugreek naturally has bitterness; a small amount is usually enough."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Galanga",
+      "origine_histoire": "Le galanga est un rhizome proche du gingembre, très utilisé en Thaïlande, Indonésie et Malaisie. Son parfum est plus poivré et citronné.",
+      "utilisation_aliments": ["soupes asiatiques", "currys thaïs", "fruits de mer", "bouillons", "sautés"],
+      "bienfaits": ["arôme frais et poivré", "parfait pour cuisine asiatique", "donne une signature \"thaï\""],
+      "intensite": 4,
+      "conservation": "Frais: réfrigérer et utiliser rapidement; séché/poudre: pot hermétique au sec.",
+      "substitutions": ["gingembre (plus doux)", "zeste de citron + gingembre (approx.)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le galanga ?", "reponse": "Le galanga est idéal dans les soupes asiatiques, currys thaïs, bouillons et plats sautés."},
+        {"question": "Quelle différence entre galanga et gingembre ?", "reponse": "Le galanga est plus poivré, plus citronné et plus résineux que le gingembre."}
+      ]
+    },
+    "en": {
+      "name": "Galangal",
+      "origine_histoire": "Galangal is a ginger-like rhizome widely used in Thailand, Indonesia, and Malaysia. Its aroma is more peppery and citrusy.",
+      "utilisation_aliments": ["Asian soups", "Thai curries", "seafood", "broths", "stir-fries"],
+      "bienfaits": ["fresh peppery aroma", "great for Asian cooking", "adds a distinct Thai signature"],
+      "intensite": 4,
+      "conservation": "Fresh: refrigerate and use soon; dried/powder: airtight and dry.",
+      "substitutions": ["ginger (milder)", "lemon zest + ginger (approx.)"],
+      "faq": [
+        {"question": "What foods pair well with galangal?", "reponse": "Galangal is ideal for Asian soups, Thai curries, broths, and stir-fries."},
+        {"question": "What's the difference between galangal and ginger?", "reponse": "Galangal is more peppery, citrusy, and resinous than ginger."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Gingembre",
+      "origine_histoire": "Le gingembre vient d'Asie et est utilisé depuis des siècles autant en cuisine qu'en boissons. Son goût est piquant, frais et citronné.",
+      "utilisation_aliments": ["woks", "currys", "soupes", "marinades", "pâtisseries", "boissons"],
+      "bienfaits": ["apporte du peps", "arôme frais", "polyvalent en sucré et salé"],
+      "intensite": 4,
+      "conservation": "Frais: au réfrigérateur (ou au congélateur). En poudre: pot hermétique au sec.",
+      "substitutions": ["galanga (différent)", "gingembre moulu", "zeste de citron + poivre (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le gingembre ?", "reponse": "Le gingembre est excellent dans les woks, soupes, currys, marinades et même les desserts."},
+        {"question": "Le gingembre frais ou moulu: lequel choisir ?", "reponse": "Le gingembre frais est plus vif; le moulu est plus rond et pratique en pâtisserie."}
+      ]
+    },
+    "en": {
+      "name": "Ginger",
+      "origine_histoire": "Ginger originates from Asia and has been used for centuries in cooking and drinks. Its flavor is spicy, fresh, and citrusy.",
+      "utilisation_aliments": ["stir-fries", "curries", "soups", "marinades", "baking", "drinks"],
+      "bienfaits": ["adds brightness", "fresh aroma", "works in sweet and savory"],
+      "intensite": 4,
+      "conservation": "Fresh: refrigerate (or freeze). Powder: airtight and dry.",
+      "substitutions": ["galangal (different)", "ground ginger", "lemon zest + pepper (light)"],
+      "faq": [
+        {"question": "What foods pair well with ginger?", "reponse": "Ginger is great in stir-fries, soups, curries, marinades, and even desserts."},
+        {"question": "Fresh ginger vs ground ginger: which should you use?", "reponse": "Fresh ginger is brighter and sharper; ground ginger is warmer and convenient for baking."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Graines de moutarde jaune",
+      "origine_histoire": "Les graines de moutarde sont utilisées depuis l'Antiquité en Europe et en Asie. La moutarde jaune est plus douce que la noire.",
+      "utilisation_aliments": ["pickles", "vinaigrettes", "sauces", "marinades", "currys", "choux"],
+      "bienfaits": ["croquant quand entières", "donne du caractère", "base de nombreuses moutardes"],
+      "intensite": 3,
+      "conservation": "Graines entières en pot hermétique, au sec. Moudre juste avant usage si possible.",
+      "substitutions": ["graines de moutarde brune", "moutarde de Dijon (diluée)", "poudre de moutarde"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser les graines de moutarde jaune ?", "reponse": "Elles sont parfaites dans les pickles, vinaigrettes, sauces et marinades."},
+        {"question": "Faut-il torréfier les graines de moutarde jaune ?", "reponse": "Tu peux les torréfier légèrement pour un goût plus rond, ou les utiliser telles quelles pour du croquant."}
+      ]
+    },
+    "en": {
+      "name": "Yellow mustard seed",
+      "origine_histoire": "Mustard seeds have been used since ancient times in Europe and Asia. Yellow mustard is milder than black mustard.",
+      "utilisation_aliments": ["pickles", "vinaigrettes", "sauces", "marinades", "curries", "cabbage dishes"],
+      "bienfaits": ["adds crunch when whole", "brings character", "base for many mustards"],
+      "intensite": 3,
+      "conservation": "Store whole seeds airtight and dry. Grind just before use if possible.",
+      "substitutions": ["brown mustard seed", "Dijon mustard (diluted)", "mustard powder"],
+      "faq": [
+        {"question": "What foods pair well with yellow mustard seed?", "reponse": "They're great in pickles, vinaigrettes, sauces, and marinades."},
+        {"question": "Should you toast yellow mustard seeds?", "reponse": "You can lightly toast them for a rounder flavor, or use them as-is for crunch."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Graines de moutarde noire",
+      "origine_histoire": "Très utilisées en Inde (tempering) et dans certains pickles, les graines de moutarde noire ont un goût plus intense que la jaune.",
+      "utilisation_aliments": ["currys", "plats indiens", "pickles", "choux", "légumes sautés", "marinades"],
+      "bienfaits": ["arôme plus puissant", "donne une note piquante", "excellent en cuisson rapide au début"],
+      "intensite": 4,
+      "conservation": "Pot hermétique au sec, à l'abri de la lumière.",
+      "substitutions": ["graines de moutarde brune", "graines de moutarde jaune (plus douce)", "poudre de moutarde (avec prudence)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser les graines de moutarde noire ?", "reponse": "Elles sont parfaites pour les currys, légumes sautés, plats indiens et pickles."},
+        {"question": "Pourquoi les graines de moutarde noire éclatent dans la poêle ?", "reponse": "Chauffées dans l'huile, elles libèrent leur arôme et peuvent \"popper\", c'est normal en cuisine indienne."}
+      ]
+    },
+    "en": {
+      "name": "Black mustard seed",
+      "origine_histoire": "Common in Indian cooking (tempering) and pickling, black mustard seeds are stronger than yellow mustard seeds.",
+      "utilisation_aliments": ["curries", "Indian dishes", "pickles", "cabbage dishes", "stir-fried vegetables", "marinades"],
+      "bienfaits": ["stronger aroma", "adds pungency", "great when quickly fried at the start"],
+      "intensite": 4,
+      "conservation": "Store airtight in a dry place away from light.",
+      "substitutions": ["brown mustard seed", "yellow mustard seed (milder)", "mustard powder (carefully)"],
+      "faq": [
+        {"question": "What foods pair well with black mustard seed?", "reponse": "They're perfect for curries, stir-fried vegetables, Indian dishes, and pickles."},
+        {"question": "Why do black mustard seeds pop in the pan?", "reponse": "When heated in oil, they release aroma and may pop—this is normal in Indian tempering."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Graines de nigelle",
+      "origine_histoire": "Aussi appelée \"cumin noir\" (à ne pas confondre avec le cumin), la nigelle est utilisée au Moyen-Orient et en Asie du Sud. Son goût est légèrement poivré et toasté.",
+      "utilisation_aliments": ["pain", "naan", "salades", "légumes", "pickles", "fromages"],
+      "bienfaits": ["note toastée", "arôme original", "super sur les pains"],
+      "intensite": 3,
+      "conservation": "Graines entières en pot hermétique, au sec, à l'abri de la lumière.",
+      "substitutions": ["sésame noir", "carvi (profil différent)", "cumin (différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la nigelle ?", "reponse": "La nigelle est excellente sur les pains, dans les salades, pickles et légumes rôtis."},
+        {"question": "La nigelle est-elle la même chose que le cumin noir ?", "reponse": "Non, on l'appelle parfois cumin noir, mais c'est une épice différente du cumin."}
+      ]
+    },
+    "en": {
+      "name": "Nigella seed",
+      "origine_histoire": "Also called \"black seed\" and sometimes (confusingly) \"black cumin,\" nigella is used in the Middle East and South Asia. Its flavor is lightly peppery and toasted.",
+      "utilisation_aliments": ["bread", "naan", "salads", "vegetables", "pickles", "cheese"],
+      "bienfaits": ["toasty note", "distinct aroma", "excellent on breads"],
+      "intensite": 3,
+      "conservation": "Store whole seeds airtight, dry, away from light.",
+      "substitutions": ["black sesame", "caraway (different)", "cumin (different)"],
+      "faq": [
+        {"question": "What foods pair well with nigella seed?", "reponse": "Nigella seed is great on breads, in salads, pickles, and roasted vegetables."},
+        {"question": "Is nigella seed the same as black cumin?", "reponse": "No—it's sometimes called that, but it's different from true cumin."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Muscade",
+      "origine_histoire": "Originaire des îles Banda (Indonésie), la muscade est une épice classique de la cuisine européenne et créole, souvent associée aux plats crémeux.",
+      "utilisation_aliments": ["béchamel", "purées", "gratin", "pâtisseries", "légumes", "plats crémeux"],
+      "bienfaits": ["arôme chaud", "donne de la rondeur", "excellent dans les sauces blanches"],
+      "intensite": 4,
+      "conservation": "Idéalement en noix entière à râper; en poudre: pot hermétique au sec (perd plus vite son arôme).",
+      "substitutions": ["macis (plus doux)", "pincée de cannelle (différent)", "quatre-épices (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la muscade ?", "reponse": "La muscade est parfaite dans la béchamel, purées, gratins et plats crémeux."},
+        {"question": "Muscade entière ou muscade moulue: quoi choisir ?", "reponse": "La muscade entière garde mieux l'arôme; la moulue est pratique mais moins parfumée avec le temps."}
+      ]
+    },
+    "en": {
+      "name": "Nutmeg",
+      "origine_histoire": "Nutmeg originates from the Banda Islands (Indonesia). It's a classic in European and Creole cooking, especially in creamy dishes.",
+      "utilisation_aliments": ["béchamel", "mashed dishes", "gratin", "baking", "vegetables", "creamy dishes"],
+      "bienfaits": ["warm aroma", "adds roundness", "excellent in white sauces"],
+      "intensite": 4,
+      "conservation": "Best as whole nutmeg to grate; powder: airtight and dry (aroma fades faster).",
+      "substitutions": ["mace (milder)", "pinch of cinnamon (different)", "four-spice blend (light)"],
+      "faq": [
+        {"question": "What foods pair well with nutmeg?", "reponse": "Nutmeg is perfect in béchamel, mashed dishes, gratins, and creamy recipes."},
+        {"question": "Whole nutmeg vs ground nutmeg: which should you use?", "reponse": "Whole nutmeg keeps aroma longer; ground nutmeg is convenient but fades over time."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Paprika fumé",
+      "origine_histoire": "Très associé à l'Espagne (pimentón), le paprika fumé est obtenu à partir de piments séchés puis fumés, donnant une saveur profonde et boisée.",
+      "utilisation_aliments": ["viandes", "BBQ", "pommes de terre", "légumes rôtis", "soupes", "sauces"],
+      "bienfaits": ["note fumée", "couleur rouge", "donne un effet \"BBQ\" sans fumoir"],
+      "intensite": 3,
+      "conservation": "Pot hermétique, au sec, à l'abri de la lumière; utiliser dans l'année pour un maximum d'arôme.",
+      "substitutions": ["paprika doux + pincée de sel fumé", "chipotle en poudre (plus piquant)", "pimentón (équivalent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le paprika fumé ?", "reponse": "Le paprika fumé est excellent sur viandes, BBQ, patates, légumes rôtis et sauces."},
+        {"question": "Le paprika fumé est-il piquant ?", "reponse": "Souvent il est doux ou modéré; l'intensité dépend de la version (doux, agridulce, piquant)."}
+      ]
+    },
+    "en": {
+      "name": "Smoked paprika",
+      "origine_histoire": "Strongly associated with Spain (pimentón), smoked paprika is made from peppers that are dried and smoked, creating a deep, woody flavor.",
+      "utilisation_aliments": ["meats", "BBQ", "potatoes", "roasted vegetables", "soups", "sauces"],
+      "bienfaits": ["smoky note", "red color", "adds BBQ character without a smoker"],
+      "intensite": 3,
+      "conservation": "Store airtight, dry, away from light; use within a year for best aroma.",
+      "substitutions": ["sweet paprika + pinch of smoked salt", "chipotle powder (hotter)", "pimentón (equivalent)"],
+      "faq": [
+        {"question": "What foods pair well with smoked paprika?", "reponse": "Smoked paprika is excellent on meats, BBQ, potatoes, roasted vegetables, and sauces."},
+        {"question": "Is smoked paprika spicy?", "reponse": "Often it's mild to medium; heat depends on the variety (sweet, bittersweet, hot)."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Poivre noir",
+      "origine_histoire": "Originaire de la côte de Malabar (Inde), le poivre noir est l'une des épices les plus échangées de l'histoire. Il apporte chaleur et piquant aromatique.",
+      "utilisation_aliments": ["viandes", "poissons", "œufs", "légumes", "soupes", "sauces"],
+      "bienfaits": ["rehausse presque tous les plats", "arôme chaud", "très polyvalent"],
+      "intensite": 4,
+      "conservation": "Idéalement en grains, dans un pot hermétique à l'abri de la lumière. Moudre au dernier moment.",
+      "substitutions": ["poivre blanc", "poivre long (différent)", "piment doux (différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le poivre noir ?", "reponse": "Le poivre noir va avec presque tout: viandes, poissons, légumes, œufs, soupes et sauces."},
+        {"question": "Poivre noir en grains ou moulu: que choisir ?", "reponse": "Le poivre noir en grains garde beaucoup mieux son parfum; moulu, il perd plus vite ses arômes."}
+      ]
+    },
+    "en": {
+      "name": "Black pepper",
+      "origine_histoire": "Native to India's Malabar Coast, black pepper has been one of the most traded spices in history, adding warmth and aromatic heat.",
+      "utilisation_aliments": ["meats", "fish", "eggs", "vegetables", "soups", "sauces"],
+      "bienfaits": ["lifts most dishes", "warm aroma", "very versatile"],
+      "intensite": 4,
+      "conservation": "Best kept as whole peppercorns in an airtight container away from light. Grind just before use.",
+      "substitutions": ["white pepper", "long pepper (different)", "mild chili (different)"],
+      "faq": [
+        {"question": "What foods pair well with black pepper?", "reponse": "Black pepper works with almost anything: meats, fish, vegetables, eggs, soups, and sauces."},
+        {"question": "Whole black peppercorns or ground black pepper—what's better?", "reponse": "Whole peppercorns keep aroma longer; ground pepper loses fragrance faster."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Poivre blanc",
+      "origine_histoire": "Le poivre blanc provient des mêmes baies que le poivre noir, mais il est décortiqué. Son goût est plus rond et discret visuellement dans les sauces claires.",
+      "utilisation_aliments": ["sauces blanches", "purées", "poissons", "volailles", "soupes", "plats crémeux"],
+      "bienfaits": ["parfume sans tacher", "goût plus doux", "idéal pour sauces claires"],
+      "intensite": 3,
+      "conservation": "En grains, pot hermétique au sec; moudre au besoin.",
+      "substitutions": ["poivre noir (plus marqué)", "poivre vert (plus frais)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le poivre blanc ?", "reponse": "Le poivre blanc est parfait dans les sauces blanches, purées, poissons et plats crémeux."},
+        {"question": "Pourquoi choisir le poivre blanc plutôt que le poivre noir ?", "reponse": "Le poivre blanc est plus discret et ne laisse pas de points noirs dans les sauces claires."}
+      ]
+    },
+    "en": {
+      "name": "White pepper",
+      "origine_histoire": "White pepper comes from the same berries as black pepper but is de-husked. It's milder and visually discreet in light sauces.",
+      "utilisation_aliments": ["white sauces", "mashed dishes", "fish", "poultry", "soups", "creamy dishes"],
+      "bienfaits": ["adds flavor without specks", "milder profile", "great for light sauces"],
+      "intensite": 3,
+      "conservation": "Store as whole peppercorns airtight and dry; grind as needed.",
+      "substitutions": ["black pepper (bolder)", "green peppercorn (fresher)"],
+      "faq": [
+        {"question": "What foods pair well with white pepper?", "reponse": "White pepper is great in white sauces, mashed dishes, fish, and creamy recipes."},
+        {"question": "Why choose white pepper instead of black pepper?", "reponse": "White pepper is more discreet and doesn't leave black specks in pale sauces."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Poivre vert",
+      "origine_histoire": "Le poivre vert est récolté avant maturité. Il a une saveur plus fraîche et végétale que le poivre noir, très apprécié dans certaines sauces.",
+      "utilisation_aliments": ["sauce au poivre", "steaks", "volailles", "poissons", "légumes", "marinades"],
+      "bienfaits": ["note fraîche", "moins piquant", "excellent en sauce"],
+      "intensite": 3,
+      "conservation": "En grains séchés: pot hermétique au sec. En saumure: réfrigérer après ouverture.",
+      "substitutions": ["poivre noir (plus chaud)", "baies roses (plus fruité, différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le poivre vert ?", "reponse": "Le poivre vert est excellent dans les sauces au poivre, avec steaks, volailles et poissons."},
+        {"question": "Poivre vert en saumure ou sec: quelle différence ?", "reponse": "En saumure il est plus doux et tendre; sec, il est plus concentré et aromatique."}
+      ]
+    },
+    "en": {
+      "name": "Green peppercorn",
+      "origine_histoire": "Green peppercorns are harvested unripe. They taste fresher and more herbal than black pepper, especially popular in pepper sauces.",
+      "utilisation_aliments": ["pepper sauce", "steaks", "poultry", "fish", "vegetables", "marinades"],
+      "bienfaits": ["fresh note", "less pungent", "excellent in sauces"],
+      "intensite": 3,
+      "conservation": "Dried: store airtight and dry. Brined: refrigerate after opening.",
+      "substitutions": ["black pepper (warmer)", "pink peppercorns (fruitier, different)"],
+      "faq": [
+        {"question": "What foods pair well with green peppercorn?", "reponse": "Green peppercorn is excellent in pepper sauce, with steaks, poultry, and fish."},
+        {"question": "Brined green peppercorn vs dried—what's the difference?", "reponse": "Brined is softer and milder; dried is more concentrated and aromatic."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Piment de Cayenne",
+      "origine_histoire": "Le piment de Cayenne est lié aux cuisines des Amériques et a été diffusé mondialement après les grandes explorations. Il apporte un piquant franc.",
+      "utilisation_aliments": ["soupes", "sauces", "marinades", "viandes", "légumes", "plats mijotés"],
+      "bienfaits": ["donne du piquant", "réveille les plats", "facile à doser en poudre"],
+      "intensite": 5,
+      "conservation": "Poudre en pot hermétique, au sec et à l'abri de la lumière.",
+      "substitutions": ["piment en poudre (chili powder)", "piment d'Espelette (plus doux)", "paprika piquant (variable)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le piment de Cayenne ?", "reponse": "Le piment de Cayenne est parfait dans les sauces, soupes, marinades et plats mijotés."},
+        {"question": "Comment doser le piment de Cayenne sans trop piquer ?", "reponse": "Commence par une petite pincée, goûte, puis ajuste graduellement."}
+      ]
+    },
+    "en": {
+      "name": "Cayenne pepper",
+      "origine_histoire": "Cayenne pepper is tied to the cuisines of the Americas and spread worldwide after early exploration. It brings clean, sharp heat.",
+      "utilisation_aliments": ["soups", "sauces", "marinades", "meats", "vegetables", "stews"],
+      "bienfaits": ["adds heat", "wakes up dishes", "easy to dose as powder"],
+      "intensite": 5,
+      "conservation": "Store powder airtight, dry, away from light.",
+      "substitutions": ["chili powder blend", "Espelette pepper (milder)", "hot paprika (varies)"],
+      "faq": [
+        {"question": "What foods pair well with cayenne pepper?", "reponse": "Cayenne pepper is great in sauces, soups, marinades, and stews."},
+        {"question": "How do you use cayenne pepper without making food too hot?", "reponse": "Start with a small pinch, taste, then increase gradually."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Piment d'Espelette",
+      "origine_histoire": "Originaire du Pays basque, le piment d'Espelette est une AOP française connue pour son piquant modéré et ses arômes fruités.",
+      "utilisation_aliments": ["œufs", "viandes", "poissons", "légumes", "fromages", "sauces"],
+      "bienfaits": ["piquant modéré", "arôme fruité", "remplace le poivre avec style"],
+      "intensite": 2,
+      "conservation": "Poudre en pot hermétique, au sec, loin de la lumière pour préserver couleur et parfum.",
+      "substitutions": ["paprika doux + pincée de piment", "piment doux (moins piquant)", "cayenne (plus fort, très léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le piment d'Espelette ?", "reponse": "Le piment d'Espelette est top sur les œufs, viandes, poissons, légumes et fromages."},
+        {"question": "Le piment d'Espelette remplace-t-il le poivre ?", "reponse": "Oui, souvent: il apporte une chaleur douce et un parfum fruité."}
+      ]
+    },
+    "en": {
+      "name": "Espelette pepper",
+      "origine_histoire": "From France's Basque Country, Espelette pepper is known for mild heat and fruity aromas (often protected by designation in France).",
+      "utilisation_aliments": ["eggs", "meats", "fish", "vegetables", "cheese", "sauces"],
+      "bienfaits": ["mild heat", "fruity aroma", "stylish alternative to pepper"],
+      "intensite": 2,
+      "conservation": "Keep powder airtight, dry, and away from light to preserve color and aroma.",
+      "substitutions": ["sweet paprika + pinch of chili", "mild chili (less heat)", "cayenne (stronger—use very lightly)"],
+      "faq": [
+        {"question": "What foods pair well with Espelette pepper?", "reponse": "Espelette pepper is great on eggs, meats, fish, vegetables, and cheese."},
+        {"question": "Can Espelette pepper replace black pepper?", "reponse": "Often yes—it adds gentle warmth and a fruity aroma."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Sumac",
+      "origine_histoire": "Très utilisé au Levant (Moyen-Orient), le sumac est une épice rouge et acidulée faite de baies séchées, parfaite pour remplacer le citron.",
+      "utilisation_aliments": ["salades", "poulet", "poissons", "houmous", "légumes", "marinades"],
+      "bienfaits": ["acidité citronnée", "rafraîchit les plats", "super en finition"],
+      "intensite": 2,
+      "conservation": "Conserver au sec dans un pot hermétique, loin de la chaleur et de la lumière.",
+      "substitutions": ["jus de citron (en fin)", "amchoor (acidité fruitée)", "vinaigre doux (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le sumac ?", "reponse": "Le sumac est excellent sur salades, poulet, poisson, houmous et légumes grillés."},
+        {"question": "Quand ajouter le sumac dans une recette ?", "reponse": "Ajoute le sumac plutôt en fin de cuisson ou au service pour garder son côté acidulé."}
+      ]
+    },
+    "en": {
+      "name": "Sumac",
+      "origine_histoire": "Widely used in the Levant, sumac is a tangy red spice made from dried berries—great as a lemony finishing touch.",
+      "utilisation_aliments": ["salads", "chicken", "fish", "hummus", "vegetables", "marinades"],
+      "bienfaits": ["lemony tang", "brightens dishes", "great as a finish"],
+      "intensite": 2,
+      "conservation": "Store airtight, dry, away from heat and light.",
+      "substitutions": ["lemon juice (at the end)", "amchoor (fruity tang)", "mild vinegar (light)"],
+      "faq": [
+        {"question": "What foods pair well with sumac?", "reponse": "Sumac is excellent on salads, chicken, fish, hummus, and grilled vegetables."},
+        {"question": "When should you add sumac to a recipe?", "reponse": "Add sumac near the end or at serving time to preserve its tangy brightness."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Sésame",
+      "origine_histoire": "Cultivé depuis des milliers d'années en Afrique et en Asie, le sésame est une graine très utilisée dans les cuisines du Moyen-Orient, d'Asie et d'Afrique.",
+      "utilisation_aliments": ["salades", "woks", "pains", "tahini", "poissons", "légumes"],
+      "bienfaits": ["saveur noisette", "apporte du croquant", "excellent grillé"],
+      "intensite": 2,
+      "conservation": "Conserver au sec en pot hermétique. Les graines grillées se conservent moins longtemps; éviter la chaleur.",
+      "substitutions": ["graines de tournesol", "graines de pavot (différent)", "amandes concassées (différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le sésame ?", "reponse": "Le sésame est parfait sur salades, woks, pains, poissons et légumes, surtout grillé."},
+        {"question": "Faut-il griller le sésame avant usage ?", "reponse": "Oui, le sésame grillé développe un goût plus noisette et plus parfumé."}
+      ]
+    },
+    "en": {
+      "name": "Sesame",
+      "origine_histoire": "Cultivated for thousands of years in Africa and Asia, sesame is widely used across Middle Eastern, Asian, and African cuisines.",
+      "utilisation_aliments": ["salads", "stir-fries", "bread", "tahini", "fish", "vegetables"],
+      "bienfaits": ["nutty flavor", "adds crunch", "excellent toasted"],
+      "intensite": 2,
+      "conservation": "Store airtight and dry. Toasted seeds keep for less time; avoid heat.",
+      "substitutions": ["sunflower seeds", "poppy seeds (different)", "crushed almonds (different)"],
+      "faq": [
+        {"question": "What foods pair well with sesame?", "reponse": "Sesame is great on salads, stir-fries, breads, fish, and vegetables—especially toasted."},
+        {"question": "Should you toast sesame before using it?", "reponse": "Yes—toasting brings out a deeper nutty aroma and flavor."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Vanille",
+      "origine_histoire": "La vanille vient à l'origine du Mexique, puis a été cultivée dans l'océan Indien (Madagascar, Réunion). C'est l'une des épices les plus précieuses en pâtisserie.",
+      "utilisation_aliments": ["crèmes", "gâteaux", "biscuits", "glaces", "boissons", "fruits"],
+      "bienfaits": ["arôme doux et rond", "parfum très apprécié", "rehausse les desserts"],
+      "intensite": 3,
+      "conservation": "Gousses: dans un tube hermétique à l'abri de la chaleur; extrait: bien fermé. Éviter le réfrigérateur pour les gousses (souvent trop humide).",
+      "substitutions": ["extrait de vanille", "pâte de vanille", "sucre vanillé"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la vanille ?", "reponse": "La vanille est parfaite dans crèmes, gâteaux, biscuits, glaces, boissons et salades de fruits."},
+        {"question": "Comment conserver la vanille pour garder son parfum ?", "reponse": "Garde la vanille (gousses) dans un tube hermétique au sec, loin de la chaleur et de la lumière."}
+      ]
+    },
+    "en": {
+      "name": "Vanilla",
+      "origine_histoire": "Vanilla originated in Mexico and later spread to the Indian Ocean (Madagascar, Réunion). It's one of the most prized spices in baking.",
+      "utilisation_aliments": ["custards", "cakes", "cookies", "ice cream", "drinks", "fruit"],
+      "bienfaits": ["smooth sweet aroma", "highly appreciated fragrance", "elevates desserts"],
+      "intensite": 3,
+      "conservation": "Beans: store in an airtight tube away from heat; extract: keep tightly closed. Avoid refrigerating beans (humidity risk).",
+      "substitutions": ["vanilla extract", "vanilla paste", "vanilla sugar"],
+      "faq": [
+        {"question": "What foods pair well with vanilla?", "reponse": "Vanilla is perfect in custards, cakes, cookies, ice cream, drinks, and fruit salads."},
+        {"question": "How do you store vanilla to keep its aroma?", "reponse": "Store vanilla beans airtight in a dry place away from heat and light."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Thym",
+      "origine_histoire": "Le thym est une herbe méditerranéenne utilisée depuis l'Antiquité pour parfumer les plats et conserver les aliments.",
+      "utilisation_aliments": ["viandes", "volailles", "poissons", "légumes", "soupes", "plats mijotés"],
+      "bienfaits": ["arôme herbacé", "supporte bien la cuisson longue", "très polyvalent"],
+      "intensite": 3,
+      "conservation": "Séché en pot hermétique à l'abri de la lumière; frais au réfrigérateur, bien enveloppé.",
+      "substitutions": ["origan", "sarriette", "herbes de Provence"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le thym ?", "reponse": "Le thym est idéal pour les viandes, légumes rôtis, soupes et plats mijotés."},
+        {"question": "Le thym frais ou séché est-il meilleur ?", "reponse": "Le thym séché est plus concentré; le frais est plus doux et végétal."}
+      ]
+    },
+    "en": {
+      "name": "Thyme",
+      "origine_histoire": "Thyme is a Mediterranean herb used since ancient times to flavor dishes and help preserve foods.",
+      "utilisation_aliments": ["meats", "poultry", "fish", "vegetables", "soups", "stews"],
+      "bienfaits": ["herbal aroma", "handles long cooking well", "very versatile"],
+      "intensite": 3,
+      "conservation": "Dried: airtight away from light; fresh: refrigerated and wrapped.",
+      "substitutions": ["oregano", "savory", "herbes de Provence"],
+      "faq": [
+        {"question": "What foods pair well with thyme?", "reponse": "Thyme works well with meats, roasted vegetables, soups, and stews."},
+        {"question": "Is fresh or dried thyme better?", "reponse": "Dried thyme is more concentrated; fresh thyme is milder and greener."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Laurier",
+      "origine_histoire": "Le laurier-sauce est utilisé depuis l'Antiquité en Méditerranée pour parfumer les plats mijotés et les bouillons.",
+      "utilisation_aliments": ["bouillons", "ragoûts", "sauces", "plats mijotés", "marinades"],
+      "bienfaits": ["parfum discret", "apporte de la profondeur", "indispensable en cuisson longue"],
+      "intensite": 2,
+      "conservation": "Feuilles séchées en pot hermétique à l'abri de la lumière.",
+      "substitutions": ["feuilles de laurier frais", "thym (profil différent)", "origan (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le laurier ?", "reponse": "Le laurier est parfait dans les bouillons, ragoûts et plats mijotés."},
+        {"question": "Faut-il retirer le laurier avant de servir ?", "reponse": "Oui, les feuilles de laurier se retirent avant service car elles sont dures."}
+      ]
+    },
+    "en": {
+      "name": "Bay leaf",
+      "origine_histoire": "Bay leaf has been used since antiquity in Mediterranean cooking to flavor stews and broths.",
+      "utilisation_aliments": ["broths", "stews", "sauces", "slow-cooked dishes", "marinades"],
+      "bienfaits": ["subtle aroma", "adds depth", "essential for long cooking"],
+      "intensite": 2,
+      "conservation": "Store dried leaves airtight away from light.",
+      "substitutions": ["fresh bay leaf", "thyme (different profile)", "oregano (light)"],
+      "faq": [
+        {"question": "What foods pair well with bay leaf?", "reponse": "Bay leaf is perfect for broths, stews, and slow-cooked dishes."},
+        {"question": "Should bay leaves be removed before serving?", "reponse": "Yes—bay leaves are tough and should be removed before serving."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Origan",
+      "origine_histoire": "Très utilisé en Italie et en Grèce, l'origan est une herbe méditerranéenne emblématique des cuisines du sud.",
+      "utilisation_aliments": ["pizzas", "sauces tomate", "viandes", "légumes", "salades"],
+      "bienfaits": ["arôme puissant", "parfait avec la tomate", "donne une touche méditerranéenne"],
+      "intensite": 3,
+      "conservation": "Séché en pot hermétique; frais au réfrigérateur.",
+      "substitutions": ["marjolaine", "thym", "herbes de Provence"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'origan ?", "reponse": "L'origan est idéal avec les pizzas, sauces tomate, viandes et légumes."},
+        {"question": "Origan frais ou séché: lequel choisir ?", "reponse": "L'origan séché est plus concentré; le frais est plus herbacé."}
+      ]
+    },
+    "en": {
+      "name": "Oregano",
+      "origine_histoire": "Widely used in Italy and Greece, oregano is a signature Mediterranean herb.",
+      "utilisation_aliments": ["pizza", "tomato sauces", "meats", "vegetables", "salads"],
+      "bienfaits": ["bold aroma", "perfect with tomatoes", "Mediterranean character"],
+      "intensite": 3,
+      "conservation": "Dried airtight; fresh refrigerated.",
+      "substitutions": ["marjoram", "thyme", "herbes de Provence"],
+      "faq": [
+        {"question": "What foods pair well with oregano?", "reponse": "Oregano is ideal with pizza, tomato sauces, meats, and vegetables."},
+        {"question": "Fresh or dried oregano—what's better?", "reponse": "Dried oregano is stronger; fresh oregano is greener and milder."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Romarin",
+      "origine_histoire": "Le romarin est une herbe méditerranéenne aromatique associée aux grillades et aux plats rôtis.",
+      "utilisation_aliments": ["agneau", "poulet", "pommes de terre", "légumes rôtis", "focaccia"],
+      "bienfaits": ["arôme boisé", "supporte bien la chaleur", "parfait pour rôtis"],
+      "intensite": 4,
+      "conservation": "Frais: réfrigérateur; séché: pot hermétique au sec.",
+      "substitutions": ["thym", "sauge", "origan (différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le romarin ?", "reponse": "Le romarin est excellent avec l'agneau, le poulet, les pommes de terre et les légumes rôtis."},
+        {"question": "Le romarin est-il très fort ?", "reponse": "Oui, il est assez puissant; mieux vaut l'utiliser avec parcimonie."}
+      ]
+    },
+    "en": {
+      "name": "Rosemary",
+      "origine_histoire": "Rosemary is a Mediterranean herb closely associated with roasting and grilling.",
+      "utilisation_aliments": ["lamb", "chicken", "potatoes", "roasted vegetables", "focaccia"],
+      "bienfaits": ["woody aroma", "handles high heat", "perfect for roasts"],
+      "intensite": 4,
+      "conservation": "Fresh refrigerated; dried airtight.",
+      "substitutions": ["thyme", "sage", "oregano (different)"],
+      "faq": [
+        {"question": "What foods pair well with rosemary?", "reponse": "Rosemary is excellent with lamb, chicken, potatoes, and roasted vegetables."},
+        {"question": "Is rosemary very strong?", "reponse": "Yes—it's fairly strong, so use it sparingly."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Herbes de Provence",
+      "origine_histoire": "Mélange emblématique du sud de la France, les herbes de Provence regroupent généralement thym, romarin, origan et sarriette.",
+      "utilisation_aliments": ["viandes grillées", "légumes", "poulet", "sauces", "plats méditerranéens"],
+      "bienfaits": ["mélange équilibré", "saveur ensoleillée", "facile à utiliser"],
+      "intensite": 3,
+      "conservation": "Conserver au sec en pot hermétique, à l'abri de la lumière.",
+      "substitutions": ["thym + origan", "romarin + sarriette", "mélange d'herbes méditerranéennes"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser les herbes de Provence ?", "reponse": "Les herbes de Provence sont parfaites pour viandes grillées, légumes et plats méditerranéens."},
+        {"question": "Peut-on cuire longtemps les herbes de Provence ?", "reponse": "Oui, elles supportent bien la cuisson, surtout dans les plats mijotés."}
+      ]
+    },
+    "en": {
+      "name": "Herbes de Provence",
+      "origine_histoire": "A classic blend from southern France, herbes de Provence usually combine thyme, rosemary, oregano, and savory.",
+      "utilisation_aliments": ["grilled meats", "vegetables", "chicken", "sauces", "Mediterranean dishes"],
+      "bienfaits": ["balanced blend", "sunny flavor", "easy to use"],
+      "intensite": 3,
+      "conservation": "Store airtight, dry, away from light.",
+      "substitutions": ["thyme + oregano", "rosemary + savory", "Mediterranean herb blend"],
+      "faq": [
+        {"question": "What foods pair well with herbes de Provence?", "reponse": "They're perfect for grilled meats, vegetables, and Mediterranean dishes."},
+        {"question": "Can herbes de Provence handle long cooking?", "reponse": "Yes—they work well in both grilling and slow-cooked recipes."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Za'atar",
+      "origine_histoire": "Le za'atar est un mélange du Moyen-Orient à base de thym, sumac et sésame. Il est très utilisé au Liban et en Palestine.",
+      "utilisation_aliments": ["pain", "houmous", "salades", "légumes", "poulet", "yaourt"],
+      "bienfaits": ["note herbacée et citronnée", "excellent en finition", "mélange très aromatique"],
+      "intensite": 3,
+      "conservation": "Pot hermétique au sec; éviter l'humidité pour préserver le sésame.",
+      "substitutions": ["thym + sumac + sésame", "herbes de Provence + citron (approx.)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le za'atar ?", "reponse": "Le za'atar est parfait sur le pain, le houmous, les salades et le poulet."},
+        {"question": "Le za'atar se cuit-il ou s'utilise-t-il cru ?", "reponse": "Les deux: souvent en finition, mais aussi en cuisson douce."}
+      ]
+    },
+    "en": {
+      "name": "Za'atar",
+      "origine_histoire": "Za'atar is a Middle Eastern blend made of thyme, sumac, and sesame, widely used in Lebanon and Palestine.",
+      "utilisation_aliments": ["bread", "hummus", "salads", "vegetables", "chicken", "yogurt"],
+      "bienfaits": ["herbal lemony note", "great finishing spice", "highly aromatic blend"],
+      "intensite": 3,
+      "conservation": "Store airtight and dry; avoid moisture to protect sesame.",
+      "substitutions": ["thyme + sumac + sesame", "herbes de Provence + lemon (approx.)"],
+      "faq": [
+        {"question": "What foods pair well with za'atar?", "reponse": "Za'atar is perfect on bread, hummus, salads, and chicken."},
+        {"question": "Is za'atar used cooked or raw?", "reponse": "Both—often as a finishing spice, but also gently cooked."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Ras el hanout",
+      "origine_histoire": "Ras el hanout est un mélange nord-africain complexe pouvant contenir plus de 20 épices, utilisé surtout au Maroc.",
+      "utilisation_aliments": ["tajines", "couscous", "viandes", "légumes", "riz"],
+      "bienfaits": ["mélange riche et chaud", "donne de la profondeur", "signature de la cuisine maghrébine"],
+      "intensite": 4,
+      "conservation": "Conserver au sec dans un pot hermétique, à l'abri de la lumière.",
+      "substitutions": ["garam masala (différent)", "curry doux (différent)", "mélange maison"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le ras el hanout ?", "reponse": "Le ras el hanout est parfait pour tajines, couscous, viandes et légumes."},
+        {"question": "Le ras el hanout est-il piquant ?", "reponse": "Il est plutôt chaud et aromatique; le piquant dépend du mélange."}
+      ]
+    },
+    "en": {
+      "name": "Ras el hanout",
+      "origine_histoire": "Ras el hanout is a complex North African blend—often with 20+ spices—especially associated with Moroccan cuisine.",
+      "utilisation_aliments": ["tagines", "couscous", "meats", "vegetables", "rice"],
+      "bienfaits": ["rich warm blend", "adds depth", "signature North African flavor"],
+      "intensite": 4,
+      "conservation": "Store airtight, dry, away from light.",
+      "substitutions": ["garam masala (different)", "mild curry (different)", "homemade blend"],
+      "faq": [
+        {"question": "What foods pair well with ras el hanout?", "reponse": "Ras el hanout is perfect for tagines, couscous, meats, and vegetables."},
+        {"question": "Is ras el hanout spicy?", "reponse": "It's aromatic and warm; heat depends on the specific blend."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Ail en poudre",
+      "origine_histoire": "L'ail en poudre est une forme déshydratée d'ail, développée pour une conservation longue et une utilisation rapide en cuisine moderne.",
+      "utilisation_aliments": ["marinades", "viandes", "légumes", "sauces", "frites", "mélanges d'épices"],
+      "bienfaits": ["pratique", "saveur constante", "se mélange facilement"],
+      "intensite": 3,
+      "conservation": "Conserver dans un pot hermétique, au sec et à l'abri de la lumière.",
+      "substitutions": ["ail frais", "ail granulé", "échalote en poudre"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'ail en poudre ?", "reponse": "L'ail en poudre est idéal pour les marinades, viandes, légumes et sauces rapides."},
+        {"question": "Quelle différence entre ail frais et ail en poudre ?", "reponse": "L'ail en poudre est plus doux et uniforme; l'ail frais est plus vif et piquant."}
+      ]
+    },
+    "en": {
+      "name": "Garlic powder",
+      "origine_histoire": "Garlic powder is dehydrated garlic, developed for long shelf life and convenience in modern cooking.",
+      "utilisation_aliments": ["marinades", "meats", "vegetables", "sauces", "fries", "spice blends"],
+      "bienfaits": ["convenient", "consistent flavor", "blends easily"],
+      "intensite": 3,
+      "conservation": "Store airtight, dry, away from light.",
+      "substitutions": ["fresh garlic", "granulated garlic", "shallot powder"],
+      "faq": [
+        {"question": "What foods pair well with garlic powder?", "reponse": "Garlic powder works well in marinades, meats, vegetables, and quick sauces."},
+        {"question": "What's the difference between fresh garlic and garlic powder?", "reponse": "Garlic powder is milder and consistent; fresh garlic is sharper and more pungent."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Oignon en poudre",
+      "origine_histoire": "L'oignon en poudre est issu d'oignons déshydratés, très utilisé dans les cuisines nord-américaines et les assaisonnements industriels.",
+      "utilisation_aliments": ["burgers", "sauces", "marinades", "viandes", "légumes", "snacks"],
+      "bienfaits": ["goût doux", "facile à doser", "idéal en mélange sec"],
+      "intensite": 2,
+      "conservation": "Pot hermétique au sec, à l'abri de la chaleur.",
+      "substitutions": ["oignon frais", "échalote en poudre", "oignon séché"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'oignon en poudre ?", "reponse": "L'oignon en poudre est parfait pour burgers, sauces, marinades et assaisonnements secs."},
+        {"question": "L'oignon en poudre remplace-t-il l'oignon frais ?", "reponse": "Oui pour le goût, mais pas pour la texture; il est surtout pratique en recettes rapides."}
+      ]
+    },
+    "en": {
+      "name": "Onion powder",
+      "origine_histoire": "Onion powder comes from dehydrated onions and is widely used in North American cooking and seasoning blends.",
+      "utilisation_aliments": ["burgers", "sauces", "marinades", "meats", "vegetables", "snacks"],
+      "bienfaits": ["mild flavor", "easy to dose", "great for dry mixes"],
+      "intensite": 2,
+      "conservation": "Store airtight, dry, away from heat.",
+      "substitutions": ["fresh onion", "shallot powder", "dried onion"],
+      "faq": [
+        {"question": "What foods pair well with onion powder?", "reponse": "Onion powder is perfect for burgers, sauces, marinades, and dry rubs."},
+        {"question": "Can onion powder replace fresh onion?", "reponse": "Yes for flavor, but not texture—it's best for quick or dry recipes."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Persil",
+      "origine_histoire": "Le persil est une herbe européenne utilisée depuis l'Antiquité, autant comme garniture que comme aromate.",
+      "utilisation_aliments": ["salades", "pommes de terre", "poissons", "soupes", "sauces", "omelettes"],
+      "bienfaits": ["saveur fraîche", "équilibre les plats", "excellent en finition"],
+      "intensite": 2,
+      "conservation": "Frais: réfrigérateur (dans un linge humide). Séché: pot hermétique.",
+      "substitutions": ["ciboulette", "cerfeuil", "coriandre feuille (différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le persil ?", "reponse": "Le persil est parfait sur salades, pommes de terre, poissons et sauces."},
+        {"question": "Quand ajouter le persil dans une recette ?", "reponse": "Ajoute-le en fin de cuisson pour préserver sa fraîcheur."}
+      ]
+    },
+    "en": {
+      "name": "Parsley",
+      "origine_histoire": "Parsley is a European herb used since ancient times, both as garnish and seasoning.",
+      "utilisation_aliments": ["salads", "potatoes", "fish", "soups", "sauces", "omelets"],
+      "bienfaits": ["fresh flavor", "balances dishes", "great as a finish"],
+      "intensite": 2,
+      "conservation": "Fresh: refrigerate wrapped in a damp towel. Dried: airtight.",
+      "substitutions": ["chives", "chervil", "cilantro (different)"],
+      "faq": [
+        {"question": "What foods pair well with parsley?", "reponse": "Parsley is perfect on salads, potatoes, fish, and sauces."},
+        {"question": "When should you add parsley to a recipe?", "reponse": "Add it near the end to keep its fresh flavor."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Ciboulette",
+      "origine_histoire": "La ciboulette est une herbe douce de la famille des alliacées, très utilisée en Europe pour sa saveur délicate.",
+      "utilisation_aliments": ["œufs", "fromages frais", "salades", "pommes de terre", "sauces"],
+      "bienfaits": ["saveur douce d'oignon", "apporte de la fraîcheur", "idéale crue"],
+      "intensite": 2,
+      "conservation": "Frais au réfrigérateur; ciselée, utiliser rapidement. Séchée: pot hermétique.",
+      "substitutions": ["oignon vert", "échalote (très fine)", "poireau jeune (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la ciboulette ?", "reponse": "La ciboulette est idéale avec les œufs, fromages frais, salades et pommes de terre."},
+        {"question": "La ciboulette supporte-t-elle la cuisson ?", "reponse": "Peu: elle est meilleure ajoutée crue ou en toute fin."}
+      ]
+    },
+    "en": {
+      "name": "Chives",
+      "origine_histoire": "Chives are a mild allium herb widely used in Europe for their delicate onion-like flavor.",
+      "utilisation_aliments": ["eggs", "fresh cheeses", "salads", "potatoes", "sauces"],
+      "bienfaits": ["mild onion flavor", "adds freshness", "best used raw"],
+      "intensite": 2,
+      "conservation": "Fresh refrigerated; once chopped, use quickly. Dried: airtight.",
+      "substitutions": ["green onion", "shallot (very fine)", "young leek (light)"],
+      "faq": [
+        {"question": "What foods pair well with chives?", "reponse": "Chives are ideal with eggs, fresh cheeses, salads, and potatoes."},
+        {"question": "Do chives handle cooking well?", "reponse": "Not much—they're best added raw or at the very end."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Basilic",
+      "origine_histoire": "Le basilic est une herbe emblématique de la cuisine italienne et asiatique, connue pour son parfum frais et sucré.",
+      "utilisation_aliments": ["tomates", "pâtes", "pesto", "salades", "poissons", "plats asiatiques"],
+      "bienfaits": ["arôme frais", "excellent cru", "parfait avec la tomate"],
+      "intensite": 3,
+      "conservation": "Frais: à température ambiante (tiges dans l'eau). Séché: pot hermétique.",
+      "substitutions": ["origan (différent)", "menthe (différent)", "persil (plus neutre)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le basilic ?", "reponse": "Le basilic est parfait avec tomates, pâtes, salades, poissons et plats asiatiques."},
+        {"question": "Le basilic supporte-t-il la cuisson ?", "reponse": "Peu: il est meilleur ajouté en fin de cuisson ou cru."}
+      ]
+    },
+    "en": {
+      "name": "Basil",
+      "origine_histoire": "Basil is a signature herb of Italian and Asian cuisines, known for its fresh, sweet aroma.",
+      "utilisation_aliments": ["tomatoes", "pasta", "pesto", "salads", "fish", "Asian dishes"],
+      "bienfaits": ["fresh aroma", "excellent raw", "perfect with tomatoes"],
+      "intensite": 3,
+      "conservation": "Fresh at room temperature (stems in water). Dried airtight.",
+      "substitutions": ["oregano (different)", "mint (different)", "parsley (milder)"],
+      "faq": [
+        {"question": "What foods pair well with basil?", "reponse": "Basil is perfect with tomatoes, pasta, salads, fish, and Asian dishes."},
+        {"question": "Does basil tolerate cooking?", "reponse": "Not much—it's best added at the end or used raw."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Menthe",
+      "origine_histoire": "La menthe est utilisée depuis l'Antiquité au Moyen-Orient, en Méditerranée et en Asie pour son parfum rafraîchissant.",
+      "utilisation_aliments": ["salades", "taboulé", "boissons", "desserts", "agneau", "yaourt"],
+      "bienfaits": ["saveur fraîche", "rafraîchissante", "polyvalente"],
+      "intensite": 3,
+      "conservation": "Frais au réfrigérateur dans un linge humide; séchée en pot hermétique.",
+      "substitutions": ["basilic (différent)", "mélisse", "coriandre feuille (différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la menthe ?", "reponse": "La menthe est parfaite dans les salades, boissons, desserts et plats d'agneau."},
+        {"question": "La menthe se cuisine-t-elle ?", "reponse": "Oui, mais elle est souvent meilleure crue ou ajoutée en fin de cuisson."}
+      ]
+    },
+    "en": {
+      "name": "Mint",
+      "origine_histoire": "Mint has been used since antiquity in the Middle East, Mediterranean, and Asia for its refreshing aroma.",
+      "utilisation_aliments": ["salads", "tabbouleh", "drinks", "desserts", "lamb", "yogurt"],
+      "bienfaits": ["fresh taste", "cooling effect", "very versatile"],
+      "intensite": 3,
+      "conservation": "Fresh refrigerated in a damp towel; dried airtight.",
+      "substitutions": ["basil (different)", "lemon balm", "cilantro (different)"],
+      "faq": [
+        {"question": "What foods pair well with mint?", "reponse": "Mint is perfect in salads, drinks, desserts, and lamb dishes."},
+        {"question": "Is mint usually cooked?", "reponse": "It can be, but it's often best used raw or added at the end."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Aneth",
+      "origine_histoire": "Très utilisé en Europe du Nord et de l'Est, l'aneth est une herbe au parfum anisé et frais, souvent associée au poisson.",
+      "utilisation_aliments": ["poissons", "saumon", "cornichons", "salades", "sauces", "pommes de terre"],
+      "bienfaits": ["arôme anisé frais", "parfait avec le poisson", "léger et parfumé"],
+      "intensite": 2,
+      "conservation": "Frais au réfrigérateur; séché en pot hermétique.",
+      "substitutions": ["fenouil vert", "estragon (différent)", "persil (plus neutre)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'aneth ?", "reponse": "L'aneth est parfait avec le poisson, le saumon, les cornichons et les sauces."},
+        {"question": "Quand ajouter l'aneth dans une recette ?", "reponse": "Ajoute-le en fin de cuisson pour conserver son arôme délicat."}
+      ]
+    },
+    "en": {
+      "name": "Dill",
+      "origine_histoire": "Widely used in Northern and Eastern Europe, dill has a fresh anise-like aroma and is often paired with fish.",
+      "utilisation_aliments": ["fish", "salmon", "pickles", "salads", "sauces", "potatoes"],
+      "bienfaits": ["fresh anise note", "perfect with fish", "light and aromatic"],
+      "intensite": 2,
+      "conservation": "Fresh refrigerated; dried airtight.",
+      "substitutions": ["fresh fennel fronds", "tarragon (different)", "parsley (milder)"],
+      "faq": [
+        {"question": "What foods pair well with dill?", "reponse": "Dill is perfect with fish, salmon, pickles, and sauces."},
+        {"question": "When should you add dill to a recipe?", "reponse": "Add it near the end to preserve its delicate aroma."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Macis",
+      "origine_histoire": "Le macis est l'arille de la noix de muscade, originaire des îles Banda en Indonésie. Il possède un parfum plus délicat que la muscade.",
+      "utilisation_aliments": ["sauces blanches", "plats crémeux", "pâtisseries", "légumes", "poissons"],
+      "bienfaits": ["arôme fin", "plus doux que la muscade", "donne de l'élégance aux plats"],
+      "intensite": 3,
+      "conservation": "En poudre ou en lame, conserver dans un pot hermétique au sec et à l'abri de la lumière.",
+      "substitutions": ["muscade (plus forte)", "quatre-épices (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le macis ?", "reponse": "Le macis est idéal dans les sauces blanches, plats crémeux, poissons et pâtisseries."},
+        {"question": "Quelle différence entre macis et muscade ?", "reponse": "Le macis est plus subtil et floral, alors que la muscade est plus chaude et puissante."}
+      ]
+    },
+    "en": {
+      "name": "Mace",
+      "origine_histoire": "Mace is the lacy aril surrounding nutmeg, native to the Banda Islands in Indonesia. It has a more delicate aroma than nutmeg.",
+      "utilisation_aliments": ["white sauces", "creamy dishes", "baking", "vegetables", "fish"],
+      "bienfaits": ["delicate aroma", "milder than nutmeg", "adds elegance to dishes"],
+      "intensite": 3,
+      "conservation": "Store powder or blades airtight, dry, and away from light.",
+      "substitutions": ["nutmeg (stronger)", "four-spice blend (light)"],
+      "faq": [
+        {"question": "What foods pair well with mace?", "reponse": "Mace is ideal for white sauces, creamy dishes, fish, and baking."},
+        {"question": "What's the difference between mace and nutmeg?", "reponse": "Mace is subtler and more floral, while nutmeg is warmer and stronger."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Poivre long",
+      "origine_histoire": "Utilisé avant le poivre noir en Europe, le poivre long vient d'Inde et apporte une chaleur douce et complexe.",
+      "utilisation_aliments": ["viandes", "légumes", "ragoûts", "plats mijotés", "desserts au chocolat"],
+      "bienfaits": ["chaleur progressive", "arôme complexe", "original par rapport au poivre noir"],
+      "intensite": 4,
+      "conservation": "Bâtons entiers en pot hermétique; râper ou concasser au besoin.",
+      "substitutions": ["poivre noir + pointe de cannelle", "poivre de Sichuan (différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le poivre long ?", "reponse": "Le poivre long est excellent avec viandes, ragoûts, légumes et desserts au chocolat."},
+        {"question": "Le poivre long est-il plus fort que le poivre noir ?", "reponse": "Il est moins piquant mais plus aromatique et chaud en bouche."}
+      ]
+    },
+    "en": {
+      "name": "Long pepper",
+      "origine_histoire": "Used in Europe before black pepper, long pepper originates from India and provides gentle, complex heat.",
+      "utilisation_aliments": ["meats", "vegetables", "stews", "slow-cooked dishes", "chocolate desserts"],
+      "bienfaits": ["gradual heat", "complex aroma", "unique alternative to black pepper"],
+      "intensite": 4,
+      "conservation": "Store whole spikes airtight; grate or crush as needed.",
+      "substitutions": ["black pepper + pinch of cinnamon", "Sichuan pepper (different)"],
+      "faq": [
+        {"question": "What foods pair well with long pepper?", "reponse": "Long pepper is excellent with meats, stews, vegetables, and chocolate desserts."},
+        {"question": "Is long pepper hotter than black pepper?", "reponse": "It's less sharp but more aromatic, with a warm lingering heat."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Safran",
+      "origine_histoire": "Le safran est l'une des épices les plus précieuses au monde, issu des stigmates du crocus. Il est cultivé depuis l'Antiquité en Iran, en Espagne et en Inde.",
+      "utilisation_aliments": ["riz", "paella", "risotto", "bouillabaisse", "desserts", "sauces"],
+      "bienfaits": ["couleur dorée", "arôme floral", "très puissant en petite quantité"],
+      "intensite": 3,
+      "conservation": "Filaments en pot hermétique, au sec, à l'abri de la lumière.",
+      "substitutions": ["curcuma (couleur seulement)", "safran des Indes (très différent)", "mélange safrané"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le safran ?", "reponse": "Le safran est parfait dans les plats de riz, paella, risotto, sauces et desserts."},
+        {"question": "Comment utiliser le safran correctement ?", "reponse": "Faire infuser les filaments dans un liquide chaud avant de les ajouter."}
+      ]
+    },
+    "en": {
+      "name": "Saffron",
+      "origine_histoire": "Saffron is one of the world's most precious spices, made from crocus stigmas and cultivated since antiquity in Iran, Spain, and India.",
+      "utilisation_aliments": ["rice", "paella", "risotto", "bouillabaisse", "desserts", "sauces"],
+      "bienfaits": ["golden color", "floral aroma", "very powerful in small amounts"],
+      "intensite": 3,
+      "conservation": "Store threads airtight, dry, away from light.",
+      "substitutions": ["turmeric (color only)", "Indian saffron (very different)", "saffron-style blends"],
+      "faq": [
+        {"question": "What foods pair well with saffron?", "reponse": "Saffron is perfect in rice dishes, paella, risotto, sauces, and desserts."},
+        {"question": "How should saffron be used properly?", "reponse": "Soak the threads in warm liquid before adding to a recipe."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Piment chipotle",
+      "origine_histoire": "Le chipotle est un jalapeño séché et fumé, très utilisé dans la cuisine mexicaine pour son goût fumé et piquant.",
+      "utilisation_aliments": ["BBQ", "chili", "sauces", "marinades", "viandes", "légumes"],
+      "bienfaits": ["saveur fumée", "piquant équilibré", "donne une signature mexicaine"],
+      "intensite": 4,
+      "conservation": "Poudre ou piment entier en pot hermétique, au sec.",
+      "substitutions": ["paprika fumé + piment", "cayenne + fumée (approx.)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le piment chipotle ?", "reponse": "Le chipotle est parfait pour BBQ, chili, sauces, viandes et légumes."},
+        {"question": "Le chipotle est-il très piquant ?", "reponse": "Il est moyennement piquant, mais surtout très fumé."}
+      ]
+    },
+    "en": {
+      "name": "Chipotle chili",
+      "origine_histoire": "Chipotle is a smoked, dried jalapeño widely used in Mexican cuisine for its smoky heat.",
+      "utilisation_aliments": ["BBQ", "chili", "sauces", "marinades", "meats", "vegetables"],
+      "bienfaits": ["smoky flavor", "balanced heat", "distinct Mexican character"],
+      "intensite": 4,
+      "conservation": "Store powder or whole chilies airtight and dry.",
+      "substitutions": ["smoked paprika + chili", "cayenne + smoke (approx.)"],
+      "faq": [
+        {"question": "What foods pair well with chipotle chili?", "reponse": "Chipotle is perfect for BBQ, chili, sauces, meats, and vegetables."},
+        {"question": "Is chipotle very spicy?", "reponse": "It's moderately hot, with smoke being the dominant feature."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Garam masala",
+      "origine_histoire": "Le garam masala est un mélange d'épices indien variant selon les régions et les familles, généralement ajouté en fin de cuisson.",
+      "utilisation_aliments": ["currys", "viandes", "légumes", "lentilles", "riz"],
+      "bienfaits": ["chaleur aromatique", "mélange complexe", "utilisé en finition"],
+      "intensite": 4,
+      "conservation": "Conserver au sec en pot hermétique, loin de la chaleur.",
+      "substitutions": ["curry doux (différent)", "ras el hanout (différent)", "mélange maison"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le garam masala ?", "reponse": "Le garam masala est parfait dans les currys, viandes, légumes et plats de lentilles."},
+        {"question": "Quand ajouter le garam masala dans une recette ?", "reponse": "Souvent en fin de cuisson pour préserver son arôme."}
+      ]
+    },
+    "en": {
+      "name": "Garam masala",
+      "origine_histoire": "Garam masala is an Indian spice blend that varies by region and family, usually added toward the end of cooking.",
+      "utilisation_aliments": ["curries", "meats", "vegetables", "lentils", "rice"],
+      "bienfaits": ["aromatic warmth", "complex blend", "used as a finishing spice"],
+      "intensite": 4,
+      "conservation": "Store airtight, dry, away from heat.",
+      "substitutions": ["mild curry (different)", "ras el hanout (different)", "homemade blend"],
+      "faq": [
+        {"question": "What foods pair well with garam masala?", "reponse": "Garam masala is perfect in curries, meats, vegetables, and lentil dishes."},
+        {"question": "When should garam masala be added?", "reponse": "Usually near the end of cooking to preserve aroma."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Curry en poudre",
+      "origine_histoire": "Le curry en poudre est un mélange occidental inspiré des cuisines indiennes, combinant curcuma, coriandre, cumin et autres épices.",
+      "utilisation_aliments": ["poulet", "riz", "légumes", "soupes", "sauces"],
+      "bienfaits": ["goût reconnaissable", "facile à utiliser", "polyvalent"],
+      "intensite": 3,
+      "conservation": "Pot hermétique au sec, à l'abri de la lumière.",
+      "substitutions": ["garam masala (différent)", "curcuma + cumin + coriandre", "mélange maison"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le curry en poudre ?", "reponse": "Le curry en poudre est idéal pour le poulet, riz, légumes et sauces."},
+        {"question": "Le curry en poudre est-il authentiquement indien ?", "reponse": "Non, c'est un mélange occidental inspiré des saveurs indiennes."}
+      ]
+    },
+    "en": {
+      "name": "Curry powder",
+      "origine_histoire": "Curry powder is a Western blend inspired by Indian cuisines, typically combining turmeric, coriander, cumin, and other spices.",
+      "utilisation_aliments": ["chicken", "rice", "vegetables", "soups", "sauces"],
+      "bienfaits": ["recognizable flavor", "easy to use", "versatile"],
+      "intensite": 3,
+      "conservation": "Store airtight, dry, away from light.",
+      "substitutions": ["garam masala (different)", "turmeric + cumin + coriander", "homemade blend"],
+      "faq": [
+        {"question": "What foods pair well with curry powder?", "reponse": "Curry powder is ideal for chicken, rice, vegetables, and sauces."},
+        {"question": "Is curry powder authentic Indian cuisine?", "reponse": "No—it's a Western blend inspired by Indian flavors."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Carvi",
+      "origine_histoire": "Le carvi est utilisé depuis l'Antiquité en Europe centrale et de l'Est. Son goût rappelle le cumin avec une note anisée.",
+      "utilisation_aliments": ["choux", "pain", "fromages", "pommes de terre", "ragoûts"],
+      "bienfaits": ["facilite l'équilibre des plats riches", "arôme chaud", "très utilisé en cuisine traditionnelle"],
+      "intensite": 3,
+      "conservation": "Graines entières en pot hermétique, au sec et à l'abri de la lumière.",
+      "substitutions": ["cumin (plus terreux)", "fenouil (plus doux)", "anis vert (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le carvi ?", "reponse": "Le carvi est parfait avec les choux, pains, fromages et plats mijotés."},
+        {"question": "Le carvi est-il identique au cumin ?", "reponse": "Non, ils se ressemblent visuellement mais le carvi est plus anisé."}
+      ]
+    },
+    "en": {
+      "name": "Caraway",
+      "origine_histoire": "Caraway has been used since antiquity in Central and Eastern Europe. Its flavor is cumin-like with an anise note.",
+      "utilisation_aliments": ["cabbage dishes", "bread", "cheese", "potatoes", "stews"],
+      "bienfaits": ["balances rich dishes", "warm aroma", "traditional culinary spice"],
+      "intensite": 3,
+      "conservation": "Store whole seeds airtight, dry, away from light.",
+      "substitutions": ["cumin (earthier)", "fennel (milder)", "green anise (light)"],
+      "faq": [
+        {"question": "What foods pair well with caraway?", "reponse": "Caraway works well with cabbage dishes, bread, cheese, and stews."},
+        {"question": "Is caraway the same as cumin?", "reponse": "No—they look similar but caraway is more anise-like."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Estragon",
+      "origine_histoire": "Très présent dans la cuisine française, l'estragon est connu pour son parfum anisé délicat.",
+      "utilisation_aliments": ["poulet", "poissons", "sauces", "œufs", "vinaigre"],
+      "bienfaits": ["arôme élégant", "parfait en sauce", "très parfumé en petite quantité"],
+      "intensite": 3,
+      "conservation": "Frais: réfrigérateur; séché: pot hermétique au sec.",
+      "substitutions": ["fenouil vert", "aneth (différent)", "persil + anis (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser l'estragon ?", "reponse": "L'estragon est excellent avec le poulet, poissons, sauces et œufs."},
+        {"question": "L'estragon supporte-t-il la cuisson ?", "reponse": "Mieux vaut l'ajouter en fin de cuisson pour préserver son parfum."}
+      ]
+    },
+    "en": {
+      "name": "Tarragon",
+      "origine_histoire": "Widely used in French cuisine, tarragon is known for its delicate anise-like aroma.",
+      "utilisation_aliments": ["chicken", "fish", "sauces", "eggs", "vinegar"],
+      "bienfaits": ["elegant aroma", "perfect for sauces", "strong in small amounts"],
+      "intensite": 3,
+      "conservation": "Fresh refrigerated; dried airtight.",
+      "substitutions": ["fennel fronds", "dill (different)", "parsley + anise (light)"],
+      "faq": [
+        {"question": "What foods pair well with tarragon?", "reponse": "Tarragon is excellent with chicken, fish, sauces, and eggs."},
+        {"question": "Does tarragon tolerate cooking?", "reponse": "It's best added near the end to preserve aroma."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Sarriette",
+      "origine_histoire": "Herbe méditerranéenne ancienne, la sarriette est très utilisée avec les légumineuses et les viandes.",
+      "utilisation_aliments": ["haricots", "légumineuses", "viandes", "soupes", "plats mijotés"],
+      "bienfaits": ["arôme poivré", "renforce les plats rustiques", "supporte bien la cuisson"],
+      "intensite": 3,
+      "conservation": "Séché en pot hermétique, à l'abri de la lumière.",
+      "substitutions": ["thym", "origan", "marjolaine"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser la sarriette ?", "reponse": "La sarriette est idéale avec haricots, légumineuses et plats mijotés."},
+        {"question": "La sarriette est-elle forte ?", "reponse": "Elle est modérément poivrée et bien équilibrée."}
+      ]
+    },
+    "en": {
+      "name": "Savory",
+      "origine_histoire": "An ancient Mediterranean herb, savory is often used with legumes and meats.",
+      "utilisation_aliments": ["beans", "legumes", "meats", "soups", "stews"],
+      "bienfaits": ["peppery aroma", "enhances rustic dishes", "handles cooking well"],
+      "intensite": 3,
+      "conservation": "Dried airtight away from light.",
+      "substitutions": ["thyme", "oregano", "marjoram"],
+      "faq": [
+        {"question": "What foods pair well with savory?", "reponse": "Savory is ideal with beans, legumes, and slow-cooked dishes."},
+        {"question": "Is savory very strong?", "reponse": "It's moderately peppery and well balanced."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Zeste de citron",
+      "origine_histoire": "Le zeste de citron est utilisé depuis longtemps en Méditerranée pour apporter fraîcheur et acidité naturelle.",
+      "utilisation_aliments": ["poissons", "desserts", "pâtes", "salades", "marinades"],
+      "bienfaits": ["fraîcheur citronnée", "rehausse sans acidité liquide", "parfait en finition"],
+      "intensite": 2,
+      "conservation": "Frais: réfrigérateur; séché: pot hermétique au sec.",
+      "substitutions": ["zeste de lime", "citron confit (différent)", "vinaigre doux (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le zeste de citron ?", "reponse": "Le zeste de citron est parfait avec poissons, desserts, pâtes et salades."},
+        {"question": "Quand ajouter le zeste de citron ?", "reponse": "Ajoute-le en fin de cuisson pour préserver sa fraîcheur."}
+      ]
+    },
+    "en": {
+      "name": "Lemon zest",
+      "origine_histoire": "Lemon zest has long been used in Mediterranean cooking to add freshness and natural acidity.",
+      "utilisation_aliments": ["fish", "desserts", "pasta", "salads", "marinades"],
+      "bienfaits": ["bright citrus aroma", "adds lift without liquid acidity", "great as a finish"],
+      "intensite": 2,
+      "conservation": "Fresh refrigerated; dried airtight.",
+      "substitutions": ["lime zest", "preserved lemon (different)", "mild vinegar (light)"],
+      "faq": [
+        {"question": "What foods pair well with lemon zest?", "reponse": "Lemon zest is perfect with fish, desserts, pasta, and salads."},
+        {"question": "When should lemon zest be added?", "reponse": "Add it at the end to keep its fresh citrus aroma."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Poivre de Sichuan",
+      "origine_histoire": "Originaire de Chine, le poivre de Sichuan n'est pas un vrai poivre mais une baie aux notes citronnées et engourdissantes.",
+      "utilisation_aliments": ["plats chinois", "porc", "canard", "nouilles", "légumes"],
+      "bienfaits": ["sensation unique", "arôme citronné", "signature asiatique"],
+      "intensite": 4,
+      "conservation": "Baies en pot hermétique, au sec et à l'abri de la lumière.",
+      "substitutions": ["poivre noir + zeste (approx.)", "poivre long (différent)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le poivre de Sichuan ?", "reponse": "Le poivre de Sichuan est parfait pour plats chinois, porc, canard et nouilles."},
+        {"question": "Pourquoi le poivre de Sichuan picote-t-il ?", "reponse": "Il provoque une légère sensation d'engourdissement typique."}
+      ]
+    },
+    "en": {
+      "name": "Sichuan pepper",
+      "origine_histoire": "Native to China, Sichuan pepper isn't a true pepper but a berry with citrusy, numbing notes.",
+      "utilisation_aliments": ["Chinese dishes", "pork", "duck", "noodles", "vegetables"],
+      "bienfaits": ["unique sensation", "citrus aroma", "Asian signature spice"],
+      "intensite": 4,
+      "conservation": "Store berries airtight, dry, away from light.",
+      "substitutions": ["black pepper + citrus zest (approx.)", "long pepper (different)"],
+      "faq": [
+        {"question": "What foods pair well with Sichuan pepper?", "reponse": "Sichuan pepper is perfect for Chinese dishes, pork, duck, and noodles."},
+        {"question": "Why does Sichuan pepper tingle?", "reponse": "It causes a light numbing sensation that's characteristic of the spice."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Graines de pavot",
+      "origine_histoire": "Utilisées depuis l'Antiquité en Europe et au Moyen-Orient, les graines de pavot apportent croquant et douceur.",
+      "utilisation_aliments": ["pain", "pâtisseries", "salades", "nouilles", "légumes"],
+      "bienfaits": ["texture croquante", "saveur douce", "très décoratif"],
+      "intensite": 1,
+      "conservation": "Pot hermétique au sec, à l'abri de la chaleur.",
+      "substitutions": ["sésame", "graines de chia", "graines de lin"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser les graines de pavot ?", "reponse": "Les graines de pavot sont parfaites dans le pain, pâtisseries et salades."},
+        {"question": "Les graines de pavot ont-elles beaucoup de goût ?", "reponse": "Non, leur saveur est douce; elles sont surtout appréciées pour le croquant."}
+      ]
+    },
+    "en": {
+      "name": "Poppy seeds",
+      "origine_histoire": "Used since antiquity in Europe and the Middle East, poppy seeds add crunch and mild flavor.",
+      "utilisation_aliments": ["bread", "baking", "salads", "noodles", "vegetables"],
+      "bienfaits": ["crunchy texture", "mild flavor", "decorative"],
+      "intensite": 1,
+      "conservation": "Store airtight, dry, away from heat.",
+      "substitutions": ["sesame seeds", "chia seeds", "flax seeds"],
+      "faq": [
+        {"question": "What foods pair well with poppy seeds?", "reponse": "Poppy seeds are perfect in bread, baking, and salads."},
+        {"question": "Do poppy seeds have a strong flavor?", "reponse": "No—their flavor is mild; they're valued mostly for texture."}
+      ]
+    }
+  },
+  {
+    "fr": {
+      "name": "Clou de girofle moulu",
+      "origine_histoire": "Version moulue du clou de girofle, utilisée pour une intégration plus homogène dans les recettes.",
+      "utilisation_aliments": ["pâtisseries", "compotes", "mélanges d'épices", "sauces", "boissons chaudes"],
+      "bienfaits": ["arôme puissant", "facile à doser", "parfait en mélange"],
+      "intensite": 5,
+      "conservation": "Pot hermétique au sec; utiliser rapidement pour garder l'arôme.",
+      "substitutions": ["clou de girofle entier", "quatre-épices (léger)"],
+      "faq": [
+        {"question": "Avec quels aliments utiliser le clou de girofle moulu ?", "reponse": "Il est parfait dans les pâtisseries, compotes, boissons chaudes et mélanges d'épices."},
+        {"question": "Le clou de girofle moulu est-il très fort ?", "reponse": "Oui, il est très puissant; une petite pincée suffit."}
+      ]
+    },
+    "en": {
+      "name": "Ground clove",
+      "origine_histoire": "Ground clove is the powdered form of whole cloves, used for even distribution in recipes.",
+      "utilisation_aliments": ["baking", "compotes", "spice blends", "sauces", "hot drinks"],
+      "bienfaits": ["very strong aroma", "easy to dose", "great in blends"],
+      "intensite": 5,
+      "conservation": "Store airtight and dry; use relatively quickly for best aroma.",
+      "substitutions": ["whole cloves", "four-spice blend (light)"],
+      "faq": [
+        {"question": "What foods pair well with ground clove?", "reponse": "Ground clove is perfect for baking, compotes, hot drinks, and spice blends."},
+        {"question": "Is ground clove very strong?", "reponse": "Yes—it's very potent; a small pinch goes a long way."}
+      ]
+    }
+  }
+]
