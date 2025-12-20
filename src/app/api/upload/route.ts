@@ -69,9 +69,9 @@ export async function POST(request: NextRequest) {
     const randomStr = Math.random().toString(36).substring(2, 8);
     const fileName = `recipes/${timestamp}-${randomStr}.webp`;
 
-    // Upload vers Supabase Storage (bucket images)
+    // Upload vers Supabase Storage (bucket recipe-images)
     const { data, error } = await supabase.storage
-      .from('images')
+      .from('recipe-images')
       .upload(fileName, webpBuffer, {
         contentType: 'image/webp',
         cacheControl: '31536000', // 1 an
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
 
     // Obtenir l'URL publique
     const { data: publicUrlData } = supabase.storage
-      .from('images')
+      .from('recipe-images')
       .getPublicUrl(data.path);
 
     return NextResponse.json({
