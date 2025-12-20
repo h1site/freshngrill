@@ -90,6 +90,12 @@ const blogSlugs = [
 ];
 
 const nextConfig: NextConfig = {
+  // Augmenter la limite de body pour les uploads (50MB)
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '50mb',
+    },
+  },
   images: {
     remotePatterns: [
       {

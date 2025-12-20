@@ -651,6 +651,47 @@ export async function getAllOrigines(): Promise<{ id: number; slug: string; name
 }
 
 /**
+ * Obtenir toutes les origines avec traduction selon la locale
+ */
+export async function getAllOriginesWithLocale(locale: 'fr' | 'en' = 'fr'): Promise<{ id: number; slug: string; name: string }[]> {
+  // Get base origines
+  const { data: origines, error } = await supabase
+    .from('origines')
+    .select('id, slug, name')
+    .order('name');
+
+  if (error) {
+    console.error('Erreur getAllOriginesWithLocale:', error);
+    return [];
+  }
+
+  // If French, return as-is
+  if (locale === 'fr') {
+    return (origines || []) as { id: number; slug: string; name: string }[];
+  }
+
+  // Get English translations
+  const { data: translations, error: translationError } = await supabase
+    .from('origine_translations')
+    .select('origine_id, name')
+    .eq('locale', 'en');
+
+  if (translationError) {
+    console.error('Erreur origine translations:', translationError);
+  }
+
+  // Create translation map
+  const translationMap = new Map((translations || []).map((t: any) => [t.origine_id, t.name]));
+
+  // Return origines with translated names
+  return (origines || []).map((orig: any) => ({
+    id: orig.id,
+    slug: orig.slug,
+    name: translationMap.get(orig.id) || orig.name,
+  }));
+}
+
+/**
  * Filtrer les recettes
  */
 export interface RecipeFilters {

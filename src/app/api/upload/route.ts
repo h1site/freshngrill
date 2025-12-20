@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
+import sharp from 'sharp';
+
+// Augmenter la limite de body pour Next.js
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,38 +27,53 @@ export async function POST(request: NextRequest) {
     }
 
     // Vérifier le type de fichier
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/heic', 'image/heif'];
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        { error: 'Type de fichier non autorisé. Utilisez JPG, PNG, WebP ou GIF.' },
+        { error: 'Type de fichier non autorisé. Utilisez JPG, PNG, WebP, GIF, AVIF ou HEIC.' },
         { status: 400 }
       );
     }
 
-    // Limiter la taille (5MB)
-    const maxSize = 5 * 1024 * 1024;
+    // Limiter la taille (50MB)
+    const maxSize = 50 * 1024 * 1024;
     if (file.size > maxSize) {
       return NextResponse.json(
-        { error: 'Fichier trop volumineux. Maximum 5MB.' },
+        { error: 'Fichier trop volumineux. Maximum 50MB.' },
         { status: 400 }
       );
     }
-
-    // Générer un nom unique
-    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-    const timestamp = Date.now();
-    const randomStr = Math.random().toString(36).substring(2, 8);
-    const fileName = `recipes/${timestamp}-${randomStr}.${ext}`;
 
     // Convertir le fichier en ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
+    const inputBuffer = Buffer.from(arrayBuffer);
 
-    // Upload vers Supabase Storage
+    // Convertir en WebP avec sharp (optimisation automatique)
+    const webpBuffer = await sharp(inputBuffer)
+      .rotate() // Auto-rotate based on EXIF
+      .webp({
+        quality: 85,
+        effort: 4,
+      })
+      .resize({
+        width: 1200,
+        height: 800,
+        fit: 'cover',
+        position: 'center',
+        withoutEnlargement: true,
+      })
+      .toBuffer();
+
+    // Générer un nom unique
+    const timestamp = Date.now();
+    const randomStr = Math.random().toString(36).substring(2, 8);
+    const fileName = `recipes/${timestamp}-${randomStr}.webp`;
+
+    // Upload vers Supabase Storage (bucket recipe-images)
     const { data, error } = await supabase.storage
-      .from('images')
-      .upload(fileName, buffer, {
-        contentType: file.type,
+      .from('recipe-images')
+      .upload(fileName, webpBuffer, {
+        contentType: 'image/webp',
         cacheControl: '31536000', // 1 an
         upsert: false,
       });
@@ -65,7 +88,7 @@ export async function POST(request: NextRequest) {
 
     // Obtenir l'URL publique
     const { data: publicUrlData } = supabase.storage
-      .from('images')
+      .from('recipe-images')
       .getPublicUrl(data.path);
 
     return NextResponse.json({

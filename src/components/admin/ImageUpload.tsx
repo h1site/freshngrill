@@ -65,10 +65,11 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
     setDragActive(false);
 
     const file = e.dataTransfer.files?.[0];
-    if (file && file.type.startsWith('image/')) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/heic', 'image/heif'];
+    if (file && (file.type.startsWith('image/') || allowedTypes.some(t => file.name.toLowerCase().endsWith(t.split('/')[1])))) {
       handleFile(file);
     } else {
-      setError('Veuillez déposer une image valide');
+      setError('Veuillez déposer une image valide (JPG, PNG, WebP, GIF, AVIF ou HEIC)');
     }
   };
 
@@ -123,7 +124,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
         <input
           ref={inputRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp,image/gif"
+          accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/heic,image/heif"
           onChange={handleInputChange}
           className="hidden"
         />
@@ -140,7 +141,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
               <span className="text-orange-600 font-medium">Cliquez pour choisir</span> ou glissez une image
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              JPG, PNG, WebP ou GIF (max 5MB)
+              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 50MB, converti en WebP)
             </p>
           </div>
         )}
