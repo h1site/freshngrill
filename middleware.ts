@@ -20,7 +20,7 @@ const BLOCKED_COUNTRIES = ['CN', 'RU'];
 
 export async function middleware(request: NextRequest) {
   // Bloquer le trafic suspect basé sur le pays (Vercel Geo)
-  const country = request.headers.get('x-vercel-ip-country') || request.geo?.country;
+  const country = request.headers.get('x-vercel-ip-country') || (request as NextRequest & { geo?: { country?: string } }).geo?.country;
   if (country && BLOCKED_COUNTRIES.includes(country)) {
     // Retourner une page vide ou 403 pour le trafic bloqué
     return new NextResponse(null, { status: 403 });

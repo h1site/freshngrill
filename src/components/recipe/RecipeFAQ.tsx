@@ -35,7 +35,29 @@ function parseFAQ(faqString: string, locale: Locale): FAQItem[] {
 
   // Essayer de parser comme JSON d'abord (nouveau format)
   try {
-    const jsonData: JSONFaqData = JSON.parse(faqString);
+    const parsed = JSON.parse(faqString);
+
+    // Format 1: Tableau direct [{question, answer}, ...]
+    if (Array.isArray(parsed)) {
+      parsed.forEach((item: { question?: string; answer?: string; question_fr?: string; answer_fr?: string; question_en?: string; answer_en?: string }) => {
+        // Support format simple {question, answer}
+        if (item.question && item.answer) {
+          items.push({ question: item.question, answer: `<p>${item.answer}</p>` });
+        }
+        // Support format bilingue {question_fr, answer_fr, question_en, answer_en}
+        else if (item.question_fr || item.question_en) {
+          const question = isEN ? item.question_en : item.question_fr;
+          const answer = isEN ? item.answer_en : item.answer_fr;
+          if (question && answer) {
+            items.push({ question, answer: `<p>${answer}</p>` });
+          }
+        }
+      });
+      return items;
+    }
+
+    // Format 2: Objet avec propriété faq {faq: [...]}
+    const jsonData = parsed as JSONFaqData;
     if (jsonData.faq && Array.isArray(jsonData.faq)) {
       jsonData.faq.forEach((item) => {
         const question = isEN ? item.question_en : item.question_fr;
