@@ -173,7 +173,7 @@ export default function SpiceGuidePage() {
               Spices
             </Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-black">Pairing Guide</span>
+            <span className="text-black">Spice Pairing</span>
           </nav>
         </div>
       </div>
@@ -182,7 +182,7 @@ export default function SpiceGuidePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
             <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
-              Interactive Guide
+              Spice Pairing
             </span>
             <h1 className="text-4xl md:text-6xl font-display mt-3 mb-6">
               Which Spice with Which Meat?

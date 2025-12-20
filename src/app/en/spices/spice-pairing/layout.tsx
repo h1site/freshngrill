@@ -5,10 +5,10 @@ export const metadata: Metadata = {
   description:
     'Interactive guide: find the best spices for beef, chicken, pork, lamb, fish and vegetables. Perfect spice-food pairings.',
   alternates: {
-    canonical: '/en/spices/guide/',
+    canonical: '/en/spices/spice-pairing/',
     languages: {
-      'fr-CA': '/epices/guide/',
-      'en-CA': '/en/spices/guide/',
+      'fr-CA': '/epices/route-des-epices/',
+      'en-CA': '/en/spices/spice-pairing/',
     },
   },
   openGraph: {

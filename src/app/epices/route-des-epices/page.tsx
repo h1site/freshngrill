@@ -187,7 +187,7 @@ export default function SpiceGuidePage() {
               Épices
             </Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-black">Guide des accords</span>
+            <span className="text-black">La Route des Épices</span>
           </nav>
         </div>
       </div>
@@ -197,7 +197,7 @@ export default function SpiceGuidePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
             <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
-              Guide interactif
+              La Route des Épices
             </span>
             <h1 className="text-4xl md:text-6xl font-display mt-3 mb-6">
               Quelle épice avec quelle viande?

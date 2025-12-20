@@ -194,7 +194,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   // Traductions inline pour chaque locale (client-side, always up-to-date)
   const translations = {
     fr: {
-      nav: { home: 'Accueil', recipes: 'Recettes', lexicon: 'Lexique', converter: 'Outils', blog: 'Blog', guide: 'Guide' },
+      nav: { home: 'Accueil', recipes: 'Recettes', spices: 'Épices', lexicon: 'Lexique', converter: 'Outils', blog: 'Blog', guide: 'Guide' },
       header: {
         search: 'Rechercher',
         searchPlaceholder: 'Rechercher une recette, un article...',
@@ -223,7 +223,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
       recipes: { difficulty: { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' } }
     },
     en: {
-      nav: { home: 'Home', recipes: 'Recipes', lexicon: 'Lexicon', converter: 'Tools', blog: 'Blog', guide: 'Guide' },
+      nav: { home: 'Home', recipes: 'Recipes', spices: 'Spices', lexicon: 'Lexicon', converter: 'Tools', blog: 'Blog', guide: 'Guide' },
       header: {
         search: 'Search',
         searchPlaceholder: 'Search for a recipe, an article...',
@@ -262,6 +262,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   // Route paths based on locale
   const routes = locale === 'en' ? {
     recipe: '/en/recipe',
+    spices: '/en/spices',
     lexicon: '/en/lexicon',
     converter: '/en/converter',
     blog: '/en/blog',
@@ -269,6 +270,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
     search: '/en/search',
   } : {
     recipe: '/recette',
+    spices: '/epices',
     lexicon: '/lexique',
     converter: '/convertisseur',
     blog: '/blog',
@@ -279,6 +281,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   const navigation = [
     { name: t.nav.home, href: `${urlPrefix}/`, hasMegaMenu: false },
     { name: t.nav.recipes, href: routes.recipe, hasMegaMenu: true },
+    { name: t.nav.spices, href: routes.spices, hasMegaMenu: false },
     { name: t.nav.lexicon, href: routes.lexicon, hasMegaMenu: false },
     { name: t.nav.converter, href: routes.converter, hasMegaMenu: false },
     { name: t.nav.blog, href: routes.blog, hasMegaMenu: false },
