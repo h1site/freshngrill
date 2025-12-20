@@ -4,6 +4,7 @@ import { getAllPosts, getAllPostsWithEnglishSlugs } from '@/lib/posts';
 import { getAllTerms } from '@/lib/lexique';
 import { getAllTermsEn } from '@/lib/lexiqueEn';
 import { siteConfig } from '@/lib/config';
+import { createClient } from '@/lib/supabase-server';
 
 // Force le sitemap à être généré dynamiquement à chaque requête
 export const dynamic = 'force-dynamic';
@@ -221,6 +222,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // ============================================
   // DONNÉES DYNAMIQUES
   // ============================================
+  // Fetch spices from Supabase
+  const supabase = await createClient();
+  const { data: spices } = await supabase
+    .from('spices')
+    .select('slug, updated_at')
+    .eq('is_published', true)
+    .order('slug') as { data: { slug: string; updated_at: string | null }[] | null };
+
   const [
     recipes,
     englishRecipeSlugs,
@@ -345,6 +354,42 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // ============================================
+  // PAGES ÉPICES FRANÇAISES
+  // ============================================
+  const spicePagesFr: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/epices`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    ...(spices || []).map((spice) => ({
+      url: `${baseUrl}/epices/${spice.slug}`,
+      lastModified: spice.updated_at ? new Date(spice.updated_at) : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+  ];
+
+  // ============================================
+  // PAGES ÉPICES ANGLAISES
+  // ============================================
+  const spicePagesEn: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/en/spices`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    ...(spices || []).map((spice) => ({
+      url: `${baseUrl}/en/spices/${spice.slug}`,
+      lastModified: spice.updated_at ? new Date(spice.updated_at) : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+  ];
+
+  // ============================================
   // ASSEMBLAGE FINAL
   // ============================================
   return [
@@ -359,5 +404,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...guideAchatPagesEn,
     ...lexiquePagesFr,
     ...lexiquePagesEn,
+    ...spicePagesFr,
+    ...spicePagesEn,
   ];
 }

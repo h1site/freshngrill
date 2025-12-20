@@ -3,6 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase-server';
 import { Flame, Leaf, Search, Globe, ChevronRight } from 'lucide-react';
+import { siteConfig } from '@/lib/config';
+import SpicePronounceButton from '@/components/spice/SpicePronounceButton';
 
 export const metadata: Metadata = {
   title: 'The Spice Route | Complete Guide - Menucochon',
@@ -121,102 +123,79 @@ function SpiceCard({ spice }: { spice: Spice }) {
   const displayFoods = foodItems.slice(0, 4);
 
   return (
-    <Link
-      href={`/en/spices/${spice.slug}/`}
-      className="group flex flex-col sm:flex-row bg-white border border-neutral-200 hover:border-[#F77313] transition-all duration-300 overflow-hidden"
-    >
+    <div className="flex items-start gap-4 p-4 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-all group">
       {/* Image */}
-      <div className="sm:w-48 md:w-56 flex-shrink-0 aspect-[4/3] sm:aspect-square relative bg-neutral-100 overflow-hidden">
+      <Link href={`/en/spices/${spice.slug}/`} className="w-16 h-16 flex-shrink-0 relative bg-neutral-100 overflow-hidden">
         {spice.featured_image ? (
           <Image
             src={spice.featured_image}
             alt={name}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-            sizes="(max-width: 640px) 100vw, 224px"
+            className="object-cover group-hover:scale-110 transition-transform duration-500"
+            sizes="64px"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br from-orange-50 to-orange-100">
-            🌶️
+          <div className="w-full h-full flex items-center justify-center text-xl bg-neutral-100">
+            🌿
           </div>
         )}
-      </div>
+      </Link>
 
       {/* Content */}
-      <div className="flex-1 p-5 flex flex-col justify-between min-w-0">
-        <div>
-          {/* Header */}
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <h2 className="font-display text-xl md:text-2xl text-black group-hover:text-[#F77313] transition-colors">
-                {name}
-              </h2>
-              {spice.name_en && spice.name_fr !== spice.name_en && (
-                <p className="text-sm text-neutral-500">{spice.name_fr}</p>
-              )}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1">
+              <Link href={`/en/spices/${spice.slug}/`}>
+                <h3 className="font-display text-base text-black group-hover:text-[#F77313] transition-colors">
+                  {name}
+                </h3>
+              </Link>
+              <SpicePronounceButton text={name} lang="en" />
             </div>
-
-            {/* Intensity indicators */}
-            <div className="flex flex-col items-end gap-1 flex-shrink-0">
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-neutral-400">Intensity</span>
-                <IntensityIndicator level={intensity} />
-              </div>
-              {spicy > 0 && (
-                <SpicyIndicator level={spicy} />
-              )}
-            </div>
+            {spice.name_en && spice.name_fr !== spice.name_en && (
+              <p className="text-xs text-neutral-500">{spice.name_fr}</p>
+            )}
           </div>
-
-          {/* Description */}
-          {spice.definition_en && (
-            <p className="text-sm text-neutral-600 mt-3 line-clamp-2">
-              {spice.definition_en}
-            </p>
-          )}
-
-          {/* Origin */}
-          {spice.origin && spice.origin.length > 0 && (
-            <div className="flex items-center gap-1.5 mt-3 text-xs text-neutral-500">
-              <Globe className="w-3.5 h-3.5" />
-              {spice.origin.slice(0, 3).join(', ')}
-            </div>
-          )}
+          <div className="flex flex-col items-end gap-1 flex-shrink-0">
+            <IntensityIndicator level={intensity} />
+            {spicy > 0 && <SpicyIndicator level={spicy} />}
+          </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-4 pt-3 border-t border-neutral-100 flex items-center justify-between">
-          {/* Associated foods */}
-          <div className="flex flex-wrap gap-1.5">
-            {displayFoods.length > 0 ? (
-              displayFoods.map((food) => (
+        {spice.definition_en && (
+          <p className="text-sm text-neutral-600 mt-1 line-clamp-2">
+            {spice.definition_en}
+          </p>
+        )}
+
+        {/* Origin + Foods */}
+        <div className="flex items-center gap-3 mt-2">
+          {spice.origin && spice.origin.length > 0 && (
+            <div className="flex items-center gap-1 text-xs text-neutral-500">
+              <Globe className="w-3 h-3" />
+              <span>{spice.origin.slice(0, 2).join(', ')}</span>
+            </div>
+          )}
+          {displayFoods.length > 0 && (
+            <div className="flex gap-1">
+              {displayFoods.slice(0, 2).map((food) => (
                 <span
                   key={food}
-                  className="text-xs px-2 py-0.5 bg-neutral-100 text-neutral-600 rounded"
+                  className="text-xs px-1.5 py-0.5 bg-neutral-100 text-neutral-600 rounded"
                 >
                   {food}
                 </span>
-              ))
-            ) : (
-              spice.categories?.slice(0, 3).map((cat) => (
-                <span
-                  key={cat}
-                  className="text-xs px-2 py-0.5 bg-neutral-100 text-neutral-600 rounded"
-                >
-                  {cat}
-                </span>
-              ))
-            )}
-          </div>
-
-          {/* CTA */}
-          <span className="text-[#F77313] text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
-            View
-            <ChevronRight className="w-4 h-4" />
-          </span>
+              ))}
+            </div>
+          )}
         </div>
       </div>
-    </Link>
+
+      <Link href={`/en/spices/${spice.slug}/`}>
+        <ChevronRight className="w-5 h-5 text-neutral-400 group-hover:text-[#F77313] transition-colors flex-shrink-0 mt-1" />
+      </Link>
+    </div>
   );
 }
 
@@ -253,6 +232,38 @@ export default async function SpicesPage({
 
   let spicesList = (spices || []) as Spice[];
 
+  // JSON-LD Schema for the collection page
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'The Spice Route',
+    description: 'Complete guide to spices: origin, taste, culinary uses.',
+    url: `${siteConfig.url}/en/spices/`,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: spicesList.length,
+      itemListElement: spicesList.slice(0, 20).map((spice, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Product',
+          name: spice.name_en || spice.name_fr,
+          description: spice.definition_en,
+          url: `${siteConfig.url}/en/spices/${spice.slug}/`,
+          image: spice.featured_image,
+          category: 'Spices and seasonings',
+        },
+      })),
+    },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteConfig.url}/en/` },
+        { '@type': 'ListItem', position: 2, name: 'The Spice Route', item: `${siteConfig.url}/en/spices/` },
+      ],
+    },
+  };
+
   // Filter by food type (client-side since it's JSONB)
   if (params.food) {
     const filter = FOOD_FILTERS.find(f => f.slug === params.food);
@@ -271,230 +282,296 @@ export default async function SpicesPage({
   // Count active filters
   const activeFilters = [params.category, params.origin, params.food, params.q].filter(Boolean).length;
 
+  // Group spices by first letter for A-Z navigation
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+  const spicesByLetter = spicesList.reduce((acc, spice) => {
+    const name = spice.name_en || spice.name_fr;
+    const firstLetter = name.charAt(0).toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const letter = alphabet.includes(firstLetter) ? firstLetter : '#';
+    if (!acc[letter]) acc[letter] = [];
+    acc[letter].push(spice);
+    return acc;
+  }, {} as Record<string, Spice[]>);
+
+  const availableLetters = Object.keys(spicesByLetter).filter(l => l !== '#');
+
   return (
-    <main className="min-h-screen bg-white">
-      {/* Breadcrumb */}
-      <div className="bg-neutral-50 border-b border-neutral-200">
-        <div className="container mx-auto px-4 py-3">
-          <nav className="flex items-center gap-2 text-sm text-neutral-500">
-            <Link href="/en/" className="hover:text-[#F77313]">Home</Link>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-black">The Spice Route</span>
-          </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <main className="min-h-screen bg-white">
+        {/* Hero - Black like lexicon */}
+        <section className="bg-black py-16 md:py-24">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between">
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-3xl">🌶️</span>
+                <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
+                  Culinary Guide
+                </span>
+              </div>
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white mb-6">
+                The Spice Route
+              </h1>
+              <p className="text-neutral-400 text-lg md:text-xl leading-relaxed">
+                Explore our collection of{' '}
+                <span className="text-white font-semibold">{spicesList.length} spices</span>{' '}
+                from around the world. Discover their origins, flavors and culinary uses.
+              </p>
+            </div>
+            <Link
+              href="/epices/"
+              className="hidden md:flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
+            >
+              <Globe className="w-5 h-5" />
+              Français
+            </Link>
+          </div>
+        </div>
+      </section>
+
+        {/* SEO Content - At top */}
+        <section className="bg-neutral-50 border-b border-neutral-200 py-10 md:py-12">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="font-display text-2xl md:text-3xl text-black mb-6">
+                How to use The Spice Route?
+              </h2>
+              <div className="prose prose-neutral">
+                <p>
+                  The Spice Route is your complete guide to mastering
+                  the art of spices in cooking. Each detailed entry gives you:
+                </p>
+                <ul>
+                  <li><strong>Geographic origin</strong> and history of the spice</li>
+                  <li><strong>Taste profile</strong> with intensity and heat level</li>
+                  <li><strong>Perfect pairings</strong> with meats, fish and vegetables</li>
+                  <li><strong>Usage tips</strong> and mistakes to avoid</li>
+                  <li><strong>Substitutions</strong> if you don&apos;t have the spice</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Alphabetical navigation - sticky */}
+        <section className="sticky top-16 md:top-20 z-40 bg-neutral-50 border-b border-neutral-200 py-4">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap justify-center gap-1 md:gap-2">
+              {alphabet.map((letter) => {
+                const isAvailable = availableLetters.includes(letter);
+                return (
+                  <a
+                    key={letter}
+                    href={isAvailable ? `#letter-${letter}` : undefined}
+                    className={`w-9 h-9 flex items-center justify-center font-display text-lg transition-all ${
+                      isAvailable
+                        ? 'text-black hover:bg-[#F77313] hover:text-white'
+                        : 'text-neutral-300 cursor-not-allowed'
+                    }`}
+                  >
+                    {letter}
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Main content with sidebar */}
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Sidebar - Filters */}
+            <aside className="lg:w-64 flex-shrink-0">
+            <div className="lg:sticky lg:top-24 space-y-6">
+              {/* Search */}
+              <div>
+                <form>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+                    <input
+                      type="text"
+                      name="q"
+                      defaultValue={params.q || ''}
+                      placeholder="Search..."
+                      className="w-full pl-10 pr-4 py-2.5 border border-neutral-200 text-sm focus:outline-none focus:border-[#F77313] rounded-lg"
+                    />
+                  </div>
+                </form>
+              </div>
+
+              {activeFilters > 0 && (
+                <Link
+                  href="/en/spices/"
+                  className="block text-sm text-[#F77313] hover:text-[#e56200] font-medium"
+                >
+                  × Reset filters ({activeFilters})
+                </Link>
+              )}
+
+              {/* By food */}
+              <div>
+                <h3 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">
+                  By food
+                </h3>
+                <div className="space-y-1">
+                  {FOOD_FILTERS.map((filter) => {
+                    const isActive = params.food === filter.slug;
+                    return (
+                      <Link
+                        key={filter.slug}
+                        href={isActive ? '/en/spices/' : `/en/spices/?food=${filter.slug}`}
+                        className="flex items-center gap-3 px-2 py-1.5 text-sm text-neutral-600 hover:text-black transition-all"
+                      >
+                        <span className={`w-4 h-4 border-2 rounded flex items-center justify-center flex-shrink-0 ${
+                          isActive ? 'bg-[#F77313] border-[#F77313]' : 'border-neutral-300'
+                        }`}>
+                          {isActive && (
+                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </span>
+                        {filter.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* By origin */}
+              <div>
+                <h3 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">
+                  By origin
+                </h3>
+                <div className="space-y-1">
+                  {ORIGIN_FILTERS.map((filter) => {
+                    const isActive = params.origin === filter.slug;
+                    return (
+                      <Link
+                        key={filter.slug}
+                        href={isActive ? '/en/spices/' : `/en/spices/?origin=${filter.slug}`}
+                        className="flex items-center gap-3 px-2 py-1.5 text-sm text-neutral-600 hover:text-black transition-all"
+                      >
+                        <span className={`w-4 h-4 border-2 rounded flex items-center justify-center flex-shrink-0 ${
+                          isActive ? 'bg-[#F77313] border-[#F77313]' : 'border-neutral-300'
+                        }`}>
+                          {isActive && (
+                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </span>
+                        {filter.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* By taste */}
+              <div>
+                <h3 className="text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-3">
+                  By taste
+                </h3>
+                <div className="space-y-1">
+                  {TASTE_FILTERS.map((filter) => {
+                    const isActive = params.category === filter.slug;
+                    return (
+                      <Link
+                        key={filter.slug}
+                        href={isActive ? '/en/spices/' : `/en/spices/?category=${filter.slug}`}
+                        className="flex items-center gap-3 px-2 py-1.5 text-sm text-neutral-600 hover:text-black transition-all"
+                      >
+                        <span className={`w-4 h-4 border-2 rounded flex items-center justify-center flex-shrink-0 ${
+                          isActive ? 'bg-[#F77313] border-[#F77313]' : 'border-neutral-300'
+                        }`}>
+                          {isActive && (
+                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          )}
+                        </span>
+                        {filter.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* Main content - Results */}
+          <div className="flex-1 min-w-0">
+            {spicesList.length === 0 ? (
+              <div className="text-center py-16">
+                <p className="text-6xl mb-4">🔍</p>
+                <h2 className="text-2xl font-display text-black mb-2">
+                  No spices found
+                </h2>
+                <p className="text-neutral-600 mb-6">
+                  {params.q
+                    ? `No results for "${params.q}"`
+                    : 'Try adjusting your filters.'}
+                </p>
+                <Link
+                  href="/en/spices/"
+                  className="inline-block px-6 py-3 bg-[#F77313] text-white font-medium hover:bg-[#e56200] transition-colors"
+                >
+                  View all spices
+                </Link>
+              </div>
+            ) : (
+              <>
+                {/* Results count */}
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-neutral-600">
+                    <span className="font-semibold text-black">{spicesList.length}</span> spice{spicesList.length > 1 ? 's' : ''}
+                    {activeFilters > 0 && ' found'}
+                  </p>
+                </div>
+
+                {/* List grouped by letter */}
+                <div className="space-y-8">
+                  {alphabet.map((letter) => {
+                    const spices = spicesByLetter[letter];
+                    if (!spices || spices.length === 0) return null;
+
+                    return (
+                      <div key={letter} id={`letter-${letter}`} className="scroll-mt-40">
+                        {/* Letter */}
+                        <div className="flex items-center gap-4 mb-4">
+                          <span className="w-12 h-12 bg-[#F77313] text-white font-display text-2xl flex items-center justify-center">
+                            {letter}
+                          </span>
+                          <div className="flex-1 h-px bg-neutral-200" />
+                          <span className="text-sm text-neutral-500">
+                            {spices.length} spice{spices.length > 1 ? 's' : ''}
+                          </span>
+                        </div>
+
+                        {/* Spices for this letter */}
+                        <div className="space-y-2">
+                          {spices.map((spice) => (
+                            <SpiceCard key={spice.id} spice={spice} />
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Hero Section */}
-      <section className="bg-black text-white py-12 md:py-20">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl">
-            <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
-              Culinary Guide
-            </span>
-            <h1 className="text-4xl md:text-6xl font-display mt-3 mb-6">
-              The Spice Route
-            </h1>
-            <p className="text-neutral-400 text-lg max-w-xl">
-              Discover the origin, taste and uses of each spice.
-              Filter by meat type, geographic origin or taste profile.
-            </p>
-            <div className="w-16 h-1 bg-[#F77313] mt-8" />
-
-            {/* Quick link to pairing guide */}
-            <Link
-              href="/en/spices/spice-pairing/"
-              className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-[#F77313] text-white font-medium hover:bg-[#e56200] transition-colors"
-            >
-              🍽️ Spice-Food Pairing Guide
-              <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Filters */}
-      <section className="border-b border-neutral-200 bg-white sticky top-0 z-20 shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          {/* Search + Reset */}
-          <div className="flex items-center gap-4 mb-4">
-            <form className="flex-1 max-w-md">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
-                <input
-                  type="text"
-                  name="q"
-                  defaultValue={params.q || ''}
-                  placeholder="Search for a spice..."
-                  className="w-full pl-10 pr-4 py-2.5 border border-neutral-200 text-sm focus:outline-none focus:border-[#F77313] rounded-lg"
-                />
-              </div>
-            </form>
-
-            {activeFilters > 0 && (
-              <Link
-                href="/en/spices/"
-                className="text-sm text-[#F77313] hover:text-[#e56200] font-medium"
-              >
-                Reset ({activeFilters})
-              </Link>
-            )}
-          </div>
-
-          {/* Filter Groups */}
-          <div className="space-y-3">
-            {/* By food */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1">
-              <span className="text-xs text-neutral-500 font-medium flex-shrink-0 w-20">Food:</span>
-              <div className="flex gap-2">
-                {FOOD_FILTERS.map((filter) => (
-                  <Link
-                    key={filter.slug}
-                    href={params.food === filter.slug ? '/en/spices/' : `/en/spices/?food=${filter.slug}`}
-                    className={`flex-shrink-0 px-3 py-1.5 text-sm font-medium transition-colors rounded-full flex items-center gap-1.5 ${
-                      params.food === filter.slug
-                        ? 'bg-[#F77313] text-white'
-                        : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
-                    }`}
-                  >
-                    <span>{filter.emoji}</span>
-                    {filter.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* By origin */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1">
-              <span className="text-xs text-neutral-500 font-medium flex-shrink-0 w-20">Origin:</span>
-              <div className="flex gap-2">
-                {ORIGIN_FILTERS.map((filter) => (
-                  <Link
-                    key={filter.slug}
-                    href={params.origin === filter.slug ? '/en/spices/' : `/en/spices/?origin=${filter.slug}`}
-                    className={`flex-shrink-0 px-3 py-1.5 text-sm font-medium transition-colors rounded-full flex items-center gap-1.5 ${
-                      params.origin === filter.slug
-                        ? 'bg-[#F77313] text-white'
-                        : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
-                    }`}
-                  >
-                    <span>{filter.flag}</span>
-                    {filter.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* By taste */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1">
-              <span className="text-xs text-neutral-500 font-medium flex-shrink-0 w-20">Profile:</span>
-              <div className="flex gap-2">
-                {TASTE_FILTERS.map((filter) => (
-                  <Link
-                    key={filter.slug}
-                    href={params.category === filter.slug ? '/en/spices/' : `/en/spices/?category=${filter.slug}`}
-                    className={`flex-shrink-0 px-3 py-1.5 text-sm font-medium transition-colors rounded-full flex items-center gap-1.5 ${
-                      params.category === filter.slug
-                        ? 'bg-[#F77313] text-white'
-                        : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
-                    }`}
-                  >
-                    <filter.icon className="w-3.5 h-3.5" />
-                    {filter.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Results */}
-      <section className="container mx-auto px-4 py-8 md:py-12">
-        {spicesList.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="text-6xl mb-4">🌶️</p>
-            <h2 className="text-2xl font-display text-black mb-2">
-              No spices found
-            </h2>
-            <p className="text-neutral-600 mb-6">
-              {params.q
-                ? `No results for "${params.q}"`
-                : 'Try adjusting your filters.'}
-            </p>
-            <Link
-              href="/en/spices/"
-              className="inline-block px-6 py-3 bg-[#F77313] text-white font-medium hover:bg-[#e56200] transition-colors"
-            >
-              View all spices
-            </Link>
-          </div>
-        ) : (
-          <>
-            {/* Results count */}
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-neutral-600">
-                <span className="font-medium text-black">{spicesList.length}</span> spice{spicesList.length > 1 ? 's' : ''}
-                {activeFilters > 0 && ' found'}
-              </p>
-            </div>
-
-            {/* Grid - horizontal cards */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-              {spicesList.map((spice) => (
-                <SpiceCard key={spice.id} spice={spice} />
-              ))}
-            </div>
-          </>
-        )}
-      </section>
-
-      {/* SEO Content */}
-      <section className="bg-neutral-50 py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="font-display text-2xl md:text-3xl text-black mb-6">
-              How to use The Spice Route?
-            </h2>
-            <div className="prose prose-neutral">
-              <p>
-                The Spice Route is your complete guide to mastering
-                the art of spices in cooking. Each detailed entry gives you:
-              </p>
-              <ul>
-                <li><strong>Geographic origin</strong> and history of the spice</li>
-                <li><strong>Taste profile</strong> with intensity and heat level</li>
-                <li><strong>Perfect pairings</strong> with meats, fish and vegetables</li>
-                <li><strong>Usage tips</strong> and mistakes to avoid</li>
-                <li><strong>Substitutions</strong> if you don&apos;t have the spice</li>
-              </ul>
-              <p>
-                Use the filters above to quickly find spices suited to your dish:
-                filter by meat type (beef, chicken, pork...), by origin
-                (India, Mediterranean...) or by taste profile (mild, hot...).
-              </p>
-            </div>
-
-            {/* Link to pairing guide */}
-            <div className="mt-8 p-6 bg-white border border-neutral-200 rounded-lg">
-              <h3 className="font-display text-xl text-black mb-2">
-                🍽️ Spice-Food Pairing Guide
-              </h3>
-              <p className="text-neutral-600 mb-4">
-                Our interactive guide to find the best spices based on what
-                you&apos;re cooking. Select beef, chicken, fish or vegetables and discover
-                perfect pairings!
-              </p>
-              <Link
-                href="/en/spices/spice-pairing/"
-                className="inline-flex items-center gap-2 text-[#F77313] font-medium hover:text-[#e56200]"
-              >
-                Explore the guide
-                <ChevronRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+      </main>
+    </>
   );
 }

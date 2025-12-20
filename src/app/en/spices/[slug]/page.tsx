@@ -3,8 +3,11 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase-server';
-import { ChevronRight, Globe, Clock, Flame, Leaf, AlertTriangle, Heart, Package, ArrowLeftRight } from 'lucide-react';
+import { ChevronRight, Globe, Clock, Flame, Leaf, AlertTriangle, Heart, Package, ArrowLeftRight, ShoppingCart } from 'lucide-react';
 import RecipeFAQ from '@/components/recipe/RecipeFAQ';
+import { siteConfig } from '@/lib/config';
+
+const AMAZON_STORE_ID = 'h1site0d-20';
 
 interface TasteProfile {
   intensity?: number;
@@ -92,6 +95,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description,
     alternates: {
       canonical: `/en/spices/${slug}/`,
+      languages: {
+        'fr-CA': `/epices/${slug}/`,
+        'en-CA': `/en/spices/${slug}/`,
+      },
     },
     openGraph: {
       title,
@@ -186,17 +193,36 @@ export default async function SpicePage({ params }: PageProps) {
     substituteSpices = (subs || []) as SubstituteSpice[];
   }
 
+  // JSON-LD Schema - Product schema for spices
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: name,
-    description: spice.definition_en,
-    image: spice.featured_image,
-    author: {
-      '@type': 'Organization',
-      name: 'Menucochon',
+    '@type': 'Product',
+    name: name,
+    description: spice.definition_en || `Complete guide to ${name}: origin, taste, culinary uses.`,
+    image: spice.featured_image || `${siteConfig.url}/images/spice-placeholder.jpg`,
+    url: `${siteConfig.url}/en/spices/${slug}/`,
+    category: 'Spices and seasonings',
+    brand: {
+      '@type': 'Brand',
+      name: 'The Spice Route',
+    },
+    aggregateRating: tasteProfile.intensity ? {
+      '@type': 'AggregateRating',
+      ratingValue: tasteProfile.intensity,
+      bestRating: 5,
+      worstRating: 1,
+      ratingCount: 1,
+    } : undefined,
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'CAD',
+      availability: 'https://schema.org/InStock',
+      url: `https://www.amazon.ca/s?k=${encodeURIComponent(name + ' spice')}&tag=${AMAZON_STORE_ID}`,
     },
   };
+
+  // Amazon search URL for this spice
+  const amazonSearchUrl = `https://www.amazon.ca/s?k=${encodeURIComponent(name + ' spice')}&tag=${AMAZON_STORE_ID}`;
 
   return (
     <>
@@ -206,20 +232,18 @@ export default async function SpicePage({ params }: PageProps) {
       />
 
       <main className="min-h-screen bg-white">
-        <div className="bg-neutral-50 border-b border-neutral-200">
-          <div className="container mx-auto px-4 py-3">
-            <nav className="flex items-center gap-2 text-sm text-neutral-500">
-              <Link href="/en/" className="hover:text-[#F77313]">Home</Link>
-              <ChevronRight className="w-4 h-4" />
-              <Link href="/en/spices/" className="hover:text-[#F77313]">Spices</Link>
-              <ChevronRight className="w-4 h-4" />
-              <span className="text-black">{name}</span>
-            </nav>
-          </div>
-        </div>
 
         <section className="bg-black text-white py-12 md:py-20">
           <div className="container mx-auto px-4">
+            <div className="flex justify-end mb-4">
+              <Link
+                href={`/epices/${slug}/`}
+                className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm"
+              >
+                <Globe className="w-4 h-4" />
+                Français
+              </Link>
+            </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
@@ -411,6 +435,32 @@ export default async function SpicePage({ params }: PageProps) {
                 />
               </section>
             )}
+
+            {/* Amazon Buy Link */}
+            <section className="border-2 border-[#F77313] bg-neutral-100 p-6 md:p-8">
+              <h2 className="font-display text-2xl text-black mb-4 flex items-center gap-3">
+                <ShoppingCart className="w-6 h-6 text-[#F77313]" />
+                Buy {name}
+              </h2>
+              <p className="text-neutral-600 mb-6">
+                Find this quality spice on Amazon.ca and start cooking!
+              </p>
+              <a
+                href={amazonSearchUrl}
+                target="_blank"
+                rel="noopener noreferrer sponsored"
+                className="inline-flex items-center gap-3 px-6 py-3 bg-[#FF9900] text-black font-semibold hover:bg-[#FF9900]/90 transition-colors rounded"
+              >
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.525.13.12.174.09.336-.12.48-.256.19-.6.41-1.006.654-1.244.743-2.64 1.316-4.185 1.726-1.544.41-3.063.615-4.56.615-4.622 0-8.648-1.244-12.08-3.73-.116-.082-.147-.173-.104-.287.043-.116.133-.174.257-.174z"/>
+                </svg>
+                View on Amazon.ca
+                <ChevronRight className="w-4 h-4" />
+              </a>
+              <p className="text-xs text-neutral-500 mt-4">
+                Amazon affiliate link - we may earn a commission on eligible purchases.
+              </p>
+            </section>
 
             {substituteSpices.length > 0 && (
               <section className="border border-neutral-200 p-6 md:p-8">
