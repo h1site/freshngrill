@@ -3,7 +3,37 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 const ADMIN_EMAIL = 'info@h1site.com';
 
+// Liste de User-Agents suspects (bots, scrapers chinois)
+// Note: AhrefsBot et SemrushBot sont autorisés pour le SEO
+const BLOCKED_USER_AGENTS = [
+  'Baiduspider',
+  'YandexBot',
+  'Sogou',
+  'Bytespider',
+  'PetalBot',
+  'DotBot',
+  'MJ12bot',
+];
+
+// Bloquer certains pays via Vercel Geo (header x-vercel-ip-country)
+const BLOCKED_COUNTRIES = ['CN', 'RU'];
+
 export async function middleware(request: NextRequest) {
+  // Bloquer le trafic suspect basé sur le pays (Vercel Geo)
+  const country = request.headers.get('x-vercel-ip-country') || request.geo?.country;
+  if (country && BLOCKED_COUNTRIES.includes(country)) {
+    // Retourner une page vide ou 403 pour le trafic bloqué
+    return new NextResponse(null, { status: 403 });
+  }
+
+  // Bloquer les User-Agents suspects
+  const userAgent = request.headers.get('user-agent') || '';
+  const isBlockedBot = BLOCKED_USER_AGENTS.some(bot =>
+    userAgent.toLowerCase().includes(bot.toLowerCase())
+  );
+  if (isBlockedBot) {
+    return new NextResponse(null, { status: 403 });
+  }
   // Add pathname header for locale detection in layout
   const requestHeaders = new Headers(request.headers);
   const currentPathname = request.nextUrl.pathname;

@@ -5,23 +5,33 @@ import Link from 'next/link';
 import { Ruler, ArrowLeft, ArrowRight, RotateCcw } from 'lucide-react';
 import GoogleAd from '@/components/ads/GoogleAd';
 
+// Tableau optimisé pour les requêtes SEO populaires (42, 46, 47, 51, 52, 56, 58, 65, 68, 69, 70, 72, 82, 83, 86, 87, 95, 102 pouces)
 const conversionTable = [
-  { inch: 1, ft: 0.0833 },
-  { inch: 2, ft: 0.1667 },
-  { inch: 3, ft: 0.25 },
-  { inch: 4, ft: 0.3333 },
-  { inch: 5, ft: 0.4167 },
-  { inch: 6, ft: 0.5 },
-  { inch: 12, ft: 1 },
-  { inch: 18, ft: 1.5 },
-  { inch: 24, ft: 2 },
-  { inch: 30, ft: 2.5 },
-  { inch: 36, ft: 3 },
-  { inch: 48, ft: 4 },
-  { inch: 60, ft: 5 },
-  { inch: 72, ft: 6 },
-  { inch: 84, ft: 7 },
-  { inch: 96, ft: 8 },
+  { inch: 12, ft: 1, ftIn: '1 pied' },
+  { inch: 24, ft: 2, ftIn: '2 pieds' },
+  { inch: 36, ft: 3, ftIn: '3 pieds' },
+  { inch: 42, ft: 3.5, ftIn: '3 pieds 6 pouces' },
+  { inch: 46, ft: 3.8333, ftIn: '3 pieds 10 pouces' },
+  { inch: 47, ft: 3.9167, ftIn: '3 pieds 11 pouces' },
+  { inch: 48, ft: 4, ftIn: '4 pieds' },
+  { inch: 51, ft: 4.25, ftIn: '4 pieds 3 pouces' },
+  { inch: 52, ft: 4.3333, ftIn: '4 pieds 4 pouces' },
+  { inch: 56, ft: 4.6667, ftIn: '4 pieds 8 pouces' },
+  { inch: 58, ft: 4.8333, ftIn: '4 pieds 10 pouces' },
+  { inch: 60, ft: 5, ftIn: '5 pieds' },
+  { inch: 65, ft: 5.4167, ftIn: '5 pieds 5 pouces' },
+  { inch: 68, ft: 5.6667, ftIn: '5 pieds 8 pouces' },
+  { inch: 69, ft: 5.75, ftIn: '5 pieds 9 pouces' },
+  { inch: 70, ft: 5.8333, ftIn: '5 pieds 10 pouces' },
+  { inch: 72, ft: 6, ftIn: '6 pieds' },
+  { inch: 82, ft: 6.8333, ftIn: '6 pieds 10 pouces' },
+  { inch: 83, ft: 6.9167, ftIn: '6 pieds 11 pouces' },
+  { inch: 84, ft: 7, ftIn: '7 pieds' },
+  { inch: 86, ft: 7.1667, ftIn: '7 pieds 2 pouces' },
+  { inch: 87, ft: 7.25, ftIn: '7 pieds 3 pouces' },
+  { inch: 95, ft: 7.9167, ftIn: '7 pieds 11 pouces' },
+  { inch: 96, ft: 8, ftIn: '8 pieds' },
+  { inch: 102, ft: 8.5, ftIn: '8 pieds 6 pouces' },
 ];
 
 export default function PoucePiedPage() {
@@ -230,24 +240,84 @@ export default function PoucePiedPage() {
 
           <div className="bg-white border border-neutral-200 overflow-hidden">
             <div className="bg-green-500 text-white px-6 py-4">
-              <h3 className="font-display text-lg">Pouces en Pieds</h3>
+              <h3 className="font-display text-lg">Pouces en Pieds - Conversions populaires</h3>
             </div>
             <table className="w-full">
               <thead>
                 <tr className="border-b border-neutral-200 bg-neutral-50">
                   <th className="px-4 py-3 text-left text-sm font-semibold">Pouces (in)</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold">Pieds (ft)</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold hidden md:table-cell">Format pieds/pouces</th>
                 </tr>
               </thead>
               <tbody>
                 {conversionTable.map((row, i) => (
                   <tr key={i} className={i % 2 === 0 ? '' : 'bg-neutral-50'}>
-                    <td className="px-4 py-2 text-sm">{row.inch}</td>
-                    <td className="px-4 py-2 text-sm">{row.ft}</td>
+                    <td className="px-4 py-2 text-sm font-medium">{row.inch} pouces</td>
+                    <td className="px-4 py-2 text-sm">{row.ft} pi</td>
+                    <td className="px-4 py-2 text-sm text-neutral-600 hidden md:table-cell">{row.ftIn}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Conversions les plus recherchées - SEO optimisé */}
+      <section className="bg-green-50 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="font-display text-2xl text-black mb-8 text-center">
+              Conversions les plus recherchées
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="bg-white border border-green-200 p-4 rounded">
+                <h3 className="font-semibold text-green-700 mb-2">70 pouces en pieds</h3>
+                <p className="text-2xl font-bold text-black">5,83 pieds</p>
+                <p className="text-sm text-neutral-600 mt-1">= 5 pieds 10 pouces (177,8 cm)</p>
+              </div>
+              <div className="bg-white border border-green-200 p-4 rounded">
+                <h3 className="font-semibold text-green-700 mb-2">72 pouces en pieds</h3>
+                <p className="text-2xl font-bold text-black">6 pieds</p>
+                <p className="text-sm text-neutral-600 mt-1">= 6 pieds exactement (182,9 cm)</p>
+              </div>
+              <div className="bg-white border border-green-200 p-4 rounded">
+                <h3 className="font-semibold text-green-700 mb-2">52 pouces en pieds</h3>
+                <p className="text-2xl font-bold text-black">4,33 pieds</p>
+                <p className="text-sm text-neutral-600 mt-1">= 4 pieds 4 pouces (132,1 cm)</p>
+              </div>
+              <div className="bg-white border border-green-200 p-4 rounded">
+                <h3 className="font-semibold text-green-700 mb-2">42 pouces en pieds</h3>
+                <p className="text-2xl font-bold text-black">3,5 pieds</p>
+                <p className="text-sm text-neutral-600 mt-1">= 3 pieds 6 pouces (106,7 cm)</p>
+              </div>
+              <div className="bg-white border border-green-200 p-4 rounded">
+                <h3 className="font-semibold text-green-700 mb-2">68 pouces en pieds</h3>
+                <p className="text-2xl font-bold text-black">5,67 pieds</p>
+                <p className="text-sm text-neutral-600 mt-1">= 5 pieds 8 pouces (172,7 cm)</p>
+              </div>
+              <div className="bg-white border border-green-200 p-4 rounded">
+                <h3 className="font-semibold text-green-700 mb-2">102 pouces en pieds</h3>
+                <p className="text-2xl font-bold text-black">8,5 pieds</p>
+                <p className="text-sm text-neutral-600 mt-1">= 8 pieds 6 pouces (259,1 cm)</p>
+              </div>
+              <div className="bg-white border border-green-200 p-4 rounded">
+                <h3 className="font-semibold text-green-700 mb-2">65 pouces en pieds</h3>
+                <p className="text-2xl font-bold text-black">5,42 pieds</p>
+                <p className="text-sm text-neutral-600 mt-1">= 5 pieds 5 pouces (165,1 cm)</p>
+              </div>
+              <div className="bg-white border border-green-200 p-4 rounded">
+                <h3 className="font-semibold text-green-700 mb-2">47 pouces en pieds</h3>
+                <p className="text-2xl font-bold text-black">3,92 pieds</p>
+                <p className="text-sm text-neutral-600 mt-1">= 3 pieds 11 pouces (119,4 cm)</p>
+              </div>
+              <div className="bg-white border border-green-200 p-4 rounded">
+                <h3 className="font-semibold text-green-700 mb-2">82 pouces en pieds</h3>
+                <p className="text-2xl font-bold text-black">6,83 pieds</p>
+                <p className="text-sm text-neutral-600 mt-1">= 6 pieds 10 pouces (208,3 cm)</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -425,6 +495,38 @@ export default function PoucePiedPage() {
                 "acceptedAnswer": {
                   "@type": "Answer",
                   "text": "Pour convertir des pouces en pieds, divisez le nombre de pouces par 12. Par exemple : 60 pouces ÷ 12 = 5 pieds."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "70 pouces en pieds, ça fait combien?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "70 pouces = 5,83 pieds, soit 5 pieds et 10 pouces (environ 177,8 cm)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "72 pouces en pieds?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "72 pouces = 6 pieds exactement (182,9 cm). C'est la taille d'une personne mesurant 6 pieds."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "52 pouces en pieds?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "52 pouces = 4,33 pieds, soit 4 pieds et 4 pouces (environ 132,1 cm)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "42 pouces en pieds?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "42 pouces = 3,5 pieds, soit 3 pieds et 6 pouces (environ 106,7 cm)."
                 }
               },
               {
