@@ -1,155 +1,164 @@
-'use client';
-
-import { useState } from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
-import { ChevronRight, Beef, Fish, Drumstick, PiggyBank, Carrot, Wheat, Cake, Search } from 'lucide-react';
+import Image from 'next/image';
+import { ChevronRight } from 'lucide-react';
+import { createClient } from '@/lib/supabase-server';
 
-// Données des associations épices/aliments
+export const metadata: Metadata = {
+  title: 'Guide des Accords Épices-Aliments | La Route des Épices - Menucochon',
+  description: 'Découvrez les meilleures épices pour chaque aliment: bœuf, poulet, agneau, poisson, légumes et desserts. Guide pratique des accords parfaits.',
+  alternates: {
+    canonical: '/epices/route-des-epices/',
+  },
+};
+
+const DEFAULT_SPICE_IMAGE = '/images/default-epice.avif';
+
+// Catégories d'aliments avec leurs mots-clés pour matcher les épices
 const FOOD_CATEGORIES = [
   {
     id: 'boeuf',
     name: 'Bœuf',
-    nameEn: 'Beef',
-    icon: Beef,
     emoji: '🥩',
-    spices: [
-      { slug: 'cumin', name: 'Cumin', match: 5, note: 'Parfait pour les steaks et ragoûts' },
-      { slug: 'paprika', name: 'Paprika', match: 5, note: 'Idéal pour colorer et parfumer' },
-      { slug: 'poivre-noir', name: 'Poivre noir', match: 5, note: 'Le classique indémodable' },
-      { slug: 'thym', name: 'Thym', match: 4, note: 'Excellent en marinade' },
-      { slug: 'romarin', name: 'Romarin', match: 4, note: 'Pour les rôtis' },
-      { slug: 'coriandre', name: 'Coriandre', match: 3, note: 'Dans les plats mijotés' },
-    ],
+    description: 'Steaks, rôtis, ragoûts et burgers',
+    keywords: ['viandes', 'viandes grillées', 'steaks', 'rôtis', 'ragoûts'],
+    tip: 'Le bœuf aime les épices terreuses et robustes. Le cumin, le paprika fumé et le poivre noir sont des classiques. Pour les ragoûts, ajoutez de la cannelle ou du clou de girofle.',
   },
   {
     id: 'poulet',
     name: 'Poulet',
-    nameEn: 'Chicken',
-    icon: Drumstick,
     emoji: '🍗',
-    spices: [
-      { slug: 'paprika', name: 'Paprika', match: 5, note: 'Poulet paprika hongrois' },
-      { slug: 'curcuma', name: 'Curcuma', match: 5, note: 'Pour les currys' },
-      { slug: 'gingembre', name: 'Gingembre', match: 5, note: 'Cuisine asiatique' },
-      { slug: 'cumin', name: 'Cumin', match: 4, note: 'Poulet épicé' },
-      { slug: 'thym', name: 'Thym', match: 4, note: 'Poulet rôti classique' },
-      { slug: 'cannelle', name: 'Cannelle', match: 3, note: 'Tajines marocains' },
-    ],
-  },
-  {
-    id: 'porc',
-    name: 'Porc',
-    nameEn: 'Pork',
-    icon: PiggyBank,
-    emoji: '🐷',
-    spices: [
-      { slug: 'gingembre', name: 'Gingembre', match: 5, note: 'Porc sauté asiatique' },
-      { slug: 'cannelle', name: 'Cannelle', match: 4, note: 'Côtelettes de porc' },
-      { slug: 'cumin', name: 'Cumin', match: 4, note: 'Carnitas mexicaines' },
-      { slug: 'paprika', name: 'Paprika fumé', match: 5, note: 'Côtes levées BBQ' },
-      { slug: 'coriandre', name: 'Coriandre', match: 3, note: 'En marinade' },
-      { slug: 'muscade', name: 'Muscade', match: 3, note: 'Charcuterie' },
-    ],
+    description: 'Rôti, grillé, sauté ou en curry',
+    keywords: ['volailles', 'volaille', 'poulet', 'viandes blanches'],
+    tip: 'Le poulet est une toile vierge qui absorbe bien les épices. Le curcuma et le gingembre créent un poulet doré parfumé. Le paprika et le thym sont parfaits pour un poulet rôti.',
   },
   {
     id: 'agneau',
     name: 'Agneau',
-    nameEn: 'Lamb',
-    icon: Beef,
     emoji: '🐑',
-    spices: [
-      { slug: 'cumin', name: 'Cumin', match: 5, note: 'L\'accord parfait!' },
-      { slug: 'coriandre', name: 'Coriandre', match: 5, note: 'Cuisine méditerranéenne' },
-      { slug: 'romarin', name: 'Romarin', match: 5, note: 'Gigot rôti' },
-      { slug: 'menthe', name: 'Menthe', match: 4, note: 'Tradition britannique' },
-      { slug: 'paprika', name: 'Paprika', match: 4, note: 'Ragoûts' },
-      { slug: 'cannelle', name: 'Cannelle', match: 3, note: 'Tajines' },
-    ],
+    description: 'Gigot, côtelettes et tajines',
+    keywords: ['agneau', 'viandes', 'ragoûts'],
+    preferOrigins: ['Moyen-Orient', 'Méditerranée', 'Afrique'],
+    tip: 'Le cumin est le partenaire naturel de l\'agneau. Associez-le avec de la coriandre et de la menthe pour une touche méditerranéenne. Le ras-el-hanout est idéal pour les tajines.',
+  },
+  {
+    id: 'porc',
+    name: 'Porc',
+    emoji: '🐷',
+    description: 'Côtelettes, rôti et charcuterie',
+    keywords: ['porc', 'viandes', 'charcuteries', 'saucisses'],
+    tip: 'Le porc aime le sucré-salé. La cannelle, le gingembre et la muscade créent des accords surprenants. Le fenouil est traditionnel dans les saucisses italiennes.',
   },
   {
     id: 'poisson',
     name: 'Poisson',
-    nameEn: 'Fish',
-    icon: Fish,
     emoji: '🐟',
-    spices: [
-      { slug: 'curcuma', name: 'Curcuma', match: 5, note: 'Curry de poisson' },
-      { slug: 'gingembre', name: 'Gingembre', match: 5, note: 'Poisson vapeur' },
-      { slug: 'paprika', name: 'Paprika', match: 4, note: 'Poisson grillé' },
-      { slug: 'coriandre', name: 'Coriandre', match: 4, note: 'Ceviche' },
-      { slug: 'aneth', name: 'Aneth', match: 5, note: 'Saumon nordique' },
-      { slug: 'fenouil', name: 'Fenouil', match: 4, note: 'Loup de mer' },
-    ],
+    description: 'Saumon, cabillaud, thon et plus',
+    keywords: ['poissons', 'poisson', 'saumon'],
+    tip: 'Les épices douces complètent sans masquer le goût délicat du poisson. Le curcuma, l\'aneth et le fenouil sont excellents. Évitez les épices trop fortes.',
   },
   {
     id: 'fruits-mer',
     name: 'Fruits de mer',
-    nameEn: 'Seafood',
-    icon: Fish,
     emoji: '🦐',
-    spices: [
-      { slug: 'gingembre', name: 'Gingembre', match: 5, note: 'Crevettes sautées' },
-      { slug: 'piment-cayenne', name: 'Piment de Cayenne', match: 5, note: 'Cajun' },
-      { slug: 'paprika', name: 'Paprika fumé', match: 4, note: 'Paella' },
-      { slug: 'curcuma', name: 'Curcuma', match: 4, note: 'Curry de crevettes' },
-      { slug: 'ail', name: 'Ail', match: 5, note: 'Crevettes à l\'ail' },
-      { slug: 'coriandre', name: 'Coriandre', match: 3, note: 'Fruits de mer thai' },
-    ],
+    description: 'Crevettes, moules et crustacés',
+    keywords: ['fruits de mer', 'poissons', 'plats asiatiques'],
+    tip: 'Les fruits de mer adorent le piquant! Le piment de Cayenne, le paprika fumé et le gingembre frais sont vos alliés pour des crevettes parfaites.',
   },
   {
     id: 'legumes',
     name: 'Légumes',
-    nameEn: 'Vegetables',
-    icon: Carrot,
     emoji: '🥕',
-    spices: [
-      { slug: 'cumin', name: 'Cumin', match: 5, note: 'Légumes rôtis' },
-      { slug: 'curcuma', name: 'Curcuma', match: 5, note: 'Chou-fleur doré' },
-      { slug: 'paprika', name: 'Paprika', match: 4, note: 'Pommes de terre' },
-      { slug: 'coriandre', name: 'Coriandre', match: 4, note: 'Carottes rôties' },
-      { slug: 'gingembre', name: 'Gingembre', match: 3, note: 'Légumes sautés' },
-      { slug: 'cannelle', name: 'Cannelle', match: 3, note: 'Courges' },
-    ],
+    description: 'Rôtis, sautés ou en soupe',
+    keywords: ['légumes', 'légumes rôtis', 'légumineuses', 'pommes de terre', 'plats végétariens'],
+    tip: 'Les légumes rôtis révèlent leur saveur avec le cumin et le curcuma. La cannelle sur les courges et le paprika sur les pommes de terre sont délicieux.',
   },
   {
-    id: 'riz-cereales',
+    id: 'riz',
     name: 'Riz & Céréales',
-    nameEn: 'Rice & Grains',
-    icon: Wheat,
     emoji: '🍚',
-    spices: [
-      { slug: 'curcuma', name: 'Curcuma', match: 5, note: 'Riz doré' },
-      { slug: 'cumin', name: 'Cumin', match: 5, note: 'Riz pilaf' },
-      { slug: 'cannelle', name: 'Cannelle', match: 4, note: 'Riz au lait' },
-      { slug: 'cardamome', name: 'Cardamome', match: 5, note: 'Biryani' },
-      { slug: 'safran', name: 'Safran', match: 5, note: 'Paella, risotto' },
-      { slug: 'coriandre', name: 'Coriandre', match: 3, note: 'Couscous' },
-    ],
+    description: 'Pilaf, risotto et couscous',
+    keywords: ['riz', 'pâtes', 'céréales'],
+    tip: 'Une pincée de curcuma transforme un simple riz en accompagnement festif. Le safran reste le roi du risotto et de la paella.',
+  },
+  {
+    id: 'soupes',
+    name: 'Soupes & Mijotés',
+    emoji: '🍲',
+    description: 'Bouillons, potages et ragoûts',
+    keywords: ['soupes', 'bouillons', 'ragoûts', 'plats mijotés', 'currys'],
+    tip: 'Les épices entières infusent merveilleusement dans les soupes. Ajoutez les épices moulues en fin de cuisson pour préserver leurs arômes.',
   },
   {
     id: 'desserts',
     name: 'Desserts',
-    nameEn: 'Desserts',
-    icon: Cake,
     emoji: '🍰',
-    spices: [
-      { slug: 'cannelle', name: 'Cannelle', match: 5, note: 'Tartes aux pommes' },
-      { slug: 'gingembre', name: 'Gingembre', match: 5, note: 'Pain d\'épices' },
-      { slug: 'muscade', name: 'Muscade', match: 4, note: 'Crèmes et flans' },
-      { slug: 'cardamome', name: 'Cardamome', match: 5, note: 'Pâtisseries orientales' },
-      { slug: 'vanille', name: 'Vanille', match: 5, note: 'Le classique universel' },
-      { slug: 'anis-etoile', name: 'Anis étoilé', match: 3, note: 'Compotes' },
-    ],
+    description: 'Gâteaux, tartes et crèmes',
+    keywords: ['desserts', 'pâtisseries', 'biscuits', 'compotes', 'plats sucrés-salés'],
+    tip: 'La cannelle et la cardamome sont les reines de la pâtisserie. La vanille est universelle. N\'ayez pas peur d\'expérimenter avec le gingembre et l\'anis!',
   },
 ];
 
-function MatchIndicator({ level }: { level: number }) {
+interface UsedWith {
+  meat?: string[];
+  fish?: string[];
+  vegetables?: string[];
+  grains?: string[];
+  bread?: string[];
+  desserts?: string[];
+  cheese?: string[];
+  soups?: string[];
+  eggs?: string[];
+  sauces?: string[];
+  drinks?: string[];
+}
+
+interface Spice {
+  id: number;
+  slug: string;
+  name_fr: string;
+  definition_fr: string | null;
+  featured_image: string | null;
+  origin: string[] | null;
+  taste_profile: {
+    intensity?: number;
+    spicy?: number;
+  } | null;
+  utilisation_aliments_fr: string[] | null;
+  used_with: UsedWith | null;
+}
+
+function matchSpiceToCategory(spice: Spice, category: typeof FOOD_CATEGORIES[0]): number {
+  let score = 0;
+  const aliments = spice.utilisation_aliments_fr || [];
+  const alimentsLower = aliments.map(a => a.toLowerCase());
+
+  // Match par mots-clés
+  for (const keyword of category.keywords) {
+    if (alimentsLower.some(a => a.includes(keyword) || keyword.includes(a))) {
+      score += 2;
+    }
+  }
+
+  // Bonus pour origine préférée
+  if (category.preferOrigins && spice.origin) {
+    for (const origin of category.preferOrigins) {
+      if (spice.origin.includes(origin)) {
+        score += 1;
+      }
+    }
+  }
+
+  return score;
+}
+
+function IntensityIndicator({ level }: { level: number }) {
   return (
     <div className="flex gap-0.5">
       {[1, 2, 3, 4, 5].map((i) => (
         <span
           key={i}
-          className={`w-2 h-2 rounded-full ${
+          className={`w-1.5 h-1.5 rounded-full ${
             i <= level ? 'bg-[#F77313]' : 'bg-neutral-200'
           }`}
         />
@@ -158,20 +167,40 @@ function MatchIndicator({ level }: { level: number }) {
   );
 }
 
-export default function SpiceGuidePage() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+export default async function SpiceGuidePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ aliment?: string }>;
+}) {
+  const params = await searchParams;
+  const supabase = await createClient();
 
-  const selectedFood = FOOD_CATEGORIES.find((cat) => cat.id === selectedCategory);
+  // Récupérer toutes les épices
+  const { data: spices } = await supabase
+    .from('spices')
+    .select('id, slug, name_fr, definition_fr, featured_image, origin, taste_profile, utilisation_aliments_fr, used_with')
+    .eq('is_published', true)
+    .order('name_fr');
 
-  // Filtrer les catégories par recherche
-  const filteredCategories = searchQuery
-    ? FOOD_CATEGORIES.filter(
-        (cat) =>
-          cat.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          cat.nameEn.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : FOOD_CATEGORIES;
+  const allSpices = (spices || []) as Spice[];
+
+  // Catégorie sélectionnée
+  const selectedCategoryId = params.aliment || null;
+  const selectedCategory = FOOD_CATEGORIES.find(c => c.id === selectedCategoryId);
+
+  // Trouver les épices pour la catégorie sélectionnée
+  let matchedSpices: { spice: Spice; score: number }[] = [];
+
+  if (selectedCategory) {
+    matchedSpices = allSpices
+      .map(spice => ({
+        spice,
+        score: matchSpiceToCategory(spice, selectedCategory),
+      }))
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 12);
+  }
 
   return (
     <main className="min-h-screen bg-white">
@@ -187,7 +216,7 @@ export default function SpiceGuidePage() {
               Épices
             </Link>
             <ChevronRight className="w-4 h-4" />
-            <span className="text-black">La Route des Épices</span>
+            <span className="text-black">Guide des Accords</span>
           </nav>
         </div>
       </div>
@@ -200,7 +229,7 @@ export default function SpiceGuidePage() {
               La Route des Épices
             </span>
             <h1 className="text-4xl md:text-6xl font-display mt-3 mb-6">
-              Quelle épice avec quelle viande?
+              Quelle épice avec quel aliment?
             </h1>
             <p className="text-neutral-400 text-lg">
               Sélectionnez un aliment pour découvrir les meilleures épices à utiliser.
@@ -211,112 +240,111 @@ export default function SpiceGuidePage() {
         </div>
       </section>
 
-      {/* Selector */}
+      {/* Food Categories Grid */}
       <section className="container mx-auto px-4 py-12 md:py-16">
-        {/* Search */}
-        <div className="max-w-md mx-auto mb-8">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Rechercher un aliment..."
-              className="w-full pl-12 pr-4 py-3 border border-neutral-200 text-lg focus:outline-none focus:border-[#F77313]"
-            />
-          </div>
-        </div>
-
-        {/* Food Categories Grid */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-9 gap-3 mb-12">
-          {filteredCategories.map((category) => {
-            const Icon = category.icon;
-            const isSelected = selectedCategory === category.id;
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-12">
+          {FOOD_CATEGORIES.map((category) => {
+            const isSelected = selectedCategoryId === category.id;
 
             return (
-              <button
+              <Link
                 key={category.id}
-                onClick={() => setSelectedCategory(isSelected ? null : category.id)}
-                className={`flex flex-col items-center justify-center p-4 border transition-all duration-200 ${
+                href={isSelected ? '/epices/route-des-epices/' : `/epices/route-des-epices/?aliment=${category.id}`}
+                className={`flex flex-col items-center justify-center p-6 border-2 transition-all duration-200 ${
                   isSelected
-                    ? 'border-[#F77313] bg-[#F77313]/5 text-[#F77313]'
+                    ? 'border-[#F77313] bg-[#F77313]/5'
                     : 'border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50'
                 }`}
               >
-                <span className="text-3xl mb-2">{category.emoji}</span>
-                <span className="text-sm font-medium text-center">{category.name}</span>
-              </button>
+                <span className="text-4xl mb-3">{category.emoji}</span>
+                <span className={`font-medium text-center ${isSelected ? 'text-[#F77313]' : 'text-black'}`}>
+                  {category.name}
+                </span>
+                <span className="text-xs text-neutral-500 text-center mt-1">
+                  {category.description}
+                </span>
+              </Link>
             );
           })}
         </div>
 
         {/* Results */}
-        {selectedFood ? (
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-neutral-50 border border-neutral-200 p-6 md:p-8">
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-5xl">{selectedFood.emoji}</span>
+        {selectedCategory ? (
+          <div className="max-w-5xl mx-auto">
+            {/* Category Header */}
+            <div className="bg-neutral-50 border border-neutral-200 p-6 md:p-8 mb-8">
+              <div className="flex items-center gap-4 mb-4">
+                <span className="text-5xl">{selectedCategory.emoji}</span>
                 <div>
                   <h2 className="font-display text-3xl text-black">
-                    Épices pour {selectedFood.name}
+                    Épices pour {selectedCategory.name}
                   </h2>
                   <p className="text-neutral-600">
-                    Les meilleures épices à associer avec {selectedFood.name.toLowerCase()}
+                    {matchedSpices.length} épices recommandées
                   </p>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                {selectedFood.spices.map((spice) => (
-                  <Link
-                    key={spice.slug}
-                    href={`/epices/${spice.slug}/`}
-                    className="flex items-center justify-between p-4 bg-white border border-neutral-200 hover:border-[#F77313] transition-colors group"
-                  >
-                    <div className="flex items-center gap-4">
-                      <span className="text-2xl">🌶️</span>
-                      <div>
-                        <h3 className="font-medium text-black group-hover:text-[#F77313] transition-colors">
-                          {spice.name}
-                        </h3>
-                        <p className="text-sm text-neutral-500">{spice.note}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <span className="text-xs text-neutral-500 block mb-1">Accord</span>
-                        <MatchIndicator level={spice.match} />
-                      </div>
-                      <ChevronRight className="w-5 h-5 text-neutral-400 group-hover:text-[#F77313]" />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-neutral-200">
-                <h3 className="font-medium text-black mb-3">💡 Conseil de chef</h3>
-                <p className="text-neutral-600">
-                  {selectedFood.id === 'boeuf' &&
-                    'Pour le bœuf, commencez par du poivre noir et du sel. Ajoutez du cumin pour un côté terreux ou du paprika fumé pour une touche BBQ.'}
-                  {selectedFood.id === 'poulet' &&
-                    'Le poulet est une toile vierge! Il absorbe bien les épices. N\'hésitez pas à mariner avec du curcuma et du gingembre pour un poulet doré parfumé.'}
-                  {selectedFood.id === 'porc' &&
-                    'Le porc aime le sucré-salé. La cannelle et le gingembre créent des accords surprenants et délicieux.'}
-                  {selectedFood.id === 'agneau' &&
-                    'Le cumin est le partenaire naturel de l\'agneau. Associez-le avec de la coriandre pour une touche méditerranéenne.'}
-                  {selectedFood.id === 'poisson' &&
-                    'Les épices douces comme le curcuma et les herbes fraîches complètent sans masquer le goût délicat du poisson.'}
-                  {selectedFood.id === 'fruits-mer' &&
-                    'Les fruits de mer adorent le piquant! Cayenne, paprika fumé et gingembre frais sont vos alliés.'}
-                  {selectedFood.id === 'legumes' &&
-                    'Les légumes rôtis révèlent leur saveur avec le cumin et le curcuma. Essayez la cannelle sur les courges!'}
-                  {selectedFood.id === 'riz-cereales' &&
-                    'Une pincée de curcuma transforme un simple riz en accompagnement festif. Le safran reste le roi du risotto.'}
-                  {selectedFood.id === 'desserts' &&
-                    'La cannelle et la cardamome sont les reines de la pâtisserie. N\'ayez pas peur d\'expérimenter avec le gingembre!'}
+              {/* Chef tip */}
+              <div className="bg-white border border-neutral-200 p-4 mt-4">
+                <h3 className="font-medium text-black mb-2 flex items-center gap-2">
+                  <span>💡</span> Conseil de chef
+                </h3>
+                <p className="text-neutral-600 text-sm">
+                  {selectedCategory.tip}
                 </p>
               </div>
             </div>
+
+            {/* Spices Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {matchedSpices.map(({ spice, score }) => (
+                <Link
+                  key={spice.id}
+                  href={`/epices/${spice.slug}/`}
+                  className="flex items-start gap-4 p-4 bg-white border border-neutral-200 hover:border-[#F77313] transition-colors group"
+                >
+                  {/* Image */}
+                  <div className="w-16 h-16 flex-shrink-0 relative bg-neutral-100 overflow-hidden">
+                    <Image
+                      src={spice.featured_image || DEFAULT_SPICE_IMAGE}
+                      alt={spice.name_fr}
+                      fill
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      sizes="64px"
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="font-medium text-black group-hover:text-[#F77313] transition-colors">
+                        {spice.name_fr}
+                      </h3>
+                      <IntensityIndicator level={spice.taste_profile?.intensity || 3} />
+                    </div>
+                    {spice.definition_fr && (
+                      <p className="text-sm text-neutral-500 mt-1 line-clamp-2">
+                        {spice.definition_fr}
+                      </p>
+                    )}
+                    {spice.origin && spice.origin.length > 0 && (
+                      <p className="text-xs text-neutral-400 mt-2">
+                        Origine: {spice.origin.slice(0, 2).join(', ')}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            {matchedSpices.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-neutral-500">
+                  Aucune épice trouvée pour cette catégorie.
+                </p>
+              </div>
+            )}
           </div>
         ) : (
           <div className="text-center py-12">
@@ -331,8 +359,38 @@ export default function SpiceGuidePage() {
         )}
       </section>
 
+      {/* All Categories Overview */}
+      {!selectedCategory && (
+        <section className="bg-neutral-50 py-16">
+          <div className="container mx-auto px-4">
+            <h2 className="font-display text-3xl text-black text-center mb-12">
+              Accords classiques
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {FOOD_CATEGORIES.slice(0, 6).map((category) => (
+                <div key={category.id} className="bg-white p-6 border border-neutral-200">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-3xl">{category.emoji}</span>
+                    <h3 className="font-display text-xl text-black">{category.name}</h3>
+                  </div>
+                  <p className="text-sm text-neutral-600 mb-4">
+                    {category.tip}
+                  </p>
+                  <Link
+                    href={`/epices/route-des-epices/?aliment=${category.id}`}
+                    className="text-[#F77313] text-sm font-medium hover:text-[#e56200] inline-flex items-center gap-1"
+                  >
+                    Voir les épices <ChevronRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* SEO Content */}
-      <section className="bg-neutral-50 py-16">
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto prose prose-neutral">
             <h2 className="font-display text-3xl text-black">
@@ -367,7 +425,7 @@ export default function SpiceGuidePage() {
       </section>
 
       {/* Back to spices */}
-      <section className="py-12">
+      <section className="pb-16">
         <div className="container mx-auto px-4 text-center">
           <Link
             href="/epices/"
