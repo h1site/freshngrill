@@ -13,6 +13,27 @@ const BLOCKED_USER_AGENTS = [
   'PetalBot',
   'DotBot',
   'MJ12bot',
+  'Yisou',
+  'YisouSpider',
+  'Qihoo',
+  '360Spider',
+  'Sosospider',
+  'HaoSouSpider',
+  'JikeSpider',
+  'EasouSpider',
+  'YoudaoBot',
+  'Alibaba',
+  'AlibabaBot',
+  'Tencent',
+  'Wechat',
+  'Huawei',
+  'UCBrowser',
+  'QQBrowser',
+  'Maxthon',
+  'TheWorld',
+  'LBBROWSER',
+  'AliApp',
+  'Dalvik', // Android/China bots
 ];
 
 // Bloquer certains pays via Vercel Geo (header x-vercel-ip-country)
@@ -32,6 +53,13 @@ export async function middleware(request: NextRequest) {
     userAgent.toLowerCase().includes(bot.toLowerCase())
   );
   if (isBlockedBot) {
+    return new NextResponse(null, { status: 403 });
+  }
+
+  // Bloquer le trafic avec Accept-Language chinois uniquement (zh sans autres langues)
+  const acceptLang = request.headers.get('accept-language') || '';
+  const isChineseOnly = acceptLang.startsWith('zh') && !acceptLang.includes('en') && !acceptLang.includes('fr');
+  if (isChineseOnly) {
     return new NextResponse(null, { status: 403 });
   }
   // Add pathname header for locale detection in layout
