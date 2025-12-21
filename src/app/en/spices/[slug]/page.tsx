@@ -196,15 +196,58 @@ export default async function SpicePage({ params }: PageProps) {
   const name = spice.name_en || spice.name_fr;
 
   // Fetch substitute spices (check both substitutes and substitutions arrays)
+  // Substitutions can be stored as slugs OR as names with notes like "paprika (for color)"
   const substitutesList = spice.substitutes?.length ? spice.substitutes : spice.substitutions;
   let substituteSpices: SubstituteSpice[] = [];
+  const unmatchedSubstitutes: string[] = []; // For display when no DB match found
+
   if (substitutesList?.length) {
-    const { data: subs } = await supabase
+    // Extract base names (remove parenthetical notes) for fuzzy matching
+    const baseNames = substitutesList.map(s => s.replace(/\s*\([^)]*\)/g, '').trim().toLowerCase());
+
+    // Try to find matches by slug first
+    const { data: bySlug } = await supabase
       .from('spices')
       .select('slug, name_fr, name_en')
       .in('slug', substitutesList)
       .eq('is_published', true);
-    substituteSpices = (subs || []) as SubstituteSpice[];
+
+    // Also search by name_fr or name_en (case-insensitive partial match)
+    const { data: allSpices } = await supabase
+      .from('spices')
+      .select('slug, name_fr, name_en')
+      .eq('is_published', true) as { data: SubstituteSpice[] | null };
+
+    const matchedByName = (allSpices || []).filter(s => {
+      const nameFr = s.name_fr?.toLowerCase() || '';
+      const nameEn = (s.name_en || '').toLowerCase();
+      return baseNames.some(baseName =>
+        nameFr.includes(baseName) || baseName.includes(nameFr) ||
+        nameEn.includes(baseName) || baseName.includes(nameEn)
+      );
+    });
+
+    // Combine results, avoiding duplicates
+    const allMatches = [...(bySlug || []), ...matchedByName];
+    const uniqueMatches = allMatches.filter((s, i, arr) =>
+      arr.findIndex(x => x.slug === s.slug) === i
+    );
+    substituteSpices = uniqueMatches as SubstituteSpice[];
+
+    // Track which substitutions didn't match any spice (to still display them as text)
+    substitutesList.forEach(sub => {
+      const baseName = sub.replace(/\s*\([^)]*\)/g, '').trim().toLowerCase();
+      const hasMatch = uniqueMatches.some(s => {
+        const nameFr = s.name_fr?.toLowerCase() || '';
+        const nameEn = (s.name_en || '').toLowerCase();
+        return s.slug === sub ||
+          nameFr.includes(baseName) || baseName.includes(nameFr) ||
+          nameEn.includes(baseName) || baseName.includes(nameEn);
+      });
+      if (!hasMatch) {
+        unmatchedSubstitutes.push(sub);
+      }
+    });
   }
 
   // Fetch similar spices (same category, excluding current)
@@ -522,7 +565,7 @@ export default async function SpicePage({ params }: PageProps) {
               </p>
             </section>
 
-            {(substituteSpices.length > 0 || substitutesList?.length) && (
+            {(substituteSpices.length > 0 || unmatchedSubstitutes.length > 0) && (
               <section className="border border-neutral-200 p-6 md:p-8">
                 <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
                   <ArrowLeftRight className="w-6 h-6 text-[#F77313]" />
@@ -532,26 +575,25 @@ export default async function SpicePage({ params }: PageProps) {
                   If you don&apos;t have {name}, you can use:
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  {substituteSpices.length > 0 ? (
-                    substituteSpices.map(sub => (
-                      <Link
-                        key={sub.slug}
-                        href={`/en/spices/${sub.slug}/`}
-                        className="px-4 py-2 bg-neutral-100 text-black hover:bg-[#F77313] hover:text-white transition-colors"
-                      >
-                        {sub.name_en || sub.name_fr}
-                      </Link>
-                    ))
-                  ) : (
-                    substitutesList?.map((sub, i) => (
-                      <span
-                        key={i}
-                        className="px-4 py-2 bg-neutral-100 text-black"
-                      >
-                        {sub}
-                      </span>
-                    ))
-                  )}
+                  {/* Linked substitutes (matched in database) */}
+                  {substituteSpices.map(sub => (
+                    <Link
+                      key={sub.slug}
+                      href={`/en/spices/${sub.slug}/`}
+                      className="px-4 py-2 bg-neutral-100 text-black hover:bg-[#F77313] hover:text-white transition-colors"
+                    >
+                      {sub.name_en || sub.name_fr}
+                    </Link>
+                  ))}
+                  {/* Unmatched substitutes (displayed as text) */}
+                  {unmatchedSubstitutes.map((sub, i) => (
+                    <span
+                      key={`unmatched-${i}`}
+                      className="px-4 py-2 bg-neutral-100 text-black"
+                    >
+                      {sub}
+                    </span>
+                  ))}
                 </div>
               </section>
             )}
