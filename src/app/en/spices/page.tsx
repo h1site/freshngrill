@@ -32,6 +32,9 @@ interface UsedWith {
   desserts?: string[];
   cheese?: string[];
   soups?: string[];
+  eggs?: string[];
+  sauces?: string[];
+  drinks?: string[];
 }
 
 interface Spice {
@@ -52,23 +55,27 @@ interface Spice {
 
 // Food type filters
 const FOOD_FILTERS = [
-  { slug: 'beef', label: 'Beef', emoji: '🥩', key: 'meat' as const, match: 'beef' },
-  { slug: 'chicken', label: 'Chicken', emoji: '🍗', key: 'meat' as const, match: 'chicken' },
-  { slug: 'pork', label: 'Pork', emoji: '🐷', key: 'meat' as const, match: 'pork' },
-  { slug: 'lamb', label: 'Lamb', emoji: '🐑', key: 'meat' as const, match: 'lamb' },
-  { slug: 'fish', label: 'Fish', emoji: '🐟', key: 'fish' as const, match: '' },
+  { slug: 'meat', label: 'Meat', emoji: '🥩', key: 'meat' as const, match: '' },
+  { slug: 'fish', label: 'Fish & Seafood', emoji: '🐟', key: 'fish' as const, match: '' },
   { slug: 'vegetables', label: 'Vegetables', emoji: '🥕', key: 'vegetables' as const, match: '' },
+  { slug: 'soups', label: 'Soups & Stews', emoji: '🍲', key: 'soups' as const, match: '' },
   { slug: 'desserts', label: 'Desserts', emoji: '🍰', key: 'desserts' as const, match: '' },
+  { slug: 'sauces', label: 'Sauces', emoji: '🥫', key: 'sauces' as const, match: '' },
+  { slug: 'drinks', label: 'Beverages', emoji: '☕', key: 'drinks' as const, match: '' },
+  { slug: 'grains', label: 'Rice & Pasta', emoji: '🍚', key: 'grains' as const, match: '' },
 ];
 
 // Origin filters
 const ORIGIN_FILTERS = [
-  { slug: 'india', label: 'India', flag: '🇮🇳' },
-  { slug: 'mediterranean', label: 'Mediterranean', flag: '🌊' },
   { slug: 'asia', label: 'Asia', flag: '🌏' },
-  { slug: 'africa', label: 'Africa', flag: '🌍' },
+  { slug: 'mediterranean', label: 'Mediterranean', flag: '🌊' },
+  { slug: 'india', label: 'India', flag: '🇮🇳' },
   { slug: 'america', label: 'Americas', flag: '🌎' },
   { slug: 'middle-east', label: 'Middle East', flag: '🕌' },
+  { slug: 'southeast-asia', label: 'Southeast Asia', flag: '🌴' },
+  { slug: 'africa', label: 'Africa', flag: '🌍' },
+  { slug: 'europe', label: 'Europe', flag: '🇪🇺' },
+  { slug: 'caribbean', label: 'Caribbean', flag: '🏝️' },
 ];
 
 // Taste filters
@@ -218,9 +225,22 @@ export default async function SpicesPage({
     query = query.contains('categories', [params.category]);
   }
 
-  // Filter by origin
+  // Filter by origin - map slug to actual DB values
   if (params.origin) {
-    query = query.or(`origin.cs.{${params.origin}},origin.cs.{${params.origin.charAt(0).toUpperCase() + params.origin.slice(1)}}`);
+    const originMap: Record<string, string[]> = {
+      'asia': ['Asie'],
+      'mediterranean': ['Méditerranée'],
+      'india': ['Inde'],
+      'america': ['Amérique', 'Amérique centrale'],
+      'middle-east': ['Moyen-Orient'],
+      'southeast-asia': ['Asie du Sud-Est'],
+      'africa': ['Afrique'],
+      'europe': ['Europe du Nord', 'France', 'Espagne', 'Hongrie'],
+      'caribbean': ['Caraïbes'],
+    };
+    const dbOrigins = originMap[params.origin] || [params.origin];
+    const originConditions = dbOrigins.map(o => `origin.cs.{${o}}`).join(',');
+    query = query.or(originConditions);
   }
 
   // Search by name
