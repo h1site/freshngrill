@@ -93,6 +93,38 @@ const TASTE_FILTERS = [
   { slug: 'fume', label: 'Fumées', icon: Sparkles },
 ];
 
+// Helper pour construire les URLs avec filtres combinés
+function buildFilterUrl(
+  currentParams: { categorie?: string; origine?: string; aliment?: string; q?: string; lettre?: string },
+  filterType: 'aliment' | 'origine' | 'categorie',
+  filterValue: string,
+  isActive: boolean
+): string {
+  const params = new URLSearchParams();
+
+  // Conserver les autres filtres
+  if (filterType !== 'aliment' && currentParams.aliment) {
+    params.set('aliment', currentParams.aliment);
+  }
+  if (filterType !== 'origine' && currentParams.origine) {
+    params.set('origine', currentParams.origine);
+  }
+  if (filterType !== 'categorie' && currentParams.categorie) {
+    params.set('categorie', currentParams.categorie);
+  }
+  if (currentParams.q) {
+    params.set('q', currentParams.q);
+  }
+
+  // Ajouter ou retirer le filtre actuel
+  if (!isActive) {
+    params.set(filterType, filterValue);
+  }
+
+  const queryString = params.toString();
+  return queryString ? `/epices/?${queryString}` : '/epices/';
+}
+
 function IntensityIndicator({ level }: { level: number }) {
   return (
     <div className="flex gap-0.5">
@@ -489,7 +521,7 @@ export default async function EpicesPage({
                       return (
                         <Link
                           key={filter.slug}
-                          href={isActive ? '/epices/' : `/epices/?aliment=${filter.slug}`}
+                          href={buildFilterUrl(params, 'aliment', filter.slug, isActive)}
                           className="flex items-center gap-3 px-2 py-1.5 text-sm text-neutral-600 hover:text-black transition-all"
                         >
                           <span className={`w-4 h-4 border-2 rounded flex items-center justify-center flex-shrink-0 ${
@@ -519,7 +551,7 @@ export default async function EpicesPage({
                       return (
                         <Link
                           key={filter.slug}
-                          href={isActive ? '/epices/' : `/epices/?origine=${filter.slug}`}
+                          href={buildFilterUrl(params, 'origine', filter.slug, isActive)}
                           className="flex items-center gap-3 px-2 py-1.5 text-sm text-neutral-600 hover:text-black transition-all"
                         >
                           <span className={`w-4 h-4 border-2 rounded flex items-center justify-center flex-shrink-0 ${
@@ -549,7 +581,7 @@ export default async function EpicesPage({
                       return (
                         <Link
                           key={filter.slug}
-                          href={isActive ? '/epices/' : `/epices/?categorie=${filter.slug}`}
+                          href={buildFilterUrl(params, 'categorie', filter.slug, isActive)}
                           className="flex items-center gap-3 px-2 py-1.5 text-sm text-neutral-600 hover:text-black transition-all"
                         >
                           <span className={`w-4 h-4 border-2 rounded flex items-center justify-center flex-shrink-0 ${

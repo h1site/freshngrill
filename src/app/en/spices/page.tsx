@@ -85,6 +85,38 @@ const TASTE_FILTERS = [
   { slug: 'fume', label: 'Smoky Spices', icon: Flame },
 ];
 
+// Helper to build URLs with combined filters
+function buildFilterUrl(
+  currentParams: { category?: string; origin?: string; food?: string; q?: string; letter?: string },
+  filterType: 'food' | 'origin' | 'category',
+  filterValue: string,
+  isActive: boolean
+): string {
+  const params = new URLSearchParams();
+
+  // Keep other filters
+  if (filterType !== 'food' && currentParams.food) {
+    params.set('food', currentParams.food);
+  }
+  if (filterType !== 'origin' && currentParams.origin) {
+    params.set('origin', currentParams.origin);
+  }
+  if (filterType !== 'category' && currentParams.category) {
+    params.set('category', currentParams.category);
+  }
+  if (currentParams.q) {
+    params.set('q', currentParams.q);
+  }
+
+  // Add or remove current filter
+  if (!isActive) {
+    params.set(filterType, filterValue);
+  }
+
+  const queryString = params.toString();
+  return queryString ? `/en/spices/?${queryString}` : '/en/spices/';
+}
+
 function IntensityIndicator({ level }: { level: number }) {
   return (
     <div className="flex gap-0.5">
@@ -453,7 +485,7 @@ export default async function SpicesPage({
                     return (
                       <Link
                         key={filter.slug}
-                        href={isActive ? '/en/spices/' : `/en/spices/?food=${filter.slug}`}
+                        href={buildFilterUrl(params, 'food', filter.slug, isActive)}
                         className="flex items-center gap-3 px-2 py-1.5 text-sm text-neutral-600 hover:text-black transition-all"
                       >
                         <span className={`w-4 h-4 border-2 rounded flex items-center justify-center flex-shrink-0 ${
@@ -483,7 +515,7 @@ export default async function SpicesPage({
                     return (
                       <Link
                         key={filter.slug}
-                        href={isActive ? '/en/spices/' : `/en/spices/?origin=${filter.slug}`}
+                        href={buildFilterUrl(params, 'origin', filter.slug, isActive)}
                         className="flex items-center gap-3 px-2 py-1.5 text-sm text-neutral-600 hover:text-black transition-all"
                       >
                         <span className={`w-4 h-4 border-2 rounded flex items-center justify-center flex-shrink-0 ${
@@ -513,7 +545,7 @@ export default async function SpicesPage({
                     return (
                       <Link
                         key={filter.slug}
-                        href={isActive ? '/en/spices/' : `/en/spices/?category=${filter.slug}`}
+                        href={buildFilterUrl(params, 'category', filter.slug, isActive)}
                         className="flex items-center gap-3 px-2 py-1.5 text-sm text-neutral-600 hover:text-black transition-all"
                       >
                         <span className={`w-4 h-4 border-2 rounded flex items-center justify-center flex-shrink-0 ${
