@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase-server';
-import { ChevronRight, Globe, Clock, Flame, Leaf, AlertTriangle, Heart, Package, ArrowLeftRight, ShoppingCart } from 'lucide-react';
+import { ChevronRight, Globe, Clock, Flame, Leaf, AlertTriangle, Heart, Package, ArrowLeftRight, ShoppingCart, UtensilsCrossed } from 'lucide-react';
 import RecipeFAQ from '@/components/recipe/RecipeFAQ';
 import SpicePronounceButton from '@/components/spice/SpicePronounceButton';
 import { siteConfig } from '@/lib/config';
@@ -77,6 +77,14 @@ interface Spice {
 interface SubstituteSpice {
   slug: string;
   name_fr: string;
+}
+
+interface RecipeWithSpice {
+  slug: string;
+  title: string;
+  featured_image: string | null;
+  prep_time: number;
+  cook_time: number;
 }
 
 type PageProps = {
@@ -257,6 +265,45 @@ export default async function SpicePage({ params }: PageProps) {
       return cats.some((c: string) => currentCategories.includes(c));
     })
     .slice(0, 4);
+
+  // Fetch recipes that contain this spice in their ingredients
+  // Search for spice name in the JSON ingredients field
+  const spiceNameLower = spice.name_fr.toLowerCase();
+  const spiceNameBase = spiceNameLower.replace(/\s*(séché|moulu|en poudre|frais)\s*/gi, '').trim();
+
+  const { data: allRecipes } = await supabase
+    .from('recipes')
+    .select('slug, title, featured_image, prep_time, cook_time, ingredients')
+    .limit(100);
+
+  // Filter recipes that contain the spice name in ingredients
+  const recipesWithSpice: RecipeWithSpice[] = ((allRecipes || []) as Array<{
+    slug: string;
+    title: string;
+    featured_image: string | null;
+    prep_time: number;
+    cook_time: number;
+    ingredients: Array<{ items?: Array<{ name: string }> }> | null;
+  }>)
+    .filter(recipe => {
+      if (!recipe.ingredients) return false;
+      // Check each ingredient group
+      return recipe.ingredients.some(group =>
+        group.items?.some(item => {
+          const ingredientName = item.name.toLowerCase();
+          return ingredientName.includes(spiceNameBase) ||
+                 ingredientName.includes(spiceNameLower);
+        })
+      );
+    })
+    .slice(0, 6)
+    .map(({ slug, title, featured_image, prep_time, cook_time }) => ({
+      slug,
+      title,
+      featured_image,
+      prep_time,
+      cook_time,
+    }));
 
   // JSON-LD Schema - Product schema for spices
   const jsonLd = {
@@ -598,6 +645,48 @@ export default async function SpicePage({ params }: PageProps) {
                     >
                       {sub}
                     </span>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Recettes avec cette épice */}
+            {recipesWithSpice.length > 0 && (
+              <section className="border border-neutral-200 p-6 md:p-8">
+                <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+                  <UtensilsCrossed className="w-6 h-6 text-[#F77313]" />
+                  Recettes avec {spice.name_fr}
+                </h2>
+                <p className="text-neutral-600 mb-6">
+                  Découvrez nos recettes qui utilisent cette épice:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {recipesWithSpice.map(recipe => (
+                    <Link
+                      key={recipe.slug}
+                      href={`/recette/${recipe.slug}/`}
+                      className="group block bg-neutral-50 hover:bg-neutral-100 transition-colors overflow-hidden"
+                    >
+                      {recipe.featured_image && (
+                        <div className="relative aspect-video">
+                          <Image
+                            src={recipe.featured_image}
+                            alt={recipe.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
+                        </div>
+                      )}
+                      <div className="p-4">
+                        <h3 className="font-medium text-black group-hover:text-[#F77313] transition-colors line-clamp-2">
+                          {recipe.title}
+                        </h3>
+                        <p className="text-sm text-neutral-500 mt-2">
+                          {recipe.prep_time + recipe.cook_time} min
+                        </p>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               </section>

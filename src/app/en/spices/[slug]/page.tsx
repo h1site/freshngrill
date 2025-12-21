@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@/lib/supabase-server';
-import { ChevronRight, Globe, Clock, Flame, Leaf, AlertTriangle, Heart, Package, ArrowLeftRight, ShoppingCart } from 'lucide-react';
+import { ChevronRight, Globe, Clock, Flame, Leaf, AlertTriangle, Heart, Package, ArrowLeftRight, ShoppingCart, UtensilsCrossed } from 'lucide-react';
 import RecipeFAQ from '@/components/recipe/RecipeFAQ';
 import SpicePronounceButton from '@/components/spice/SpicePronounceButton';
 import { siteConfig } from '@/lib/config';
@@ -78,6 +78,16 @@ interface SubstituteSpice {
   slug: string;
   name_en: string | null;
   name_fr: string;
+}
+
+interface RecipeWithSpice {
+  slug: string;
+  slug_en: string | null;
+  title: string;
+  title_en: string | null;
+  featured_image: string | null;
+  prep_time: number;
+  cook_time: number;
 }
 
 type PageProps = {
@@ -267,6 +277,66 @@ export default async function SpicePage({ params }: PageProps) {
       return cats.some((c: string) => currentCategories.includes(c));
     })
     .slice(0, 4);
+
+  // Fetch recipes that contain this spice in their ingredients
+  // Search using both English and French names
+  const spiceNameEnLower = (spice.name_en || '').toLowerCase();
+  const spiceNameFrLower = spice.name_fr.toLowerCase();
+  const spiceNameBase = spiceNameFrLower.replace(/\s*(séché|moulu|en poudre|frais)\s*/gi, '').trim();
+  const spiceNameEnBase = spiceNameEnLower.replace(/\s*(dried|ground|powder|fresh)\s*/gi, '').trim();
+
+  // Get recipes with their English translations
+  const { data: allRecipes } = await supabase
+    .from('recipes')
+    .select('id, slug, title, featured_image, prep_time, cook_time, ingredients')
+    .limit(100);
+
+  // Get English translations for recipes
+  const { data: translations } = await supabase
+    .from('recipe_translations')
+    .select('recipe_id, slug_en, title_en')
+    .eq('locale', 'en') as { data: Array<{ recipe_id: number; slug_en: string; title_en: string }> | null };
+
+  const translationMap = new Map(
+    (translations || []).map(t => [t.recipe_id, { slug_en: t.slug_en, title_en: t.title_en }])
+  );
+
+  // Filter recipes that contain the spice name in ingredients
+  const recipesWithSpice: RecipeWithSpice[] = ((allRecipes || []) as Array<{
+    id: number;
+    slug: string;
+    title: string;
+    featured_image: string | null;
+    prep_time: number;
+    cook_time: number;
+    ingredients: Array<{ items?: Array<{ name: string }> }> | null;
+  }>)
+    .filter(recipe => {
+      if (!recipe.ingredients) return false;
+      // Check each ingredient group
+      return recipe.ingredients.some(group =>
+        group.items?.some(item => {
+          const ingredientName = item.name.toLowerCase();
+          return ingredientName.includes(spiceNameBase) ||
+                 ingredientName.includes(spiceNameFrLower) ||
+                 ingredientName.includes(spiceNameEnBase) ||
+                 ingredientName.includes(spiceNameEnLower);
+        })
+      );
+    })
+    .slice(0, 6)
+    .map(recipe => {
+      const trans = translationMap.get(recipe.id);
+      return {
+        slug: recipe.slug,
+        slug_en: trans?.slug_en || null,
+        title: recipe.title,
+        title_en: trans?.title_en || null,
+        featured_image: recipe.featured_image,
+        prep_time: recipe.prep_time,
+        cook_time: recipe.cook_time,
+      };
+    });
 
   // JSON-LD Schema - Product schema for spices
   const jsonLd = {
@@ -588,6 +658,48 @@ export default async function SpicePage({ params }: PageProps) {
                     >
                       {sub}
                     </span>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Recipes with this spice */}
+            {recipesWithSpice.length > 0 && (
+              <section className="border border-neutral-200 p-6 md:p-8">
+                <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
+                  <UtensilsCrossed className="w-6 h-6 text-[#F77313]" />
+                  Recipes with {name}
+                </h2>
+                <p className="text-neutral-600 mb-6">
+                  Discover our recipes that use this spice:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {recipesWithSpice.map(recipe => (
+                    <Link
+                      key={recipe.slug}
+                      href={`/en/recipe/${recipe.slug_en || recipe.slug}/`}
+                      className="group block bg-neutral-50 hover:bg-neutral-100 transition-colors overflow-hidden"
+                    >
+                      {recipe.featured_image && (
+                        <div className="relative aspect-video">
+                          <Image
+                            src={recipe.featured_image}
+                            alt={recipe.title_en || recipe.title}
+                            fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
+                        </div>
+                      )}
+                      <div className="p-4">
+                        <h3 className="font-medium text-black group-hover:text-[#F77313] transition-colors line-clamp-2">
+                          {recipe.title_en || recipe.title}
+                        </h3>
+                        <p className="text-sm text-neutral-500 mt-2">
+                          {recipe.prep_time + recipe.cook_time} min
+                        </p>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               </section>
