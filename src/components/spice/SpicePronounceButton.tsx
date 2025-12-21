@@ -5,11 +5,12 @@ import { Volume2, VolumeX } from 'lucide-react';
 
 interface Props {
   text: string;
+  description?: string;
   lang?: 'fr' | 'en';
   className?: string;
 }
 
-export default function SpicePronounceButton({ text, lang = 'fr', className = '' }: Props) {
+export default function SpicePronounceButton({ text, description, lang = 'fr', className = '' }: Props) {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [voicesLoaded, setVoicesLoaded] = useState(false);
 
@@ -33,6 +34,7 @@ export default function SpicePronounceButton({ text, lang = 'fr', className = ''
   }, []);
 
   // Get the best available voice for a language
+  // Priority: Enhanced/Premium voices > preferred voices > any local voice
   const getBestVoice = useCallback((): SpeechSynthesisVoice | null => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return null;
 
@@ -40,10 +42,19 @@ export default function SpicePronounceButton({ text, lang = 'fr', className = ''
     if (voices.length === 0) return null;
 
     const preferredVoices = lang === 'fr' ? {
-      preferred: ['Amélie', 'Thomas', 'Audrey', 'Google français'],
+      // Enhanced voices first (more natural), then standard
+      preferred: [
+        'Amélie (Enhanced)', 'Thomas (Enhanced)', 'Audrey (Enhanced)',
+        'Amélie (Premium)', 'Thomas (Premium)', 'Audrey (Premium)',
+        'Amélie', 'Thomas', 'Audrey', 'Google français'
+      ],
       langCodes: ['fr-CA', 'fr-FR', 'fr'],
     } : {
-      preferred: ['Samantha', 'Karen', 'Daniel', 'Google US English'],
+      preferred: [
+        'Samantha (Enhanced)', 'Karen (Enhanced)', 'Daniel (Enhanced)',
+        'Samantha (Premium)', 'Karen (Premium)', 'Daniel (Premium)',
+        'Samantha', 'Karen', 'Daniel', 'Google US English'
+      ],
       langCodes: ['en-US', 'en-CA', 'en-GB', 'en'],
     };
 
@@ -54,6 +65,12 @@ export default function SpicePronounceButton({ text, lang = 'fr', className = ''
     );
 
     if (langVoices.length === 0) return null;
+
+    // First, look for Enhanced or Premium voices (most natural)
+    const enhancedVoice = langVoices.find(v =>
+      v.name.includes('Enhanced') || v.name.includes('Premium')
+    );
+    if (enhancedVoice) return enhancedVoice;
 
     // Try to find a preferred voice by name
     for (const prefName of preferredVoices.preferred) {
@@ -80,7 +97,9 @@ export default function SpicePronounceButton({ text, lang = 'fr', className = ''
       return;
     }
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    // Combine name and description if provided
+    const fullText = description ? `${text}. ${description}` : text;
+    const utterance = new SpeechSynthesisUtterance(fullText);
     utterance.lang = lang === 'fr' ? 'fr-CA' : 'en-US';
     utterance.rate = 0.85;
     utterance.pitch = 1;
@@ -96,7 +115,7 @@ export default function SpicePronounceButton({ text, lang = 'fr', className = ''
 
     setIsSpeaking(true);
     window.speechSynthesis.speak(utterance);
-  }, [text, lang, getBestVoice]);
+  }, [text, description, lang, getBestVoice]);
 
   // Cleanup on unmount
   useEffect(() => {

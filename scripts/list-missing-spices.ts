@@ -1,0 +1,27 @@
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  'https://cjbdgfcxewvxcojxbuab.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqYmRnZmN4ZXd2eGNvanhidWFiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NTI4OTczNCwiZXhwIjoyMDgwODY1NzM0fQ.wq_hwCrw8CfmKnf7Hla8S_jtQjHE5cOMIfvi5Ww7jYA'
+);
+
+async function main() {
+  const { data, error } = await supabase
+    .from('spices')
+    .select('name_fr, name_en')
+    .is('origine_histoire_fr', null)
+    .eq('is_published', true)
+    .order('name_fr');
+
+  if (error) {
+    console.error(error);
+    process.exit(1);
+  }
+
+  console.log(`\n📋 Épices sans données enrichies (${data.length}):\n`);
+  data.forEach((s, i) => {
+    console.log(`${i + 1}. ${s.name_fr} (${s.name_en || '-'})`);
+  });
+}
+
+main();

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { createClient } from '@/lib/supabase-server';
 import { ChevronRight, Globe, Clock, Flame, Leaf, AlertTriangle, Heart, Package, ArrowLeftRight, ShoppingCart } from 'lucide-react';
 import RecipeFAQ from '@/components/recipe/RecipeFAQ';
+import SpicePronounceButton from '@/components/spice/SpicePronounceButton';
 import { siteConfig } from '@/lib/config';
 
 const AMAZON_STORE_ID = 'h1site0d-20';
@@ -40,22 +41,33 @@ interface Spice {
   origin: string[] | null;
   history_fr: string | null;
   history_en: string | null;
+  origine_histoire_fr: string | null;
+  origine_histoire_en: string | null;
   taste_profile: TasteProfile | null;
   usage_tips_fr: string | null;
   usage_tips_en: string | null;
+  utilisation_aliments_fr: string[] | null;
+  utilisation_aliments_en: string[] | null;
   common_mistakes_fr: string | null;
   common_mistakes_en: string | null;
   used_with: UsedWith | null;
   benefits_fr: string | null;
   benefits_en: string | null;
+  bienfaits_fr: string[] | null;
+  bienfaits_en: string[] | null;
   storage_fr: string | null;
   storage_en: string | null;
+  conservation_fr: string | null;
+  conservation_en: string | null;
   substitutes: string[] | null;
+  substitutions: string[] | null;
   seo_title_fr: string | null;
   seo_title_en: string | null;
   seo_description_fr: string | null;
   seo_description_en: string | null;
   faq: string | null;
+  faq_fr: Array<{ question: string; reponse: string }> | null;
+  faq_en: Array<{ question: string; reponse: string }> | null;
   featured_image: string | null;
   image_alt_fr: string | null;
   categories: string[] | null;
@@ -180,16 +192,34 @@ export default async function SpicePage({ params }: PageProps) {
   const tasteProfile = spice.taste_profile || {};
   const usedWith = spice.used_with || {};
 
-  // Fetch substitute spices
+  // Fetch substitute spices (check both substitutes and substitutions arrays)
+  const substitutesList = spice.substitutes?.length ? spice.substitutes : spice.substitutions;
   let substituteSpices: SubstituteSpice[] = [];
-  if (spice.substitutes?.length) {
+  if (substitutesList?.length) {
     const { data: subs } = await supabase
       .from('spices')
       .select('slug, name_fr')
-      .in('slug', spice.substitutes)
+      .in('slug', substitutesList)
       .eq('is_published', true);
     substituteSpices = (subs || []) as SubstituteSpice[];
   }
+
+  // Fetch similar spices (same category or origin, excluding current)
+  const { data: similarSpices } = await supabase
+    .from('spices')
+    .select('slug, name_fr, featured_image, categories')
+    .eq('is_published', true)
+    .neq('slug', slug)
+    .limit(6);
+
+  // Filter to find spices with matching categories
+  const currentCategories = spice.categories || [];
+  const suggestedSpices = ((similarSpices || []) as Array<{slug: string; name_fr: string; featured_image: string | null; categories: string[] | null}>)
+    .filter(s => {
+      const cats = s.categories || [];
+      return cats.some((c: string) => currentCategories.includes(c));
+    })
+    .slice(0, 4);
 
   // JSON-LD Schema - Product schema for spices
   const jsonLd = {
@@ -234,24 +264,23 @@ export default async function SpicePage({ params }: PageProps) {
         {/* Hero */}
         <section className="bg-black text-white py-12 md:py-20">
           <div className="container mx-auto px-4">
-            <div className="flex justify-end mb-4">
-              <Link
-                href={`/en/spices/${slug}/`}
-                className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors text-sm"
-              >
-                <Globe className="w-4 h-4" />
-                English
-              </Link>
-            </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               {/* Content */}
               <div>
                 <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
                   La Route des Épices
                 </span>
-                <h1 className="text-5xl md:text-6xl font-display mt-3 mb-4">
-                  {spice.name_fr}
-                </h1>
+                <div className="flex items-center gap-3 mt-3 mb-4">
+                  <h1 className="text-5xl md:text-6xl font-display">
+                    {spice.name_fr}
+                  </h1>
+                  <SpicePronounceButton
+                    text={spice.name_fr}
+                    description={spice.definition_fr || undefined}
+                    lang="fr"
+                    className="!p-2 !text-white hover:!bg-white/20"
+                  />
+                </div>
 
                 {spice.name_en && spice.name_en !== spice.name_fr && (
                   <p className="text-neutral-400 text-lg mb-2">
@@ -328,7 +357,7 @@ export default async function SpicePage({ params }: PageProps) {
         <article className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-4xl mx-auto space-y-12">
             {/* Origine & Histoire */}
-            {(spice.origin?.length || spice.history_fr) && (
+            {(spice.origin?.length || spice.history_fr || spice.origine_histoire_fr) && (
               <section className="border border-neutral-200 p-6 md:p-8">
                 <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
                   <Globe className="w-6 h-6 text-[#F77313]" />
@@ -342,10 +371,10 @@ export default async function SpicePage({ params }: PageProps) {
                   </div>
                 ) : null}
 
-                {spice.history_fr && (
+                {(spice.history_fr || spice.origine_histoire_fr) && (
                   <div
                     className="prose prose-neutral max-w-none"
-                    dangerouslySetInnerHTML={{ __html: spice.history_fr }}
+                    dangerouslySetInnerHTML={{ __html: spice.history_fr || spice.origine_histoire_fr || '' }}
                   />
                 )}
               </section>
@@ -392,16 +421,30 @@ export default async function SpicePage({ params }: PageProps) {
             ) : null}
 
             {/* Utilisation */}
-            {spice.usage_tips_fr && (
+            {(spice.usage_tips_fr || spice.utilisation_aliments_fr?.length) && (
               <section className="border border-neutral-200 p-6 md:p-8">
                 <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
                   <Clock className="w-6 h-6 text-[#F77313]" />
                   Comment utiliser cette épice
                 </h2>
-                <div
-                  className="prose prose-neutral max-w-none"
-                  dangerouslySetInnerHTML={{ __html: spice.usage_tips_fr }}
-                />
+                {spice.usage_tips_fr && (
+                  <div
+                    className="prose prose-neutral max-w-none mb-4"
+                    dangerouslySetInnerHTML={{ __html: spice.usage_tips_fr }}
+                  />
+                )}
+                {spice.utilisation_aliments_fr?.length ? (
+                  <div>
+                    <span className="text-sm text-neutral-500 block mb-2">Idéal avec:</span>
+                    <div className="flex flex-wrap gap-2">
+                      {spice.utilisation_aliments_fr.map((item, i) => (
+                        <span key={i} className="px-3 py-1 bg-neutral-100 text-neutral-700 text-sm">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
               </section>
             )}
 
@@ -423,16 +466,28 @@ export default async function SpicePage({ params }: PageProps) {
             <UsedWithSection usedWith={usedWith} />
 
             {/* Bienfaits */}
-            {spice.benefits_fr && (
+            {(spice.benefits_fr || spice.bienfaits_fr?.length) && (
               <section className="border border-green-200 bg-green-50 p-6 md:p-8">
                 <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
                   <Heart className="w-6 h-6 text-green-600" />
                   Bienfaits
                 </h2>
-                <div
-                  className="prose prose-neutral max-w-none"
-                  dangerouslySetInnerHTML={{ __html: spice.benefits_fr }}
-                />
+                {spice.benefits_fr && (
+                  <div
+                    className="prose prose-neutral max-w-none mb-4"
+                    dangerouslySetInnerHTML={{ __html: spice.benefits_fr }}
+                  />
+                )}
+                {spice.bienfaits_fr?.length ? (
+                  <ul className="space-y-2">
+                    {spice.bienfaits_fr.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-green-600 mt-0.5">✓</span>
+                        <span className="text-neutral-700">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
                 <p className="text-xs text-neutral-500 mt-4 italic">
                   Information à titre indicatif uniquement. Ne constitue pas un avis médical.
                 </p>
@@ -440,16 +495,20 @@ export default async function SpicePage({ params }: PageProps) {
             )}
 
             {/* Conservation */}
-            {spice.storage_fr && (
+            {(spice.storage_fr || spice.conservation_fr) && (
               <section className="border border-neutral-200 p-6 md:p-8">
                 <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
                   <Package className="w-6 h-6 text-[#F77313]" />
                   Conservation
                 </h2>
-                <div
-                  className="prose prose-neutral max-w-none"
-                  dangerouslySetInnerHTML={{ __html: spice.storage_fr }}
-                />
+                {spice.storage_fr ? (
+                  <div
+                    className="prose prose-neutral max-w-none"
+                    dangerouslySetInnerHTML={{ __html: spice.storage_fr }}
+                  />
+                ) : spice.conservation_fr ? (
+                  <p className="text-neutral-700">{spice.conservation_fr}</p>
+                ) : null}
               </section>
             )}
 
@@ -480,7 +539,7 @@ export default async function SpicePage({ params }: PageProps) {
             </section>
 
             {/* Substitutions */}
-            {substituteSpices.length > 0 && (
+            {(substituteSpices.length > 0 || substitutesList?.length) && (
               <section className="border border-neutral-200 p-6 md:p-8">
                 <h2 className="font-display text-2xl text-black mb-6 flex items-center gap-3">
                   <ArrowLeftRight className="w-6 h-6 text-[#F77313]" />
@@ -490,28 +549,99 @@ export default async function SpicePage({ params }: PageProps) {
                   Si vous n&apos;avez pas de {spice.name_fr}, vous pouvez utiliser:
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  {substituteSpices.map(sub => (
-                    <Link
-                      key={sub.slug}
-                      href={`/epices/${sub.slug}/`}
-                      className="px-4 py-2 bg-neutral-100 text-black hover:bg-[#F77313] hover:text-white transition-colors"
-                    >
-                      {sub.name_fr}
-                    </Link>
-                  ))}
+                  {substituteSpices.length > 0 ? (
+                    substituteSpices.map(sub => (
+                      <Link
+                        key={sub.slug}
+                        href={`/epices/${sub.slug}/`}
+                        className="px-4 py-2 bg-neutral-100 text-black hover:bg-[#F77313] hover:text-white transition-colors"
+                      >
+                        {sub.name_fr}
+                      </Link>
+                    ))
+                  ) : (
+                    substitutesList?.map((sub, i) => (
+                      <span
+                        key={i}
+                        className="px-4 py-2 bg-neutral-100 text-black"
+                      >
+                        {sub}
+                      </span>
+                    ))
+                  )}
                 </div>
               </section>
             )}
 
             {/* FAQ */}
-            {spice.faq && (
-              <RecipeFAQ faq={typeof spice.faq === 'string' ? spice.faq : JSON.stringify(spice.faq)} />
+            {(spice.faq || spice.faq_fr?.length) && (
+              spice.faq ? (
+                <RecipeFAQ faq={typeof spice.faq === 'string' ? spice.faq : JSON.stringify(spice.faq)} />
+              ) : spice.faq_fr?.length ? (
+                <section className="border border-neutral-200 p-6 md:p-8">
+                  <h2 className="font-display text-2xl text-black mb-6">
+                    Questions fréquentes
+                  </h2>
+                  <div className="space-y-4">
+                    {spice.faq_fr.map((item, i) => (
+                      <details key={i} className="group bg-neutral-50 p-4">
+                        <summary className="font-medium text-black cursor-pointer list-none flex items-center justify-between">
+                          {item.question}
+                          <span className="text-neutral-400 group-open:rotate-180 transition-transform">▼</span>
+                        </summary>
+                        <p className="mt-3 text-neutral-600">{item.reponse}</p>
+                      </details>
+                    ))}
+                  </div>
+                </section>
+              ) : null
             )}
           </div>
         </article>
 
+        {/* Suggested spices */}
+        {suggestedSpices.length > 0 && (
+          <section className="bg-neutral-50 py-12 border-t border-neutral-200">
+            <div className="container mx-auto px-4">
+              <h2 className="font-display text-2xl md:text-3xl text-black mb-8 text-center">
+                Découvrez d&apos;autres épices
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                {suggestedSpices.map(s => (
+                  <Link
+                    key={s.slug}
+                    href={`/epices/${s.slug}/`}
+                    className="group bg-white border border-neutral-200 hover:border-[#F77313] transition-all overflow-hidden"
+                  >
+                    <div className="aspect-square relative bg-neutral-100">
+                      {s.featured_image ? (
+                        <Image
+                          src={s.featured_image}
+                          alt={s.name_fr}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                          sizes="(max-width: 768px) 50vw, 25vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-4xl">
+                          🌿
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-3 text-center">
+                      <h3 className="font-display text-sm text-black group-hover:text-[#F77313] transition-colors line-clamp-2">
+                        {s.name_fr}
+                      </h3>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Back to list */}
-        <section className="bg-neutral-50 py-12">
+        <section className="bg-neutral-100 py-8">
           <div className="container mx-auto px-4 text-center">
             <Link
               href="/epices/"

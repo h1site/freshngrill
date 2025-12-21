@@ -158,7 +158,7 @@ function SpiceCard({ spice }: { spice: Spice }) {
                   {spice.name_fr}
                 </h3>
               </Link>
-              <SpicePronounceButton text={spice.name_fr} lang="fr" />
+              <SpicePronounceButton text={spice.name_fr} description={spice.definition_fr || undefined} lang="fr" />
             </div>
             {spice.name_en && spice.name_en !== spice.name_fr && (
               <p className="text-xs text-neutral-500">{spice.name_en}</p>
@@ -209,7 +209,7 @@ function SpiceCard({ spice }: { spice: Spice }) {
 export default async function EpicesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ categorie?: string; origine?: string; aliment?: string; q?: string }>;
+  searchParams: Promise<{ categorie?: string; origine?: string; aliment?: string; q?: string; lettre?: string }>;
 }) {
   const params = await searchParams;
   const supabase = await createClient();
@@ -255,6 +255,7 @@ export default async function EpicesPage({
   }
 
   const activeFilters = [params.categorie, params.origine, params.aliment, params.q].filter(Boolean).length;
+  const selectedLetter = params.lettre?.toUpperCase();
 
   // Group spices by first letter for A-Z navigation
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -312,30 +313,21 @@ export default async function EpicesPage({
         {/* Hero - Black like lexique */}
         <section className="bg-black py-16 md:py-24">
           <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between">
-              <div className="max-w-3xl">
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-3xl">🌶️</span>
-                  <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
-                    Guide culinaire
-                  </span>
-                </div>
-                <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white mb-6">
-                  La Route des Épices
-                </h1>
-                <p className="text-neutral-400 text-lg md:text-xl leading-relaxed">
-                  Explorez notre collection de{' '}
-                  <span className="text-white font-semibold">{spicesList.length} épices</span>{' '}
-                  du monde entier. Découvrez leurs origines, saveurs et utilisations culinaires.
-                </p>
+            <div className="max-w-3xl">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-3xl">🌶️</span>
+                <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
+                  Guide culinaire
+                </span>
               </div>
-              <Link
-                href="/en/spices/"
-                className="hidden md:flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
-              >
-                <Globe className="w-5 h-5" />
-                English
-              </Link>
+              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white mb-6">
+                La Route des Épices
+              </h1>
+              <p className="text-neutral-400 text-lg md:text-xl leading-relaxed">
+                Explorez notre collection de{' '}
+                <span className="text-white font-semibold">{spicesList.length} épices</span>{' '}
+                du monde entier. Découvrez leurs origines, saveurs et utilisations culinaires.
+              </p>
             </div>
           </div>
         </section>
@@ -399,20 +391,36 @@ export default async function EpicesPage({
         <section className="sticky top-16 md:top-20 z-40 bg-neutral-50 border-b border-neutral-200 py-4">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center gap-1 md:gap-2">
+              {/* Bouton "Tous" */}
+              <Link
+                href="/epices/"
+                scroll={false}
+                className={`px-3 h-9 flex items-center justify-center font-display text-sm transition-all ${
+                  !selectedLetter
+                    ? 'bg-[#F77313] text-white'
+                    : 'text-black hover:bg-[#F77313] hover:text-white'
+                }`}
+              >
+                Tous
+              </Link>
               {alphabet.map((letter) => {
                 const isAvailable = availableLetters.includes(letter);
+                const isSelected = selectedLetter === letter;
                 return (
-                  <a
+                  <Link
                     key={letter}
-                    href={isAvailable ? `#lettre-${letter}` : undefined}
+                    scroll={false}
+                    href={isAvailable ? `/epices/?lettre=${letter.toLowerCase()}` : '/epices/'}
                     className={`w-9 h-9 flex items-center justify-center font-display text-lg transition-all ${
-                      isAvailable
+                      isSelected
+                        ? 'bg-[#F77313] text-white'
+                        : isAvailable
                         ? 'text-black hover:bg-[#F77313] hover:text-white'
                         : 'text-neutral-300 cursor-not-allowed'
                     }`}
                   >
                     {letter}
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -567,39 +575,61 @@ export default async function EpicesPage({
                   {/* Results count */}
                   <div className="flex items-center justify-between mb-4">
                     <p className="text-neutral-600">
-                      <span className="font-semibold text-black">{spicesList.length}</span> épice{spicesList.length > 1 ? 's' : ''}
-                      {activeFilters > 0 && ' trouvées'}
+                      <span className="font-semibold text-black">
+                        {selectedLetter
+                          ? (spicesByLetter[selectedLetter] || []).length
+                          : spicesList.length}
+                      </span> épice{(selectedLetter ? (spicesByLetter[selectedLetter] || []).length : spicesList.length) > 1 ? 's' : ''}
+                      {(activeFilters > 0 || selectedLetter) && ' trouvées'}
                     </p>
                   </div>
 
-                  {/* List grouped by letter */}
+                  {/* List - filtered by letter or grouped */}
                   <div className="space-y-8">
-                    {alphabet.map((letter) => {
-                      const spices = spicesByLetter[letter];
-                      if (!spices || spices.length === 0) return null;
-
-                      return (
-                        <div key={letter} id={`lettre-${letter}`} className="scroll-mt-40">
-                          {/* Lettre */}
-                          <div className="flex items-center gap-4 mb-4">
-                            <span className="w-12 h-12 bg-[#F77313] text-white font-display text-2xl flex items-center justify-center">
-                              {letter}
-                            </span>
-                            <div className="flex-1 h-px bg-neutral-200" />
-                            <span className="text-sm text-neutral-500">
-                              {spices.length} épice{spices.length > 1 ? 's' : ''}
-                            </span>
-                          </div>
-
-                          {/* Épices de cette lettre */}
-                          <div className="space-y-2">
-                            {spices.map((spice) => (
-                              <SpiceCard key={spice.id} spice={spice} />
-                            ))}
-                          </div>
+                    {selectedLetter ? (
+                      // Afficher seulement la lettre sélectionnée
+                      <div>
+                        <div className="flex items-center gap-4 mb-4">
+                          <span className="w-12 h-12 bg-[#F77313] text-white font-display text-2xl flex items-center justify-center">
+                            {selectedLetter}
+                          </span>
+                          <div className="flex-1 h-px bg-neutral-200" />
+                          <span className="text-sm text-neutral-500">
+                            {(spicesByLetter[selectedLetter] || []).length} épice{(spicesByLetter[selectedLetter] || []).length > 1 ? 's' : ''}
+                          </span>
                         </div>
-                      );
-                    })}
+                        <div className="space-y-2">
+                          {(spicesByLetter[selectedLetter] || []).map((spice) => (
+                            <SpiceCard key={spice.id} spice={spice} />
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      // Afficher toutes les lettres
+                      alphabet.map((letter) => {
+                        const spices = spicesByLetter[letter];
+                        if (!spices || spices.length === 0) return null;
+
+                        return (
+                          <div key={letter} id={`lettre-${letter}`} className="scroll-mt-40">
+                            <div className="flex items-center gap-4 mb-4">
+                              <span className="w-12 h-12 bg-[#F77313] text-white font-display text-2xl flex items-center justify-center">
+                                {letter}
+                              </span>
+                              <div className="flex-1 h-px bg-neutral-200" />
+                              <span className="text-sm text-neutral-500">
+                                {spices.length} épice{spices.length > 1 ? 's' : ''}
+                              </span>
+                            </div>
+                            <div className="space-y-2">
+                              {spices.map((spice) => (
+                                <SpiceCard key={spice.id} spice={spice} />
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
                   </div>
                 </>
               )}

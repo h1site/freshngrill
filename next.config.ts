@@ -388,6 +388,42 @@ const nextConfig: NextConfig = {
         destination: '/en/recipe',
         permanent: true,
       },
+      // 404 fixes from error log - Dec 20, 2025
+      {
+        source: '/homemade-sorbet',
+        destination: '/blog/sorbet-maison',
+        permanent: true,
+      },
+      {
+        source: '/lexique/firmly-packed',
+        destination: '/en/lexicon/firmly-packed',
+        permanent: true,
+      },
+      {
+        source: '/en/epices/:slug*',
+        destination: '/en/spices/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/en/decouvrez-lhistoire-ricardo-cuisine-patrimoine-culinaire',
+        destination: '/blog/ricardo-cuisine',
+        permanent: true,
+      },
+      {
+        source: '/recette/epices',
+        destination: '/epices',
+        permanent: true,
+      },
+      {
+        source: '/en/hello-hello-in-your-plate',
+        destination: '/en/blog/salut-bonjour-dans-votre-assiette',
+        permanent: true,
+      },
+      {
+        source: '/blog/10-recettes-incontournables-noel',
+        destination: '/blog/recette-de-noel',
+        permanent: true,
+      },
     ];
   },
 };

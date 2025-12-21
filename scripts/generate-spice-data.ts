@@ -17,24 +17,43 @@ const OLLAMA_URL = 'http://localhost:11434/api/generate';
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
+interface TasteProfile {
+  intensity?: number;
+  spicy?: number;
+  bitterness?: number;
+  sweetness?: number;
+  notes_fr?: string[];
+  notes_en?: string[];
+}
+
 interface SpiceData {
   slug: string;
   name_fr: string;
   name_en: string;
+  taste_profile: TasteProfile | null;
 }
 
 interface GeneratedData {
-  origine_histoire_fr: string;
-  origine_histoire_en: string;
-  utilisation_aliments_fr: string[];
-  utilisation_aliments_en: string[];
-  bienfaits_fr: string[];
-  bienfaits_en: string[];
-  conservation_fr: string;
-  conservation_en: string;
-  substitutions: string[];
-  faq_fr: Array<{ question: string; reponse: string }>;
-  faq_en: Array<{ question: string; reponse: string }>;
+  fr: {
+    name: string;
+    origine_histoire: string;
+    utilisation_aliments: string[];
+    bienfaits: string[];
+    intensite: number;
+    conservation: string;
+    substitutions: string[];
+    faq: Array<{ question: string; reponse: string }>;
+  };
+  en: {
+    name: string;
+    origine_histoire: string;
+    utilisation_aliments: string[];
+    bienfaits: string[];
+    intensite: number;
+    conservation: string;
+    substitutions: string[];
+    faq: Array<{ question: string; reponse: string }>;
+  };
 }
 
 async function callOllama(prompt: string): Promise<string> {
@@ -68,24 +87,37 @@ async function generateSpiceData(spice: SpiceData): Promise<GeneratedData | null
 
 IMPORTANT: Réponds UNIQUEMENT avec ce JSON valide, sans texte avant ou après, sans markdown:
 {
-  "origine_histoire_fr": "1-2 phrases sur l'origine géographique et historique",
-  "origine_histoire_en": "1-2 sentences about origin and history",
-  "utilisation_aliments_fr": ["viandes", "poissons", "légumes", "sauces"],
-  "utilisation_aliments_en": ["meats", "fish", "vegetables", "sauces"],
-  "bienfaits_fr": ["avantage culinaire 1", "avantage 2", "avantage 3"],
-  "bienfaits_en": ["culinary benefit 1", "benefit 2", "benefit 3"],
-  "conservation_fr": "Comment conserver cette épice",
-  "conservation_en": "How to store this spice",
-  "substitutions": ["alternative 1", "alternative 2"],
-  "faq_fr": [
-    {"question": "Avec quels aliments utiliser ${spice.name_fr} ?", "reponse": "Réponse pratique"},
-    {"question": "Comment doser ${spice.name_fr} ?", "reponse": "Réponse pratique"}
-  ],
-  "faq_en": [
-    {"question": "What foods pair well with ${spice.name_en}?", "reponse": "Practical answer"},
-    {"question": "How much ${spice.name_en} should you use?", "reponse": "Practical answer"}
-  ]
-}`;
+  "fr": {
+    "name": "${spice.name_fr}",
+    "origine_histoire": "1-2 phrases sur l'origine géographique et historique",
+    "utilisation_aliments": ["viandes", "poissons", "légumes", "sauces"], 
+    "bienfaits": ["avantage culinaire 1", "avantage 2", "avantage 3"],
+    "intensite": 3,
+    "conservation": "Comment conserver cette épice",
+    "substitutions": ["alternative 1", "alternative 2"],
+    "faq": [
+      {"question": "Avec quels aliments utiliser ${spice.name_fr} ?", "reponse": "Réponse pratique"},
+      {"question": "Comment doser ${spice.name_fr} ?", "reponse": "Réponse pratique"}
+    ]
+  },
+  "en": {
+    "name": "${spice.name_en}",
+    "origine_histoire": "1-2 sentences about origin and history",
+    "utilisation_aliments": ["meats", "fish", "vegetables", "sauces"],
+    "bienfaits": ["culinary benefit 1", "benefit 2", "benefit 3"],
+    "intensite": 3,
+    "conservation": "How to store this spice",
+    "substitutions": ["alternative 1", "alternative 2"],
+    "faq": [
+      {"question": "What foods pair well with ${spice.name_en}?", "reponse": "Practical answer"},
+      {"question": "How much ${spice.name_en} should you use?", "reponse": "Practical answer"}
+    ]
+  }
+}
+
+Contraintes:
+- intensite est un entier de 1 (doux) à 5 (très puissant). Choisis une valeur réaliste pour cette épice.
+- utilises des formulations concises et pratiques.`;
 
   try {
     const response = await callOllama(prompt);
@@ -105,26 +137,36 @@ IMPORTANT: Réponds UNIQUEMENT avec ce JSON valide, sans texte avant ou après, 
   }
 }
 
-async function updateSpiceInDatabase(slug: string, data: GeneratedData): Promise<boolean> {
+function mergeIntensity(existing: TasteProfile | null, newIntensity: number): TasteProfile {
+  return {
+    ...(existing || {}),
+    intensity: newIntensity,
+  };
+}
+
+async function updateSpiceInDatabase(spice: SpiceData, data: GeneratedData): Promise<boolean> {
+  const updatedTasteProfile = mergeIntensity(spice.taste_profile, data.fr.intensite);
+
   const { error } = await supabase
     .from('spices')
     .update({
-      origine_histoire_fr: data.origine_histoire_fr,
-      origine_histoire_en: data.origine_histoire_en,
-      utilisation_aliments_fr: data.utilisation_aliments_fr,
-      utilisation_aliments_en: data.utilisation_aliments_en,
-      bienfaits_fr: data.bienfaits_fr,
-      bienfaits_en: data.bienfaits_en,
-      conservation_fr: data.conservation_fr,
-      conservation_en: data.conservation_en,
-      substitutions: data.substitutions,
-      faq_fr: data.faq_fr,
-      faq_en: data.faq_en,
+      origine_histoire_fr: data.fr.origine_histoire,
+      origine_histoire_en: data.en.origine_histoire,
+      utilisation_aliments_fr: data.fr.utilisation_aliments,
+      utilisation_aliments_en: data.en.utilisation_aliments,
+      bienfaits_fr: data.fr.bienfaits,
+      bienfaits_en: data.en.bienfaits,
+      conservation_fr: data.fr.conservation,
+      conservation_en: data.en.conservation,
+      substitutions: data.fr.substitutions,
+      faq_fr: data.fr.faq,
+      faq_en: data.en.faq,
+      taste_profile: updatedTasteProfile,
     })
-    .eq('slug', slug);
+    .eq('slug', spice.slug);
 
   if (error) {
-    console.error(`❌ Erreur DB pour ${slug}:`, error.message);
+    console.error(`❌ Erreur DB pour ${spice.slug}:`, error.message);
     return false;
   }
   return true;
@@ -148,7 +190,7 @@ async function main() {
   // Récupérer les épices sans données complètes
   const { data: spices, error } = await supabase
     .from('spices')
-    .select('slug, name_fr, name_en')
+    .select('slug, name_fr, name_en, taste_profile')
     .is('origine_histoire_fr', null)
     .eq('is_published', true)
     .order('slug');
@@ -175,7 +217,7 @@ async function main() {
     const data = await generateSpiceData(spice);
 
     if (data) {
-      const updated = await updateSpiceInDatabase(spice.slug, data);
+      const updated = await updateSpiceInDatabase(spice, data);
       if (updated) {
         console.log(`  ✅ ${spice.name_fr} mis à jour`);
         success++;
