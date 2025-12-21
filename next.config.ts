@@ -424,6 +424,42 @@ const nextConfig: NextConfig = {
         destination: '/blog/recette-de-noel',
         permanent: true,
       },
+      // 404 fixes from error log - Dec 21, 2025
+      {
+        source: '/en/pizza-in-quebec',
+        destination: '/en/blog/pizza-au-quebec',
+        permanent: true,
+      },
+      {
+        source: '/pizza-oven',
+        destination: '/blog/four-a-pizza',
+        permanent: true,
+      },
+      {
+        source: '/spices/:slug*',
+        destination: '/epices/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/en/register',
+        destination: '/register',
+        permanent: false,
+      },
+      {
+        source: '/en/login',
+        destination: '/login',
+        permanent: false,
+      },
+      {
+        source: '/recette/omelette-cabane-a-sucre',
+        destination: '/recette/omelette-au-four',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/chicken-pate',
+        destination: '/en/recipe/chicken-pot-pie',
+        permanent: true,
+      },
     ];
   },
 };
