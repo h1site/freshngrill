@@ -9,6 +9,7 @@ import SpicePronounceButton from '@/components/spice/SpicePronounceButton';
 import { siteConfig } from '@/lib/config';
 
 const AMAZON_STORE_ID = 'h1site0d-20';
+const DEFAULT_SPICE_IMAGE = '/images/default-epice.avif';
 
 interface TasteProfile {
   intensity?: number;
@@ -370,20 +371,14 @@ export default async function SpicePage({ params }: PageProps) {
 
               {/* Image */}
               <div className="relative aspect-square bg-neutral-900 overflow-hidden">
-                {spice.featured_image ? (
-                  <Image
-                    src={spice.featured_image}
-                    alt={spice.image_alt_fr || spice.name_fr}
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-9xl">
-                    🌶️
-                  </div>
-                )}
+                <Image
+                  src={spice.featured_image || DEFAULT_SPICE_IMAGE}
+                  alt={spice.image_alt_fr || `Photo de ${spice.name_fr} - épice culinaire`}
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
               </div>
             </div>
           </div>
