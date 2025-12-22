@@ -7,6 +7,7 @@ import {
   getAllRecipeSlugs,
   getSimilarRecipes,
   enrichRecipeCardsWithEnglishSlugs,
+  getNextRecipe,
 } from '@/lib/recipes';
 import RecipeHeader from '@/components/recipe/RecipeHeader';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
@@ -21,6 +22,7 @@ import GoogleAd from '@/components/ads/GoogleAd';
 import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
+import NextRecipe from '@/components/recipe/NextRecipe';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -104,7 +106,10 @@ export default async function RecipePageEN({ params }: Props) {
     redirect(`/en/recipe/${recipe.slugEn}/`);
   }
 
-  const rawSimilarRecipes = await getSimilarRecipes(recipe, 4);
+  const [rawSimilarRecipes, nextRecipe] = await Promise.all([
+    getSimilarRecipes(recipe, 4),
+    getNextRecipe(recipe, 'en'),
+  ]);
   // Convert to RecipeCard format and enrich with English slugs
   const similarRecipeCards = rawSimilarRecipes.map((r) => ({
     id: r.id,
@@ -297,6 +302,9 @@ export default async function RecipePageEN({ params }: Props) {
             </aside>
           </div>
         </section>
+
+        {/* Next recipe */}
+        {nextRecipe && <NextRecipe recipe={nextRecipe} locale="en" />}
 
         {/* Similar recipes */}
         {similarRecipes.length > 0 && (

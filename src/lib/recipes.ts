@@ -359,6 +359,115 @@ export async function getRecentRecipes(limit: number = 10): Promise<Recipe[]> {
 }
 
 /**
+ * Obtenir la prochaine recette à suggérer (même catégorie, triée par date)
+ */
+export async function getNextRecipe(recipe: Recipe, locale: 'fr' | 'en' = 'fr'): Promise<RecipeCard | null> {
+  const categoryIds = recipe.categories.map((c) => c.id);
+
+  // Si la recette a des catégories, chercher la prochaine recette dans la même catégorie
+  if (categoryIds.length > 0) {
+    const { data: recipeIds } = await supabase
+      .from('recipe_categories')
+      .select('recipe_id')
+      .in('category_id', categoryIds)
+      .neq('recipe_id', recipe.id);
+
+    if (recipeIds?.length) {
+      const uniqueIds = [...new Set((recipeIds as any[]).map(r => r.recipe_id))];
+
+      // Récupérer les recettes triées par date de publication
+      const { data, error } = await supabase
+        .from('recipes_with_categories')
+        .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes, published_at')
+        .in('id', uniqueIds)
+        .order('published_at', { ascending: false })
+        .limit(1);
+
+      if (!error && data?.length) {
+        const r = data[0] as any;
+        let card: RecipeCard = {
+          id: r.id,
+          slug: r.slug,
+          title: r.title,
+          featuredImage: r.featured_image || '',
+          prepTime: r.prep_time,
+          cookTime: r.cook_time,
+          totalTime: r.total_time,
+          difficulty: r.difficulty,
+          categories: r.categories || [],
+          likes: r.likes,
+        };
+
+        // Si locale anglais, enrichir avec traduction
+        if (locale === 'en') {
+          const { data: translation } = await supabase
+            .from('recipe_translations')
+            .select('slug_en, title')
+            .eq('recipe_id', r.id)
+            .eq('locale', 'en')
+            .single();
+
+          if (translation) {
+            card = {
+              ...card,
+              slugEn: (translation as any).slug_en || undefined,
+              title: (translation as any).title || card.title,
+            };
+          }
+        }
+
+        return card;
+      }
+    }
+  }
+
+  // Fallback: retourner la recette la plus récente (exclure la recette actuelle)
+  const { data: fallbackData, error: fallbackError } = await supabase
+    .from('recipes_with_categories')
+    .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
+    .neq('id', recipe.id)
+    .order('published_at', { ascending: false })
+    .limit(1);
+
+  if (fallbackError || !fallbackData?.length) {
+    return null;
+  }
+
+  const r = fallbackData[0] as any;
+  let card: RecipeCard = {
+    id: r.id,
+    slug: r.slug,
+    title: r.title,
+    featuredImage: r.featured_image || '',
+    prepTime: r.prep_time,
+    cookTime: r.cook_time,
+    totalTime: r.total_time,
+    difficulty: r.difficulty,
+    categories: r.categories || [],
+    likes: r.likes,
+  };
+
+  if (locale === 'en') {
+    const { data: translation } = await supabase
+      .from('recipe_translations')
+      .select('slug_en, title')
+      .eq('recipe_id', r.id)
+      .eq('locale', 'en')
+      .single();
+
+    if (translation) {
+      card = {
+        ...card,
+        slugEn: (translation as any).slug_en || undefined,
+        title: (translation as any).title || card.title,
+      };
+    }
+  }
+
+  return card;
+}
+
+/**
  * Obtenir les recettes similaires (avec fallback sur recettes récentes)
  */
 export async function getSimilarRecipes(recipe: Recipe, limit: number = 4): Promise<Recipe[]> {

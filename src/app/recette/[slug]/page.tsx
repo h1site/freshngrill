@@ -5,6 +5,7 @@ import {
   getAllRecipeSlugs,
   getSimilarRecipes,
   getRecipeBySlugWithLocale,
+  getNextRecipe,
 } from '@/lib/recipes';
 import RecipeHeader from '@/components/recipe/RecipeHeader';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
@@ -19,6 +20,7 @@ import GoogleAd from '@/components/ads/GoogleAd';
 import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
+import NextRecipe from '@/components/recipe/NextRecipe';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -88,7 +90,10 @@ export default async function RecettePage({ params }: Props) {
     notFound();
   }
 
-  const similarRecipes = await getSimilarRecipes(recipe, 4);
+  const [similarRecipes, nextRecipe] = await Promise.all([
+    getSimilarRecipes(recipe, 4),
+    getNextRecipe(recipe, 'fr'),
+  ]);
 
   const breadcrumbs = [
     { name: 'Accueil', url: '/' },
@@ -266,6 +271,9 @@ export default async function RecettePage({ params }: Props) {
             </aside>
           </div>
         </section>
+
+        {/* Prochaine recette */}
+        {nextRecipe && <NextRecipe recipe={nextRecipe} locale="fr" />}
 
         {/* Recettes similaires */}
         {similarRecipes.length > 0 && (
