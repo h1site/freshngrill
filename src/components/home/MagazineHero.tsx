@@ -152,23 +152,23 @@ export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr', showD
               </Link>
             </motion.div>
 
-            {/* Side Recipes - Right Side - Larger */}
+            {/* Side Recipes - Right Side (Desktop) / Below (Mobile) */}
             <motion.div
-              className="hidden lg:block w-full max-w-md"
+              className="w-full lg:max-w-md"
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             >
-              {/* Section Title - Bigger */}
-              <div className="flex items-center gap-4 mb-6">
+              {/* Section Title */}
+              <div className="flex items-center gap-4 mb-4 lg:mb-6">
                 <div className="w-10 h-0.5 bg-[#F77313]" />
-                <span className="text-white text-base font-semibold uppercase tracking-widest">
+                <span className="text-white text-sm lg:text-base font-semibold uppercase tracking-widest">
                   {t.alsoDiscover}
                 </span>
               </div>
 
-              {/* Recipe Cards - Larger */}
-              <div className="space-y-4">
+              {/* Recipe Cards - Grid on mobile, stack on desktop */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-3 lg:gap-4">
                 {sideRecipes.slice(0, 3).map((recipe, index) => (
                   <motion.div
                     key={recipe.id}
@@ -178,37 +178,37 @@ export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr', showD
                   >
                     <Link
                       href={`${recipeBasePath}/${recipe.slug}`}
-                      className="group flex items-center gap-5 p-4 bg-black/40 backdrop-blur-sm border border-white/20 hover:bg-black/60 hover:border-[#F77313]/50 transition-all duration-300 rounded-xl"
+                      className="group flex items-center gap-4 lg:gap-5 p-3 lg:p-4 bg-black/40 backdrop-blur-sm border border-white/20 hover:bg-black/60 hover:border-[#F77313]/50 transition-all duration-300 rounded-xl"
                     >
-                      {/* Thumbnail - Bigger */}
-                      <div className="relative w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg">
+                      {/* Thumbnail */}
+                      <div className="relative w-16 h-16 lg:w-20 lg:h-20 flex-shrink-0 overflow-hidden rounded-lg">
                         {recipe.featuredImage ? (
                           <Image
                             src={recipe.featuredImage}
                             alt={recipe.title}
                             fill
                             className="object-cover group-hover:scale-110 transition-transform duration-500"
-                            sizes="80px"
+                            sizes="(max-width: 1024px) 64px, 80px"
                           />
                         ) : (
                           <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center">
-                            <ChefHat className="w-6 h-6 text-neutral-600" />
+                            <ChefHat className="w-5 h-5 lg:w-6 lg:h-6 text-neutral-600" />
                           </div>
                         )}
                       </div>
 
-                      {/* Info - Larger text */}
+                      {/* Info */}
                       <div className="flex-1 min-w-0">
                         {recipe.categories[0] && (
-                          <span className="text-[#F77313] text-xs font-bold uppercase tracking-wider">
+                          <span className="text-[#F77313] text-[10px] lg:text-xs font-bold uppercase tracking-wider">
                             {recipe.categories[0].name}
                           </span>
                         )}
-                        <h3 className="text-white font-display text-lg leading-tight line-clamp-2 group-hover:text-[#F77313] transition-colors mt-0.5">
+                        <h3 className="text-white font-display text-base lg:text-lg leading-tight line-clamp-2 group-hover:text-[#F77313] transition-colors mt-0.5">
                           {recipe.title}
                         </h3>
-                        <span className="text-white/60 text-sm flex items-center gap-1.5 mt-1.5">
-                          <Clock className="w-3.5 h-3.5" />
+                        <span className="text-white/60 text-xs lg:text-sm flex items-center gap-1.5 mt-1">
+                          <Clock className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
                           {recipe.totalTime} {t.min}
                         </span>
                       </div>
@@ -223,11 +223,11 @@ export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr', showD
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1 }}
-                  className="mt-6"
+                  className="mt-4 lg:mt-6"
                 >
                   <Link
                     href={allRecipesPath}
-                    className="group flex items-center justify-center gap-2 w-full py-3 bg-[#F77313] hover:bg-[#d45f0a] text-white font-medium uppercase tracking-wide text-sm transition-all duration-300 rounded-xl"
+                    className="group flex items-center justify-center gap-2 w-full py-3 bg-[#F77313] hover:bg-[#d45f0a] text-white font-medium uppercase tracking-wide text-xs lg:text-sm transition-all duration-300 rounded-xl"
                   >
                     {t.discoverAll}
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
