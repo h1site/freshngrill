@@ -150,7 +150,7 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
+      <div className="relative z-10 container mx-auto px-4 h-full flex items-center pt-16 md:pt-0">
         <div className="max-w-2xl">
           <AnimatePresence mode="wait">
             <motion.div
@@ -162,17 +162,17 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
               className="text-white"
             >
               {/* Icon Badge */}
-              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${currentFeature.color} flex items-center justify-center mb-6 shadow-2xl`}>
+              <div className={`w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br ${currentFeature.color} flex items-center justify-center mb-4 md:mb-6 shadow-2xl`}>
                 {currentFeature.icon}
               </div>
 
               {/* Title */}
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display mb-4 leading-tight">
+              <h2 className="text-3xl md:text-5xl lg:text-6xl font-display mb-3 md:mb-4 leading-tight">
                 {currentFeature.title}
               </h2>
 
               {/* Description */}
-              <p className="text-xl md:text-2xl text-white/80 mb-8 max-w-xl leading-relaxed">
+              <p className="text-base md:text-2xl text-white/80 mb-6 md:mb-8 max-w-xl leading-relaxed">
                 {currentFeature.description}
               </p>
 
@@ -180,7 +180,7 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
               {currentFeature.href && currentFeature.cta && (
                 <Link
                   href={currentFeature.href}
-                  className="group inline-flex items-center gap-3 bg-white text-black px-8 py-4 font-medium uppercase tracking-wide text-sm hover:bg-[#F77313] hover:text-white transition-all duration-300 shadow-lg"
+                  className="group inline-flex items-center gap-2 md:gap-3 bg-white text-black px-6 py-3 md:px-8 md:py-4 font-medium uppercase tracking-wide text-xs md:text-sm hover:bg-[#F77313] hover:text-white transition-all duration-300 shadow-lg"
                 >
                   {currentFeature.cta}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -190,21 +190,21 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className="flex items-center gap-4 mt-10">
+          <div className="flex items-center gap-3 md:gap-4 mt-6 md:mt-10">
             {/* Prev/Next Buttons */}
             <button
               onClick={prevSlide}
-              className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-white/10 transition-colors text-white"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-white/10 transition-colors text-white"
               aria-label={isEN ? 'Previous' : 'Précédent'}
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
             </button>
             <button
               onClick={nextSlide}
-              className="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-white/10 transition-colors text-white"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 flex items-center justify-center hover:bg-white/10 transition-colors text-white"
               aria-label={isEN ? 'Next' : 'Suivant'}
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
             </button>
 
             {/* Dots */}
