@@ -460,6 +460,52 @@ const nextConfig: NextConfig = {
         destination: '/en/recipe/chicken-pot-pie',
         permanent: true,
       },
+      // French slugs in EN path -> proper EN slugs
+      {
+        source: '/en/recipe/soupe-aux-pois-traditionnelle',
+        destination: '/en/recipe/traditional-pea-soup',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/soupe-a-loignon-gratinee',
+        destination: '/en/recipe/french-onion-soup',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/gateau-aux-carottes-meilleur',
+        destination: '/en/recipe/best-carrot-cake',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/poulet-au-beurre-indien',
+        destination: '/en/recipe/indian-butter-chicken',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/filets-de-porc-glaces-erable',
+        destination: '/en/recipe/maple-glazed-pork-tenderloin',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/tartare-de-boeuf-classique',
+        destination: '/en/recipe/classic-beef-tartare',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/pain-aux-bananes-moelleux',
+        destination: '/en/recipe/moist-banana-bread',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/kutia-traditionnelle',
+        destination: '/en/recipe/traditional-kutia',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/jambon-glace-a-lerable',
+        destination: '/en/recipe/maple-glazed-ham',
+        permanent: true,
+      },
     ];
   },
 };

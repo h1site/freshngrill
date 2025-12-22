@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Image from 'next/image';
 import {
   getRecipeBySlugWithLocale,
@@ -97,6 +97,11 @@ export default async function RecipePageEN({ params }: Props) {
 
   if (!recipe) {
     notFound();
+  }
+
+  // Si on accède avec un slug français et qu'un slug anglais existe, rediriger
+  if (recipe.slugEn && recipe.slugEn !== slug && recipe.slug === slug) {
+    redirect(`/en/recipe/${recipe.slugEn}/`);
   }
 
   const rawSimilarRecipes = await getSimilarRecipes(recipe, 4);
