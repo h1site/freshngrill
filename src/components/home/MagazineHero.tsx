@@ -11,13 +11,15 @@ interface MagazineHeroProps {
   featuredRecipe: Recipe;
   sideRecipes: Recipe[];
   locale?: Locale;
+  showDiscoverCTA?: boolean;
 }
 
 const translations = {
   fr: {
     featuredRecipe: 'Recette Vedette',
     viewRecipe: 'Voir la recette',
-    alsoDiscover: 'Aussi à découvrir',
+    alsoDiscover: 'À découvrir',
+    discoverAll: 'Découvrir nos recettes',
     scroll: 'Défiler',
     minutes: 'minutes',
     min: 'min',
@@ -26,7 +28,8 @@ const translations = {
   en: {
     featuredRecipe: 'Featured Recipe',
     viewRecipe: 'View Recipe',
-    alsoDiscover: 'Also Discover',
+    alsoDiscover: 'Discover',
+    discoverAll: 'Browse all recipes',
     scroll: 'Scroll',
     minutes: 'minutes',
     min: 'min',
@@ -34,9 +37,10 @@ const translations = {
   },
 };
 
-export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr' }: MagazineHeroProps) {
+export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr', showDiscoverCTA = false }: MagazineHeroProps) {
   const t = translations[locale];
   const recipeBasePath = locale === 'en' ? '/en/recipe' : '/recette';
+  const allRecipesPath = locale === 'en' ? '/en/recipe' : '/recette';
 
   return (
     <section className="relative min-h-screen bg-neutral-950 overflow-hidden">
@@ -212,6 +216,24 @@ export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr' }: Mag
                   </motion.div>
                 ))}
               </div>
+
+              {/* CTA Button - Discover All Recipes */}
+              {showDiscoverCTA && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1 }}
+                  className="mt-6"
+                >
+                  <Link
+                    href={allRecipesPath}
+                    className="group flex items-center justify-center gap-2 w-full py-3 bg-[#F77313] hover:bg-[#d45f0a] text-white font-medium uppercase tracking-wide text-sm transition-all duration-300 rounded-xl"
+                  >
+                    {t.discoverAll}
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </motion.div>
+              )}
             </motion.div>
           </div>
         </div>
