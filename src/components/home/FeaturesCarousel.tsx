@@ -33,7 +33,7 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
       description: isEN
         ? 'Find the best kitchen equipment recommended by our chefs. Quality tools for perfect results.'
         : 'Trouvez les meilleurs équipements de cuisine recommandés par nos chefs. Des outils de qualité pour des résultats parfaits.',
-      image: '/images/banners/guide-achat.webp',
+      image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1920&q=80',
       color: 'from-amber-500 to-orange-600',
       href: isEN ? '/en/buying-guide' : '/guide-achat',
       cta: isEN ? 'Explore guides' : 'Explorer les guides',
@@ -44,7 +44,7 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
       description: isEN
         ? 'Discover spices from around the world. Origins, pairings, and tips to elevate your dishes.'
         : 'Découvrez les épices du monde entier. Origines, accords et astuces pour sublimer vos plats.',
-      image: '/images/banners/route-epices.webp',
+      image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1920&q=80',
       color: 'from-emerald-500 to-teal-600',
       href: isEN ? '/en/spices/spice-pairing' : '/epices/route-des-epices',
       cta: isEN ? 'Discover spices' : 'Découvrir les épices',
@@ -55,9 +55,9 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
       description: isEN
         ? 'Master cooking vocabulary. Definitions, techniques, and tips for every skill level.'
         : 'Maîtrisez le vocabulaire culinaire. Définitions, techniques et astuces pour tous les niveaux.',
-      image: '/images/banners/lexique.webp',
+      image: 'https://images.unsplash.com/photo-1507048331197-7d4ac70811cf?w=1920&q=80',
       color: 'from-indigo-500 to-purple-600',
-      href: isEN ? '/en/glossary' : '/lexique',
+      href: isEN ? '/en/lexicon' : '/lexique',
       cta: isEN ? 'Browse glossary' : 'Parcourir le lexique',
     },
     // Feature slides
@@ -67,7 +67,7 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
       description: isEN
         ? 'Listen to music from around the world while preparing your recipes. 7 stations available!'
         : 'Écoutez de la musique du monde entier pendant que vous préparez vos recettes. 7 stations disponibles!',
-      image: '/images/banners/radio.webp',
+      image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1920&q=80',
       color: 'from-pink-500 to-purple-600',
     },
     {
@@ -76,7 +76,7 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
       description: isEN
         ? 'Step-by-step instructions with text-to-speech and voice control. Navigate hands-free!'
         : 'Instructions étape par étape avec lecture vocale et contrôle par la voix. Naviguez mains libres!',
-      image: '/images/banners/cooking-mode.webp',
+      image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1920&q=80',
       color: 'from-[#F77313] to-[#d45f0a]',
     },
     {
@@ -85,7 +85,7 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
       description: isEN
         ? "Tell us what's in your fridge and we'll find recipes you can make!"
         : "Dites-nous ce qu'il y a dans votre frigo et nous trouverons des recettes!",
-      image: '/images/banners/frigo.webp',
+      image: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=1920&q=80',
       color: 'from-cyan-500 to-blue-600',
       href: isEN ? '/en/fridge' : '/frigo',
       cta: isEN ? 'Try it now' : 'Essayer maintenant',
