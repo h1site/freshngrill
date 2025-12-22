@@ -103,8 +103,10 @@ export async function POST(request: NextRequest) {
     // Importer chaque recette
     for (let i = 0; i < recipesFr.length; i++) {
       const recipeFr = recipesFr[i];
-      const recipeEn = recipesEn.find(r => r.index === recipeFr.index);
-      const image = images.find(img => img.index === recipeFr.index);
+      // Chercher par index OU par position dans le tableau
+      const recipeEn = recipesEn.find(r => r.index === recipeFr.index) || recipesEn[i];
+      // Utiliser la position dans le tableau pour les images (plus fiable)
+      const image = images[i] || images.find(img => img.index === recipeFr.index);
 
       if (!recipeEn) {
         results.errors.push({
@@ -114,10 +116,10 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      if (!image) {
+      if (!image || !image.url) {
         results.errors.push({
           index: recipeFr.index,
-          error: `Image manquante pour l'index ${recipeFr.index}`,
+          error: `Image manquante pour la recette ${i + 1} (${recipeFr.title})`,
         });
         continue;
       }
