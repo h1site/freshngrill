@@ -201,7 +201,7 @@ export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectio
         >
           <Link
             href={locale === 'en' ? '/en/buying-guide' : '/guide-achat'}
-            className="group flex items-center justify-between bg-gradient-to-r from-[#F77313] to-[#d45f0a] p-6 md:p-8 hover:from-[#d45f0a] hover:to-[#b85209] transition-all duration-300"
+            className="group flex items-center justify-between bg-gradient-to-r from-[#F77313] to-[#d45f0a] p-6 md:p-8 rounded-full hover:from-[#d45f0a] hover:to-[#b85209] transition-all duration-300"
           >
             <div className="flex items-center gap-4 md:gap-6">
               <div className="w-12 h-12 md:w-14 md:h-14 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
