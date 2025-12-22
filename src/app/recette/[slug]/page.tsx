@@ -7,6 +7,7 @@ import {
   getRecipeBySlugWithLocale,
   getNextRecipe,
 } from '@/lib/recipes';
+import { optimizeMetaDescription } from '@/lib/utils';
 import RecipeHeader from '@/components/recipe/RecipeHeader';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
 import RecipeInstructions from '@/components/recipe/RecipeInstructions';
@@ -45,9 +46,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Slug anglais pour hreflang (si disponible)
   const enSlug = recipe.slugEn || slug;
 
+  // Meta description optimisée (155-160 caractères)
+  const metaDescription = optimizeMetaDescription(
+    recipe.seoDescription || recipe.excerpt,
+    `Découvrez notre recette de ${recipe.title}. Instructions faciles, ingrédients simples.`
+  );
+
   return {
     title: recipe.seoTitle || `${recipe.title} | Menucochon`,
-    description: recipe.seoDescription || recipe.excerpt,
+    description: metaDescription,
     alternates: {
       canonical: `/recette/${slug}/`,
       languages: {
