@@ -25,14 +25,6 @@ export const metadata: Metadata = {
     title: 'Menucochon | Delicious Quebec Recipes',
     description:
       'Discover our collection of delicious and easy-to-make recipes. Meal ideas for every day.',
-    images: [
-      {
-        url: '/images/og-home.svg',
-        width: 1200,
-        height: 630,
-        alt: 'Menucochon - Delicious Recipes',
-      },
-    ],
     type: 'website',
     url: '/en/',
     siteName: 'Menucochon',
@@ -43,7 +35,6 @@ export const metadata: Metadata = {
     title: 'Menucochon | Delicious Quebec Recipes',
     description:
       'Discover our collection of delicious and easy-to-make recipes.',
-    images: ['/images/og-home.svg'],
   },
 };
 

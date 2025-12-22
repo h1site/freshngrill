@@ -25,14 +25,6 @@ export const metadata: Metadata = {
     title: 'Menucochon | Recettes gourmandes québécoises',
     description:
       'Découvrez notre collection de recettes gourmandes et faciles à réaliser. Des idées de repas pour tous les jours.',
-    images: [
-      {
-        url: '/images/og-home.svg',
-        width: 1200,
-        height: 630,
-        alt: 'Menucochon - Recettes gourmandes',
-      },
-    ],
     type: 'website',
     url: '/',
     siteName: 'Menucochon',
@@ -43,7 +35,6 @@ export const metadata: Metadata = {
     title: 'Menucochon | Recettes gourmandes québécoises',
     description:
       'Découvrez notre collection de recettes gourmandes et faciles à réaliser.',
-    images: ['/images/og-home.svg'],
   },
 };
 
