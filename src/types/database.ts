@@ -366,6 +366,7 @@ export interface Database {
           slug_en: string | null;
           title: string;
           excerpt: string | null;
+          content: string | null;
           introduction: string | null;
           conclusion: string | null;
           ingredients: Json | null;
@@ -383,6 +384,7 @@ export interface Database {
           slug_en?: string | null;
           title: string;
           excerpt?: string | null;
+          content?: string | null;
           introduction?: string | null;
           conclusion?: string | null;
           ingredients?: Json | null;
@@ -400,6 +402,7 @@ export interface Database {
           slug_en?: string | null;
           title?: string;
           excerpt?: string | null;
+          content?: string | null;
           introduction?: string | null;
           conclusion?: string | null;
           ingredients?: Json | null;
