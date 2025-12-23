@@ -68,6 +68,7 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
   };
   const [isOpen, setIsOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const currentStepRef = useRef(currentStep); // Ref to avoid stale closure in voice commands
   const [checkedIngredients, setCheckedIngredients] = useState<Set<string>>(new Set());
 
   // Timer states
@@ -93,6 +94,11 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
 
   // Total des étapes: 0 = ingrédients, 1+ = instructions
   const totalPages = recipe.instructions.length + 1;
+
+  // Keep currentStepRef in sync with currentStep (fixes stale closure in voice commands)
+  useEffect(() => {
+    currentStepRef.current = currentStep;
+  }, [currentStep]);
 
   // Preload voices (they may not be available immediately)
   useEffect(() => {
@@ -532,13 +538,14 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     console.log('Voice command (raw):', raw);
     console.log('Voice command (normalized):', text);
 
-    // ===== STEP 2: Helper functions =====
+    // ===== STEP 2: Helper functions (use ref to avoid stale closure) =====
     const goNext = () => {
-      if (currentStep < totalPages - 1) {
-        const newStep = currentStep + 1;
+      const step = currentStepRef.current;
+      if (step < totalPages - 1) {
+        const newStep = step + 1;
         setCurrentStep(newStep);
         setTimeout(() => speakStep(newStep), 200);
-        console.log('→ Going to step', newStep);
+        console.log('→ Going to step', newStep, '(from', step, ')');
         return true;
       }
       console.log('→ Already at last step');
@@ -546,30 +553,32 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     };
 
     const goPrev = () => {
-      if (currentStep > 0) {
-        const newStep = currentStep - 1;
+      const step = currentStepRef.current;
+      if (step > 0) {
+        const newStep = step - 1;
         setCurrentStep(newStep);
         setTimeout(() => speakStep(newStep), 200);
-        console.log('→ Going to step', newStep);
+        console.log('→ Going to step', newStep, '(from', step, ')');
         return true;
       }
       console.log('→ Already at first step');
       return false;
     };
 
-    const goToStep = (step: number) => {
-      if (step >= 0 && step < totalPages) {
-        setCurrentStep(step);
-        setTimeout(() => speakStep(step), 200);
-        console.log('→ Going to step', step);
+    const goToStep = (targetStep: number) => {
+      if (targetStep >= 0 && targetStep < totalPages) {
+        setCurrentStep(targetStep);
+        setTimeout(() => speakStep(targetStep), 200);
+        console.log('→ Going to step', targetStep);
         return true;
       }
       return false;
     };
 
     const readCurrent = () => {
-      console.log('→ Reading current step', currentStep);
-      speakStep(currentStep);
+      const step = currentStepRef.current;
+      console.log('→ Reading current step', step);
+      speakStep(step);
       return true;
     };
 
@@ -757,7 +766,7 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     }
 
     console.log('✗ Unrecognized command:', text);
-  }, [currentStep, totalPages, speakStep, stopSpeaking]);
+  }, [totalPages, speakStep, stopSpeaking]); // currentStep removed - using currentStepRef instead
 
   // Voice recognition - start/stop listening
   const toggleListening = useCallback(() => {
