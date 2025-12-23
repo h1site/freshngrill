@@ -107,7 +107,7 @@ export function FeaturesSection({ locale = 'fr' }: FeaturesSectionProps) {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <p className="text-neutral-500 text-sm">
+          <p className="text-neutral-400 text-sm">
             {isEN
               ? 'Click the Radio button in the header to start listening!'
               : 'Cliquez sur le bouton Radio dans l\'en-tête pour commencer à écouter!'}

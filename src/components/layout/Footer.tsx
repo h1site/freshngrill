@@ -260,10 +260,10 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
 
         {/* Bottom */}
         <div className="border-t border-neutral-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-neutral-500 text-sm">
+          <p className="text-neutral-400 text-sm">
             {t.copyright.replace('{year}', currentYear.toString())}
           </p>
-          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-neutral-500 text-sm">
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-neutral-400 text-sm">
             <div className="flex items-center gap-2">
               <span>{t.madeWith}</span>
               <span className="text-[#F77313]">♥</span>

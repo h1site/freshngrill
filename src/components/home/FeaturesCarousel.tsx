@@ -213,18 +213,20 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
+                  className={`min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full transition-all duration-300`}
+                  aria-label={`${isEN ? 'Go to slide' : 'Aller au slide'} ${index + 1}`}
+                >
+                  <span className={`h-2 rounded-full transition-all duration-300 ${
                     index === currentIndex
                       ? 'w-8 bg-[#F77313]'
                       : 'w-2 bg-white/40 hover:bg-white/60'
-                  }`}
-                  aria-label={`${isEN ? 'Go to slide' : 'Aller au slide'} ${index + 1}`}
-                />
+                  }`} />
+                </button>
               ))}
             </div>
 
             {/* Counter */}
-            <span className="text-white/50 text-sm ml-auto">
+            <span className="text-white/70 text-sm ml-auto">
               {String(currentIndex + 1).padStart(2, '0')} / {String(features.length).padStart(2, '0')}
             </span>
           </div>

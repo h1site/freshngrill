@@ -162,9 +162,9 @@ export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr', showD
               {/* Section Title */}
               <div className="flex items-center gap-4 mb-4 lg:mb-6">
                 <div className="w-10 h-0.5 bg-[#F77313]" />
-                <span className="text-white text-sm lg:text-base font-semibold uppercase tracking-widest">
+                <h2 className="text-white text-sm lg:text-base font-semibold uppercase tracking-widest">
                   {t.alsoDiscover}
-                </span>
+                </h2>
               </div>
 
               {/* Recipe Cards - Grid on mobile, stack on desktop */}

@@ -574,6 +574,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               ref={searchButtonRef}
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all"
+              aria-label={locale === 'en' ? 'Search' : 'Rechercher'}
             >
               <Search className="w-5 h-5" />
             </button>
