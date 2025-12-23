@@ -91,14 +91,36 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
   // Voice recognition state
   const [isListening, setIsListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognitionType | null>(null);
+  const isListeningRef = useRef(isListening);
+
+  // Refs for state values to avoid stale closures in callbacks
+  const timeRemainingRef = useRef(timeRemaining);
+  const isTimerRunningRef = useRef(isTimerRunning);
+  const isAlarmPlayingRef = useRef(isAlarmPlaying);
 
   // Total des étapes: 0 = ingrédients, 1+ = instructions
   const totalPages = recipe.instructions.length + 1;
 
-  // Keep currentStepRef in sync with currentStep (fixes stale closure in voice commands)
+  // Keep refs in sync with state (fixes stale closures in voice commands and other callbacks)
   useEffect(() => {
     currentStepRef.current = currentStep;
   }, [currentStep]);
+
+  useEffect(() => {
+    isListeningRef.current = isListening;
+  }, [isListening]);
+
+  useEffect(() => {
+    timeRemainingRef.current = timeRemaining;
+  }, [timeRemaining]);
+
+  useEffect(() => {
+    isTimerRunningRef.current = isTimerRunning;
+  }, [isTimerRunning]);
+
+  useEffect(() => {
+    isAlarmPlayingRef.current = isAlarmPlaying;
+  }, [isAlarmPlaying]);
 
   // Preload voices (they may not be available immediately)
   useEffect(() => {
@@ -582,34 +604,79 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return true;
     };
 
-    // ===== STEP 3: Word matching with fuzzy support =====
-    // Check if any pattern matches (supports partial matches)
+    // Timer control helpers
+    const resumeT = () => {
+      if (!isTimerRunningRef.current && timeRemainingRef.current != null && timeRemainingRef.current > 0) {
+        console.log('→ Resuming timer');
+        resumeTimer();
+        return true;
+      }
+      return false;
+    };
+    const pauseT = () => {
+      if (isTimerRunningRef.current) {
+        console.log('→ Pausing timer');
+        pauseTimer();
+        return true;
+      }
+      return false;
+    };
+    const resetT = () => {
+      console.log('→ Resetting timer');
+      resetTimer();
+      return true;
+    };
+    const stopA = () => {
+      if (isAlarmPlayingRef.current) {
+        console.log('→ Stopping alarm');
+        stopAlarm();
+        return true;
+      }
+      return false;
+    };
+    const setAndStartTimer = (duration: { hours?: number, minutes?: number, seconds?: number }) => {
+      const { hours = 0, minutes = 0, seconds = 0 } = duration;
+      const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+      if (totalSeconds > 0) {
+        setTimeRemaining(totalSeconds);
+        setIsTimerRunning(true);
+        setShowTimerModal(false); // Close if open
+        console.log(`→ Timer set and started for ${hours}h ${minutes}m ${seconds}s`);
+        return true;
+      }
+      return false;
+    };
+
+
+    // ===== STEP 3: Word matching with better accuracy =====
     const matchesAny = (patterns: string[]): boolean => {
       return patterns.some(pattern => {
-        // Exact word boundary match or contains
-        const regex = new RegExp(`\\b${pattern}\\b|${pattern}`, 'i');
+        // Use word boundaries for more precise matching
+        const regex = new RegExp(`\\b${pattern}\\b`, 'i');
         return regex.test(text) || regex.test(raw);
       });
     };
 
-    // ===== STEP 4: Extract numbers (spoken or digit) =====
+    // ===== STEP 4: Extract numbers and duration =====
     const extractNumber = (): number | null => {
-      // Check for digits first
       const digitMatch = text.match(/\b(\d+)\b/);
       if (digitMatch) return parseInt(digitMatch[1]);
 
-      // Spoken numbers (French + English)
       const numberWords: Record<string, number> = {
         'un': 1, 'une': 1, 'premier': 1, 'premiere': 1, 'first': 1, 'one': 1,
-        'deux': 2, 'deuxieme': 2, 'second': 2, 'seconde': 2, 'two': 2,
+        'deux': 2, 'deuxieme': 2, 'second': 2, 'seconde': 2, 'two': 2, 'to': 2,
         'trois': 3, 'troisieme': 3, 'third': 3, 'three': 3,
         'quatre': 4, 'quatrieme': 4, 'fourth': 4, 'four': 4,
         'cinq': 5, 'cinquieme': 5, 'fifth': 5, 'five': 5,
-        'six': 6, 'sixieme': 6, 'sixth': 6,
+        'six': 6, 'sixieme': 6, 'sixth': 6, 'sex': 6,
         'sept': 7, 'septieme': 7, 'seventh': 7, 'seven': 7,
-        'huit': 8, 'huitieme': 8, 'eighth': 8, 'eight': 8,
+        'huit': 8, 'huitieme': 8, 'eighth': 8, 'eight': 8, 'width': 8,
         'neuf': 9, 'neuvieme': 9, 'ninth': 9, 'nine': 9,
         'dix': 10, 'dixieme': 10, 'tenth': 10, 'ten': 10,
+        'onze': 11, 'eleven': 11, 'douze': 12, 'twelve': 12, 'treize': 13, 'thirteen': 13,
+        'quatorze': 14, 'fourteen': 14, 'quinze': 15, 'fifteen': 15, 'seize': 16, 'sixteen': 16,
+        'vingt': 20, 'twenty': 20, 'trente': 30, 'thirty': 30, 'quarante': 40, 'forty': 40,
+        'cinquante': 50, 'fifty': 50, 'soixante': 60, 'sixty': 60,
       };
 
       for (const [word, num] of Object.entries(numberWords)) {
@@ -618,24 +685,97 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return null;
     };
 
+    const extractDuration = (): { hours: number, minutes: number, seconds: number } | null => {
+        let hours = 0, minutes = 0, seconds = 0;
+        let found = false;
+
+        let processedText = ` ${text} `;
+        const numberWords: Record<string, number> = {
+            'un': 1, 'une': 1, 'one': 1, 'deux': 2, 'two': 2, 'trois': 3, 'three': 3, 'quatre': 4, 'four': 4,
+            'cinq': 5, 'five': 5, 'six': 6, 'six': 6, 'sept': 7, 'seven': 7, 'huit': 8, 'eight': 8,
+            'neuf': 9, 'nine': 9, 'dix': 10, 'ten': 10, 'onze': 11, 'eleven': 11, 'douze': 12, 'twelve': 12,
+            'treize': 13, 'thirteen': 13, 'quatorze': 14, 'fourteen': 14, 'quinze': 15, 'fifteen': 15,
+            'seize': 16, 'sixteen': 16, 'vingt': 20, 'twenty': 20, 'trente': 30, 'thirty': 30,
+            'quarante': 40, 'forty': 40, 'cinquante': 50, 'fifty': 50, 'soixante': 60, 'sixty': 60,
+        };
+
+        for (const [word, num] of Object.entries(numberWords)) {
+            processedText = processedText.replace(` ${word} `, ` ${num} `);
+        }
+
+        const hRegex = /(\d+)\s*(h|heure|heures|hour|hours)/;
+        const mRegex = /(\d+)\s*(m|min|minute|minutes)/;
+        const sRegex = /(\d+)\s*(s|sec|seconde|secondes|second|seconds)/;
+
+        const hMatch = processedText.match(hRegex);
+        if (hMatch) { hours = parseInt(hMatch[1], 10); found = true; }
+
+        const mMatch = processedText.match(mRegex);
+        if (mMatch) { minutes = parseInt(mMatch[1], 10); found = true; }
+
+        const sMatch = processedText.match(sRegex);
+        if (sMatch) { seconds = parseInt(sMatch[1], 10); found = true; }
+
+        if (!found) {
+            const numMatch = processedText.match(/\b(\d+)\b/);
+            if (numMatch) {
+                minutes = parseInt(numMatch[1], 10); // Default to minutes
+                found = true;
+            }
+        }
+        return found ? { hours, minutes, seconds } : null;
+    };
+
     // ===== COMMAND PATTERNS (ordered by priority) =====
 
-    // 1. NEXT STEP - Most common, check first
+    // 1. STOP ALARM (highest priority)
+    const stopAlarmPatterns = ['stop alarme', 'arrete l alarme', 'stop alarm', 'turn off alarm'];
+    if (matchesAny(stopAlarmPatterns)) {
+      if (stopA()) {
+        console.log('✓ STOP ALARM detected');
+        return;
+      }
+    }
+
+    // 2. SET TIMER
+    const timerTriggers = ['minuterie', 'minuteur', 'timer', 'set a timer', 'mets une minuterie'];
+    if (matchesAny(timerTriggers)) {
+      const duration = extractDuration();
+      if (duration && setAndStartTimer(duration)) {
+        console.log('✓ SET TIMER detected');
+        return;
+      }
+    }
+
+    // 3. TIMER CONTROLS (PAUSE/RESUME/RESET)
+    const pauseTimerPatterns = ['pause minuterie', 'pause timer', 'pause'];
+    if (matchesAny(pauseTimerPatterns)) {
+      if (pauseT()) {
+        console.log('✓ PAUSE TIMER detected');
+        return;
+      }
+    }
+    const resumeTimerPatterns = ['reprends la minuterie', 'demarre la minuterie', 'resume timer', 'start timer'];
+    if (matchesAny(resumeTimerPatterns)) {
+      if (resumeT()) {
+        console.log('✓ RESUME/START TIMER detected');
+        return;
+      }
+    }
+    const resetTimerPatterns = ['reinitialise la minuterie', 'reset timer', 'recommence la minuterie'];
+    if (matchesAny(resetTimerPatterns)) {
+      if (resetT()) {
+        console.log('✓ RESET TIMER detected');
+        return;
+      }
+    }
+
+    // 4. NEXT STEP - Most common, check first
     const nextPatterns = [
-      // French - main words
-      'suivant', 'suivante', 'suivan',
-      'prochain', 'prochaine',
-      'apres', 'ensuite',
-      'continue', 'continuer', 'continué',
-      'avance', 'avancer',
-      'passe', 'passer',
-      // French - phrases
-      'etape suivante', 'prochaine etape',
-      // French - common misheard
-      'savant', 'vivant', 'devant',
-      // English
-      'next', 'forward', 'proceed', 'go on', 'move on',
-      'keep going', 'carry on', 'advance',
+      'suivant', 'suivante', 'suivan', 'prochain', 'prochaine', 'apres', 'ensuite',
+      'continue', 'continuer', 'continue', 'avance', 'avancer', 'passe', 'passer',
+      'etape suivante', 'prochaine etape', 'savant', 'vivant', 'devant',
+      'next', 'forward', 'proceed', 'go on', 'move on', 'keep going', 'carry on', 'advance', 'next step',
     ];
     if (matchesAny(nextPatterns)) {
       console.log('✓ NEXT detected');
@@ -643,19 +783,11 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return;
     }
 
-    // 2. PREVIOUS STEP
+    // 5. PREVIOUS STEP
     const prevPatterns = [
-      // French - main words
-      'precedent', 'precedente',
-      'retour', 'retourne',
-      'arriere', 'derriere',
-      'recule', 'reculer',
-      'revenir', 'reviens',
-      // French - phrases
-      'etape precedente', 'etape avant', 'etape d avant',
-      // English
-      'previous', 'back', 'backward', 'backwards',
-      'go back', 'step back', 'before', 'prior',
+      'precedent', 'precedente', 'retour', 'retourne', 'arriere', 'derriere',
+      'recule', 'reculer', 'revenir', 'reviens', 'etape precedente', 'etape avant', 'etape d avant',
+      'previous', 'back', 'backward', 'backwards', 'go back', 'step back', 'before', 'prior',
     ];
     if (matchesAny(prevPatterns)) {
       console.log('✓ PREVIOUS detected');
@@ -663,23 +795,12 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return;
     }
 
-    // 3. REPEAT/READ CURRENT
+    // 6. REPEAT/READ CURRENT
     const repeatPatterns = [
-      // French - main words
-      'repete', 'repeter', 'repetez',
-      'encore', 'encore une fois',
-      'relis', 'relire', 'relisez',
-      'redis', 'redire', 'redites',
-      'recommence', 'recommencer',
-      'lis', 'lire', 'lisez',
-      'parle', 'parler', 'parlez',
-      'dis', 'dire', 'dites',
-      // French - questions
-      'c est quoi', 'qu est ce que', 'ca dit quoi',
-      // English
-      'repeat', 'again', 'one more time', 'once more',
-      'read', 'read it', 'read aloud',
-      'say again', 'what was that',
+      'repete', 'repeter', 'repetez', 'encore', 'encore une fois', 'relis', 'relire', 'relisez',
+      'redis', 'redire', 'redites', 'recommence', 'recommencer', 'lis', 'lire', 'lisez',
+      'parle', 'parler', 'parlez', 'dis', 'dire', 'dites', 'c est quoi', 'qu est ce que', 'ca dit quoi',
+      'repeat', 'again', 'one more time', 'once more', 'read', 'read it', 'read aloud', 'say again', 'what was that',
     ];
     if (matchesAny(repeatPatterns)) {
       console.log('✓ REPEAT/READ detected');
@@ -687,19 +808,11 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return;
     }
 
-    // 4. STOP SPEAKING
+    // 7. STOP SPEAKING
     const stopPatterns = [
-      // French
-      'stop', 'stoppe', 'stopper',
-      'arrete', 'arreter',
-      'tais', 'taisez',
-      'silence', 'silencieux',
-      'pause', 'pauser',
-      'chut', 'suffit', 'assez',
-      'ferme', 'la ferme',
-      // English
-      'quiet', 'be quiet', 'hush', 'shush',
-      'shut up', 'enough', 'stop talking', 'stop reading',
+      'stop', 'stoppe', 'stopper', 'arrete', 'arreter', 'tais', 'taisez', 'silence', 'silencieux',
+      'pause', 'pauser', 'chut', 'suffit', 'assez', 'ferme', 'la ferme',
+      'quiet', 'be quiet', 'hush', 'shush', 'shut up', 'enough', 'stop talking', 'stop reading',
     ];
     if (matchesAny(stopPatterns)) {
       console.log('✓ STOP detected');
@@ -707,18 +820,15 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return;
     }
 
-    // 5. GO TO INGREDIENTS
-    const ingredientPatterns = [
-      'ingredient', 'ingredients', 'ingredien',
-      'liste', 'shopping',
-    ];
+    // 8. GO TO INGREDIENTS
+    const ingredientPatterns = ['ingredient', 'ingredients', 'ingredien', 'liste', 'shopping', 'list'];
     if (matchesAny(ingredientPatterns)) {
       console.log('✓ INGREDIENTS detected');
       goToStep(0);
       return;
     }
 
-    // 6. GO TO SPECIFIC STEP (with number)
+    // 9. GO TO SPECIFIC STEP (with number)
     const stepTriggers = ['etape', 'step', 'numero', 'number', 'va a', 'aller a', 'go to'];
     if (matchesAny(stepTriggers)) {
       const num = extractNumber();
@@ -729,10 +839,9 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       }
     }
 
-    // 7. FIRST STEP
+    // 10. FIRST STEP
     const firstPatterns = [
-      'debut', 'commencement', 'commencer', 'commence',
-      'premiere etape', 'etape une', 'etape un',
+      'debut', 'commencement', 'commencer', 'commence', 'premiere etape', 'etape une', 'etape un',
       'first', 'first step', 'beginning', 'start',
     ];
     if (matchesAny(firstPatterns)) {
@@ -741,10 +850,9 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return;
     }
 
-    // 8. LAST STEP
+    // 11. LAST STEP
     const lastPatterns = [
-      'fin', 'derniere', 'dernier', 'finale',
-      'derniere etape', 'etape finale',
+      'fin', 'derniere', 'dernier', 'finale', 'derniere etape', 'etape finale',
       'last', 'last step', 'final', 'end',
     ];
     if (matchesAny(lastPatterns)) {
@@ -753,7 +861,23 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return;
     }
 
-    // 9. Fallback - check for simple confirmations that might mean "next"
+    // 12. Easter egg - Menucochon!
+    if (matchesAny(['menucochon', 'menu cochon'])) {
+      console.log('🐷 MENUCOCHON detected!');
+      if (typeof window !== 'undefined' && window.speechSynthesis) {
+        stopSpeaking();
+        const utterance = new SpeechSynthesisUtterance('Menucochon, vos recettes cochonnes!');
+        utterance.lang = 'fr-FR';
+        utterance.rate = 1.0;
+        const voices = window.speechSynthesis.getVoices();
+        const frenchVoice = voices.find(v => v.lang.startsWith('fr'));
+        if (frenchVoice) utterance.voice = frenchVoice;
+        window.speechSynthesis.speak(utterance);
+      }
+      return;
+    }
+
+    // 13. Fallback - check for simple confirmations that might mean "next"
     const confirmPatterns = [
       'ok', 'okay', 'd accord', 'daccord', 'oui', 'yes', 'yeah',
       'compris', 'c est bon', 'parfait', 'super', 'bien',
@@ -766,7 +890,7 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     }
 
     console.log('✗ Unrecognized command:', text);
-  }, [totalPages, speakStep, stopSpeaking]); // currentStep removed - using currentStepRef instead
+  }, [totalPages, speakStep, stopSpeaking, isEN, resumeTimer, pauseTimer, resetTimer, stopAlarm, setTimeRemaining, setIsTimerRunning, setShowTimerModal]);
 
   // Voice recognition - start/stop listening
   const toggleListening = useCallback(() => {
@@ -776,18 +900,21 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
 
     if (!SpeechRecognitionAPI) {
       console.error('Speech recognition not supported');
+      alert(isEN ? 'Speech recognition is not supported by your browser.' : 'La reconnaissance vocale n\'est pas supportée par votre navigateur.');
       return;
     }
 
-    if (isListening && recognitionRef.current) {
+    // If listening, stop it.
+    if (isListeningRef.current && recognitionRef.current) {
       recognitionRef.current.stop();
       setIsListening(false);
       return;
     }
 
+    // If not listening, start it.
     const recognition = new SpeechRecognitionAPI();
-    recognition.continuous = true;
-    recognition.interimResults = false;
+    recognition.continuous = true; // Keep listening even after a result
+    recognition.interimResults = false; // We only want final results
     recognition.lang = isEN ? 'en-US' : 'fr-FR';
 
     recognition.onstart = () => {
@@ -797,25 +924,30 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       const last = event.results.length - 1;
       const transcript = event.results[last][0].transcript;
-      console.log('Voice command:', transcript);
       processVoiceCommand(transcript);
     };
 
     recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
       console.error('Speech recognition error:', event.error);
+      // 'no-speech' is common, we can ignore it or just stop listening.
+      // Other errors like 'network' or 'not-allowed' are more critical.
       if (event.error !== 'no-speech') {
         setIsListening(false);
       }
     };
 
     recognition.onend = () => {
-      // Restart if still supposed to be listening
-      if (isListening && recognitionRef.current) {
+      // Some browsers stop recognition after a period of silence.
+      // If we are still supposed to be listening, restart it.
+      if (isListeningRef.current) {
         try {
-          recognitionRef.current.start();
-        } catch {
-          setIsListening(false);
+          recognition.start();
+        } catch (e) {
+          console.error('Error restarting recognition:', e);
+          setIsListening(false); // Stop if restart fails
         }
+      } else {
+        setIsListening(false); // Ensure UI is synced
       }
     };
 
@@ -825,8 +957,9 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       recognition.start();
     } catch (e) {
       console.error('Error starting recognition:', e);
+      setIsListening(false);
     }
-  }, [isListening, isEN, processVoiceCommand]);
+  }, [isEN, processVoiceCommand]);
 
   // Stop listening when closing cook mode
   useEffect(() => {
