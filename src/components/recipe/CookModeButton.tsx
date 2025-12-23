@@ -513,173 +513,250 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     };
   }, [stopSpeaking]);
 
-  // Voice recognition - process commands with simplified matching
+  // Voice recognition - BEST PRACTICES implementation
   const processVoiceCommand = useCallback((transcript: string) => {
-    const text = transcript.toLowerCase().trim();
-    console.log('Processing voice command:', text);
+    // ===== STEP 1: Normalize text (remove accents, lowercase, clean) =====
+    const normalizeText = (str: string): string => {
+      return str
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Remove accents
+        .replace(/['']/g, ' ')           // Replace apostrophes with space
+        .replace(/[^a-z0-9\s]/g, ' ')    // Remove special chars
+        .replace(/\s+/g, ' ')            // Multiple spaces to single
+        .trim();
+    };
 
-    // Helper function to go to next step
+    const raw = transcript.toLowerCase().trim();
+    const text = normalizeText(transcript);
+    console.log('Voice command (raw):', raw);
+    console.log('Voice command (normalized):', text);
+
+    // ===== STEP 2: Helper functions =====
     const goNext = () => {
       if (currentStep < totalPages - 1) {
         const newStep = currentStep + 1;
         setCurrentStep(newStep);
-        setTimeout(() => speakStep(newStep), 150);
+        setTimeout(() => speakStep(newStep), 200);
+        console.log('→ Going to step', newStep);
         return true;
       }
+      console.log('→ Already at last step');
       return false;
     };
 
-    // Helper function to go to previous step
     const goPrev = () => {
       if (currentStep > 0) {
         const newStep = currentStep - 1;
         setCurrentStep(newStep);
-        setTimeout(() => speakStep(newStep), 150);
+        setTimeout(() => speakStep(newStep), 200);
+        console.log('→ Going to step', newStep);
+        return true;
+      }
+      console.log('→ Already at first step');
+      return false;
+    };
+
+    const goToStep = (step: number) => {
+      if (step >= 0 && step < totalPages) {
+        setCurrentStep(step);
+        setTimeout(() => speakStep(step), 200);
+        console.log('→ Going to step', step);
         return true;
       }
       return false;
     };
 
-    // Helper function to repeat/read current step
     const readCurrent = () => {
+      console.log('→ Reading current step', currentStep);
       speakStep(currentStep);
       return true;
     };
 
-    // ===== PRIORITY 1: NEXT STEP (most common command) =====
-    // Check these FIRST before anything else
-    if (
-      text.includes('suivant') ||
-      text.includes('suivante') ||
-      text.includes('prochain') ||
-      text.includes('prochaine') ||
-      text.includes('next') ||
-      text.includes('après') ||
-      text.includes('apres') ||
-      text.includes('ensuite') ||
-      text.includes('continue') ||
-      text.includes('continuer') ||
-      text.includes('avance') ||
-      text.includes('avancer') ||
-      text.includes('passe') ||
-      text.includes('passer')
-    ) {
-      console.log('NEXT command detected');
+    // ===== STEP 3: Word matching with fuzzy support =====
+    // Check if any pattern matches (supports partial matches)
+    const matchesAny = (patterns: string[]): boolean => {
+      return patterns.some(pattern => {
+        // Exact word boundary match or contains
+        const regex = new RegExp(`\\b${pattern}\\b|${pattern}`, 'i');
+        return regex.test(text) || regex.test(raw);
+      });
+    };
+
+    // ===== STEP 4: Extract numbers (spoken or digit) =====
+    const extractNumber = (): number | null => {
+      // Check for digits first
+      const digitMatch = text.match(/\b(\d+)\b/);
+      if (digitMatch) return parseInt(digitMatch[1]);
+
+      // Spoken numbers (French + English)
+      const numberWords: Record<string, number> = {
+        'un': 1, 'une': 1, 'premier': 1, 'premiere': 1, 'first': 1, 'one': 1,
+        'deux': 2, 'deuxieme': 2, 'second': 2, 'seconde': 2, 'two': 2,
+        'trois': 3, 'troisieme': 3, 'third': 3, 'three': 3,
+        'quatre': 4, 'quatrieme': 4, 'fourth': 4, 'four': 4,
+        'cinq': 5, 'cinquieme': 5, 'fifth': 5, 'five': 5,
+        'six': 6, 'sixieme': 6, 'sixth': 6,
+        'sept': 7, 'septieme': 7, 'seventh': 7, 'seven': 7,
+        'huit': 8, 'huitieme': 8, 'eighth': 8, 'eight': 8,
+        'neuf': 9, 'neuvieme': 9, 'ninth': 9, 'nine': 9,
+        'dix': 10, 'dixieme': 10, 'tenth': 10, 'ten': 10,
+      };
+
+      for (const [word, num] of Object.entries(numberWords)) {
+        if (text.includes(word)) return num;
+      }
+      return null;
+    };
+
+    // ===== COMMAND PATTERNS (ordered by priority) =====
+
+    // 1. NEXT STEP - Most common, check first
+    const nextPatterns = [
+      // French - main words
+      'suivant', 'suivante', 'suivan',
+      'prochain', 'prochaine',
+      'apres', 'ensuite',
+      'continue', 'continuer', 'continué',
+      'avance', 'avancer',
+      'passe', 'passer',
+      // French - phrases
+      'etape suivante', 'prochaine etape',
+      // French - common misheard
+      'savant', 'vivant', 'devant',
+      // English
+      'next', 'forward', 'proceed', 'go on', 'move on',
+      'keep going', 'carry on', 'advance',
+    ];
+    if (matchesAny(nextPatterns)) {
+      console.log('✓ NEXT detected');
       goNext();
       return;
     }
 
-    // ===== PRIORITY 2: PREVIOUS STEP =====
-    if (
-      text.includes('précédent') ||
-      text.includes('précédente') ||
-      text.includes('precedent') ||
-      text.includes('previous') ||
-      text.includes('retour') ||
-      text.includes('arrière') ||
-      text.includes('arriere') ||
-      text.includes('back') ||
-      text.includes('avant') ||
-      text.includes('recule') ||
-      text.includes('reculer')
-    ) {
-      console.log('PREVIOUS command detected');
+    // 2. PREVIOUS STEP
+    const prevPatterns = [
+      // French - main words
+      'precedent', 'precedente',
+      'retour', 'retourne',
+      'arriere', 'derriere',
+      'recule', 'reculer',
+      'revenir', 'reviens',
+      // French - phrases
+      'etape precedente', 'etape avant', 'etape d avant',
+      // English
+      'previous', 'back', 'backward', 'backwards',
+      'go back', 'step back', 'before', 'prior',
+    ];
+    if (matchesAny(prevPatterns)) {
+      console.log('✓ PREVIOUS detected');
       goPrev();
       return;
     }
 
-    // ===== PRIORITY 3: REPEAT/READ CURRENT =====
-    if (
-      text.includes('répète') ||
-      text.includes('repete') ||
-      text.includes('répéter') ||
-      text.includes('repeat') ||
-      text.includes('encore') ||
-      text.includes('again') ||
-      text.includes('relis') ||
-      text.includes('relire') ||
-      text.includes('redis') ||
-      text.includes('lire') ||
-      text.includes('lis') ||
-      text.includes('read') ||
-      text.includes('parle') ||
-      text.includes('parler')
-    ) {
-      console.log('REPEAT/READ command detected');
+    // 3. REPEAT/READ CURRENT
+    const repeatPatterns = [
+      // French - main words
+      'repete', 'repeter', 'repetez',
+      'encore', 'encore une fois',
+      'relis', 'relire', 'relisez',
+      'redis', 'redire', 'redites',
+      'recommence', 'recommencer',
+      'lis', 'lire', 'lisez',
+      'parle', 'parler', 'parlez',
+      'dis', 'dire', 'dites',
+      // French - questions
+      'c est quoi', 'qu est ce que', 'ca dit quoi',
+      // English
+      'repeat', 'again', 'one more time', 'once more',
+      'read', 'read it', 'read aloud',
+      'say again', 'what was that',
+    ];
+    if (matchesAny(repeatPatterns)) {
+      console.log('✓ REPEAT/READ detected');
       readCurrent();
       return;
     }
 
-    // ===== PRIORITY 4: STOP SPEAKING =====
-    if (
-      text.includes('stop') ||
-      text.includes('arrête') ||
-      text.includes('arrete') ||
-      text.includes('tais') ||
-      text.includes('silence') ||
-      text.includes('pause') ||
-      text.includes('quiet')
-    ) {
-      console.log('STOP command detected');
+    // 4. STOP SPEAKING
+    const stopPatterns = [
+      // French
+      'stop', 'stoppe', 'stopper',
+      'arrete', 'arreter',
+      'tais', 'taisez',
+      'silence', 'silencieux',
+      'pause', 'pauser',
+      'chut', 'suffit', 'assez',
+      'ferme', 'la ferme',
+      // English
+      'quiet', 'be quiet', 'hush', 'shush',
+      'shut up', 'enough', 'stop talking', 'stop reading',
+    ];
+    if (matchesAny(stopPatterns)) {
+      console.log('✓ STOP detected');
       stopSpeaking();
       return;
     }
 
-    // ===== PRIORITY 5: GO TO INGREDIENTS =====
-    if (
-      text.includes('ingrédient') ||
-      text.includes('ingredient') ||
-      text.includes('ingredien')
-    ) {
-      console.log('INGREDIENTS command detected');
-      setCurrentStep(0);
-      setTimeout(() => speakStep(0), 150);
+    // 5. GO TO INGREDIENTS
+    const ingredientPatterns = [
+      'ingredient', 'ingredients', 'ingredien',
+      'liste', 'shopping',
+    ];
+    if (matchesAny(ingredientPatterns)) {
+      console.log('✓ INGREDIENTS detected');
+      goToStep(0);
       return;
     }
 
-    // ===== PRIORITY 6: GO TO SPECIFIC STEP NUMBER =====
-    // Check for "étape X" or "step X" with a number
-    const stepMatch = text.match(/(?:étape|etape|step)\s*(\d+)/i);
-    if (stepMatch) {
-      const stepNum = parseInt(stepMatch[1]);
-      if (stepNum >= 1 && stepNum <= totalPages - 1) {
-        console.log('GO TO STEP command detected:', stepNum);
-        setCurrentStep(stepNum);
-        setTimeout(() => speakStep(stepNum), 150);
+    // 6. GO TO SPECIFIC STEP (with number)
+    const stepTriggers = ['etape', 'step', 'numero', 'number', 'va a', 'aller a', 'go to'];
+    if (matchesAny(stepTriggers)) {
+      const num = extractNumber();
+      if (num !== null && num >= 1 && num <= totalPages - 1) {
+        console.log('✓ GO TO STEP', num, 'detected');
+        goToStep(num);
         return;
       }
     }
 
-    // ===== PRIORITY 7: FIRST/LAST STEP =====
-    if (
-      text.includes('début') ||
-      text.includes('debut') ||
-      text.includes('première étape') ||
-      text.includes('premiere etape') ||
-      text.includes('first step') ||
-      text.includes('beginning')
-    ) {
-      console.log('FIRST STEP command detected');
-      setCurrentStep(1);
-      setTimeout(() => speakStep(1), 150);
+    // 7. FIRST STEP
+    const firstPatterns = [
+      'debut', 'commencement', 'commencer', 'commence',
+      'premiere etape', 'etape une', 'etape un',
+      'first', 'first step', 'beginning', 'start',
+    ];
+    if (matchesAny(firstPatterns)) {
+      console.log('✓ FIRST STEP detected');
+      goToStep(1);
       return;
     }
 
-    if (
-      text.includes('fin') ||
-      text.includes('dernière') ||
-      text.includes('derniere') ||
-      text.includes('last') ||
-      text.includes('final')
-    ) {
-      console.log('LAST STEP command detected');
-      const lastStep = totalPages - 1;
-      setCurrentStep(lastStep);
-      setTimeout(() => speakStep(lastStep), 150);
+    // 8. LAST STEP
+    const lastPatterns = [
+      'fin', 'derniere', 'dernier', 'finale',
+      'derniere etape', 'etape finale',
+      'last', 'last step', 'final', 'end',
+    ];
+    if (matchesAny(lastPatterns)) {
+      console.log('✓ LAST STEP detected');
+      goToStep(totalPages - 1);
       return;
     }
 
-    console.log('Unrecognized voice command:', text);
+    // 9. Fallback - check for simple confirmations that might mean "next"
+    const confirmPatterns = [
+      'ok', 'okay', 'd accord', 'daccord', 'oui', 'yes', 'yeah',
+      'compris', 'c est bon', 'parfait', 'super', 'bien',
+      'got it', 'alright', 'understood',
+    ];
+    if (matchesAny(confirmPatterns)) {
+      console.log('✓ CONFIRMATION → NEXT detected');
+      goNext();
+      return;
+    }
+
+    console.log('✗ Unrecognized command:', text);
   }, [currentStep, totalPages, speakStep, stopSpeaking]);
 
   // Voice recognition - start/stop listening
