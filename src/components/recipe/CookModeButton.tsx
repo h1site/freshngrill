@@ -692,7 +692,7 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
         let processedText = ` ${text} `;
         const numberWords: Record<string, number> = {
             'un': 1, 'une': 1, 'one': 1, 'deux': 2, 'two': 2, 'trois': 3, 'three': 3, 'quatre': 4, 'four': 4,
-            'cinq': 5, 'five': 5, 'six': 6, 'six': 6, 'sept': 7, 'seven': 7, 'huit': 8, 'eight': 8,
+            'cinq': 5, 'five': 5, 'six': 6, 'sept': 7, 'seven': 7, 'huit': 8, 'eight': 8,
             'neuf': 9, 'nine': 9, 'dix': 10, 'ten': 10, 'onze': 11, 'eleven': 11, 'douze': 12, 'twelve': 12,
             'treize': 13, 'thirteen': 13, 'quatorze': 14, 'fourteen': 14, 'quinze': 15, 'fifteen': 15,
             'seize': 16, 'sixteen': 16, 'vingt': 20, 'twenty': 20, 'trente': 30, 'thirty': 30,
