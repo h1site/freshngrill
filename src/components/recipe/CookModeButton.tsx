@@ -513,291 +513,172 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     };
   }, [stopSpeaking]);
 
-  // Voice recognition - process commands with intent-based matching
-  // Handles: cleaning filler words, spoken numbers, implicit commands
+  // Voice recognition - process commands with simplified matching
   const processVoiceCommand = useCallback((transcript: string) => {
-    let text = transcript.toLowerCase().trim();
+    const text = transcript.toLowerCase().trim();
+    console.log('Processing voice command:', text);
 
-    // ===== STEP 1: Clean filler/politeness words =====
-    const fillerWords = [
-      // French politeness
-      'peux-tu', 'peux tu', 'pouvez-vous', 'pouvez vous',
-      'est-ce que tu peux', 'est ce que tu peux',
-      's\'il te plaît', 's\'il vous plaît', 'sil te plait', 'sil vous plait',
-      'je veux', 'je voudrais', 'j\'aimerais', 'j aimerais',
-      'merci de', 'merci', 'svp', 's.v.p.',
-      // English politeness
-      'can you', 'could you', 'would you', 'will you',
-      'please', 'kindly', 'i want to', 'i would like to',
-      'i\'d like to', 'i want you to', 'thank you',
-      // Common intros
-      'ok ', 'okay ', 'hey ', 'dis ', 'euh ', 'um ', 'uh ',
-    ];
-    for (const filler of fillerWords) {
-      text = text.replace(new RegExp(filler, 'gi'), ' ');
-    }
-    text = text.replace(/\s+/g, ' ').trim();
-
-    // ===== STEP 2: Convert spoken numbers to digits =====
-    const spokenNumbers: Record<string, number> = {
-      // French
-      'un': 1, 'une': 1, 'premier': 1, 'première': 1,
-      'deux': 2, 'deuxième': 2, 'second': 2, 'seconde': 2,
-      'trois': 3, 'troisième': 3,
-      'quatre': 4, 'quatrième': 4,
-      'cinq': 5, 'cinquième': 5,
-      'six': 6, 'sixième': 6,
-      'sept': 7, 'septième': 7,
-      'huit': 8, 'huitième': 8,
-      'neuf': 9, 'neuvième': 9,
-      'dix': 10, 'dixième': 10,
-      'onze': 11, 'onzième': 11,
-      'douze': 12, 'douzième': 12,
-      // English
-      'one': 1, 'first': 1,
-      'two': 2,
-      'three': 3, 'third': 3,
-      'four': 4, 'fourth': 4,
-      'five': 5, 'fifth': 5,
-      'sixth': 6,
-      'seven': 7, 'seventh': 7,
-      'eight': 8, 'eighth': 8,
-      'nine': 9, 'ninth': 9,
-      'ten': 10, 'tenth': 10,
-      'eleven': 11, 'eleventh': 11,
-      'twelve': 12, 'twelfth': 12,
-    };
-
-    // Helper: check if any word in the list is found
-    const matchesAny = (words: string[]) => words.some(w => text.includes(w));
-
-    // Helper: extract step number from text (handles spoken and digit numbers)
-    const extractStepNumber = (): number | null => {
-      // First check for digit
-      const digitMatch = text.match(/(\d+)/);
-      if (digitMatch) {
-        return parseInt(digitMatch[1]);
-      }
-      // Then check for spoken numbers
-      for (const [word, num] of Object.entries(spokenNumbers)) {
-        if (text.includes(word)) {
-          return num;
-        }
-      }
-      return null;
-    };
-
-    // ===== INTENT: INGREDIENTS =====
-    const ingredientWords = [
-      // French
-      'ingrédient', 'ingredient', 'ingrédients', 'ingredients',
-      'ingredien', 'ingrédi', 'ingrédian', 'ingrediant',
-      'les ingrédients', 'aux ingrédients', 'voir ingrédients',
-      'montre ingrédients', 'affiche ingrédients', 'liste ingrédients',
-      'quels ingrédients', 'qu\'est-ce qu\'il faut', 'il faut quoi',
-      'de quoi j\'ai besoin', 'besoin de quoi',
-      // English
-      'show ingredients', 'go to ingredients', 'ingredients please',
-      'ingredient list', 'show me ingredients', 'the ingredients',
-      'ingredients list', 'what ingredients', 'see ingredients',
-      'what do i need', 'what\'s needed', 'shopping list',
-    ];
-    if (matchesAny(ingredientWords)) {
-      setCurrentStep(0);
-      // Use setTimeout to ensure state is updated before speaking
-      setTimeout(() => speakStep(0), 100);
-      return;
-    }
-
-    // ===== INTENT: GO TO SPECIFIC STEP (check before next/previous) =====
-    const stepTriggers = [
-      'étape', 'etape', 'step', 'numéro', 'numero', 'number',
-      'aller à', 'aller a', 'va à', 'va a', 'go to', 'jump to',
-    ];
-    if (matchesAny(stepTriggers)) {
-      const stepNum = extractStepNumber();
-      if (stepNum !== null && stepNum >= 1 && stepNum <= totalPages - 1) {
-        setCurrentStep(stepNum);
-        setTimeout(() => speakStep(stepNum), 100);
-        return;
-      }
-    }
-
-    // ===== INTENT: NEXT STEP =====
-    const nextWords = [
-      // French
-      'suivant', 'suivante', 'suivan', 'savant', 'servant', 'suivre',
-      'prochain', 'prochaine', 'prochai', 'proche',
-      'après', 'apres', 'ensuite', 'puis',
-      'continuer', 'continue', 'continué', 'continuez',
-      'avancer', 'avance', 'avancé', 'avancez',
-      'passer', 'passe', 'passé',
-      'étape suivante', 'prochaine étape',
-      // English
-      'next', 'nex', 'necks', 'nets',
-      'forward', 'forwards', 'foward',
-      'go on', 'move on', 'proceed',
-      'next step', 'next one', 'go next', 'move forward',
-      'keep going', 'carry on', 'advance',
-      // Implicit confirmations (user understood, moving on)
-      'c\'est bon', 'c est bon', 'compris', 'j\'ai compris',
-      'd\'accord', 'd accord', 'parfait', 'super',
-      'got it', 'okay next', 'alright', 'done',
-      'understood', 'i got it', 'yep', 'yes',
-    ];
-    if (matchesAny(nextWords)) {
+    // Helper function to go to next step
+    const goNext = () => {
       if (currentStep < totalPages - 1) {
         const newStep = currentStep + 1;
         setCurrentStep(newStep);
-        // Use setTimeout to ensure state is updated before speaking
-        setTimeout(() => speakStep(newStep), 100);
+        setTimeout(() => speakStep(newStep), 150);
+        return true;
       }
-      return;
-    }
+      return false;
+    };
 
-    // ===== INTENT: PREVIOUS STEP =====
-    const prevWords = [
-      // French
-      'précédent', 'précédente', 'précéden', 'preceden', 'presidant', 'président',
-      'retour', 'retourne', 'revenir', 'reviens',
-      'en arrière', 'arrière', 'derrière',
-      'reculer', 'recule', 'reculé',
-      'étape précédente', 'étape d\'avant', 'étape avant',
-      'juste avant', 'celle d\'avant',
-      // English
-      'previous', 'previus', 'previou', 'previews',
-      'back', 'bac', 'beck',
-      'go back', 'step back', 'one back',
-      'backwards', 'backward', 'backword',
-      'before', 'prior', 'the one before',
-      'previous step', 'one before', 'go backwards',
-    ];
-    if (matchesAny(prevWords)) {
+    // Helper function to go to previous step
+    const goPrev = () => {
       if (currentStep > 0) {
         const newStep = currentStep - 1;
         setCurrentStep(newStep);
-        // Use setTimeout to ensure state is updated before speaking
-        setTimeout(() => speakStep(newStep), 100);
+        setTimeout(() => speakStep(newStep), 150);
+        return true;
       }
+      return false;
+    };
+
+    // Helper function to repeat/read current step
+    const readCurrent = () => {
+      speakStep(currentStep);
+      return true;
+    };
+
+    // ===== PRIORITY 1: NEXT STEP (most common command) =====
+    // Check these FIRST before anything else
+    if (
+      text.includes('suivant') ||
+      text.includes('suivante') ||
+      text.includes('prochain') ||
+      text.includes('prochaine') ||
+      text.includes('next') ||
+      text.includes('après') ||
+      text.includes('apres') ||
+      text.includes('ensuite') ||
+      text.includes('continue') ||
+      text.includes('continuer') ||
+      text.includes('avance') ||
+      text.includes('avancer') ||
+      text.includes('passe') ||
+      text.includes('passer')
+    ) {
+      console.log('NEXT command detected');
+      goNext();
       return;
     }
 
-    // ===== INTENT: READ / SPEAK =====
-    const readWords = [
-      // French
-      'lire', 'lis', 'lit', 'lise', 'lisez',
-      'parle', 'parler', 'parlé', 'parlez',
-      'dis', 'dire', 'dites',
-      'lecture', 'lis-moi', 'dis-moi',
-      'récite', 'réciter', 'recite',
-      'énonce', 'énoncer', 'annonce',
-      'c\'est quoi', 'qu\'est-ce que', 'ça dit quoi',
-      // English
-      'read', 'reed', 'reading',
-      'speak', 'speaking',
-      'tell me', 'say it',
-      'read out', 'read aloud', 'out loud',
-      'read this', 'read it', 'speak up',
-      'what does it say', 'read to me',
-      'what\'s this step', 'what is this',
-    ];
-    if (matchesAny(readWords)) {
-      speakStep();
+    // ===== PRIORITY 2: PREVIOUS STEP =====
+    if (
+      text.includes('précédent') ||
+      text.includes('précédente') ||
+      text.includes('precedent') ||
+      text.includes('previous') ||
+      text.includes('retour') ||
+      text.includes('arrière') ||
+      text.includes('arriere') ||
+      text.includes('back') ||
+      text.includes('avant') ||
+      text.includes('recule') ||
+      text.includes('reculer')
+    ) {
+      console.log('PREVIOUS command detected');
+      goPrev();
       return;
     }
 
-    // ===== INTENT: STOP =====
-    const stopWords = [
-      // French
-      'stop', 'stoppe', 'stoppé', 'stopper',
-      'arrête', 'arrete', 'arrêter', 'arreter', 'arrêté',
-      'tais-toi', 'tais toi', 'tait toi', 'taisez-vous',
-      'silence', 'silencieux',
-      'pause', 'pauser', 'pausé',
-      'chut', 'chuut', 'assez', 'suffit', 'ça suffit',
-      'ferme-la', 'la ferme', 'ferme la',
-      'taire', 'se taire', 'ok j\'ai compris',
-      // English
-      'stop', 'stob', 'stopp',
-      'quiet', 'be quiet',
-      'silence', 'silent',
-      'shut up', 'hush', 'shush',
-      'pause', 'paus',
-      'enough', 'stop reading', 'stop talking',
-      'be silent', 'stop speaking', 'that\'s enough',
-      'okay i got it', 'ok i understand',
-    ];
-    if (matchesAny(stopWords)) {
+    // ===== PRIORITY 3: REPEAT/READ CURRENT =====
+    if (
+      text.includes('répète') ||
+      text.includes('repete') ||
+      text.includes('répéter') ||
+      text.includes('repeat') ||
+      text.includes('encore') ||
+      text.includes('again') ||
+      text.includes('relis') ||
+      text.includes('relire') ||
+      text.includes('redis') ||
+      text.includes('lire') ||
+      text.includes('lis') ||
+      text.includes('read') ||
+      text.includes('parle') ||
+      text.includes('parler')
+    ) {
+      console.log('REPEAT/READ command detected');
+      readCurrent();
+      return;
+    }
+
+    // ===== PRIORITY 4: STOP SPEAKING =====
+    if (
+      text.includes('stop') ||
+      text.includes('arrête') ||
+      text.includes('arrete') ||
+      text.includes('tais') ||
+      text.includes('silence') ||
+      text.includes('pause') ||
+      text.includes('quiet')
+    ) {
+      console.log('STOP command detected');
       stopSpeaking();
       return;
     }
 
-    // ===== INTENT: REPEAT =====
-    const repeatWords = [
-      // French
-      'répète', 'repete', 'répéter', 'repeter', 'répété',
-      'encore', 'encore une fois', 'une fois encore',
-      'recommence', 'recommencer', 'recommencé',
-      'redis', 'redis-moi', 'redit', 'redire',
-      'refais', 'refaire', 'refait',
-      'relis', 'relire', 'relu',
-      'à nouveau', 'de nouveau',
-      'j\'ai pas compris', 'j\'ai pas entendu',
-      'tu peux répéter', 'quoi',
-      // English
-      'repeat', 'repea', 'repeate', 'repeated',
-      'again', 'one more', 'one more time', 'once more',
-      'say again', 'say that again', 'repeat that',
-      'do it again', 'pardon', 'sorry', 'huh',
-      'come again', 'i didn\'t catch that', 'repeat please',
-      'what was that', 'didn\'t hear', 'say it again',
-    ];
-    if (matchesAny(repeatWords)) {
-      speakStep();
+    // ===== PRIORITY 5: GO TO INGREDIENTS =====
+    if (
+      text.includes('ingrédient') ||
+      text.includes('ingredient') ||
+      text.includes('ingredien')
+    ) {
+      console.log('INGREDIENTS command detected');
+      setCurrentStep(0);
+      setTimeout(() => speakStep(0), 150);
       return;
     }
 
-    // ===== INTENT: FIRST STEP =====
-    const firstWords = [
-      // French
-      'début', 'debut', 'au début', 'le début',
-      'première étape', 'premiere etape', 'étape un', 'etape un',
-      'commencer', 'commence', 'on commence',
-      'retour au début', 'depuis le début',
-      // English
-      'first step', 'step one', 'step 1',
-      'beginning', 'from the start', 'from the beginning',
-      'start over', 'restart', 'go to start',
-      'back to the beginning',
-    ];
-    if (matchesAny(firstWords)) {
+    // ===== PRIORITY 6: GO TO SPECIFIC STEP NUMBER =====
+    // Check for "étape X" or "step X" with a number
+    const stepMatch = text.match(/(?:étape|etape|step)\s*(\d+)/i);
+    if (stepMatch) {
+      const stepNum = parseInt(stepMatch[1]);
+      if (stepNum >= 1 && stepNum <= totalPages - 1) {
+        console.log('GO TO STEP command detected:', stepNum);
+        setCurrentStep(stepNum);
+        setTimeout(() => speakStep(stepNum), 150);
+        return;
+      }
+    }
+
+    // ===== PRIORITY 7: FIRST/LAST STEP =====
+    if (
+      text.includes('début') ||
+      text.includes('debut') ||
+      text.includes('première étape') ||
+      text.includes('premiere etape') ||
+      text.includes('first step') ||
+      text.includes('beginning')
+    ) {
+      console.log('FIRST STEP command detected');
       setCurrentStep(1);
-      speakStep(1);
+      setTimeout(() => speakStep(1), 150);
       return;
     }
 
-    // ===== INTENT: LAST STEP =====
-    const lastWords = [
-      // French
-      'fin', 'la fin', 'à la fin',
-      'dernière étape', 'derniere etape', 'dernière', 'dernier',
-      'terminer', 'termine', 'étape finale',
-      'aller à la fin', 'sauter à la fin',
-      // English
-      'last step', 'final step', 'last one',
-      'the end', 'go to end', 'jump to end',
-      'final', 'finale', 'last',
-      'skip to end', 'go to last',
-    ];
-    if (matchesAny(lastWords)) {
+    if (
+      text.includes('fin') ||
+      text.includes('dernière') ||
+      text.includes('derniere') ||
+      text.includes('last') ||
+      text.includes('final')
+    ) {
+      console.log('LAST STEP command detected');
       const lastStep = totalPages - 1;
       setCurrentStep(lastStep);
-      speakStep(lastStep);
+      setTimeout(() => speakStep(lastStep), 150);
       return;
     }
 
-    // ===== INTENT: HELP (could add in future) =====
-    // For now, log unrecognized commands for debugging
     console.log('Unrecognized voice command:', text);
   }, [currentStep, totalPages, speakStep, stopSpeaking]);
 
