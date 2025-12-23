@@ -604,7 +604,8 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
     ];
     if (matchesAny(ingredientWords)) {
       setCurrentStep(0);
-      speakStep(0);
+      // Use setTimeout to ensure state is updated before speaking
+      setTimeout(() => speakStep(0), 100);
       return;
     }
 
@@ -617,7 +618,7 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       const stepNum = extractStepNumber();
       if (stepNum !== null && stepNum >= 1 && stepNum <= totalPages - 1) {
         setCurrentStep(stepNum);
-        speakStep(stepNum);
+        setTimeout(() => speakStep(stepNum), 100);
         return;
       }
     }
@@ -648,7 +649,8 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       if (currentStep < totalPages - 1) {
         const newStep = currentStep + 1;
         setCurrentStep(newStep);
-        speakStep(newStep);
+        // Use setTimeout to ensure state is updated before speaking
+        setTimeout(() => speakStep(newStep), 100);
       }
       return;
     }
@@ -674,7 +676,8 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       if (currentStep > 0) {
         const newStep = currentStep - 1;
         setCurrentStep(newStep);
-        speakStep(newStep);
+        // Use setTimeout to ensure state is updated before speaking
+        setTimeout(() => speakStep(newStep), 100);
       }
       return;
     }
