@@ -10,6 +10,7 @@ import { SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
 import UserMenu from '@/components/auth/UserMenu';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { KracRadioModal, KracRadioNowPlaying, useKracRadio } from '@/components/KracRadio/KracRadio';
+import { SubmitRecipeModal } from '@/components/recipe/SubmitRecipeModal';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
 
@@ -140,6 +141,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSubmitRecipeModalOpen, setIsSubmitRecipeModalOpen] = useState(false);
 
   // Detect scroll for transparent header
   useEffect(() => {
@@ -217,7 +219,8 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
           sweet: 'Sucré', desserts: 'Desserts', pastries: 'Pâtisseries', pies: 'Tartes',
           breads: 'Pains', drinks: 'Boissons', worldCuisines: 'Cuisines du monde',
           seeAllRecipes: 'Voir toutes les recettes', culinaryLexicon: 'Lexique culinaire',
-          holidayRecipes: 'Recettes des fêtes', canning: 'Mise en conserve'
+          holidayRecipes: 'Recettes des fêtes', canning: 'Mise en conserve',
+          submitRecipe: 'Soumettre une recette'
         }
       },
       recipes: { difficulty: { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' } }
@@ -246,7 +249,8 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
           sweet: 'Sweet', desserts: 'Desserts', pastries: 'Pastries', pies: 'Pies',
           breads: 'Breads', drinks: 'Drinks', worldCuisines: 'World Cuisines',
           seeAllRecipes: 'See all recipes', culinaryLexicon: 'Culinary Lexicon',
-          holidayRecipes: 'Holiday Recipes', canning: 'Canning'
+          holidayRecipes: 'Holiday Recipes', canning: 'Canning',
+          submitRecipe: 'Submit a recipe'
         }
       },
       recipes: { difficulty: { easy: 'Easy', medium: 'Medium', hard: 'Hard' } }
@@ -693,6 +697,16 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                       <span className="text-base">🫙</span>
                       {t.header?.menu?.canning || 'Canning'}
                     </Link>
+                    <button
+                      onClick={() => {
+                        setIsMegaMenuOpen(false);
+                        setIsSubmitRecipeModalOpen(true);
+                      }}
+                      className="text-[#F77313] hover:text-white transition-colors text-sm flex items-center gap-2 font-medium"
+                    >
+                      <span className="text-base">✍️</span>
+                      {t.header?.menu?.submitRecipe || 'Submit a recipe'}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1143,6 +1157,13 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
         </AnimatePresence>
       </div>
     </header>
+
+    {/* Submit Recipe Modal */}
+    <SubmitRecipeModal
+      isOpen={isSubmitRecipeModalOpen}
+      onClose={() => setIsSubmitRecipeModalOpen(false)}
+      locale={locale}
+    />
     </>
   );
 }
