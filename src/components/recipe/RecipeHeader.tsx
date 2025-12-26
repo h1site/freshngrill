@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Recipe } from '@/types/recipe';
-import { Clock, Users, Calendar } from 'lucide-react';
+import { Clock, Users, Calendar, Heart } from 'lucide-react';
 import LikeButton from './LikeButton';
 import ShareButton from './ShareButton';
 import PrintButton from './PrintButton';
@@ -122,22 +122,51 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
         </div>
       </div>
 
+      {/* Community Recipe Badge */}
+      {recipe.isCommunityRecipe && (
+        <div className="flex items-center gap-2 mb-3 md:mb-4">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs md:text-sm font-semibold px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-lg">
+            <Heart className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current" />
+            <span>{isEN ? 'Community Recipe' : 'Recette de la communauté'}</span>
+          </div>
+        </div>
+      )}
+
       {/* Author and Date - E-E-A-T for Google Discover */}
       <div className="flex flex-wrap items-center gap-3 md:gap-4 mb-3 md:mb-4 text-white/80 text-xs sm:text-sm">
         {/* Author with photo */}
-        <Link
-          href={isEN ? '/en/about' : '/a-propos'}
-          className="flex items-center gap-2 hover:text-white transition-colors"
-        >
-          <Image
-            src="/images/auteurs/seb.jpg"
-            alt="Sébastien Ross"
-            width={28}
-            height={28}
-            className="rounded-full object-cover"
-          />
-          <span>{isEN ? 'By' : 'Par'} <strong className="text-white">{recipe.author || 'Menucochon'}</strong></span>
-        </Link>
+        {recipe.isCommunityRecipe ? (
+          <div className="flex items-center gap-2">
+            {recipe.communityAuthorImage ? (
+              <Image
+                src={recipe.communityAuthorImage}
+                alt={recipe.communityAuthorName || recipe.author}
+                width={28}
+                height={28}
+                className="rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center">
+                <Heart className="w-3.5 h-3.5 text-white fill-current" />
+              </div>
+            )}
+            <span>{isEN ? 'Submitted by' : 'Soumis par'} <strong className="text-white">{recipe.communityAuthorName || recipe.author}</strong></span>
+          </div>
+        ) : (
+          <Link
+            href={isEN ? '/en/about' : '/a-propos'}
+            className="flex items-center gap-2 hover:text-white transition-colors"
+          >
+            <Image
+              src="/images/auteurs/seb.jpg"
+              alt="Sébastien Ross"
+              width={28}
+              height={28}
+              className="rounded-full object-cover"
+            />
+            <span>{isEN ? 'By' : 'Par'} <strong className="text-white">{recipe.author || 'Menucochon'}</strong></span>
+          </Link>
+        )}
 
         {/* Published Date */}
         {recipe.publishedAt && (

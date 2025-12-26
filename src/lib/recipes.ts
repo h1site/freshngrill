@@ -41,6 +41,10 @@ function transformRecipe(data: any): Recipe {
     likes: data.likes,
     seoTitle: data.seo_title,
     seoDescription: data.seo_description,
+    // Community recipe fields
+    isCommunityRecipe: data.is_community_recipe || false,
+    communityAuthorName: data.community_author_name || undefined,
+    communityAuthorImage: data.community_author_image || undefined,
   };
 }
 

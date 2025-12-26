@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { createClient } from '@/lib/supabase-browser';
-import { ChefHat, Mail, Clock, Eye, Check, X, Loader2, RefreshCw } from 'lucide-react';
+import { ChefHat, Mail, Clock, Eye, Check, X, Loader2, RefreshCw, Globe, ExternalLink } from 'lucide-react';
 
 interface RecipeSubmission {
   id: number;
@@ -46,6 +47,8 @@ export default function SubmissionsPage() {
   const [selectedSubmission, setSelectedSubmission] = useState<RecipeSubmission | null>(null);
   const [filter, setFilter] = useState<string>('all');
   const [updating, setUpdating] = useState<number | null>(null);
+  const [publishing, setPublishing] = useState<number | null>(null);
+  const [publishResult, setPublishResult] = useState<{ success: boolean; message: string; slugFr?: string; slugEn?: string } | null>(null);
 
   const supabase = createClient();
 
@@ -96,6 +99,47 @@ export default function SubmissionsPage() {
   };
 
   const pendingCount = submissions.filter(s => s.status === 'pending').length;
+
+  // Publish submission as a real recipe with translations
+  const publishRecipe = async (id: number) => {
+    setPublishing(id);
+    setPublishResult(null);
+
+    try {
+      const response = await fetch('/api/admin/submissions/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ submissionId: id }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setPublishResult({
+          success: true,
+          message: data.message,
+          slugFr: data.slugFr,
+          slugEn: data.slugEn,
+        });
+        fetchSubmissions();
+        if (selectedSubmission?.id === id) {
+          setSelectedSubmission({ ...selectedSubmission, status: 'published' });
+        }
+      } else {
+        setPublishResult({
+          success: false,
+          message: data.error || 'Erreur lors de la publication',
+        });
+      }
+    } catch (error) {
+      setPublishResult({
+        success: false,
+        message: 'Erreur de connexion au serveur',
+      });
+    }
+
+    setPublishing(null);
+  };
 
   return (
     <div>
@@ -325,18 +369,64 @@ export default function SubmissionsPage() {
               )}
 
               {selectedSubmission.status === 'approved' && (
-                <div className="mt-6 pt-6 border-t border-gray-200">
+                <div className="mt-6 pt-6 border-t border-gray-200 space-y-4">
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <Globe className="w-5 h-5 text-blue-600 mt-0.5" />
+                      <div>
+                        <h4 className="font-medium text-blue-900">Publier avec traduction automatique</h4>
+                        <p className="text-sm text-blue-700 mt-1">
+                          La recette sera publiée en français et traduite automatiquement en anglais.
+                          L&apos;auteur &quot;{selectedSubmission.name}&quot; sera crédité sur la fiche recette.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {publishResult && (
+                    <div className={`rounded-lg p-4 ${publishResult.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`}>
+                      <p className={`text-sm ${publishResult.success ? 'text-green-800' : 'text-red-800'}`}>
+                        {publishResult.message}
+                      </p>
+                      {publishResult.success && publishResult.slugFr && (
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <Link
+                            href={`/recette/${publishResult.slugFr}`}
+                            target="_blank"
+                            className="inline-flex items-center gap-1 text-sm text-green-700 hover:text-green-900"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                            Voir en français
+                          </Link>
+                          <Link
+                            href={`/en/recipe/${publishResult.slugEn}`}
+                            target="_blank"
+                            className="inline-flex items-center gap-1 text-sm text-green-700 hover:text-green-900"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                            View in English
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   <button
-                    onClick={() => updateStatus(selectedSubmission.id, 'published')}
-                    disabled={updating === selectedSubmission.id}
+                    onClick={() => publishRecipe(selectedSubmission.id)}
+                    disabled={publishing === selectedSubmission.id}
                     className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:opacity-50"
                   >
-                    {updating === selectedSubmission.id ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                    {publishing === selectedSubmission.id ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Publication et traduction en cours...
+                      </>
                     ) : (
-                      <Eye className="w-4 h-4" />
+                      <>
+                        <Eye className="w-4 h-4" />
+                        Publier la recette (FR + EN)
+                      </>
                     )}
-                    Marquer comme publié
                   </button>
                 </div>
               )}

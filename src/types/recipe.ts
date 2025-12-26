@@ -49,6 +49,11 @@ export interface Recipe {
   publishedAt: string;
   updatedAt: string;
 
+  // Community recipes
+  isCommunityRecipe?: boolean;
+  communityAuthorName?: string;
+  communityAuthorImage?: string;
+
   // Engagement
   likes: number;
 
