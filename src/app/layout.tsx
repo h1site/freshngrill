@@ -105,9 +105,10 @@ export default async function RootLayout({
   // Detect locale from pathname
   const locale: Locale = pathname.startsWith('/en') ? 'en' : 'fr';
 
-  // Transparent header for homepage only
+  // Transparent header for homepage only (disabled for now - testing locally only)
   // Check for root or /en with optional trailing slash
-  const isHomepage = pathname === '/' || /^\/en\/?$/.test(pathname);
+  // const isHomepage = pathname === '/' || /^\/en\/?$/.test(pathname);
+  const isHomepage = false;
 
   // Get dictionaries for BOTH locales - we pass FR to server but client components will use the right one
   const dictionary = await getDictionary(locale);
