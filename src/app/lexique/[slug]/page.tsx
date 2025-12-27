@@ -84,7 +84,7 @@ export default async function LexiqueTermPage({ params }: Props) {
 
       <main className="min-h-screen bg-white">
         {/* Breadcrumb */}
-        <div className="bg-neutral-50 border-b border-neutral-200">
+        <nav className="bg-neutral-50 border-b border-neutral-200" aria-label="Fil d'Ariane">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center gap-2 text-sm">
               <Link href="/" className="text-neutral-500 hover:text-black">
@@ -98,10 +98,10 @@ export default async function LexiqueTermPage({ params }: Props) {
               <span className="text-black font-medium">{term.term}</span>
             </div>
           </div>
-        </div>
+        </nav>
 
         {/* Contenu principal */}
-        <section className="container mx-auto px-4 py-12 md:py-16">
+        <article className="container mx-auto px-4 py-12 md:py-16">
           <div className="max-w-3xl mx-auto">
             {/* Retour au lexique */}
             <Link
@@ -113,7 +113,7 @@ export default async function LexiqueTermPage({ params }: Props) {
             </Link>
 
             {/* Header */}
-            <div className="flex items-start gap-6 mb-8">
+            <header className="flex items-start gap-6 mb-8">
               <div className="w-20 h-20 bg-[#F77313] text-white font-display text-4xl flex items-center justify-center flex-shrink-0">
                 {term.letter}
               </div>
@@ -126,15 +126,15 @@ export default async function LexiqueTermPage({ params }: Props) {
                   <span>Terme culinaire</span>
                 </div>
               </div>
-            </div>
+            </header>
 
             {/* Définition */}
-            <div className="bg-neutral-50 p-8 md:p-10 mb-12">
+            <section className="bg-neutral-50 p-8 md:p-10 mb-12">
               <h2 className="font-display text-xl text-black mb-4">Définition</h2>
               <p className="text-neutral-700 text-lg leading-relaxed">
                 {term.definition}
               </p>
-            </div>
+            </section>
 
             {/* Navigation précédent/suivant */}
             <div className="grid grid-cols-2 gap-4 mb-12">
@@ -177,36 +177,39 @@ export default async function LexiqueTermPage({ params }: Props) {
               )}
             </div>
 
-            {/* Autres termes en {letter} */}
-            {otherTerms.length > 0 && (
-              <div className="border-t border-neutral-200 pt-12">
-                <h2 className="font-display text-2xl text-black mb-6">
-                  Autres termes en {term.letter}
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {otherTerms.map((t) => (
-                    <Link
-                      key={t.id}
-                      href={`/lexique/${t.slug}`}
-                      className="p-3 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-all"
-                    >
-                      <span className="font-display text-black hover:text-[#F77313]">
-                        {t.term}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-                <Link
-                  href={`/lexique#lettre-${term.letter}`}
-                  className="inline-flex items-center gap-2 mt-6 text-[#F77313] hover:text-black transition-colors text-sm font-medium"
-                >
-                  Voir tous les termes en {term.letter}
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-              </div>
-            )}
           </div>
-        </section>
+        </article>
+
+        {/* Autres termes en {letter} */}
+        {otherTerms.length > 0 && (
+          <aside className="container mx-auto px-4 pb-12 md:pb-16">
+            <div className="max-w-3xl mx-auto border-t border-neutral-200 pt-12">
+              <h2 className="font-display text-2xl text-black mb-6">
+                Autres termes en {term.letter}
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                {otherTerms.map((t) => (
+                  <Link
+                    key={t.id}
+                    href={`/lexique/${t.slug}`}
+                    className="p-3 border border-neutral-200 hover:border-[#F77313] hover:bg-neutral-50 transition-all"
+                  >
+                    <span className="font-display text-black hover:text-[#F77313]">
+                      {t.term}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                href={`/lexique#lettre-${term.letter}`}
+                className="inline-flex items-center gap-2 mt-6 text-[#F77313] hover:text-black transition-colors text-sm font-medium"
+              >
+                Voir tous les termes en {term.letter}
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </aside>
+        )}
       </main>
     </>
   );

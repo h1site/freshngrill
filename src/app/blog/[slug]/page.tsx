@@ -100,8 +100,9 @@ export default async function BlogPostPage({ params }: Props) {
       <ArticleSchema post={post} locale="fr" />
       <BreadcrumbSchema items={breadcrumbs} />
       <main className="min-h-screen bg-white">
+        <article>
         {/* Magazine Header */}
-      <header className="bg-black text-white">
+        <header className="bg-black text-white">
         <div className="container mx-auto px-4">
           {/* Navigation Bar */}
           <div className="py-4 flex items-center justify-between border-b border-white/10">
@@ -185,69 +186,69 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           </div>
         </div>
-      </header>
+        </header>
 
-      {/* Featured Image - Full Width */}
-      {post.featuredImage && (
-        <div className="relative w-full h-[40vh] md:h-[50vh] lg:h-[60vh]">
-          <Image
-            src={post.featuredImage}
-            alt={post.title}
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-        </div>
-      )}
-
-      {/* Article Content */}
-      <article className="relative">
-        {/* Progress Bar Placeholder */}
-        <div className="sticky top-0 z-50 h-1 bg-neutral-100">
-          <div className="h-full bg-[#F77313] w-0" id="reading-progress" />
-        </div>
-
-        <div className="container mx-auto px-4 py-12 md:py-16">
-          <div className="max-w-3xl mx-auto">
-            {/* Drop Cap Article Content */}
-            <div
-              className="blog-content first-letter:text-7xl first-letter:font-display first-letter:text-[#F77313] first-letter:float-left first-letter:mr-3 first-letter:mt-1"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+        {/* Featured Image - Full Width */}
+        {post.featuredImage && (
+          <div className="relative w-full h-[40vh] md:h-[50vh] lg:h-[60vh]">
+            <Image
+              src={post.featuredImage}
+              alt={post.title}
+              fill
+              className="object-cover"
+              priority
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+          </div>
+        )}
 
-            {/* Amazon Products */}
-            <AmazonKitchenProducts
-              products={['instantPot', 'chefKnife', 'skillet']}
-              title="Équipement recommandé"
-              locale="fr"
-            />
+        {/* Article Content */}
+        <div className="relative">
+          {/* Progress Bar Placeholder */}
+          <div className="sticky top-0 z-50 h-1 bg-neutral-100">
+            <div className="h-full bg-[#F77313] w-0" id="reading-progress" />
+          </div>
 
-            {/* Ad in article */}
-            <GoogleAd slot="7610644087" className="my-12" />
+          <div className="container mx-auto px-4 py-12 md:py-16">
+            <div className="max-w-3xl mx-auto">
+              {/* Drop Cap Article Content */}
+              <div
+                className="blog-content first-letter:text-7xl first-letter:font-display first-letter:text-[#F77313] first-letter:float-left first-letter:mr-3 first-letter:mt-1"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
 
-            {/* Tags */}
-            {post.tags && post.tags.length > 0 && (
-              <div className="mt-12 pt-8 border-t border-neutral-200">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="text-sm text-neutral-500 font-medium">Tags:</span>
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-sm px-4 py-2 transition-colors cursor-pointer"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
+              {/* Amazon Products */}
+              <AmazonKitchenProducts
+                products={['instantPot', 'chefKnife', 'skillet']}
+                title="Équipement recommandé"
+                locale="fr"
+              />
+
+              {/* Ad in article */}
+              <GoogleAd slot="7610644087" className="my-12" />
+
+              {/* Tags */}
+              {post.tags && post.tags.length > 0 && (
+                <div className="mt-12 pt-8 border-t border-neutral-200">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="text-sm text-neutral-500 font-medium">Tags:</span>
+                    {post.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-sm px-4 py-2 transition-colors cursor-pointer"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-
+              )}
+            </div>
           </div>
         </div>
-      </article>
+        </article>
 
-      {/* Similar Articles - Editorial Style */}
+        {/* Similar Articles - Editorial Style */}
       {similarPosts.length > 0 && (
         <section className="bg-neutral-50 py-16 md:py-24">
           <div className="container mx-auto px-4">

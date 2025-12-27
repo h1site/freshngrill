@@ -116,8 +116,9 @@ export default async function RecettePage({ params }: Props) {
       <BreadcrumbSchema items={breadcrumbs} />
 
       <main className="min-h-screen bg-white">
+        <article>
         {/* Hero Image - Optimisé mobile */}
-        <section className="relative h-[55vh] sm:h-[50vh] md:h-[55vh] lg:h-[60vh]">
+        <header className="relative h-[55vh] sm:h-[50vh] md:h-[55vh] lg:h-[60vh]">
           {recipe.featuredImage ? (
             <Image
               src={recipe.featuredImage}
@@ -138,7 +139,7 @@ export default async function RecettePage({ params }: Props) {
               <RecipeHeader recipe={recipe} />
             </div>
           </div>
-        </section>
+        </header>
 
         {/* Contenu principal */}
         <section className="container mx-auto px-4 py-16 md:py-20">
@@ -278,6 +279,7 @@ export default async function RecettePage({ params }: Props) {
             </aside>
           </div>
         </section>
+        </article>
 
         {/* Prochaine recette */}
         {nextRecipe && <NextRecipe recipe={nextRecipe} locale="fr" />}
