@@ -241,7 +241,7 @@ export async function POST(request: Request) {
 
     // Create the recipe in the main table (French)
     const { data: newRecipe, error: insertError } = await supabase
-      .from('recipes')
+      .from('recipes' as never)
       .insert({
         slug: slugFr,
         title: titleFr,
@@ -266,7 +266,7 @@ export async function POST(request: Request) {
         seo_title: `${titleFr} | Recette de la communauté`,
         seo_description: descriptionFr.substring(0, 160),
         published_at: new Date().toISOString(),
-      })
+      } as never)
       .select('id')
       .single();
 
@@ -280,7 +280,7 @@ export async function POST(request: Request) {
 
     // Create the English translation
     const { error: translationError } = await supabase
-      .from('recipe_translations')
+      .from('recipe_translations' as never)
       .insert({
         recipe_id: newRecipe.id,
         locale: 'en',
@@ -292,7 +292,7 @@ export async function POST(request: Request) {
         instructions: instructionsEn,
         seo_title: `${titleEn} | Community Recipe`,
         seo_description: descriptionEn.substring(0, 160),
-      });
+      } as never);
 
     if (translationError) {
       console.error('Error creating translation:', translationError);
@@ -301,7 +301,7 @@ export async function POST(request: Request) {
 
     // Update the submission status to published
     const { error: updateError } = await supabase
-      .from('recipe_submissions')
+      .from('recipe_submissions' as never)
       .update({
         status: 'published',
         reviewed_at: new Date().toISOString(),
