@@ -105,7 +105,7 @@ export default function CartDrawer({ isOpen, onClose, locale = 'fr' }: Props) {
               <ShoppingBag className="w-16 h-16 text-gray-300 mb-4" />
               <p className="text-gray-500 mb-4">{t.empty}</p>
               <Link
-                href={isEN ? '/en/shop' : '/boutique'}
+                href={isEN ? '/en/store' : '/boutique'}
                 onClick={onClose}
                 className="text-[#F77313] hover:underline"
               >

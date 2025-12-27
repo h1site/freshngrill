@@ -34,7 +34,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
     about: '/en/about',
     contact: '/en/contact',
     privacy: '/en/privacy',
-    shop: '/en/shop',
+    shop: '/en/store',
   } : {
     recipe: '/recette',
     blog: '/blog',

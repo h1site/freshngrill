@@ -68,15 +68,15 @@ export default function CartPage() {
   return (
     <main className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
-        {/* Test Mode Warning */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 flex items-center gap-3">
-          <span className="text-2xl">⚠️</span>
+        {/* Coming Soon Warning */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-center gap-3">
+          <span className="text-2xl">🚧</span>
           <div>
-            <p className="font-semibold text-yellow-800">Test mode / Mode test</p>
-            <p className="text-sm text-yellow-700">
-              This shop is in test mode. Do not use for real purchases.
+            <p className="font-semibold text-amber-800">Coming soon / Bientôt disponible</p>
+            <p className="text-sm text-amber-700">
+              Products are not yet for sale. Cart is in demo mode.
               <br />
-              <span className="text-yellow-600">Cette boutique est en mode test. Ne pas utiliser pour de vrais achats.</span>
+              <span className="text-amber-600">Les produits ne sont pas encore en vente. Le panier est en mode démonstration.</span>
             </p>
           </div>
         </div>
@@ -85,7 +85,7 @@ export default function CartPage() {
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Your Cart</h1>
           <Link
-            href="/en/shop"
+            href="/en/store"
             className="inline-flex items-center gap-2 text-gray-600 hover:text-[#F77313] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -103,7 +103,7 @@ export default function CartPage() {
               Discover our products and add them to your cart
             </p>
             <Link
-              href="/en/shop"
+              href="/en/store"
               className="inline-flex items-center gap-2 bg-[#F77313] hover:bg-[#e56200] text-white font-semibold px-6 py-3 rounded-lg transition-colors"
             >
               <ShoppingBag className="w-5 h-5" />
@@ -138,7 +138,7 @@ export default function CartPage() {
                   {/* Details */}
                   <div className="flex-1 min-w-0">
                     <Link
-                      href={`/en/shop/${item.product.slug}`}
+                      href={`/en/store/${item.product.slug}`}
                       className="font-semibold text-gray-900 hover:text-[#F77313] transition-colors line-clamp-1"
                     >
                       {item.product.name}

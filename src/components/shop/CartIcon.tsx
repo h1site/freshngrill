@@ -15,7 +15,7 @@ export default function CartIcon({ locale = 'fr', className = '' }: Props) {
 
   return (
     <Link
-      href={isEN ? '/en/shop/cart' : '/boutique/panier'}
+      href={isEN ? '/en/store/cart' : '/boutique/panier'}
       className={`relative inline-flex items-center justify-center p-2 text-gray-700 hover:text-[#F77313] transition-colors ${className}`}
       aria-label={isEN ? 'Shopping cart' : 'Panier'}
     >

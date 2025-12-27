@@ -23,11 +23,11 @@ export default function ConfirmationPage() {
   return (
     <main className="min-h-screen bg-gray-50 py-16">
       <div className="container mx-auto px-4 max-w-2xl">
-        {/* Test Mode Warning */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6 flex items-center justify-center gap-3">
-          <span className="text-xl">⚠️</span>
-          <p className="text-sm text-yellow-800">
-            <strong>Mode test</strong> - Ceci est une commande test. / <strong>Test mode</strong> - This is a test order.
+        {/* Demo Mode Warning */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6 flex items-center justify-center gap-3">
+          <span className="text-xl">🚧</span>
+          <p className="text-sm text-amber-800">
+            <strong>Mode démo</strong> - Ceci est une commande de démonstration. / <strong>Demo mode</strong> - This is a demo order.
           </p>
         </div>
 

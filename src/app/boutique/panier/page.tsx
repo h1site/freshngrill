@@ -68,15 +68,15 @@ export default function CartPage() {
   return (
     <main className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
-        {/* Test Mode Warning */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 flex items-center gap-3">
-          <span className="text-2xl">⚠️</span>
+        {/* Coming Soon Warning */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6 flex items-center gap-3">
+          <span className="text-2xl">🚧</span>
           <div>
-            <p className="font-semibold text-yellow-800">Mode test / Test mode</p>
-            <p className="text-sm text-yellow-700">
-              Cette boutique est en mode test. Ne pas utiliser pour de vrais achats.
+            <p className="font-semibold text-amber-800">Bientôt disponible / Coming soon</p>
+            <p className="text-sm text-amber-700">
+              Les produits ne sont pas encore en vente. Le panier est en mode démonstration.
               <br />
-              <span className="text-yellow-600">This shop is in test mode. Do not use for real purchases.</span>
+              <span className="text-amber-600">Products are not yet for sale. Cart is in demo mode.</span>
             </p>
           </div>
         </div>

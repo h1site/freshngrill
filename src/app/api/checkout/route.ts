@@ -8,8 +8,20 @@ interface CartItem {
   quantity: number;
 }
 
+// Get base URL with fallbacks for different environments
+function getBaseUrl(): string {
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    return process.env.NEXT_PUBLIC_BASE_URL;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return 'http://localhost:3000';
+}
+
 export async function POST(request: Request) {
   const supabase = createAdminClient();
+  const baseUrl = getBaseUrl();
 
   try {
     const { items, customerEmail } = (await request.json()) as {
@@ -67,8 +79,8 @@ export async function POST(request: Request) {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/boutique/confirmation?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/boutique/panier`,
+      success_url: `${baseUrl}/boutique/confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/boutique/panier`,
       customer_email: customerEmail,
 
       // Collecter adresse si produits physiques

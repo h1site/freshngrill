@@ -33,7 +33,7 @@ export default function ProductCard({ product, locale = 'fr' }: Props) {
     <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
       {/* Image */}
       <Link
-        href={isEN ? `/en/shop/${product.slug}` : `/boutique/${product.slug}`}
+        href={isEN ? `/en/store/${product.slug}` : `/boutique/${product.slug}`}
         className="block relative aspect-square overflow-hidden"
       >
         {product.featuredImage ? (
@@ -83,7 +83,7 @@ export default function ProductCard({ product, locale = 'fr' }: Props) {
       {/* Content */}
       <div className="p-4">
         <Link
-          href={isEN ? `/en/shop/${product.slug}` : `/boutique/${product.slug}`}
+          href={isEN ? `/en/store/${product.slug}` : `/boutique/${product.slug}`}
           className="block"
         >
           <h3 className="font-semibold text-gray-900 group-hover:text-[#F77313] transition-colors line-clamp-2 mb-1">

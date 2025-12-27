@@ -23,11 +23,11 @@ export default function ConfirmationPage() {
   return (
     <main className="min-h-screen bg-gray-50 py-16">
       <div className="container mx-auto px-4 max-w-2xl">
-        {/* Test Mode Warning */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6 flex items-center justify-center gap-3">
-          <span className="text-xl">⚠️</span>
-          <p className="text-sm text-yellow-800">
-            <strong>Test mode</strong> - This is a test order. / <strong>Mode test</strong> - Ceci est une commande test.
+        {/* Demo Mode Warning */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6 flex items-center justify-center gap-3">
+          <span className="text-xl">🚧</span>
+          <p className="text-sm text-amber-800">
+            <strong>Demo mode</strong> - This is a demo order. / <strong>Mode démo</strong> - Ceci est une commande de démonstration.
           </p>
         </div>
 
@@ -97,7 +97,7 @@ export default function ConfirmationPage() {
           {/* Actions */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/en/shop"
+              href="/en/store"
               className="inline-flex items-center justify-center gap-2 bg-[#F77313] hover:bg-[#e56200] text-white font-semibold px-6 py-3 rounded-lg transition-colors"
             >
               Continue shopping

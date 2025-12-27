@@ -32,12 +32,12 @@ export default async function ShopPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Test Mode Warning */}
-      <div className="bg-yellow-50 border-b border-yellow-200 py-3">
+      {/* Coming Soon Warning */}
+      <div className="bg-amber-50 border-b border-amber-200 py-3">
         <div className="container mx-auto px-4 flex items-center justify-center gap-3">
-          <span className="text-xl">⚠️</span>
-          <p className="text-sm text-yellow-800">
-            <strong>Test mode</strong> - Do not use for real purchases. / <strong>Mode test</strong> - Ne pas utiliser pour de vrais achats.
+          <span className="text-xl">🚧</span>
+          <p className="text-sm text-amber-800">
+            <strong>Coming soon</strong> - Products are not yet for sale. / <strong>Bientôt disponible</strong> - Les produits ne sont pas encore en vente.
           </p>
         </div>
       </div>
@@ -46,7 +46,7 @@ export default async function ShopPage() {
       <div className="bg-gradient-to-r from-[#F77313] to-[#ff9a4d] text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <ShoppingBag className="w-16 h-16 mx-auto mb-4 opacity-90" />
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Shop</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Shop - Coming Soon</h1>
           <p className="text-xl opacity-90 max-w-2xl mx-auto">
             Recipe books, spices, kitchen accessories and more
           </p>

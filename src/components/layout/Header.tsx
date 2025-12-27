@@ -286,7 +286,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
     blog: '/en/blog',
     guide: '/en/buying-guide',
     search: '/en/search',
-    shop: '/en/shop',
+    shop: '/en/store',
   } : {
     recipe: '/recette',
     spices: '/epices',
@@ -499,7 +499,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               alt="Menucochon"
               width={180}
               height={40}
-              className="h-7 sm:h-8 md:h-9 lg:h-10 xl:h-10 w-auto transition-all duration-200"
+              className="h-7 sm:h-8 md:h-9 lg:h-8 xl:h-10 w-auto transition-all duration-200"
               priority
             />
           </Link>
@@ -515,7 +515,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               >
                 <Link
                   href={item.href}
-                  className={`relative flex items-center gap-0.5 px-1 xl:px-2.5 2xl:px-4 py-2 text-[10px] xl:text-[11px] 2xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-normal xl:tracking-wide group ${
+                  className={`relative flex items-center gap-0.5 px-1.5 xl:px-3 2xl:px-4 py-2 text-[11px] xl:text-xs 2xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-normal xl:tracking-wide group ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'text-white' : ''
                   }`}
                 >
@@ -523,7 +523,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                   {item.hasMegaMenu && (
                     <ChevronDown className={`w-3 h-3 xl:w-4 xl:h-4 transition-transform ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
                   )}
-                  <span className={`absolute bottom-0 left-1 right-1 xl:left-2.5 xl:right-2.5 2xl:left-4 2xl:right-4 h-0.5 bg-[#F77313] transition-all duration-300 ${
+                  <span className={`absolute bottom-0 left-1.5 right-1.5 xl:left-3 xl:right-3 2xl:left-4 2xl:right-4 h-0.5 bg-[#F77313] transition-all duration-300 ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </Link>
@@ -602,7 +602,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
 
             {/* Cart Icon */}
             <Link
-              href={locale === 'en' ? '/en/shop/cart' : '/boutique/panier'}
+              href={locale === 'en' ? '/en/store/cart' : '/boutique/panier'}
               className="relative p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all"
               aria-label={locale === 'en' ? 'Cart' : 'Panier'}
             >

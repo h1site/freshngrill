@@ -69,11 +69,11 @@ export default async function ProductPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4">
-        {/* Test Mode Warning */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6 flex items-center justify-center gap-3">
-          <span className="text-xl">⚠️</span>
-          <p className="text-sm text-yellow-800">
-            <strong>Mode test</strong> - Ne pas utiliser pour de vrais achats. / <strong>Test mode</strong> - Do not use for real purchases.
+        {/* Coming Soon Warning */}
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-6 flex items-center justify-center gap-3">
+          <span className="text-xl">🚧</span>
+          <p className="text-sm text-amber-800">
+            <strong>Bientôt disponible</strong> - Ce produit n'est pas encore en vente. / <strong>Coming soon</strong> - This product is not yet for sale.
           </p>
         </div>
 
