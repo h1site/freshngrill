@@ -7,6 +7,16 @@ export const metadata: Metadata = {
   title: 'À propos de Sébastien Ross | Menucochon',
   description:
     'Découvrez Sébastien Ross, fondateur de Menucochon. Passionné de cuisine depuis l\'âge de 8 ans, il partage ses recettes testées et approuvées depuis Vaudreuil-Dorion, Québec.',
+  keywords: [
+    'Sébastien Ross',
+    'menucochon',
+    'fondateur',
+    'cuisine québécoise',
+    'chef amateur',
+    'Vaudreuil-Dorion',
+    'recettes maison',
+    'passion culinaire',
+  ],
   alternates: {
     canonical: '/a-propos/',
     languages: {
@@ -15,6 +25,32 @@ export const metadata: Metadata = {
     },
   },
   authors: [{ name: 'Sébastien Ross' }],
+  openGraph: {
+    title: 'À propos de Sébastien Ross | Menucochon',
+    description:
+      'Découvrez Sébastien Ross, fondateur de Menucochon. Passionné de cuisine depuis l\'âge de 8 ans.',
+    siteName: 'Menucochon',
+    locale: 'fr_CA',
+    type: 'profile',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'À propos de Sébastien Ross | Menucochon',
+    description:
+      'Découvrez Sébastien Ross, fondateur de Menucochon. Passionné de cuisine depuis l\'âge de 8 ans.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
+  },
 };
 
 export default function AProposPage() {

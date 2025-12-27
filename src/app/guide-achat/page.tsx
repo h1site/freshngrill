@@ -9,6 +9,14 @@ export const metadata: Metadata = {
   title: "Guide d'achat Cuisine | Menucochon",
   description:
     "Découvrez notre sélection des meilleurs ustensiles, électroménagers et livres de cuisine pour équiper votre cuisine comme un chef.",
+  keywords: [
+    'guide achat cuisine',
+    'ustensiles cuisine',
+    'électroménagers cuisine',
+    'équipement cuisine',
+    'livres recettes',
+    'meilleurs accessoires cuisine',
+  ],
   alternates: {
     canonical: '/guide-achat/',
     languages: {
@@ -39,6 +47,18 @@ export const metadata: Metadata = {
     description:
       "Découvrez notre sélection des meilleurs ustensiles, électroménagers et livres de cuisine.",
     images: ['/images/og-guide-achat.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

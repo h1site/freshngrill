@@ -14,11 +14,47 @@ export const metadata: Metadata = {
   title: 'Kitchen Measurement Converter | Menucochon',
   description:
     'Free conversion tools for cooking: temperature (Celsius/Fahrenheit), lengths (meters, feet, inches, centimeters) and online timer.',
+  keywords: [
+    'kitchen converter',
+    'measurement conversion',
+    'celsius fahrenheit',
+    'meter feet',
+    'inch centimeter',
+    'cooking timer',
+    'conversion table',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/en/converter/',
     languages: {
       'fr-CA': '/convertisseur/',
       'en-CA': '/en/converter/',
+    },
+  },
+  openGraph: {
+    title: 'Kitchen Measurement Converter | Menucochon',
+    description:
+      'Free conversion tools: temperature, lengths and online timer.',
+    siteName: 'Menucochon',
+    locale: 'en_CA',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Kitchen Measurement Converter | Menucochon',
+    description:
+      'Free conversion tools for cooking: temperature, lengths and timer.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
     },
   },
 };

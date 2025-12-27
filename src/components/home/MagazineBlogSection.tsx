@@ -1,8 +1,5 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { ArrowRight, BookOpen, Clock, ShoppingCart } from 'lucide-react';
 import { PostCard } from '@/types/post';
 import type { Locale } from '@/i18n/config';
@@ -37,7 +34,6 @@ const translations = {
   },
 };
 
-// Helper function to get the correct URL for a post based on its category
 function getPostUrl(post: PostCard, locale: Locale): string {
   const isGuideAchat = post.categories.some((cat) => cat.slug === 'guide-achat');
   if (isGuideAchat) {
@@ -58,12 +54,7 @@ export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectio
     <section className="py-20 md:py-32 bg-neutral-900">
       <div className="container mx-auto px-4">
         {/* Header */}
-        <motion.div
-          className="flex flex-col md:flex-row md:items-end justify-between mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
           <div>
             <span className="text-[#F77313] text-sm font-semibold uppercase tracking-[0.2em] flex items-center gap-2">
               <BookOpen className="w-4 h-4" />
@@ -81,18 +72,12 @@ export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectio
             {t.allArticles}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-        </motion.div>
+        </div>
 
         {/* Blog Grid - 1 featured left, 3 stacked right */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {/* Featured Post - Left (full height) */}
-          <motion.div
-            className="lg:row-span-1"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="lg:row-span-1">
             <Link href={getPostUrl(featuredPost, locale)} className="group block h-full">
               <article className="relative h-full min-h-[400px] lg:min-h-full overflow-hidden bg-white">
                 {/* Image - Full cover */}
@@ -141,19 +126,12 @@ export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectio
                 </div>
               </article>
             </Link>
-          </motion.div>
+          </div>
 
           {/* Other Posts - Right (3 stacked) */}
           <div className="flex flex-col gap-4">
-            {otherPosts.slice(0, 3).map((post, index) => (
-              <motion.div
-                key={post.id}
-                className="flex-1"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
+            {otherPosts.slice(0, 3).map((post) => (
+              <div key={post.id} className="flex-1">
                 <Link href={getPostUrl(post, locale)} className="group block h-full">
                   <article className="flex gap-5 h-full bg-neutral-800 p-4 border border-neutral-700 hover:border-[#F77313]/50 hover:bg-neutral-800/80 transition-all duration-300">
                     {/* Thumbnail */}
@@ -186,19 +164,13 @@ export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectio
                     </div>
                   </article>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
         {/* Guide d'achat CTA */}
-        <motion.div
-          className="mt-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+        <div className="mt-8">
           <Link
             href={locale === 'en' ? '/en/buying-guide' : '/guide-achat'}
             className="group flex items-center justify-between bg-gradient-to-r from-[#F77313] to-[#d45f0a] p-6 md:px-10 md:py-6 rounded-2xl hover:from-[#d45f0a] hover:to-[#b85209] transition-all duration-300 border border-[#F77313]/30"
@@ -224,7 +196,7 @@ export function MagazineBlogSection({ posts, locale = 'fr' }: MagazineBlogSectio
               <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
             </div>
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

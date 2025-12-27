@@ -1,8 +1,5 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { Clock, ArrowRight, ChefHat } from 'lucide-react';
 import { RecipeCard as RecipeCardType } from '@/types/recipe';
 import type { Locale } from '@/i18n/config';
@@ -46,12 +43,7 @@ export function MagazineRecipeGrid({
     <section className="py-20 md:py-32 bg-[#faf8f5]">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <motion.div
-          className="flex flex-col md:flex-row md:items-end justify-between mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
           <div>
             <span className="text-[#F77313] text-sm font-semibold uppercase tracking-[0.2em]">
               {displaySubtitle}
@@ -68,19 +60,13 @@ export function MagazineRecipeGrid({
             {t.allRecipes}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-        </motion.div>
+        </div>
 
         {/* Bento Grid Layout - Large card left, 2x2 grid right */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
 
           {/* Large Featured Card - Left */}
-          <motion.div
-            className="lg:row-span-2"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-          >
+          <div className="lg:row-span-2">
             <Link href={`${recipeBasePath}/${featuredRecipe.slug}`} className="group block h-full">
               <article className="relative h-full min-h-[500px] overflow-hidden bg-white">
                 {/* Image */}
@@ -131,18 +117,12 @@ export function MagazineRecipeGrid({
                 </div>
               </article>
             </Link>
-          </motion.div>
+          </div>
 
           {/* Right side - 2x2 Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
-            {gridRecipes.slice(0, 4).map((recipe, index) => (
-              <motion.div
-                key={recipe.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
+            {gridRecipes.slice(0, 4).map((recipe) => (
+              <div key={recipe.id}>
                 <Link href={`${recipeBasePath}/${recipe.slug}`} className="group block h-full">
                   <article className="flex flex-col h-full bg-white overflow-hidden border border-neutral-100 hover:border-[#F77313]/30 hover:shadow-xl transition-all duration-300">
                     {/* Image */}
@@ -187,7 +167,7 @@ export function MagazineRecipeGrid({
                     </div>
                   </article>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -195,14 +175,8 @@ export function MagazineRecipeGrid({
         {/* Additional Row - Standard Cards */}
         {gridRecipes.length > 4 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mt-8">
-            {gridRecipes.slice(4, 8).map((recipe, index) => (
-              <motion.div
-                key={recipe.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-              >
+            {gridRecipes.slice(4, 8).map((recipe) => (
+              <div key={recipe.id}>
                 <Link href={`${recipeBasePath}/${recipe.slug}`} className="group block h-full">
                   <article className="flex flex-col h-full bg-white overflow-hidden border border-neutral-100 hover:border-[#F77313]/30 hover:shadow-lg transition-all duration-300">
                     {/* Image */}
@@ -249,7 +223,7 @@ export function MagazineRecipeGrid({
                     </div>
                   </article>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}

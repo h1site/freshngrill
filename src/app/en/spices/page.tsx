@@ -8,7 +8,18 @@ import SpicePronounceButton from '@/components/spice/SpicePronounceButton';
 
 export const metadata: Metadata = {
   title: 'The Spice Route | Complete Guide - Menucochon',
-  description: 'The Spice Route: discover the origin, taste and culinary uses of each spice. Complete guide for cooking with spices.',
+  description:
+    'The Spice Route: discover the origin, taste and culinary uses of each spice. Complete guide for cooking with spices.',
+  keywords: [
+    'cooking spices',
+    'spice guide',
+    'spice route',
+    'spice uses',
+    'spice pairings',
+    'spice origins',
+    'world spices',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/en/spices/',
     languages: {
@@ -17,9 +28,30 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'The Spice Route | Complete Guide',
-    description: 'Complete guide to spices: origin, taste, uses. Learn to cook with spices like a chef!',
+    title: 'The Spice Route | Complete Guide - Menucochon',
+    description:
+      'Complete guide to spices: origin, taste, uses. Learn to cook with spices like a chef!',
     type: 'website',
+    siteName: 'Menucochon',
+    locale: 'en_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The Spice Route | Menucochon',
+    description:
+      'Complete guide to spices: origin, taste, culinary uses.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

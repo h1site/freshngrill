@@ -14,8 +14,44 @@ export const metadata: Metadata = {
   title: 'Convertisseur de Mesures en Cuisine | Menucochon',
   description:
     'Outils de conversion gratuits pour la cuisine : température (Celsius/Fahrenheit), longueurs (mètres, pieds, pouces, centimètres) et minuterie en ligne.',
+  keywords: [
+    'convertisseur cuisine',
+    'conversion mesures',
+    'celsius fahrenheit',
+    'mètre pied',
+    'pouce centimètre',
+    'minuterie cuisine',
+    'tableau conversion',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/convertisseur/',
+  },
+  openGraph: {
+    title: 'Convertisseur de Mesures en Cuisine | Menucochon',
+    description:
+      'Outils de conversion gratuits : température, longueurs et minuterie en ligne.',
+    siteName: 'Menucochon',
+    locale: 'fr_CA',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Convertisseur de Mesures en Cuisine | Menucochon',
+    description:
+      'Outils de conversion gratuits pour la cuisine : température, longueurs et minuterie.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

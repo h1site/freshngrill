@@ -1,7 +1,4 @@
-'use client';
-
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { Category } from '@/types/recipe';
 import {
   Utensils,
@@ -107,20 +104,14 @@ export function CategoryGrid({ categories, locale = 'fr' }: CategoryGridProps) {
           <div className="w-16 h-1 bg-[#F77313] mx-auto mt-6" />
         </div>
 
-        {/* Category Grid - Nouveau design */}
+        {/* Category Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {categories.map((category, index) => {
+          {categories.map((category) => {
             const style = getCategoryStyle(category.slug);
             const Icon = style.icon;
 
             return (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
+              <div key={category.id}>
                 <Link
                   href={`${recipeBasePath}?${categoryParam}=${category.slug}`}
                   className="group block relative overflow-hidden rounded-2xl bg-white border border-neutral-100 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
@@ -148,7 +139,7 @@ export function CategoryGrid({ categories, locale = 'fr' }: CategoryGridProps) {
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             );
           })}
         </div>

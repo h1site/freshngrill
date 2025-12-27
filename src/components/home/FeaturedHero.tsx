@@ -1,8 +1,5 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import { Clock, ArrowRight } from 'lucide-react';
 import { Recipe } from '@/types/recipe';
 import type { Locale } from '@/i18n/config';
@@ -33,12 +30,7 @@ export function FeaturedHero({ featuredRecipe, secondaryRecipes = [], locale = '
       <div className="container mx-auto px-4 py-8 md:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
           {/* Featured Recipe - Large */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="relative"
-          >
+          <div className="relative">
             <Link href={`${recipeBasePath}/${featuredRecipe.slug}`} className="group block">
               <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-neutral-100">
                 {featuredRecipe.featuredImage ? (
@@ -86,18 +78,12 @@ export function FeaturedHero({ featuredRecipe, secondaryRecipes = [], locale = '
                 </div>
               </div>
             </Link>
-          </motion.div>
+          </div>
 
           {/* Secondary Recipes - Stacked */}
           <div className="flex flex-col gap-6 md:gap-8">
-            {secondaryRecipes.map((recipe, index) => (
-              <motion.div
-                key={recipe.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 * (index + 1) }}
-                className="flex-1"
-              >
+            {secondaryRecipes.map((recipe) => (
+              <div key={recipe.id} className="flex-1">
                 <Link href={`${recipeBasePath}/${recipe.slug}`} className="group block h-full">
                   <div className="relative h-full min-h-[200px] md:min-h-0 aspect-auto md:aspect-[16/9] overflow-hidden bg-neutral-100">
                     {recipe.featuredImage ? (
@@ -137,7 +123,7 @@ export function FeaturedHero({ featuredRecipe, secondaryRecipes = [], locale = '
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

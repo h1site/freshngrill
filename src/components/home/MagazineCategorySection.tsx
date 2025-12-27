@@ -1,7 +1,4 @@
-'use client';
-
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { Category } from '@/types/recipe';
 import {
   Utensils, Cake, Soup, Salad, Fish, Beef, Drumstick,
@@ -72,7 +69,6 @@ function getCategoryStyle(slug: string) {
     .replace(/[^a-z0-9-]/g, '');
 
   // Find matching style by checking if any keyword is contained in the slug
-  // Only check if slug contains keyword (not reverse) to avoid false matches
   for (const style of categoryKeywords) {
     for (const keyword of style.keywords) {
       if (normalizedSlug.includes(keyword)) {
@@ -100,12 +96,7 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
+        <div className="text-center mb-16">
           <span className="text-[#F77313] text-sm font-semibold uppercase tracking-[0.2em]">
             {t.explore}
           </span>
@@ -113,24 +104,20 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
             {t.byCategory}
           </h2>
           <div className="w-24 h-1 bg-[#F77313] mx-auto mt-6" />
-        </motion.div>
+        </div>
 
         {/* Categories Grid - Horizontal Scroll on Mobile */}
         <div className="relative">
           {/* Mobile Scroll */}
           <div className="flex lg:hidden gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
-            {categories.map((category, index) => {
+            {categories.map((category) => {
               const style = getCategoryStyle(category.slug);
               const Icon = style.icon;
 
               return (
-                <motion.div
+                <div
                   key={category.id}
                   className="snap-start flex-shrink-0 w-40"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
                 >
                   <Link
                     href={`${recipeBasePath}?${categoryParam}=${category.slug}`}
@@ -146,25 +133,19 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
                       {getCategoryName(category.name, locale)}
                     </h3>
                   </Link>
-                </motion.div>
+                </div>
               );
             })}
           </div>
 
           {/* Desktop Grid */}
           <div className="hidden lg:grid grid-cols-4 xl:grid-cols-5 gap-6">
-            {categories.map((category, index) => {
+            {categories.map((category) => {
               const style = getCategoryStyle(category.slug);
               const Icon = style.icon;
 
               return (
-                <motion.div
-                  key={category.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                >
+                <div key={category.id}>
                   <Link
                     href={`${recipeBasePath}?${categoryParam}=${category.slug}`}
                     className="group relative block overflow-hidden bg-white border border-neutral-100 hover:border-transparent hover:shadow-2xl transition-all duration-500"
@@ -176,17 +157,15 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
 
                     <div className="relative p-8 text-center">
                       {/* Icon */}
-                      <motion.div
-                        className="w-20 h-20 mx-auto mb-5 rounded-2xl flex items-center justify-center transition-all duration-500"
+                      <div
+                        className="w-20 h-20 mx-auto mb-5 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110"
                         style={{ backgroundColor: `${style.color}10` }}
-                        whileHover={{ rotate: [0, -5, 5, 0], scale: 1.1 }}
-                        transition={{ duration: 0.5 }}
                       >
                         <Icon
                           className="w-10 h-10 transition-transform duration-500 group-hover:scale-110"
                           style={{ color: style.color }}
                         />
-                      </motion.div>
+                      </div>
 
                       {/* Name */}
                       <h3 className="font-display text-xl text-black group-hover:text-[#F77313] transition-colors duration-300">
@@ -206,7 +185,7 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
                       </div>
                     </div>
                   </Link>
-                </motion.div>
+                </div>
               );
             })}
           </div>

@@ -8,7 +8,16 @@ import BlogCategoryTabs from '@/components/blog/BlogCategoryTabs';
 
 export const metadata: Metadata = {
   title: 'Blog | Menucochon',
-  description: 'Découvrez nos articles, conseils et astuces culinaires pour devenir un chef en cuisine.',
+  description:
+    'Découvrez nos articles, conseils et astuces culinaires pour devenir un chef en cuisine.',
+  keywords: [
+    'blog cuisine',
+    'conseils culinaires',
+    'astuces cuisine',
+    'articles recettes',
+    'chroniques culinaires',
+    'menucochon blog',
+  ],
   alternates: {
     canonical: '/blog/',
     languages: {
@@ -18,7 +27,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Blog | Menucochon',
-    description: 'Découvrez nos articles, conseils et astuces culinaires pour devenir un chef en cuisine.',
+    description:
+      'Découvrez nos articles, conseils et astuces culinaires pour devenir un chef en cuisine.',
     images: [
       {
         url: '/images/og-blog.jpg',
@@ -35,8 +45,21 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Blog | Menucochon',
-    description: 'Découvrez nos articles, conseils et astuces culinaires pour devenir un chef en cuisine.',
+    description:
+      'Découvrez nos articles, conseils et astuces culinaires pour devenir un chef en cuisine.',
     images: ['/images/og-blog.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

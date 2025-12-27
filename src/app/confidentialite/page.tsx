@@ -2,12 +2,47 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Politique de confidentialité | Menucochon',
-  description: 'Politique de confidentialité et protection des données personnelles de Menucochon.',
+  description:
+    'Politique de confidentialité et protection des données personnelles de Menucochon.',
+  keywords: [
+    'politique confidentialité',
+    'protection données',
+    'vie privée',
+    'cookies',
+    'RGPD',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/confidentialite/',
     languages: {
       'fr-CA': '/confidentialite/',
       'en-CA': '/en/privacy/',
+    },
+  },
+  openGraph: {
+    title: 'Politique de confidentialité | Menucochon',
+    description:
+      'Politique de confidentialité et protection des données personnelles de Menucochon.',
+    siteName: 'Menucochon',
+    locale: 'fr_CA',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Politique de confidentialité | Menucochon',
+    description:
+      'Politique de confidentialité et protection des données personnelles.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
     },
   },
 };

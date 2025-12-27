@@ -7,8 +7,44 @@ export const metadata: Metadata = {
   title: 'Lexique Culinaire | Menucochon',
   description:
     'Découvrez notre lexique culinaire complet avec plus de 280 termes de cuisine expliqués. De A à Z, maîtrisez le vocabulaire gastronomique.',
+  keywords: [
+    'lexique culinaire',
+    'vocabulaire cuisine',
+    'termes gastronomiques',
+    'dictionnaire cuisine',
+    'définitions culinaires',
+    'glossaire cuisine',
+    'techniques culinaires',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/lexique/',
+  },
+  openGraph: {
+    title: 'Lexique Culinaire | Menucochon',
+    description:
+      'Découvrez notre lexique culinaire complet avec plus de 280 termes de cuisine expliqués. De A à Z, maîtrisez le vocabulaire gastronomique.',
+    siteName: 'Menucochon',
+    locale: 'fr_CA',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lexique Culinaire | Menucochon',
+    description:
+      'Découvrez notre lexique culinaire complet avec plus de 280 termes de cuisine expliqués.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

@@ -7,11 +7,47 @@ export const metadata: Metadata = {
   title: 'Culinary Glossary | Menucochon',
   description:
     'Discover our complete culinary glossary with cooking terms explained. From A to Z, master the gastronomic vocabulary.',
+  keywords: [
+    'culinary glossary',
+    'cooking vocabulary',
+    'gastronomic terms',
+    'cooking dictionary',
+    'culinary definitions',
+    'cooking glossary',
+    'culinary techniques',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/en/lexicon/',
     languages: {
       'fr-CA': '/lexique/',
       'en-CA': '/en/lexicon/',
+    },
+  },
+  openGraph: {
+    title: 'Culinary Glossary | Menucochon',
+    description:
+      'Discover our complete culinary glossary with cooking terms explained.',
+    siteName: 'Menucochon',
+    locale: 'en_CA',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Culinary Glossary | Menucochon',
+    description:
+      'Complete culinary glossary with cooking terms explained.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
     },
   },
 };

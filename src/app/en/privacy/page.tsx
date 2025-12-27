@@ -2,12 +2,47 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy | Menucochon',
-  description: 'Privacy policy and personal data protection for Menucochon.',
+  description:
+    'Privacy policy and personal data protection for Menucochon.',
+  keywords: [
+    'privacy policy',
+    'data protection',
+    'privacy',
+    'cookies',
+    'GDPR',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/en/privacy/',
     languages: {
       'fr-CA': '/confidentialite/',
       'en-CA': '/en/privacy/',
+    },
+  },
+  openGraph: {
+    title: 'Privacy Policy | Menucochon',
+    description:
+      'Privacy policy and personal data protection for Menucochon.',
+    siteName: 'Menucochon',
+    locale: 'en_CA',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Privacy Policy | Menucochon',
+    description:
+      'Privacy policy and personal data protection for Menucochon.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
     },
   },
 };

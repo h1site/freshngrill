@@ -8,10 +8,40 @@ export const metadata: Metadata = {
   title: 'Boutique | Menucochon',
   description:
     'Découvrez nos produits: livres de recettes, épices, accessoires de cuisine et plus encore.',
+  keywords: [
+    'boutique cuisine',
+    'livres recettes',
+    'épices cuisine',
+    'accessoires cuisine',
+    'produits culinaires',
+    'menucochon boutique',
+  ],
+  alternates: {
+    canonical: '/boutique/',
+  },
   openGraph: {
     title: 'Boutique | Menucochon',
     description: 'Découvrez nos produits culinaires',
     type: 'website',
+    siteName: 'Menucochon',
+    locale: 'fr_CA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Boutique | Menucochon',
+    description: 'Découvrez nos produits culinaires.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

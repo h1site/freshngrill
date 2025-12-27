@@ -1,11 +1,7 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { RecipeCard as RecipeCardType } from '@/types/recipe';
 import { Clock, ArrowUpRight, ChefHat } from 'lucide-react';
-
 import type { Locale } from '@/i18n/config';
 
 interface Props {
@@ -15,20 +11,17 @@ interface Props {
   locale?: Locale;
 }
 
-export default function RecipeCard({ recipe, index = 0, variant = 'default', locale = 'fr' }: Props) {
+export default function RecipeCard({ recipe, variant = 'default', locale = 'fr' }: Props) {
   const isLarge = variant === 'large';
   const recipeBasePath = locale === 'en' ? '/en/recipe' : '/recette';
-  // Utiliser le slug anglais si disponible et locale EN, sinon slug français
   const recipeSlug = locale === 'en' && recipe.slugEn ? recipe.slugEn : recipe.slug;
 
-  // Translate difficulty labels
   const difficultyLabels: Record<string, Record<string, string>> = {
     fr: { facile: 'Facile', moyen: 'Moyen', difficile: 'Difficile' },
     en: { facile: 'Easy', moyen: 'Medium', difficile: 'Hard' },
   };
   const difficultyLabel = difficultyLabels[locale]?.[recipe.difficulty] || recipe.difficulty;
 
-  // Difficulty color
   const difficultyColors: Record<string, string> = {
     facile: 'text-emerald-500',
     moyen: 'text-amber-500',
@@ -37,23 +30,11 @@ export default function RecipeCard({ recipe, index = 0, variant = 'default', loc
   const difficultyColor = difficultyColors[recipe.difficulty] || 'text-neutral-500';
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{
-        duration: 0.5,
-        delay: Math.min(index * 0.08, 0.4),
-        ease: [0.4, 0, 0.2, 1]
-      }}
-      className="group"
-    >
+    <article className="group">
       <Link href={`${recipeBasePath}/${recipeSlug}`} className="block">
-        {/* Image Container with enhanced hover */}
-        <motion.div
-          className={`relative overflow-hidden bg-neutral-100 rounded-lg ${isLarge ? 'aspect-[4/5]' : 'aspect-[3/4]'}`}
-          whileHover={{ y: -4 }}
-          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+        {/* Image Container with CSS hover */}
+        <div
+          className={`relative overflow-hidden bg-neutral-100 rounded-lg transition-transform duration-300 ease-out group-hover:-translate-y-1 ${isLarge ? 'aspect-[4/5]' : 'aspect-[3/4]'}`}
         >
           {recipe.featuredImage ? (
             <Image
@@ -73,17 +54,11 @@ export default function RecipeCard({ recipe, index = 0, variant = 'default', loc
           {/* Gradient overlay on hover */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          {/* Category Badge with animation */}
+          {/* Category Badge */}
           {recipe.categories[0] && (
-            <motion.span
-              className="absolute top-4 left-4 bg-[#F77313] text-white text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-sm shadow-lg shadow-orange-500/25"
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: Math.min(index * 0.08, 0.4) + 0.2 }}
-            >
+            <span className="absolute top-4 left-4 bg-[#F77313] text-white text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-sm shadow-lg shadow-orange-500/25">
               {recipe.categories[0].name}
-            </motion.span>
+            </span>
           )}
 
           {/* Quick info on hover */}
@@ -102,7 +77,7 @@ export default function RecipeCard({ recipe, index = 0, variant = 'default', loc
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Content */}
         <div className="pt-4 space-y-2">
@@ -129,6 +104,6 @@ export default function RecipeCard({ recipe, index = 0, variant = 'default', loc
           </h3>
         </div>
       </Link>
-    </motion.article>
+    </article>
   );
 }

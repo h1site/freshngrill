@@ -14,6 +14,14 @@ export const metadata: Metadata = {
   title: 'Menucochon | Delicious Quebec Recipes',
   description:
     'Discover our collection of delicious and easy-to-make recipes. Meal ideas for every day, from appetizers to desserts.',
+  keywords: [
+    'Quebec recipes',
+    'delicious recipes',
+    'easy recipes',
+    'homemade cooking',
+    'meal ideas',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/en/',
     languages: {
@@ -35,6 +43,18 @@ export const metadata: Metadata = {
     title: 'Menucochon | Delicious Quebec Recipes',
     description:
       'Discover our collection of delicious and easy-to-make recipes.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

@@ -1,8 +1,5 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { PostCard as PostCardType } from '@/types/post';
 import { Calendar, Clock, ArrowUpRight } from 'lucide-react';
 
@@ -12,7 +9,7 @@ interface Props {
   variant?: 'default' | 'large' | 'horizontal';
 }
 
-export default function PostCard({ post, index = 0, variant = 'default' }: Props) {
+export default function PostCard({ post, variant = 'default' }: Props) {
   const isLarge = variant === 'large';
   const isHorizontal = variant === 'horizontal';
 
@@ -26,13 +23,7 @@ export default function PostCard({ post, index = 0, variant = 'default' }: Props
 
   if (isHorizontal) {
     return (
-      <motion.article
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: index * 0.05 }}
-        className="group"
-      >
+      <article className="group">
         <Link href={`/blog/${post.slug}`} className="flex gap-6">
           {/* Image Container */}
           <div className="relative w-48 h-32 flex-shrink-0 overflow-hidden bg-neutral-100">
@@ -73,18 +64,12 @@ export default function PostCard({ post, index = 0, variant = 'default' }: Props
             </div>
           </div>
         </Link>
-      </motion.article>
+      </article>
     );
   }
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group"
-    >
+    <article className="group">
       <Link href={`/blog/${post.slug}`} className="block">
         {/* Image Container */}
         <div className={`relative overflow-hidden bg-neutral-100 ${isLarge ? 'aspect-[16/10]' : 'aspect-[16/9]'}`}>
@@ -152,6 +137,6 @@ export default function PostCard({ post, index = 0, variant = 'default' }: Props
           )}
         </div>
       </Link>
-    </motion.article>
+    </article>
   );
 }

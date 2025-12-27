@@ -7,7 +7,17 @@ import FridgeSearch from '@/components/recipe/FridgeSearch';
 
 export const metadata: Metadata = {
   title: 'Toutes nos recettes | Menucochon',
-  description: 'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
+  description:
+    'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
+  keywords: [
+    'recettes faciles',
+    'recettes cuisine',
+    'idées repas',
+    'recettes québécoises',
+    'cuisine maison',
+    'recettes gourmandes',
+    'menucochon recettes',
+  ],
   alternates: {
     canonical: '/recette/',
     languages: {
@@ -17,7 +27,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Toutes nos recettes | Menucochon',
-    description: 'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
+    description:
+      'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
     images: [
       {
         url: '/images/og-recettes.svg',
@@ -34,8 +45,21 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Toutes nos recettes | Menucochon',
-    description: 'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
+    description:
+      'Découvrez notre collection de délicieuses recettes faciles à réaliser.',
     images: ['/images/og-recettes.svg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

@@ -14,6 +14,14 @@ export const metadata: Metadata = {
   title: 'Menucochon | Recettes gourmandes québécoises',
   description:
     'Découvrez notre collection de recettes gourmandes et faciles à réaliser. Des idées de repas pour tous les jours, des entrées aux desserts.',
+  keywords: [
+    'recettes québécoises',
+    'recettes gourmandes',
+    'recettes faciles',
+    'cuisine maison',
+    'idées repas',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/',
     languages: {
@@ -35,6 +43,18 @@ export const metadata: Metadata = {
     title: 'Menucochon | Recettes gourmandes québécoises',
     description:
       'Découvrez notre collection de recettes gourmandes et faciles à réaliser.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

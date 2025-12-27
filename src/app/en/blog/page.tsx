@@ -8,7 +8,16 @@ import BlogCategoryTabs from '@/components/blog/BlogCategoryTabs';
 
 export const metadata: Metadata = {
   title: 'Blog | Menucochon',
-  description: 'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
+  description:
+    'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
+  keywords: [
+    'cooking blog',
+    'culinary tips',
+    'cooking tricks',
+    'recipe articles',
+    'food chronicles',
+    'menucochon blog',
+  ],
   alternates: {
     canonical: '/en/blog/',
     languages: {
@@ -18,7 +27,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Blog | Menucochon',
-    description: 'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
+    description:
+      'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
     images: [
       {
         url: '/images/og-blog.jpg',
@@ -35,8 +45,21 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Blog | Menucochon',
-    description: 'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
+    description:
+      'Discover our articles, tips and culinary tricks to become a chef in the kitchen.',
     images: ['/images/og-blog.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

@@ -9,6 +9,14 @@ export const metadata: Metadata = {
   title: 'Kitchen Buying Guide | Menucochon',
   description:
     'Discover our selection of the best utensils, appliances and cookbooks to equip your kitchen like a professional chef.',
+  keywords: [
+    'kitchen buying guide',
+    'kitchen utensils',
+    'kitchen appliances',
+    'kitchen equipment',
+    'cookbooks',
+    'best kitchen accessories',
+  ],
   alternates: {
     canonical: '/en/buying-guide/',
     languages: {
@@ -39,6 +47,18 @@ export const metadata: Metadata = {
     description:
       'Discover our selection of the best utensils, appliances and cookbooks.',
     images: ['/images/og-guide-achat.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 

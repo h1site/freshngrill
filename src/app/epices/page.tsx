@@ -8,7 +8,18 @@ import SpicePronounceButton from '@/components/spice/SpicePronounceButton';
 
 export const metadata: Metadata = {
   title: 'La Route des Épices | Guide Complet - Menucochon',
-  description: 'La Route des Épices: découvrez l\'origine, le goût et les utilisations de chaque épice. Guide complet pour cuisiner avec les épices.',
+  description:
+    'La Route des Épices: découvrez l\'origine, le goût et les utilisations de chaque épice. Guide complet pour cuisiner avec les épices.',
+  keywords: [
+    'épices cuisine',
+    'guide épices',
+    'route des épices',
+    'utilisation épices',
+    'accords épices',
+    'origine épices',
+    'épices du monde',
+    'menucochon',
+  ],
   alternates: {
     canonical: '/epices/',
     languages: {
@@ -17,9 +28,12 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'La Route des Épices | Guide Complet',
-    description: 'Guide complet des épices: origine, goût, utilisations. Apprenez à cuisiner avec les épices comme un chef!',
+    title: 'La Route des Épices | Guide Complet - Menucochon',
+    description:
+      'Guide complet des épices: origine, goût, utilisations. Apprenez à cuisiner avec les épices comme un chef!',
     type: 'website',
+    siteName: 'Menucochon',
+    locale: 'fr_CA',
     images: [
       {
         url: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1200&h=630&fit=crop',
@@ -28,6 +42,25 @@ export const metadata: Metadata = {
         alt: 'La Route des Épices - Marché aux épices coloré',
       },
     ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'La Route des Épices | Menucochon',
+    description:
+      'Guide complet des épices: origine, goût, utilisations culinaires.',
+    images: ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1200&h=630&fit=crop'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-snippet': -1,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+    },
   },
 };
 
