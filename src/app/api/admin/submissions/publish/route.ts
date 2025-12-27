@@ -305,7 +305,7 @@ export async function POST(request: Request) {
       .update({
         status: 'published',
         reviewed_at: new Date().toISOString(),
-      })
+      } as never)
       .eq('id', submissionId);
 
     if (updateError) {
