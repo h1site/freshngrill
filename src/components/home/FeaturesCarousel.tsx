@@ -150,7 +150,7 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 h-full flex items-center xl:items-start pt-16 md:pt-0 xl:pt-[50px]">
+      <div className="relative z-10 container mx-auto px-4 h-full flex items-center lg:items-start pt-16 md:pt-0 lg:pt-[50px]">
         <div className="max-w-2xl">
           <AnimatePresence mode="wait">
             <motion.div
