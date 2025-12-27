@@ -11,6 +11,7 @@ import { headers } from 'next/headers';
 import { getDictionary } from '@/i18n/getDictionary';
 import { LocaleProvider } from '@/i18n/LocaleContext';
 import { LanguageProvider } from '@/contexts/LanguageContext';
+import { CartProvider } from '@/contexts/CartContext';
 import type { Locale } from '@/i18n/config';
 
 const inter = Inter({
@@ -135,13 +136,15 @@ export default async function RootLayout({
         />
         <LocaleProvider locale={locale} dictionary={dictionary}>
           <LanguageProvider>
-            <ScrollToTop />
-            <Header locale={locale} dictionary={dictionary} transparent={isHomepage} />
-            {/* Spacer for fixed header on non-homepage pages */}
-            {!isHomepage && <div className="h-14 md:h-16" />}
-            {children}
-            <Footer locale={locale} dictionary={dictionary} />
-            <MobileRadioBar locale={locale} />
+            <CartProvider>
+              <ScrollToTop />
+              <Header locale={locale} dictionary={dictionary} transparent={isHomepage} />
+              {/* Spacer for fixed header on non-homepage pages */}
+              {!isHomepage && <div className="h-14 md:h-16" />}
+              {children}
+              <Footer locale={locale} dictionary={dictionary} />
+              <MobileRadioBar locale={locale} />
+            </CartProvider>
           </LanguageProvider>
         </LocaleProvider>
       </body>

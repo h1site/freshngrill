@@ -5,7 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensils, Globe, Cake, Soup, Coffee, Salad, Fish, Beef, Drumstick, Refrigerator, Plus, Percent, Play, Pause, Square } from 'lucide-react';
+import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensils, Globe, Cake, Soup, Coffee, Salad, Fish, Beef, Drumstick, Refrigerator, Plus, Percent, Play, Pause, Square, ShoppingCart } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
 import { SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
 import UserMenu from '@/components/auth/UserMenu';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -13,6 +14,19 @@ import { KracRadioModal, KracRadioNowPlaying, useKracRadio } from '@/components/
 import { SubmitRecipeModal } from '@/components/recipe/SubmitRecipeModal';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
+
+// Cart Badge Component
+function CartBadge() {
+  const { itemCount } = useCart();
+
+  if (itemCount === 0) return null;
+
+  return (
+    <span className="absolute -top-0.5 -right-0.5 bg-[#F77313] text-white text-[10px] font-bold min-w-[18px] h-[18px] rounded-full flex items-center justify-center px-1">
+      {itemCount > 99 ? '99+' : itemCount}
+    </span>
+  );
+}
 
 interface SearchResult {
   recipes: Array<{
@@ -196,7 +210,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   // Traductions inline pour chaque locale (client-side, always up-to-date)
   const translations = {
     fr: {
-      nav: { home: 'Accueil', recipes: 'Recettes', spices: 'Épices', lexicon: 'Lexique', converter: 'Outils', blog: 'Blog', guide: 'Guide' },
+      nav: { home: 'Accueil', recipes: 'Recettes', spices: 'Épices', lexicon: 'Lexique', converter: 'Outils', blog: 'Blog', guide: 'Guide', shop: 'Boutique' },
       header: {
         search: 'Rechercher',
         searchPlaceholder: 'Rechercher une recette, un article...',
@@ -226,7 +240,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
       recipes: { difficulty: { easy: 'Facile', medium: 'Moyen', hard: 'Difficile' } }
     },
     en: {
-      nav: { home: 'Home', recipes: 'Recipes', spices: 'Spices', lexicon: 'Lexicon', converter: 'Tools', blog: 'Blog', guide: 'Guide' },
+      nav: { home: 'Home', recipes: 'Recipes', spices: 'Spices', lexicon: 'Lexicon', converter: 'Tools', blog: 'Blog', guide: 'Guide', shop: 'Shop' },
       header: {
         search: 'Search',
         searchPlaceholder: 'Search for a recipe, an article...',
@@ -272,6 +286,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
     blog: '/en/blog',
     guide: '/en/buying-guide',
     search: '/en/search',
+    shop: '/en/shop',
   } : {
     recipe: '/recette',
     spices: '/epices',
@@ -280,6 +295,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
     blog: '/blog',
     guide: '/guide-achat',
     search: '/recherche',
+    shop: '/boutique',
   };
 
   const navigation = [
@@ -290,6 +306,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
     { name: t.nav.converter, href: routes.converter, hasMegaMenu: false },
     { name: t.nav.blog, href: routes.blog, hasMegaMenu: false },
     { name: t.nav.guide, href: routes.guide, hasMegaMenu: false },
+    { name: t.nav.shop, href: routes.shop, hasMegaMenu: false },
   ];
 
   // Fermer la recherche quand on clique en dehors
@@ -476,19 +493,19 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
         <div className="container mx-auto px-4">
           <div className="flex items-center h-14 md:h-16">
           {/* Logo */}
-          <Link href={`${urlPrefix}/`} className="flex items-center group">
+          <Link href={`${urlPrefix}/`} className="flex items-center group flex-shrink-0">
             <Image
               src="/images/logos/menucochon-blanc.svg"
               alt="Menucochon"
               width={180}
               height={40}
-              className="h-8 md:h-10 w-auto"
+              className="h-7 sm:h-8 md:h-9 lg:h-10 xl:h-10 w-auto transition-all duration-200"
               priority
             />
           </Link>
 
           {/* Navigation Desktop */}
-          <nav className="hidden lg:flex items-center gap-0 ml-6 xl:ml-10">
+          <nav className="hidden lg:flex items-center gap-0 ml-2 xl:ml-6">
             {navigation.map((item) => (
               <div
                 key={item.name}
@@ -498,15 +515,15 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               >
                 <Link
                   href={item.href}
-                  className={`relative flex items-center gap-1 px-2 xl:px-4 py-2 text-xs xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-wide group ${
+                  className={`relative flex items-center gap-0.5 px-1 xl:px-2.5 2xl:px-4 py-2 text-[10px] xl:text-[11px] 2xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-normal xl:tracking-wide group ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'text-white' : ''
                   }`}
                 >
                   {item.name}
                   {item.hasMegaMenu && (
-                    <ChevronDown className={`w-4 h-4 transition-transform ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-3 h-3 xl:w-4 xl:h-4 transition-transform ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
                   )}
-                  <span className={`absolute bottom-0 left-2 right-2 xl:left-4 xl:right-4 h-0.5 bg-[#F77313] transition-all duration-300 ${
+                  <span className={`absolute bottom-0 left-1 right-1 xl:left-2.5 xl:right-2.5 2xl:left-4 2xl:right-4 h-0.5 bg-[#F77313] transition-all duration-300 ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </Link>
@@ -582,6 +599,16 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
             >
               <Search className="w-5 h-5" />
             </button>
+
+            {/* Cart Icon */}
+            <Link
+              href={locale === 'en' ? '/en/shop/cart' : '/boutique/panier'}
+              className="relative p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all"
+              aria-label={locale === 'en' ? 'Cart' : 'Panier'}
+            >
+              <ShoppingCart className="w-5 h-5" />
+              <CartBadge />
+            </Link>
 
             {/* User Menu */}
             <UserMenu />

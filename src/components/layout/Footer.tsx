@@ -34,12 +34,14 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
     about: '/en/about',
     contact: '/en/contact',
     privacy: '/en/privacy',
+    shop: '/en/shop',
   } : {
     recipe: '/recette',
     blog: '/blog',
     about: '/a-propos',
     contact: '/contact',
     privacy: '/confidentialite',
+    shop: '/boutique',
   };
 
   // Traductions inline pour chaque locale (client-side, always up-to-date)
@@ -65,6 +67,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       about: 'À propos',
       contact: 'Contact',
       privacy: 'Confidentialité',
+      shop: 'Boutique',
       copyright: '© {year} Menucochon. Tous droits réservés.',
       madeWith: 'Fait avec',
       inQuebec: 'au Québec',
@@ -92,6 +95,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       about: 'About',
       contact: 'Contact',
       privacy: 'Privacy',
+      shop: 'Shop',
       copyright: '© {year} Menucochon. All rights reserved.',
       madeWith: 'Made with',
       inQuebec: 'in Quebec',
@@ -123,6 +127,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       { name: t.buyingGuide, href: locale === 'en' ? '/en/buying-guide' : '/guide-achat' },
     ],
     info: [
+      { name: t.shop, href: routes.shop },
       { name: t.about, href: routes.about },
       { name: t.contact, href: routes.contact },
       { name: t.privacy, href: routes.privacy },
