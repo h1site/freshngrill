@@ -1,13 +1,8 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import { Recipe } from '@/types/recipe';
 import { Clock, Users, Calendar, Heart } from 'lucide-react';
-import LikeButton from './LikeButton';
-import ShareButton from './ShareButton';
-import PrintButton from './PrintButton';
-import CookModeButton from './CookModeButton';
+import RecipeActions from './RecipeActions';
 import type { Locale } from '@/i18n/config';
 import { getCategoryName } from '@/lib/categoryTranslations';
 
@@ -16,18 +11,8 @@ interface Props {
   locale?: Locale;
 }
 
-export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
-  const isEN = locale === 'en';
-
-  const t = isEN ? {
-    prep: 'Prep',
-    cook: 'Cook',
-    servings: 'Servings',
-    difficulty: 'Difficulty',
-    easy: 'Easy',
-    medium: 'Medium',
-    hard: 'Hard',
-  } : {
+const translations = {
+  fr: {
     prep: 'Préparation',
     cook: 'Cuisson',
     servings: 'Portions',
@@ -35,19 +20,44 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
     easy: 'Facile',
     medium: 'Moyen',
     hard: 'Difficile',
-  };
+    communityRecipe: 'Recette de la communauté',
+    submittedBy: 'Soumis par',
+    by: 'Par',
+    updated: 'Mis à jour',
+  },
+  en: {
+    prep: 'Prep',
+    cook: 'Cook',
+    servings: 'Servings',
+    difficulty: 'Difficulty',
+    easy: 'Easy',
+    medium: 'Medium',
+    hard: 'Hard',
+    communityRecipe: 'Community Recipe',
+    submittedBy: 'Submitted by',
+    by: 'By',
+    updated: 'Updated',
+  },
+};
 
-  const difficultyColors = {
-    facile: 'bg-green-500',
-    moyen: 'bg-amber-500',
-    difficile: 'bg-red-500',
-  };
+const difficultyColors: Record<string, string> = {
+  facile: 'bg-green-500',
+  moyen: 'bg-amber-500',
+  difficile: 'bg-red-500',
+};
+
+export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
+  const t = translations[locale];
 
   const difficultyTranslation: Record<string, string> = {
     facile: t.easy,
     moyen: t.medium,
     difficile: t.hard,
   };
+
+  const categoryPath = locale === 'en' ? '/en/category' : '/categorie';
+  const aboutPath = locale === 'en' ? '/en/about' : '/a-propos';
+  const dateLocale = locale === 'en' ? 'en-CA' : 'fr-CA';
 
   return (
     <div className="text-white max-w-4xl">
@@ -57,7 +67,7 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
           {recipe.categories.map((cat) => (
             <Link
               key={cat.id}
-              href={isEN ? `/en/category/${cat.slug}` : `/categorie/${cat.slug}`}
+              href={`${categoryPath}/${cat.slug}`}
               className="bg-white/20 backdrop-blur-sm text-white text-xs md:text-sm font-medium px-3 py-1 md:px-4 md:py-1.5 rounded-full hover:bg-[#F77313] transition-colors duration-200"
             >
               {getCategoryName(cat.name, locale)}
@@ -127,7 +137,7 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
         <div className="flex items-center gap-2 mb-3 md:mb-4">
           <div className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs md:text-sm font-semibold px-3 py-1.5 md:px-4 md:py-2 rounded-full shadow-lg">
             <Heart className="w-3.5 h-3.5 md:w-4 md:h-4 fill-current" />
-            <span>{isEN ? 'Community Recipe' : 'Recette de la communauté'}</span>
+            <span>{t.communityRecipe}</span>
           </div>
         </div>
       )}
@@ -150,11 +160,11 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
                 <Heart className="w-3.5 h-3.5 text-white fill-current" />
               </div>
             )}
-            <span>{isEN ? 'Submitted by' : 'Soumis par'} <strong className="text-white">{recipe.communityAuthorName || recipe.author}</strong></span>
+            <span>{t.submittedBy} <strong className="text-white">{recipe.communityAuthorName || recipe.author}</strong></span>
           </div>
         ) : (
           <Link
-            href={isEN ? '/en/about' : '/a-propos'}
+            href={aboutPath}
             className="flex items-center gap-2 hover:text-white transition-colors"
           >
             <Image
@@ -164,7 +174,7 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
               height={28}
               className="rounded-full object-cover"
             />
-            <span>{isEN ? 'By' : 'Par'} <strong className="text-white">{recipe.author || 'Menucochon'}</strong></span>
+            <span>{t.by} <strong className="text-white">{recipe.author || 'Menucochon'}</strong></span>
           </Link>
         )}
 
@@ -175,7 +185,7 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
             <div className="flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <time dateTime={recipe.publishedAt}>
-                {new Date(recipe.publishedAt).toLocaleDateString(isEN ? 'en-CA' : 'fr-CA', {
+                {new Date(recipe.publishedAt).toLocaleDateString(dateLocale, {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -190,7 +200,7 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
           <>
             <span className="text-white/40">|</span>
             <span className="text-white/60">
-              {isEN ? 'Updated' : 'Mis à jour'}: {new Date(recipe.updatedAt).toLocaleDateString(isEN ? 'en-CA' : 'fr-CA', {
+              {t.updated}: {new Date(recipe.updatedAt).toLocaleDateString(dateLocale, {
                 year: 'numeric',
                 month: 'short',
                 day: 'numeric',
@@ -200,23 +210,8 @@ export default function RecipeHeader({ recipe, locale = 'fr' }: Props) {
         )}
       </div>
 
-      {/* Actions - icon only on mobile */}
-      <div className="flex flex-wrap items-center gap-2 md:gap-3">
-        <LikeButton recipeId={recipe.id} initialCount={recipe.likes} size="sm" showCount={false} />
-
-        <ShareButton
-          title={recipe.title}
-          description={recipe.excerpt}
-          image={recipe.featuredImage}
-          pinterestImage={recipe.pinterestImage}
-          compact
-          locale={locale}
-        />
-
-        <PrintButton recipe={recipe} compact locale={locale} />
-
-        <CookModeButton recipe={recipe} compact locale={locale} />
-      </div>
+      {/* Actions - Client Component for interactivity */}
+      <RecipeActions recipe={recipe} locale={locale} />
     </div>
   );
 }
