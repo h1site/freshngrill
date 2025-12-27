@@ -515,7 +515,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               >
                 <Link
                   href={item.href}
-                  className={`relative flex items-center gap-0.5 px-1 xl:px-2.5 2xl:px-4 py-2 text-[16px] xl:text-[11px] 2xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-tight xl:tracking-normal 2xl:tracking-wide group ${
+                  className={`relative flex items-center gap-0.5 px-1 xl:px-2.5 2xl:px-4 py-2 text-[14px] xl:text-xs 2xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-tight xl:tracking-normal 2xl:tracking-wide group ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'text-white' : ''
                   }`}
                 >
