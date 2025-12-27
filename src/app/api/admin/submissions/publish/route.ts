@@ -2,9 +2,17 @@ import { NextResponse } from 'next/server';
 import { createAdminClient } from '@/lib/supabase';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// OpenAI client is initialized lazily inside functions to avoid build-time errors
+let openaiClient: OpenAI | null = null;
+
+function getOpenAIClient(): OpenAI {
+  if (!openaiClient) {
+    openaiClient = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  }
+  return openaiClient;
+}
 
 interface RecipeSubmission {
   id: number;
@@ -92,7 +100,7 @@ async function translateText(text: string, fromLang: string, toLang: string): Pr
   const fromName = fromLang === 'fr' ? 'French' : 'English';
   const toName = toLang === 'fr' ? 'French' : 'English';
 
-  const response = await openai.chat.completions.create({
+  const response = await getOpenAIClient().chat.completions.create({
     model: 'gpt-4o-mini',
     messages: [
       {
