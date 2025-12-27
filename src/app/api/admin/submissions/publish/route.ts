@@ -268,12 +268,12 @@ export async function POST(request: Request) {
         published_at: new Date().toISOString(),
       } as never)
       .select('id')
-      .single();
+      .single() as { data: { id: number } | null; error: Error | null };
 
-    if (insertError) {
+    if (insertError || !newRecipe) {
       console.error('Error creating recipe:', insertError);
       return NextResponse.json(
-        { error: `Erreur création recette: ${insertError.message}` },
+        { error: `Erreur création recette: ${insertError?.message || 'Unknown error'}` },
         { status: 500 }
       );
     }
