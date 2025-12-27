@@ -111,7 +111,7 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
 
   return (
     <section
-      className="relative h-[60vh] min-h-[450px] max-h-[600px] bg-neutral-950 overflow-hidden"
+      className="relative h-[60vh] min-h-[500px] max-h-[600px] bg-neutral-950 overflow-hidden"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
