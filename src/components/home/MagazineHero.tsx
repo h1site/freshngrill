@@ -65,7 +65,7 @@ export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr', showD
       </div>
 
       {/* Content Container - Fixed position from top for consistent layout across languages */}
-      <div className="relative z-10 container mx-auto px-4 min-h-screen flex items-start pt-32 pb-32 md:pt-40 md:pb-40">
+      <div className="relative z-10 container mx-auto px-4 min-h-screen flex items-start pt-32 pb-32 md:pt-40 md:pb-40 lg:pt-28 lg:pb-24 xl:pt-40 xl:pb-40">
         <div className="w-full">
           {/* Main Content Row */}
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12 lg:gap-16">
