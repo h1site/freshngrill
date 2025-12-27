@@ -499,7 +499,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               alt="Menucochon"
               width={180}
               height={40}
-              className="h-7 sm:h-8 md:h-9 lg:h-7 xl:h-10 w-auto transition-all duration-200"
+              className="h-7 sm:h-8 md:h-9 lg:h-7 xl:h-8 w-auto transition-all duration-200"
               priority
             />
           </Link>
