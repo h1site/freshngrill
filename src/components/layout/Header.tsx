@@ -490,7 +490,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
       />
 
       <header className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${headerBg}`}>
-        <div className="container mx-auto px-4 xl:px-[10px]">
+        <div className="container mx-auto px-4 xl:px-2">
           <div className="flex items-center h-14 md:h-16">
           {/* Logo */}
           <Link href={`${urlPrefix}/`} className="flex items-center group flex-shrink-0">
@@ -505,7 +505,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
           </Link>
 
           {/* Navigation Desktop */}
-          <nav className="hidden lg:flex items-center gap-0 ml-2 xl:ml-6">
+          <nav className="hidden lg:flex items-center gap-0 ml-2 xl:ml-2">
             {navigation.map((item) => (
               <div
                 key={item.name}
@@ -515,7 +515,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               >
                 <Link
                   href={item.href}
-                  className={`relative flex items-center gap-0.5 px-1 xl:px-2.5 2xl:px-4 py-2 text-[14px] xl:text-[14px] 2xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-tight xl:tracking-normal 2xl:tracking-wide group ${
+                  className={`relative flex items-center gap-0.5 px-1 xl:px-1.5 2xl:px-4 py-2 text-[14px] xl:text-[13px] 2xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-tight xl:tracking-tight 2xl:tracking-wide group ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'text-white' : ''
                   }`}
                 >
@@ -523,7 +523,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                   {item.hasMegaMenu && (
                     <ChevronDown className={`w-3 h-3 xl:w-4 xl:h-4 transition-transform ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
                   )}
-                  <span className={`absolute bottom-0 left-1 right-1 xl:left-2.5 xl:right-2.5 2xl:left-4 2xl:right-4 h-0.5 bg-[#F77313] transition-all duration-300 ${
+                  <span className={`absolute bottom-0 left-1 right-1 xl:left-1.5 xl:right-1.5 2xl:left-4 2xl:right-4 h-0.5 bg-[#F77313] transition-all duration-300 ${
                     item.hasMegaMenu && isMegaMenuOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </Link>
