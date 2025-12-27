@@ -67,7 +67,7 @@ export default async function BuyingGuidePage() {
       <header className="bg-black text-white">
         <div className="container mx-auto px-4">
           {/* Hero Content */}
-          <div className="py-12 md:py-20 max-w-4xl mx-auto text-center">
+          <div className="pt-[50px] pb-12 md:pt-20 md:pb-20 lg:pt-[50px] lg:pb-[50px] xl:pt-20 xl:pb-20 max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-[#F77313] text-white text-xs font-bold uppercase tracking-[0.15em] px-4 py-1.5 mb-6">
               <ShoppingCart className="w-4 h-4" />
               Buying Guide
