@@ -31,8 +31,8 @@ export function FeaturesCarousel({ locale = 'fr' }: FeaturesCarouselProps) {
       icon: <ShoppingBag className="w-8 h-8" />,
       title: isEN ? 'Buying Guide' : 'Guide d\'achat',
       description: isEN
-        ? 'Find the best kitchen equipment recommended by our chefs. Quality tools for perfect results.'
-        : 'Trouvez les meilleurs équipements de cuisine recommandés par nos chefs. Des outils de qualité pour des résultats parfaits.',
+        ? 'Quality kitchen equipment recommended by our chefs.'
+        : 'Les meilleurs équipements de cuisine recommandés par nos chefs.',
       image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1920&q=80',
       color: 'from-amber-500 to-orange-600',
       href: isEN ? '/en/buying-guide' : '/guide-achat',
