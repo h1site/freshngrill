@@ -155,6 +155,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [isBlogMenuOpen, setIsBlogMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSubmitRecipeModalOpen, setIsSubmitRecipeModalOpen] = useState(false);
 
@@ -182,6 +183,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   const inputRef = useRef<HTMLInputElement>(null);
   const megaMenuRef = useRef<HTMLDivElement>(null);
   const megaMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const blogMenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // KracRadio
   const {
@@ -300,14 +302,14 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   };
 
   const navigation = [
-    { name: t.nav.home, href: `${urlPrefix}/`, hasMegaMenu: false },
-    { name: t.nav.recipes, href: routes.recipe, hasMegaMenu: true },
-    { name: t.nav.spices, href: routes.spices, hasMegaMenu: false },
-    { name: t.nav.lexicon, href: routes.lexicon, hasMegaMenu: false },
-    { name: t.nav.converter, href: routes.converter, hasMegaMenu: false },
-    { name: t.nav.blog, href: routes.blog, hasMegaMenu: false },
-    { name: t.nav.guide, href: routes.guide, hasMegaMenu: false },
-    { name: t.nav.shop, href: routes.shop, hasMegaMenu: false },
+    { name: t.nav.home, href: `${urlPrefix}/`, hasMegaMenu: false, hasBlogMenu: false },
+    { name: t.nav.recipes, href: routes.recipe, hasMegaMenu: true, hasBlogMenu: false },
+    { name: t.nav.spices, href: routes.spices, hasMegaMenu: false, hasBlogMenu: false },
+    { name: t.nav.lexicon, href: routes.lexicon, hasMegaMenu: false, hasBlogMenu: false },
+    { name: t.nav.converter, href: routes.converter, hasMegaMenu: false, hasBlogMenu: false },
+    { name: t.nav.blog, href: routes.blog, hasMegaMenu: false, hasBlogMenu: true },
+    { name: t.nav.guide, href: routes.guide, hasMegaMenu: false, hasBlogMenu: false },
+    { name: t.nav.shop, href: routes.shop, hasMegaMenu: false, hasBlogMenu: false },
   ];
 
   // Fermer la recherche quand on clique en dehors
@@ -469,6 +471,19 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
     }, 150);
   };
 
+  const handleBlogMenuEnter = () => {
+    if (blogMenuTimeoutRef.current) {
+      clearTimeout(blogMenuTimeoutRef.current);
+    }
+    setIsBlogMenuOpen(true);
+  };
+
+  const handleBlogMenuLeave = () => {
+    blogMenuTimeoutRef.current = setTimeout(() => {
+      setIsBlogMenuOpen(false);
+    }, 150);
+  };
+
   const difficultyLabel = (diff: string) => {
     const labels: Record<string, string> = {
       facile: 'Facile',
@@ -511,23 +526,51 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               <div
                 key={item.name}
                 className="relative"
-                onMouseEnter={item.hasMegaMenu ? handleMegaMenuEnter : undefined}
-                onMouseLeave={item.hasMegaMenu ? handleMegaMenuLeave : undefined}
+                onMouseEnter={item.hasMegaMenu ? handleMegaMenuEnter : item.hasBlogMenu ? handleBlogMenuEnter : undefined}
+                onMouseLeave={item.hasMegaMenu ? handleMegaMenuLeave : item.hasBlogMenu ? handleBlogMenuLeave : undefined}
               >
                 <Link
                   href={item.href}
                   className={`relative flex items-center gap-0.5 px-1 xl:px-2 2xl:px-4 py-2 text-[14px] xl:text-[14px] 2xl:text-sm font-medium text-white/80 hover:text-white transition-colors uppercase tracking-tight xl:tracking-tight 2xl:tracking-wide group ${
-                    item.hasMegaMenu && isMegaMenuOpen ? 'text-white' : ''
+                    (item.hasMegaMenu && isMegaMenuOpen) || (item.hasBlogMenu && isBlogMenuOpen) ? 'text-white' : ''
                   }`}
                 >
                   {item.name}
-                  {item.hasMegaMenu && (
-                    <ChevronDown className={`w-3 h-3 xl:w-4 xl:h-4 transition-transform ${isMegaMenuOpen ? 'rotate-180' : ''}`} />
+                  {(item.hasMegaMenu || item.hasBlogMenu) && (
+                    <ChevronDown className={`w-3 h-3 xl:w-4 xl:h-4 transition-transform ${(item.hasMegaMenu && isMegaMenuOpen) || (item.hasBlogMenu && isBlogMenuOpen) ? 'rotate-180' : ''}`} />
                   )}
                   <span className={`absolute bottom-0 left-1 right-1 xl:left-2 xl:right-2 2xl:left-4 2xl:right-4 h-0.5 bg-[#F77313] transition-all duration-300 ${
-                    item.hasMegaMenu && isMegaMenuOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    (item.hasMegaMenu && isMegaMenuOpen) || (item.hasBlogMenu && isBlogMenuOpen) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </Link>
+
+                {/* Blog Dropdown */}
+                {item.hasBlogMenu && isBlogMenuOpen && (
+                  <div
+                    className="absolute left-0 top-full pt-2 z-50"
+                    onMouseEnter={handleBlogMenuEnter}
+                    onMouseLeave={handleBlogMenuLeave}
+                  >
+                    <div className="bg-neutral-900 border border-neutral-800 rounded-xl shadow-2xl p-3 min-w-[200px]">
+                      <Link
+                        href={routes.blog}
+                        onClick={() => setIsBlogMenuOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
+                      >
+                        <FileText className="w-4 h-4 text-[#F77313]" />
+                        <span className="text-sm font-medium">{locale === 'en' ? 'Articles' : 'Articles'}</span>
+                      </Link>
+                      <Link
+                        href={locale === 'en' ? '/en/videos' : '/videos'}
+                        onClick={() => setIsBlogMenuOpen(false)}
+                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
+                      >
+                        <Youtube className="w-4 h-4 text-red-500" />
+                        <span className="text-sm font-medium">{locale === 'en' ? 'Videos' : 'Vidéos'}</span>
+                      </Link>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </nav>
