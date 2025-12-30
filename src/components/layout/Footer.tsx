@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Facebook, Instagram, Rss } from 'lucide-react';
+import { Facebook, Instagram, Rss, Youtube } from 'lucide-react';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
@@ -68,6 +68,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       contact: 'Contact',
       privacy: 'Confidentialité',
       shop: 'Boutique',
+      videos: 'Vidéos',
       copyright: '© {year} Menucochon. Tous droits réservés.',
       madeWith: 'Fait avec',
       inQuebec: 'au Québec',
@@ -96,6 +97,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       contact: 'Contact',
       privacy: 'Privacy',
       shop: 'Shop',
+      videos: 'Videos',
       copyright: '© {year} Menucochon. All rights reserved.',
       madeWith: 'Made with',
       inQuebec: 'in Quebec',
@@ -128,6 +130,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
     ],
     info: [
       { name: t.shop, href: routes.shop },
+      { name: t.videos, href: locale === 'en' ? '/en/videos' : '/videos' },
       { name: t.about, href: routes.about },
       { name: t.contact, href: routes.contact },
       { name: t.privacy, href: routes.privacy },
@@ -171,6 +174,15 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.youtube.com/@menucochon"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-neutral-800 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors"
+                aria-label="YouTube"
+              >
+                <Youtube className="w-5 h-5" />
               </a>
               <a
                 href={locale === 'en' ? '/en/rss/recipes' : '/rss/recettes'}

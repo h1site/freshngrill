@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensils, Globe, Cake, Soup, Coffee, Salad, Fish, Beef, Drumstick, Refrigerator, Plus, Percent, Play, Pause, Square, ShoppingCart } from 'lucide-react';
+import { Menu, X, Search, Clock, ChefHat, FileText, Loader2, ChevronDown, Utensils, Globe, Cake, Soup, Coffee, Salad, Fish, Beef, Drumstick, Refrigerator, Plus, Percent, Play, Pause, Square, ShoppingCart, Youtube } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { SpeakerHigh, SpeakerSlash } from '@phosphor-icons/react';
 import UserMenu from '@/components/auth/UserMenu';
@@ -14,6 +14,7 @@ import { KracRadioModal, KracRadioNowPlaying, useKracRadio } from '@/components/
 import { SubmitRecipeModal } from '@/components/recipe/SubmitRecipeModal';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
+import { VIDEOS } from '@/lib/videos';
 
 // Cart Badge Component
 function CartBadge() {
@@ -642,7 +643,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               onMouseLeave={handleMegaMenuLeave}
             >
               <div className="container mx-auto px-4 py-8">
-                <div className="grid grid-cols-5 gap-8">
+                <div className="grid grid-cols-6 gap-6">
                   {/* Sections principales */}
                   {megaMenuData.recettes.sections.map((section) => (
                     <div key={section.title}>
@@ -667,25 +668,72 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                   ))}
 
                   {/* Cuisines du monde */}
-                  <div className="bg-neutral-800/50 rounded-lg p-6 -my-2">
-                    <div className="flex items-center gap-2 mb-4">
-                      <Globe className="w-5 h-5 text-[#F77313]" />
-                      <h3 className="text-white font-display text-lg">{megaMenuData.recettes.featured.title}</h3>
+                  <div className="bg-neutral-800/50 rounded-lg p-4 -my-2">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Globe className="w-4 h-4 text-[#F77313]" />
+                      <h3 className="text-white font-display text-base">{megaMenuData.recettes.featured.title}</h3>
                     </div>
-                    <ul className="space-y-2">
-                      {megaMenuData.recettes.featured.links.map((link) => (
+                    <ul className="space-y-1.5">
+                      {megaMenuData.recettes.featured.links.slice(0, 6).map((link) => (
                         <li key={link.name}>
                           <Link
                             href={link.href}
                             onClick={() => setIsMegaMenuOpen(false)}
-                            className="text-neutral-400 hover:text-white transition-all text-sm flex items-center gap-2 py-1 group"
+                            className="text-neutral-400 hover:text-white transition-all text-sm flex items-center gap-2 py-0.5 group"
                           >
-                            <span className="text-base">{link.flag}</span>
+                            <span className="text-sm">{link.flag}</span>
                             <span className="group-hover:translate-x-1 transition-transform">{link.name}</span>
                           </Link>
                         </li>
                       ))}
                     </ul>
+                  </div>
+
+                  {/* Videos Section */}
+                  <div className="bg-gradient-to-br from-red-900/30 to-neutral-900 rounded-lg p-4 -my-2">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Youtube className="w-4 h-4 text-red-500" />
+                      <h3 className="text-white font-display text-base">{locale === 'en' ? 'Videos' : 'Vidéos'}</h3>
+                    </div>
+                    <div className="space-y-3">
+                      {VIDEOS.slice(0, 2).map((video) => (
+                        <Link
+                          key={video.id}
+                          href={locale === 'en' ? `/en/video/${video.slugEn}` : `/video/${video.slug}`}
+                          onClick={() => setIsMegaMenuOpen(false)}
+                          className="block group"
+                        >
+                          <div className="relative aspect-video rounded-lg overflow-hidden mb-1.5">
+                            <Image
+                              src={video.thumbnail}
+                              alt={locale === 'en' ? video.titleEn : video.title}
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              sizes="150px"
+                            />
+                            <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                              <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+                                <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
+                              </div>
+                            </div>
+                            <div className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1.5 py-0.5 rounded">
+                              {video.duration}
+                            </div>
+                          </div>
+                          <p className="text-neutral-300 text-xs font-medium line-clamp-2 group-hover:text-white transition-colors">
+                            {locale === 'en' ? video.titleEn : video.title}
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                    <Link
+                      href={locale === 'en' ? '/en/videos' : '/videos'}
+                      onClick={() => setIsMegaMenuOpen(false)}
+                      className="mt-3 text-red-400 hover:text-red-300 text-xs font-medium flex items-center gap-1 transition-colors"
+                    >
+                      {locale === 'en' ? 'All videos' : 'Toutes les vidéos'}
+                      <span>→</span>
+                    </Link>
                   </div>
                 </div>
 
@@ -723,6 +771,14 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                     >
                       <span className="text-base">🫙</span>
                       {t.header?.menu?.canning || 'Canning'}
+                    </Link>
+                    <Link
+                      href={locale === 'en' ? '/en/videos' : '/videos'}
+                      onClick={() => setIsMegaMenuOpen(false)}
+                      className="text-red-500 hover:text-white transition-colors text-sm flex items-center gap-2 font-medium"
+                    >
+                      <span className="text-base">🎬</span>
+                      {locale === 'en' ? 'Videos' : 'Vidéos'}
                     </Link>
                     <button
                       onClick={() => {

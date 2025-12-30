@@ -1,26 +1,31 @@
 import { Metadata } from 'next';
 import { getAllRecipes, getMainCategoriesWithLocale, enrichRecipesWithEnglishData } from '@/lib/recipes';
 import { getRecentPostsWithEnglish } from '@/lib/posts';
+import { getRecentVideos } from '@/lib/videos';
 import { FeaturesCarousel } from '@/components/home/FeaturesCarousel';
 import { MagazineHero } from '@/components/home/MagazineHero';
 import { MagazineCategorySection } from '@/components/home/MagazineCategorySection';
 import { MagazineCTA } from '@/components/home/MagazineCTA';
 import { NewsletterSection } from '@/components/home/NewsletterSection';
 import { MagazineBlogSection } from '@/components/home/MagazineBlogSection';
+import { YouTubeSection } from '@/components/home/YouTubeSection';
+import { HomeSEOSection } from '@/components/home/HomeSEOSection';
+import WebSiteSchema from '@/components/schema/WebSiteSchema';
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: 'Menucochon | Delicious Quebec Recipes',
+  title: 'Menucochon - Delicious Quebec Recipes Easy to Make',
   description:
-    'Discover our collection of delicious and easy-to-make recipes. Meal ideas for every day, from appetizers to desserts.',
+    'Menucochon, your gourmet destination! Discover hundreds of easy Quebec recipes. Main dishes, desserts, soups and more on Menucochon.com',
   keywords: [
+    'menucochon',
     'Quebec recipes',
     'delicious recipes',
     'easy recipes',
+    'Quebec cuisine',
     'homemade cooking',
     'meal ideas',
-    'menucochon',
   ],
   alternates: {
     canonical: '/en/',
@@ -30,9 +35,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Menucochon | Delicious Quebec Recipes',
+    title: 'Menucochon - Delicious Quebec Recipes Easy to Make',
     description:
-      'Discover our collection of delicious and easy-to-make recipes. Meal ideas for every day.',
+      'Menucochon, your gourmet destination! Discover hundreds of easy Quebec recipes.',
     type: 'website',
     url: '/en/',
     siteName: 'Menucochon',
@@ -40,9 +45,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Menucochon | Delicious Quebec Recipes',
+    title: 'Menucochon - Delicious Quebec Recipes Easy to Make',
     description:
-      'Discover our collection of delicious and easy-to-make recipes.',
+      'Menucochon, your gourmet destination! Discover hundreds of easy Quebec recipes.',
   },
   robots: {
     index: true,
@@ -68,12 +73,18 @@ export default async function EnglishHomePage() {
   // Enrichir avec les données anglaises
   const allRecipes = await enrichRecipesWithEnglishData(rawRecipes);
 
+  // Get videos (sync function, no await needed)
+  const recentVideos = getRecentVideos(3);
+
   // Get featured recipe (most recent)
   const featuredRecipe = allRecipes[0];
   const sideRecipes = allRecipes.slice(1, 4);
 
   return (
     <main className="min-h-screen">
+      {/* JSON-LD Schema for SEO */}
+      <WebSiteSchema locale="en" />
+
       {/* 1. Features Carousel - Full width animated slideshow */}
       <FeaturesCarousel locale="en" />
 
@@ -97,10 +108,18 @@ export default async function EnglishHomePage() {
         <MagazineBlogSection posts={recentPosts} locale="en" />
       )}
 
-      {/* 5. Newsletter Section */}
+      {/* 5. YouTube Section */}
+      {recentVideos.length > 0 && (
+        <YouTubeSection videos={recentVideos} locale="en" />
+      )}
+
+      {/* 6. Newsletter Section */}
       <NewsletterSection locale="en" />
 
-      {/* 6. CTA Section */}
+      {/* 6. SEO Section - About Menucochon */}
+      <HomeSEOSection locale="en" />
+
+      {/* 7. CTA Section */}
       <MagazineCTA recipe={allRecipes[Math.floor(Math.random() * Math.min(5, allRecipes.length))]} locale="en" />
     </main>
   );
