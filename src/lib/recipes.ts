@@ -363,6 +363,27 @@ export async function getRecentRecipes(limit: number = 10): Promise<Recipe[]> {
 }
 
 /**
+ * Obtenir plusieurs recettes par leurs slugs (pour les recettes vedettes)
+ */
+export async function getRecipesBySlugs(slugs: string[]): Promise<Recipe[]> {
+  const { data, error } = await supabase
+    .from('recipes_with_categories')
+    .select('*')
+    .in('slug', slugs);
+
+  if (error) {
+    console.error('Erreur getRecipesBySlugs:', error);
+    return [];
+  }
+
+  // Trier les résultats dans l'ordre des slugs fournis
+  const recipes = (data || []).map(transformRecipe);
+  return slugs
+    .map(slug => recipes.find(r => r.slug === slug))
+    .filter((r): r is Recipe => r !== undefined);
+}
+
+/**
  * Obtenir la prochaine recette à suggérer (même catégorie, triée par date)
  */
 export async function getNextRecipe(recipe: Recipe, locale: 'fr' | 'en' = 'fr'): Promise<RecipeCard | null> {

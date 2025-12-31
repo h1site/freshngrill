@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getAllRecipes, getMainCategories } from '@/lib/recipes';
+import { getAllRecipes, getMainCategories, getRecipesBySlugs } from '@/lib/recipes';
 import { getRecentPosts } from '@/lib/posts';
 import { getRecentVideos } from '@/lib/videos';
 import { FeaturesCarousel } from '@/components/home/FeaturesCarousel';
@@ -10,7 +10,17 @@ import { NewsletterSection } from '@/components/home/NewsletterSection';
 import { MagazineBlogSection } from '@/components/home/MagazineBlogSection';
 import { YouTubeSection } from '@/components/home/YouTubeSection';
 import { HomeSEOSection } from '@/components/home/HomeSEOSection';
+import { FeaturedRecipesSection } from '@/components/home/FeaturedRecipesSection';
 import WebSiteSchema from '@/components/schema/WebSiteSchema';
+
+// Recettes vedettes Menucochon (slugs)
+const FEATURED_RECIPE_SLUGS = [
+  'filet-de-porc',
+  'macaroni-chinois',
+  'orange-julep',
+  'jambon-a-la-biere-a-la-mijoteuse',
+  'soupe-won-ton',
+];
 
 export const revalidate = 60;
 
@@ -64,10 +74,11 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const [allRecipes, categories, recentPosts] = await Promise.all([
+  const [allRecipes, categories, recentPosts, featuredRecipes] = await Promise.all([
     getAllRecipes(),
     getMainCategories(10),
     getRecentPosts(4),
+    getRecipesBySlugs(FEATURED_RECIPE_SLUGS),
   ]);
 
   // Get videos (sync function, no await needed)
@@ -94,7 +105,12 @@ export default async function HomePage() {
         />
       )}
 
-      {/* 3. Categories Section */}
+      {/* 3. Featured Recipes Section - Menucochon's Best */}
+      {featuredRecipes.length > 0 && (
+        <FeaturedRecipesSection recipes={featuredRecipes} locale="fr" />
+      )}
+
+      {/* 4. Categories Section */}
       {categories.length > 0 && (
         <MagazineCategorySection categories={categories} />
       )}
