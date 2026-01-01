@@ -505,9 +505,9 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
         onClose={() => setShowNowPlaying(false)}
       />
 
-      <header className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${headerBg}`}>
-        <div className="container mx-auto px-4 xl:px-2">
-          <div className="flex items-center h-14 md:h-16">
+      <header className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 overflow-x-hidden ${headerBg}`}>
+        <div className="container mx-auto px-2 sm:px-4 xl:px-2 overflow-hidden">
+          <div className="flex items-center justify-between h-14 md:h-16 w-full">
           {/* Logo */}
           <Link href={`${urlPrefix}/`} className="flex items-center group flex-shrink-0">
             <Image
@@ -575,11 +575,8 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
             ))}
           </nav>
 
-          {/* Spacer pour pousser les actions à droite */}
-          <div className="flex-1" />
-
           {/* Actions */}
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex items-center gap-0.5 sm:gap-1 md:gap-2 flex-shrink-0">
             {/* KracRadio Controls - Hidden on mobile, shown on tablet+ */}
             <div className="hidden md:flex items-center">
               {/* Radio Button - opens modal */}
@@ -638,19 +635,19 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
             <button
               ref={searchButtonRef}
               onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all"
+              className="p-1.5 sm:p-2 md:p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all flex-shrink-0"
               aria-label={locale === 'en' ? 'Search' : 'Rechercher'}
             >
-              <Search className="w-5 h-5" />
+              <Search className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
 
             {/* Cart Icon */}
             <Link
               href={locale === 'en' ? '/en/store/cart' : '/boutique/panier'}
-              className="relative p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all"
+              className="relative p-1.5 sm:p-2 md:p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all flex-shrink-0"
               aria-label={locale === 'en' ? 'Cart' : 'Panier'}
             >
-              <ShoppingCart className="w-5 h-5" />
+              <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
               <CartBadge />
             </Link>
 
@@ -665,9 +662,9 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden p-2.5 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all"
+              className="lg:hidden p-1.5 sm:p-2 text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-all flex-shrink-0"
             >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
             </button>
           </div>
         </div>
