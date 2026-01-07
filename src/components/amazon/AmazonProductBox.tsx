@@ -2,8 +2,11 @@
 
 import Image from 'next/image';
 import { ExternalLink } from 'lucide-react';
+import { trackAffiliateClick, type AffiliateClickPayload } from '@/lib/amazon-affiliate';
 
-const AMAZON_STORE_ID = 'h1site0d-20';
+// Tag affilié depuis env (avec fallback)
+const AMAZON_STORE_ID = process.env.NEXT_PUBLIC_AMAZON_ASSOC_TAG || 'menucochon-20';
+const AMAZON_DOMAIN = process.env.NEXT_PUBLIC_AMAZON_DOMAIN || 'www.amazon.ca';
 
 interface AmazonProduct {
   asin: string; // Amazon Standard Identification Number
@@ -32,7 +35,21 @@ const translations = {
 };
 
 function getAmazonUrl(asin: string): string {
-  return `https://www.amazon.ca/dp/${asin}?tag=${AMAZON_STORE_ID}`;
+  return `https://${AMAZON_DOMAIN}/dp/${asin}?tag=${AMAZON_STORE_ID}`;
+}
+
+// Tracking non-bloquant des clics
+function handleAffiliateClick(asin: string, title: string, href: string) {
+  const payload: AffiliateClickPayload = {
+    ts: new Date().toISOString(),
+    query: title,
+    href,
+    pagePath: typeof window !== 'undefined' ? window.location.pathname : '',
+    domain: AMAZON_DOMAIN,
+    tag: AMAZON_STORE_ID,
+    extra: { type: 'product', asin },
+  };
+  trackAffiliateClick(payload);
 }
 
 export default function AmazonProductBox({
@@ -54,12 +71,15 @@ export default function AmazonProductBox({
       </h3>
 
       <div className={`grid gap-4 ${products.length === 1 ? 'grid-cols-1' : 'sm:grid-cols-2'}`}>
-        {products.map((product) => (
+        {products.map((product) => {
+          const href = getAmazonUrl(product.asin);
+          return (
           <a
             key={product.asin}
-            href={getAmazonUrl(product.asin)}
+            href={href}
             target="_blank"
-            rel="noopener noreferrer sponsored"
+            rel="nofollow noopener sponsored"
+            onClick={() => handleAffiliateClick(product.asin, product.title, href)}
             className="flex items-center gap-4 bg-white rounded-lg p-4 border border-amber-100 hover:border-[#FF9900] hover:shadow-md transition-all group"
           >
             <div className="relative w-20 h-20 flex-shrink-0 bg-white rounded-lg overflow-hidden">
@@ -83,7 +103,8 @@ export default function AmazonProductBox({
               </span>
             </div>
           </a>
-        ))}
+          );
+        })}
       </div>
 
       <p className="text-[10px] text-neutral-400 mt-4 text-center">
@@ -104,12 +125,14 @@ interface SingleProductProps {
 
 export function AmazonProduct({ asin, title, image, price, locale = 'fr' }: SingleProductProps) {
   const t = translations[locale];
+  const href = getAmazonUrl(asin);
 
   return (
     <a
-      href={getAmazonUrl(asin)}
+      href={href}
       target="_blank"
-      rel="noopener noreferrer sponsored"
+      rel="nofollow noopener sponsored"
+      onClick={() => handleAffiliateClick(asin, title, href)}
       className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg p-3 hover:border-[#FF9900] hover:shadow-md transition-all group my-4"
     >
       <div className="relative w-14 h-14 flex-shrink-0 bg-white rounded-lg overflow-hidden">
@@ -149,12 +172,15 @@ export function AmazonSidebarBox({ products, title, locale = 'fr' }: AmazonSideb
       </h3>
 
       <div className="space-y-3">
-        {products.slice(0, 3).map((product) => (
+        {products.slice(0, 3).map((product) => {
+          const href = getAmazonUrl(product.asin);
+          return (
           <a
             key={product.asin}
-            href={getAmazonUrl(product.asin)}
+            href={href}
             target="_blank"
-            rel="noopener noreferrer sponsored"
+            rel="nofollow noopener sponsored"
+            onClick={() => handleAffiliateClick(product.asin, product.title, href)}
             className="flex items-center gap-3 p-2 rounded-lg hover:bg-amber-50 transition-colors group"
           >
             <div className="relative w-12 h-12 flex-shrink-0 bg-neutral-50 rounded overflow-hidden">
@@ -169,7 +195,8 @@ export function AmazonSidebarBox({ products, title, locale = 'fr' }: AmazonSideb
               )}
             </div>
           </a>
-        ))}
+          );
+        })}
       </div>
 
       <p className="text-[9px] text-neutral-400 mt-3 text-center">{t.affiliate}</p>

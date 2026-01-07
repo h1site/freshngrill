@@ -20,6 +20,7 @@ import RecipeRating from '@/components/recipe/RecipeRating';
 import GoogleAd from '@/components/ads/GoogleAd';
 import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
+import RecipeAmazonSuggestions from '@/components/amazon/RecipeAmazonSuggestions';
 import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 import NextRecipe from '@/components/recipe/NextRecipe';
 
@@ -264,7 +265,18 @@ export default async function RecettePage({ params }: Props) {
                 )}
               </div>
 
-              {/* Amazon Products */}
+              {/* Amazon Suggestions dynamiques basées sur la recette */}
+              <div className="print:hidden">
+                <RecipeAmazonSuggestions
+                  recipeTitle={recipe.title}
+                  ingredients={recipe.ingredients?.flatMap(g => g.items.map(i => typeof i === 'string' ? i : i.name)) || []}
+                  category={recipe.categories?.[0]?.slug}
+                  locale="fr"
+                  variant="sidebar"
+                />
+              </div>
+
+              {/* Amazon Products - Équipement générique */}
               <div className="print:hidden">
                 <AmazonKitchenProducts
                   products={['thermometer', 'skillet', 'chefKnife']}

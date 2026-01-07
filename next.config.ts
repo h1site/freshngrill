@@ -347,6 +347,27 @@ const nextConfig: NextConfig = {
         destination: '/en/recipe/traditional-crepe',
         permanent: true,
       },
+      // Crêpe soufflée (Dutch Baby) - renamed from pfannkuchen for SEO - Dec 30, 2025
+      {
+        source: '/recette/crepe-allemande-pfannkuchen',
+        destination: '/recette/crepe-soufflee-dutch-baby',
+        permanent: true,
+      },
+      {
+        source: '/recette/crepe-allemande-pfannkuchen/',
+        destination: '/recette/crepe-soufflee-dutch-baby/',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/german-pancake-pfannkuchen',
+        destination: '/en/recipe/dutch-baby-pancake',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/german-pancake-pfannkuchen/',
+        destination: '/en/recipe/dutch-baby-pancake/',
+        permanent: true,
+      },
       // 404 fixes from error log - Dec 18, 2025
       {
         source: '/en/recipe/chinese-macaroni',
@@ -504,6 +525,37 @@ const nextConfig: NextConfig = {
       {
         source: '/en/recipe/jambon-glace-a-lerable',
         destination: '/en/recipe/maple-glazed-ham',
+        permanent: true,
+      },
+      // 404 fixes from error log - Dec 30, 2025
+      {
+        source: '/en/recipe/bilodeau-family-molasses-galette-1971',
+        destination: '/en/recipe/molasses-cookie-of-the-bilodeau-family-1971',
+        permanent: true,
+      },
+      {
+        source: '/en/saint-jean-baptist',
+        destination: '/en/blog/saint-jean-baptiste',
+        permanent: true,
+      },
+      {
+        source: '/author/:slug*',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/en/conversion-inch-to-foot',
+        destination: '/en/converter/inch-foot',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/simple-and-delicious-recipe-for-carrot-cake',
+        destination: '/en/recipe/best-carrot-cake',
+        permanent: true,
+      },
+      {
+        source: '/en/recipe/cake-in-a-cup',
+        destination: '/en/recipe/mug-cake',
         permanent: true,
       },
     ];

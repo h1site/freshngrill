@@ -13,6 +13,8 @@ interface MagazineHeroProps {
 
 const translations = {
   fr: {
+    heroTitle: 'Menucochon',
+    heroSubtitle: 'Recettes québécoises gourmandes',
     featuredRecipe: 'Recette Vedette',
     viewRecipe: 'Voir la recette',
     alsoDiscover: 'À découvrir',
@@ -23,6 +25,8 @@ const translations = {
     portions: 'portions',
   },
   en: {
+    heroTitle: 'Menucochon',
+    heroSubtitle: 'Delicious Quebec Recipes',
     featuredRecipe: 'Featured Recipe',
     viewRecipe: 'View Recipe',
     alsoDiscover: 'Discover',
@@ -41,6 +45,9 @@ export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr', showD
 
   return (
     <section className="relative min-h-screen bg-neutral-950 overflow-hidden">
+      {/* H1 SEO - Visible but integrated into design */}
+      <h1 className="sr-only">{t.heroTitle} - {t.heroSubtitle}</h1>
+
       {/* Background Image - Full Screen */}
       <div className="absolute inset-0">
         {featuredRecipe.featuredImage ? (
@@ -83,13 +90,13 @@ export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr', showD
                   )}
                 </div>
 
-                {/* Title */}
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display text-white leading-[0.95] mb-6 tracking-tight max-w-3xl">
+                {/* Recipe Title - H2 for SEO (H1 is site name above) */}
+                <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-display text-white leading-[0.95] mb-6 tracking-tight max-w-3xl">
                   <span className="relative inline drop-shadow-lg">
                     {featuredRecipe.title}
                     <span className="absolute -bottom-2 left-0 h-1.5 bg-[#F77313] w-[30%]" />
                   </span>
-                </h1>
+                </h2>
 
                 {/* Meta Info */}
                 <div className="flex flex-wrap items-center gap-4 md:gap-6 text-white/80 mb-8">
@@ -125,9 +132,9 @@ export function MagazineHero({ featuredRecipe, sideRecipes, locale = 'fr', showD
               {/* Section Title */}
               <div className="flex items-center gap-4 mb-4 lg:mb-6">
                 <div className="w-10 h-0.5 bg-[#F77313]" />
-                <h2 className="text-white text-sm lg:text-base font-semibold uppercase tracking-widest">
+                <h3 className="text-white text-sm lg:text-base font-semibold uppercase tracking-widest">
                   {t.alsoDiscover}
-                </h2>
+                </h3>
               </div>
 
               {/* Recipe Cards - Grid on mobile, stack on desktop */}

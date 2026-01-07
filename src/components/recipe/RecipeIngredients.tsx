@@ -2,8 +2,26 @@
 
 import { useState } from 'react';
 import { IngredientGroup } from '@/types/recipe';
-import { Minus, Plus, Check } from 'lucide-react';
+import { Minus, Plus, Check, ShoppingCart } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
+import { AmazonSearchAffiliateLink } from '@/components/affiliate/AmazonSearchAffiliateLink';
+
+// Ingrédients spéciaux qui méritent un lien Amazon (épices, sauces, produits spéciaux)
+const AMAZON_INGREDIENTS = [
+  'ají', 'aji', 'chipotle', 'sriracha', 'gochujang', 'harissa', 'sambal',
+  'miso', 'tahini', 'za\'atar', 'sumac', 'ras el hanout', 'berbere',
+  'panko', 'nouilles ramen', 'nouilles soba', 'vermicelles de riz',
+  'lait de coco', 'crème de coco', 'huile de sésame', 'huile truffe',
+  'sauce soya', 'sauce hoisin', 'sauce teriyaki', 'sauce worcestershire',
+  'pâte de curry', 'curry', 'garam masala', 'curcuma', 'poudre chili',
+  'cardamome', 'safran', 'vanille', 'extrait vanille', 'fève tonka',
+  'chocolat noir', 'cacao', 'matcha', 'poudre cacao',
+  'sirop d\'érable', 'miel', 'sirop agave', 'mélasse',
+  'farine d\'amande', 'farine coco', 'fécule', 'arrow-root',
+  'levure nutritionnelle', 'agar-agar', 'gélatine',
+  'vinaigre balsamique', 'vinaigre de riz', 'mirin',
+  'fond de veau', 'bouillon', 'demi-glace',
+];
 
 interface Props {
   ingredients: IngredientGroup[];
@@ -58,6 +76,17 @@ export default function RecipeIngredients({
       newChecked.add(id);
     }
     setCheckedItems(newChecked);
+  };
+
+  // Vérifie si un ingrédient mérite un lien Amazon
+  const shouldShowAmazonLink = (ingredientName: string): string | null => {
+    const lowerName = ingredientName.toLowerCase();
+    for (const amazonIng of AMAZON_INGREDIENTS) {
+      if (lowerName.includes(amazonIng.toLowerCase())) {
+        return amazonIng;
+      }
+    }
+    return null;
   };
 
   return (
@@ -134,7 +163,24 @@ export default function RecipeIngredients({
                         <span className={`flex-1 ${isChecked ? 'line-through' : ''}`}>
                           {isStringItem ? (
                             // String format: "250 g de farine tout usage"
-                            <span className="text-neutral-800">{itemText}</span>
+                            <>
+                              <span className="text-neutral-800">{itemText}</span>
+                              {(() => {
+                                const amazonMatch = shouldShowAmazonLink(itemText || '');
+                                if (amazonMatch && !isChecked) {
+                                  return (
+                                    <AmazonSearchAffiliateLink
+                                      query={amazonMatch}
+                                      className="ml-2 inline-flex items-center text-[#FF9900] hover:text-[#FF9900]/80"
+                                      title={isEN ? `Buy ${amazonMatch} on Amazon` : `Acheter ${amazonMatch} sur Amazon`}
+                                    >
+                                      <ShoppingCart className="w-3.5 h-3.5" />
+                                    </AmazonSearchAffiliateLink>
+                                  );
+                                }
+                                return null;
+                              })()}
+                            </>
                           ) : (
                             // Object format: { name, quantity, unit, note }
                             <>
@@ -154,6 +200,21 @@ export default function RecipeIngredients({
                                   ({itemObj.note})
                                 </span>
                               )}
+                              {(() => {
+                                const amazonMatch = shouldShowAmazonLink(itemObj?.name || '');
+                                if (amazonMatch && !isChecked) {
+                                  return (
+                                    <AmazonSearchAffiliateLink
+                                      query={amazonMatch}
+                                      className="ml-2 inline-flex items-center text-[#FF9900] hover:text-[#FF9900]/80"
+                                      title={isEN ? `Buy ${amazonMatch} on Amazon` : `Acheter ${amazonMatch} sur Amazon`}
+                                    >
+                                      <ShoppingCart className="w-3.5 h-3.5" />
+                                    </AmazonSearchAffiliateLink>
+                                  );
+                                }
+                                return null;
+                              })()}
                             </>
                           )}
                         </span>

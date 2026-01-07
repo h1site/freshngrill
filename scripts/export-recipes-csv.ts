@@ -4,30 +4,43 @@ import * as fs from 'fs';
 
 dotenv.config({ path: '.env.local' });
 
+function cleanForCsv(text: string | null): string {
+  if (!text) return '';
+  return text
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/"/g, '""')
+    .trim();
+}
+
 async function main() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
   const { data, error } = await supabase
     .from('recipes')
-    .select('id, title')
-    .order('id', { ascending: true });
+    .select('title, slug, introduction, conclusion')
+    .order('title');
 
   if (error) {
     console.error(error);
     process.exit(1);
   }
 
-  let csv = 'id,title,pays\n';
-  data.forEach((r: { id: number; title: string }) => {
-    const title = r.title.replace(/"/g, '""');
-    csv += `${r.id},"${title}",\n`;
-  });
+  let csv = 'titre,url,introduction,conclusion\n';
+
+  for (const r of data || []) {
+    const url = `https://menucochon.com/recette/${r.slug}/`;
+    const title = cleanForCsv(r.title);
+    const intro = cleanForCsv(r.introduction);
+    const conclusion = cleanForCsv(r.conclusion);
+    csv += `"${title}","${url}","${intro}","${conclusion}"\n`;
+  }
 
   fs.writeFileSync('recettes-export.csv', csv);
-  console.log(`Exported ${data.length} recipes to recettes-export.csv`);
+  console.log(`✅ Exporté ${data?.length || 0} recettes vers recettes-export.csv`);
 }
 
 main();

@@ -1,0 +1,4746 @@
+[
+  {
+    "id": 2,
+    "slug": "chili-con-carne-traditionnel",
+    "category": "Plats principaux - Boeuf",
+    "title": "Chili con carne recette traditionnelle mexicaine",
+    "excerpt": "La recette de chili con carne traditionnel est un grand classique de la cuisine mexicaine, apprécié partout dans le monde. Ce plat mijoté, à base de viande hachée, de haricots...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312119630-hot-chili-con-carne-2025-03-08-04-03-16-utc-scaled.jpg",
+    "prep_time": 20,
+    "cook_time": 90,
+    "total_time": 110,
+    "servings": 6,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "500",
+            "unit": "g",
+            "name": "bœuf haché (ou moitié bœuf, moitié porc)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "oignons jaunes, émincés",
+            "note": null
+          },
+          {
+            "quantity": "3",
+            "unit": "g",
+            "name": "ousses d’ail, hachées",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "poivrons rouges, coupés en dés",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "boîtes de tomates concassées (800 g)",
+            "note": null
+          },
+          {
+            "quantity": "400",
+            "unit": "g",
+            "name": "haricots rouges en conserve (rincés et égouttés)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "petite boîte de maïs (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "concentré de tomate",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "d’huile d’olive",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "cumin moulu",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "paprika fumé",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "chili en poudre (ajustez selon goût)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "d’origan séché",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "feuille de laurier",
+            "note": null
+          },
+          {
+            "quantity": "250",
+            "unit": "ml",
+            "name": "bouillon de bœuf",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre au goût",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Coriandre fraîche et quartiers de lime pour garnir",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préparer la base aromatique",
+        "content": "Dans une grande casserole, chauffez l’huile d’olive. Ajoutez les oignons et l’ail, puis faites-les revenir 3 minutes jusqu’à ce qu’ils soient translucides."
+      },
+      {
+        "step": 2,
+        "title": "Saisir la viande",
+        "content": "Ajoutez la viande hachée dans la casserole et faites-la revenir à feu moyen-vif en l’émiettant avec une cuillère en bois. Laissez cuire jusqu’à ce qu’elle soit bien dorée."
+      },
+      {
+        "step": 3,
+        "title": "Ajouter les légumes et les épices",
+        "content": "Incorporez les poivrons en dés, puis assaisonnez avec le cumin, le paprika, la poudre de chili, l’origan et le laurier. Mélangez bien pour enrober la viande et les légumes."
+      },
+      {
+        "step": 4,
+        "title": "Verser la sauce tomate",
+        "content": "Ajoutez les tomates concassées, le concentré de tomate et le bouillon. Mélangez et portez à ébullition. Réduisez le feu et laissez mijoter doucement pendant 45 minutes en remuant de temps en temps."
+      },
+      {
+        "step": 5,
+        "title": "Intégrer les haricots",
+        "content": "Ajoutez les haricots rouges et, si désiré, le maïs. Laissez mijoter encore 30 minutes à feu doux pour que toutes les saveurs se mélangent."
+      },
+      {
+        "step": 6,
+        "title": "Ajuster l’assaisonnement",
+        "content": "Goûtez et rectifiez le sel, le poivre ou le piquant selon vos préférences."
+      },
+      {
+        "step": 7,
+        "title": "Servir",
+        "content": "Servez le chili con carne bien chaud, garni de coriandre fraîche et d’un quartier de lime. Vous pouvez l’accompagner de riz blanc, de nachos ou de tortillas pour un repas complet."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/chili-con-carne-traditionnel/"
+  },
+  {
+    "id": 5,
+    "slug": "sloppy-joe",
+    "category": "Plats principaux - Boeuf",
+    "title": "Sloppy Joe Recette Maison (boeuf ou porc haché)",
+    "excerpt": "Un classique américain revisité avec des ingrédients simples Si tu cherches une sloppy joe recette facile, savoureuse et rapide à préparer pour toute la famille, tu es au bon endroit...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312126823-sloppy-joe-sandwiches-freshly-cooked-from-skillet.jpg",
+    "prep_time": 10,
+    "cook_time": 25,
+    "total_time": 35,
+    "servings": 6,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "500",
+            "unit": "g",
+            "name": "bœuf ou porc haché",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "d’huile d’olive",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "échalotes françaises, hachées finement",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "g",
+            "name": "ousse d’ail hachée (ou 1 c. à soupe de beurre à l’ail)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "pâte de tomate",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "moutarde (jaune ou Dijon)",
+            "note": null
+          },
+          {
+            "quantity": "2/3",
+            "unit": "tasse",
+            "name": "ketchup",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "sauce Worcestershire (witchitire)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "poudre de chili",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": "c. à thé",
+            "name": "d’origan séché",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Fleur de sel, au goût",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Optionnel : 1/2 c. à thé de fumée liquide",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Cuire la viandeAjouter la viande hachée. Cuire en émiettant jusqu’à ce qu’elle soit bien dorée (environ 8 à 10 minutes)."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Faire revenir les échalotes et l’ailDans une grande poêle, faire chauffer l’huile d’olive à feu moyen. Ajouter les échalotes et l’ail (ou le beurre à l’ail). Cuire 2 à 3 minutes jusqu’à ce qu’ils deviennent translucides."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Ajouter la sauceIncorporer la pâte de tomate, la moutarde, le ketchup, la sauce Worcestershire, la poudre de chili, l’origan, et la fumée liquide si désirée. Bien mélanger pour obtenir une sloppy joe sauce onctueuse."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Laisser mijoterRéduire le feu et laisser mijoter à découvert pendant 10 à 15 minutes. Saler à la fleur de sel au goût."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Servir chaudGarnir des pains à burger ou pains briochés légèrement grillés. Servir avec une salade de chou, des frites ou des légumes croquants."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/sloppy-joe/"
+  },
+  {
+    "id": 20,
+    "slug": "pate-chinois-traditionnel",
+    "category": "Plats principaux - Boeuf",
+    "title": "Pâté Chinois Traditionnel",
+    "excerpt": "Le pâté chinois est un classique intemporel de la cuisine québécoise. Réconfortant, chaleureux et facile à réaliser, ce plat familial réunit viande hachée, maïs crémeux et purée de pommes de...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312169210-shepherd-s-pie-in-the-casserole-dish-traditional-2025-03-06-00-23-03-utc-scaled.jpg",
+    "prep_time": 15,
+    "cook_time": 45,
+    "total_time": 60,
+    "servings": 6,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "à 5 grosses pommes de terre, pelées et coupées en cubes",
+            "note": null
+          },
+          {
+            "quantity": "500",
+            "unit": "g",
+            "name": "(1 lb) de bœuf haché maigre ou Porc Haché",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon moyen, haché finement",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "boîte (540 ml) de maïs en grains égouttés",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "boîte (398 ml) de maïs en crème",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe de beurre",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "tasse",
+            "name": "lait chaud",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre, au goût",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Paprika ou persil frais (optionnel pour garnir)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Dans une casserole d’eau salée, faire bouillir les pommes de terre jusqu’à tendreté, environ 20 minutes. Égoutter."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Écraser avec le beurre, le lait chaud, le sel et le poivre jusqu’à obtenir une purée lisse."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Dans une poêle à feu moyen, faire revenir l’oignon jusqu’à ce qu’il soit translucide."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Ajouter la viande hachée et cuire en émiettant avec une cuillère jusqu’à ce que la viande soit bien dorée. Assaisonner généreusement avec sel et poivre."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Préchauffer le four à 190 °C (375 °F)."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Déposer uniformément la viande cuite au fond d’un plat allant au four."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Étaler par-dessus le maïs en grains puis le maïs en crème."
+      },
+      {
+        "step": 8,
+        "title": "Étape 8",
+        "content": "Couvrir uniformément avec la purée de pommes de terre."
+      },
+      {
+        "step": 9,
+        "title": "Étape 9",
+        "content": "Enfourner pendant environ 25 minutes ou jusqu’à ce que la purée soit dorée."
+      },
+      {
+        "step": 10,
+        "title": "Étape 10",
+        "content": "Saupoudrer éventuellement de paprika ou de persil frais haché."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/pate-chinois-traditionnel/"
+  },
+  {
+    "id": 25,
+    "slug": "macaroni-chinois",
+    "category": "Plats principaux - Boeuf",
+    "title": "Macaroni Chinois Maison",
+    "excerpt": "Le macaroni chinois, c’est l’un de ces plats typiquement québécois qui n’a de « chinois » que le nom, mais qui évoque à lui seul une foule de souvenirs d’enfance, de soupers...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312181157-traditional-spanish-fideua-noodle-paella-2025-04-22-04-31-07-utc-scaled.jpg",
+    "prep_time": 15,
+    "cook_time": 20,
+    "total_time": 35,
+    "servings": 6,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "2",
+            "unit": "tasse",
+            "name": "s de macaroni (non cuit)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "d’huile végétale",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon haché",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "branches de céleri coupées en dés",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "poivron vert (ou rouge), coupé en dés",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "l",
+            "name": "b (450 g) de bœuf haché",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "tasse",
+            "name": "sauce soya",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": "tasse",
+            "name": "bouillon de bœuf ou d’eau",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "sauce hoisin (facultatif pour plus de goût)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "cassonade (optionnel pour adoucir)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre au goût",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "fécule de maïs (diluée dans un peu d’eau) – facultatif pour épaissir",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Cuire les pâtes :Faites cuire le macaroni selon les instructions sur l’emballage. Égouttez et réservez."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Faire revenir les légumes :Dans une grande poêle ou un wok, chauffer l’huile à feu moyen. Ajouter l’oignon, le céleri et le poivron. Faire sauter 5 minutes jusqu’à ce que les légumes soient tendres."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Cuire la viande :Ajouter le bœuf haché et cuire en émiettant la viande jusqu’à ce qu’elle soit bien dorée. Égoutter l’excès de gras si nécessaire."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Ajouter les sauces :Incorporer la sauce soya, le bouillon, la sauce hoisin et la cassonade. Laisser mijoter 2-3 minutes. Ajouter la fécule de maïs diluée si vous souhaitez une sauce plus épaisse."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Mélanger avec les pâtes :Ajouter le macaroni cuit à la poêle et bien mélanger pour que les saveurs s’imprègnent. Rectifier l’assaisonnement au goût."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Servir chaudGarnir de ciboulette ou oignons verts hachés si désiré sur votre macaroni chinois pour plus de saveurs."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/macaroni-chinois/"
+  },
+  {
+    "id": 27,
+    "slug": "smash-burgers",
+    "category": "Plats principaux - Boeuf",
+    "title": "Smash Burgers Maison",
+    "excerpt": "Envie d’un burger croustillant, juteux et plein de saveurs, comme dans les meilleurs diners américains ? Le smash burger est la réponse parfaite. Contrairement aux burgers classiques, ici, on écrase...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312186684-the-chef-in-the-kitchen-of-restaurant-makes-cutlets-for-hamburgers-smash-burger-beefsteak.jpg",
+    "prep_time": 10,
+    "cook_time": 20,
+    "total_time": 30,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "500",
+            "unit": "g",
+            "name": "bœuf haché (idéalement 80 % maigre / 20 % gras)",
+            "note": null
+          },
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "pains à burger briochés",
+            "note": null
+          },
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "tranches de fromage américain (ou cheddar fondant)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Beurre ou huile pour cuisson",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Cornichons tranchés",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Oignons émincés très fins (optionnel : caramélisés)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sauce burger (voir ci-dessous)",
+            "note": null
+          },
+          {
+            "quantity": "4",
+            "unit": "c. à soupe",
+            "name": "mayonnaise",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "ketchup",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "moutarde jaune",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "jus de cornichon",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "pincée",
+            "name": "paprika",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "réparer les boulettes : Former 4 boules de viande hachée d’environ 125 g chacune. Ne pas trop les manipuler."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Chauffer la poêle ou une plaque en fonte à feu très vif. Ajouter un peu d’huile ou de beurre."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Smash ! : Placer une boule sur la plaque chaude. Avec une spatule solide (ou deux), aplatir fortement la boulette jusqu’à ce qu’elle fasse environ 1 cm d’épaisseur. Saler et poivrer."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Cuire 1 à 2 minutes sans toucher pour bien saisir. Retourner quand une croûte dorée s’est formée."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Ajouter une tranche de fromage sur chaque galette immédiatement après le retournement. Cuire encore 1 minute."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Griller les pains à burger à la poêle ou au grille-pain."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Assembler : Pain, sauce, galette au fromage, oignons, cornichons, refermer et servir immédiatement."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/smash-burgers/"
+  },
+  {
+    "id": 10,
+    "slug": "poulet-mole",
+    "category": "Plats principaux - Volaille",
+    "title": "Poulet Mole (Mole Poblano Mexicain)",
+    "excerpt": "Le Poulet Mole, ou Mole Poblano, est un plat traditionnel mexicain riche en saveurs et en histoire. Ce mets emblématique combine des ingrédients surprenants comme le chocolat, les épices, et...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312142044-chicken-mole-poblano-with-chocolate-and-chilli-tradition-from-mexico-.jpg",
+    "prep_time": 15,
+    "cook_time": 35,
+    "total_time": 50,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "poitrines de poulet désossées et sans peau",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "piment Poblano haché (ou remplacez par un piment Chipotle ou Fresno selon la disponibilité)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon émincé",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "g",
+            "name": "ousse d’ail écrasée",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "beurre",
+            "note": null
+          },
+          {
+            "quantity": "3",
+            "unit": "c. à soupe",
+            "name": "pâte de tomates",
+            "note": null
+          },
+          {
+            "quantity": "375",
+            "unit": "ml",
+            "name": "(1 ½ tasse) de bouillon de poulet",
+            "note": null
+          },
+          {
+            "quantity": "125",
+            "unit": "ml",
+            "name": "(½ tasse) de chocolat noir râpé ou en pastilles",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "poudre de cacao non sucrée (optionnel pour un goût plus intense)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "cannelle",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ c. à thé de cumin",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "pincée",
+            "name": "clou de girofle moulu",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre au goût",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": "G",
+            "name": "raines de sésame pour garnir (optionnel)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préparer le pouletDans une grande poêle, faire fondre 1 c. à soupe de beurre à feu moyen. Ajouter les poitrines de poulet, saler et poivrer. Faire dorer environ 5 minutes de chaque côté, puis retirer et réserver."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Faire revenir les aromatesDans la même poêle, ajouter le reste du beurre. Faire revenir l’oignon, l’ail et le piment jusqu’à ce qu’ils soient tendres (environ 5 minutes)."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Créer la base de la sauce moleIncorporer la pâte de tomates, la cannelle, le cumin et le clou de girofle. Cuire 1 à 2 minutes en remuant."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Ajouter le bouillon et le chocolatVerser le bouillon de poulet, ajouter le chocolat noir et la poudre de cacao. Bien mélanger jusqu’à ce que le chocolat soit fondu."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Laisser mijoterRemettre le poulet dans la poêle, couvrir et laisser mijoter à feu doux pendant 25 à 30 minutes, jusqu’à ce que la sauce épaississe et que le poulet soit bien tendre."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "ServirGarnir de graines de sésame grillées et accompagner de riz blanc, de tortillas ou de légumes sautés."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/poulet-mole/"
+  },
+  {
+    "id": 14,
+    "slug": "poulet-chorizo-cremeux",
+    "category": "Plats principaux - Volaille",
+    "title": "Poulet et chorizo crémeux au basilic et citron",
+    "excerpt": "Envie d’un plat riche en goût mais simple à préparer ? Ce poulet et chorizo crémeux est la combinaison parfaite entre tendreté du poulet, chaleur du chorizo et douceur de...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312154948-Untitled-design-9-1-scaled.jpg",
+    "prep_time": 20,
+    "cook_time": 55,
+    "total_time": 75,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "poitrines de poulet",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "paprika",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "d’huile d’olive",
+            "note": null
+          },
+          {
+            "quantity": "150",
+            "unit": "g",
+            "name": "chorizo (doux ou fort, selon votre goût), tranché finement",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "g",
+            "name": "ousses d’ail émincées",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "échalote française hachée",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "oignons verts ciselés",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": "L",
+            "name": "e jus d’un demi-citron",
+            "note": null
+          },
+          {
+            "quantity": "250",
+            "unit": "ml",
+            "name": "crème 15 % à cuisson",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Quelques feuilles de basilic frais",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre au goût",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préparer le poulet :Coupez les poitrines de poulet en lanières ou en cubes. Saupoudrez de paprika, salez, poivrez et mélangez bien."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Cuisson du chorizo :Faites chauffer l’huile d’olive dans une grande poêle. Ajoutez le chorizo et faites-le revenir 3 à 4 minutes jusqu’à ce qu’il soit doré et légèrement croustillant. Retirez-le et réservez."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Saisir le poulet :Dans la même poêle, ajoutez les morceaux de poulet. Faites cuire 5 à 6 minutes jusqu’à ce qu’ils soient bien dorés et cuits à cœur. Retirez-les et réservez avec le chorizo."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Faire la base aromatique :Dans la poêle, ajoutez l’ail, l’échalote et les oignons verts. Faites revenir 2 minutes à feu moyen."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Ajouter la crème :Versez la crème 15 %, ajoutez le jus de citron, salez légèrement et poivrez. Laissez mijoter 3 à 4 minutes pour épaissir légèrement."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Assembler le tout :Remettez le poulet et le chorizo dans la poêle. Laissez mijoter encore 3 minutes pour bien enrober le tout."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Finaliser :Hors du feu, ajoutez le basilic frais ciselé. Rectifiez l’assaisonnement si nécessaire."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/poulet-chorizo-cremeux/"
+  },
+  {
+    "id": 17,
+    "slug": "dumplings-au-poulet",
+    "category": "Plats principaux - Volaille",
+    "title": "Dumplings au Poulet",
+    "excerpt": "Les dumplings au poulet sont une spécialité asiatique irrésistible, alliant une pâte fine et tendre à une farce savoureuse, parfumée au gingembre, à l’ail et à la sauce soya. À...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312161912-steamed-korean-dumplings-mandu-with-chicken-meat-and-vegetables.jpg",
+    "prep_time": 35,
+    "cook_time": 15,
+    "total_time": 50,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "400",
+            "unit": "g",
+            "name": "poulet haché (cuisses ou poitrine)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "oignons verts émincés",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "g",
+            "name": "ousses d’ail hachées",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "gingembre frais râpé",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "sauce soya",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "d’huile de sésame grillé",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "sauce aux huîtres (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "sucre",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Poivre noir au goût",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "tasse",
+            "name": "chou chinois finement haché (optionnel mais traditionnel)",
+            "note": null
+          },
+          {
+            "quantity": "35",
+            "unit": null,
+            "name": "à 40 feuilles de pâte à dumpling (disponible en épicerie asiatique ou maison)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Un petit bol d’eau pour sceller les bords",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "sauce soya",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "vinaigre de riz",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "d’huile de sésame",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Un peu de chili ou ail selon goût",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préparer la farce",
+        "content": "Dans un grand bol, mélanger le poulet haché avec l’ail, le gingembre, les oignons verts, le chou haché (si utilisé), la sauce soya, l’huile de sésame, la sauce aux huîtres, le sucre et le poivre. Bien mélanger pour obtenir une farce homogène. Laisser reposer au frigo pendant 15-20 minutes pour bien faire mariner."
+      },
+      {
+        "step": 2,
+        "title": "Façonner les dumplings",
+        "content": "Prendre une feuille de pâte à dumpling. Déposer environ 1 c. à thé de farce au centre. Mouiller légèrement le pourtour de la pâte avec de l’eau, puis plier en demi-lune. Sceller les bords en pressant fermement ou en plissant pour une forme plus traditionnelle."
+      },
+      {
+        "step": 3,
+        "title": "Cuisson des dumplings (3 méthodes)",
+        "content": "➤ Poêlés (méthode gyoza) Chauffer 1 c. à soupe d’huile dans une grande poêle antiadhésive à feu moyen. Déposer les dumplings (face plate vers le bas) et cuire 2-3 minutes jusqu’à ce que le fond soit doré. Ajouter 1/4 tasse d’eau, couvrir immédiatement et laisser cuire à la vapeur 5 à 6 minutes jusqu’à cuisson complète. Retirer le couvercle, laisser l’eau s’évaporer, puis servir. ➤ VapeurCuire dans un panier vapeur tapissé de papier parchemin troué pendant 8 à 10 minutes. ➤ BouillisDéposer les dumplings dans une eau bouillante salée pendant 5 à 6 minutes jusqu’à ce qu’ils remontent à la surface."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/dumplings-au-poulet/"
+  },
+  {
+    "id": 23,
+    "slug": "doigts-de-poulet-croustillants",
+    "category": "Plats principaux - Volaille",
+    "title": "Doigts de poulet croustillants au parmesan et chapelure",
+    "excerpt": "Les doigts de poulet maison sont une solution parfaite pour un souper rapide, gourmand et adoré par toute la famille. Cette version, enrobée de chapelure panko et de parmesan, donne...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312176373-delicious-fresh-chicken-or-turkey-strips-or-nugget-2024-12-12-07-44-10-utc-scaled.jpg",
+    "prep_time": 15,
+    "cook_time": 25,
+    "total_time": 40,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "poitrines de poulet, coupées en lanières",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "½ tasse de chapelure panko",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ tasse de parmesan râpé",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "œufs",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre (au goût)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préparation de la panureDans un bol ou un grand sac Ziploc, mélange la chapelure panko et le parmesan. Ajoute un peu de sel et de poivre si désiré."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Préparation du pouletCoupe les poitrines de poulet en lanières de taille uniforme."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Bain d’œufsBats les œufs dans un bol. Trempe chaque lanière de poulet dans les œufs battus."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Panure Méthode 1 (Ziploc – plus pratique) :Mets les lanières trempées dans les œufs dans le sac Ziploc contenant le mélange chapelure/parmesan. Ferme bien le sac et secoue jusqu’à ce que les morceaux soient bien enrobés."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Méthode 2 (bol – plus visuel) :Égoutte légèrement les lanières trempées et dépose-les dans le bol avec la panure. Mélange bien pour bien enrober chaque morceau."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Optionnel – deuxième enrobagePour une panure plus croustillante, tu peux retremper les lanières dans l’œuf, puis à nouveau dans la chapelure/parmesan."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "CuissonDispose les lanières panées sur une plaque de cuisson tapissée de papier parchemin.Fais cuire au four à 400 °F (200 °C) pendant environ 20 à 25 minutes, en les retournant à mi-cuisson, jusqu’à ce qu’elles soient bien dorées et croustillantes."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/doigts-de-poulet-croustillants/"
+  },
+  {
+    "id": 30,
+    "slug": "poulet-au-curry",
+    "category": "Plats principaux - Volaille",
+    "title": "Poulet au curry",
+    "excerpt": "Envie d’évasion et de parfums venus d’ailleurs ? Le poulet au curry est un classique incontournable qui mêle simplicité et saveurs exotiques. Avec ses arômes d’épices douces, sa sauce onctueuse...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312193556-delicious-chicken-curry.jpg",
+    "prep_time": 30,
+    "cook_time": 15,
+    "total_time": 45,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "600",
+            "unit": "g",
+            "name": "blancs de poulet, coupés en morceaux",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon moyen, émincé",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "g",
+            "name": "ousses d’ail, hachées",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "morceau de gingembre frais (2 cm), râpé",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "pâte ou poudre de curry (doux ou fort selon goût)",
+            "note": null
+          },
+          {
+            "quantity": "400",
+            "unit": "ml",
+            "name": "lait de coco",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "d’huile végétale",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "curcuma",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "cumin moulu (optionnel)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre au goût",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "poignée de coriandre fraîche (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "citron vert (facultatif)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préparer la base aromatiqueDans une grande poêle ou un wok, faire chauffer l’huile. Ajouter l’oignon émincé et faire revenir à feu moyen jusqu’à ce qu’il soit translucide."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Ajouter les épicesIncorporer l’ail, le gingembre, le curry, le curcuma et le cumin. Faire revenir 1 à 2 minutes pour libérer les arômes."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Cuire le pouletAjouter les morceaux de poulet dans la poêle. Faire dorer de tous les côtés pendant 5 à 7 minutes."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Ajouter le lait de cocoVerser le lait de coco. Bien mélanger. Saler et poivrer. Laisser mijoter à feu doux pendant 15 à 20 minutes jusqu’à ce que la sauce épaississe et que le poulet soit bien cuit."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "FinitionRectifier l’assaisonnement. Ajouter de la coriandre fraîche hachée juste avant de servir. Un filet de citron vert peut également relever le tout."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/poulet-au-curry/"
+  },
+  {
+    "id": 16,
+    "slug": "cotelette-de-porc-bbq",
+    "category": "Plats principaux - Porc",
+    "title": "Côtelettes de Porc sur le BBQ",
+    "excerpt": "Envie d’un souper simple, savoureux et rempli de souvenirs de famille ? Voici la recette de côtelettes de porc façon Colette, un classique revisité qui fait toujours fureur sur le...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312159614-grilled-pork-chops-risotto-with-portobello-2024-09-24-00-07-50-utc-scaled.jpg",
+    "prep_time": 5,
+    "cook_time": 15,
+    "total_time": 20,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "Côtelettes de porc",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Fleur de sel",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Moutarde de Dijon (ou moutarde jaune, au goût)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "à 2 gousses d’ail émincées",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ cuillère à thé de beurre par côtelette",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Épices à steak de Montréal",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Assaisonnement initialSaupoudrer chaque côté des côtelettes de porc avec de la fleur de sel. Laisser reposer à température ambiante pendant 30 minutes. Cela permet de rehausser les saveurs et d’attendrir la viande."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Préparation de la marinade expressÉtendre une fine couche de moutarde sur chaque face des côtelettes. Ajouter l’ail émincé et bien répartir."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Cuisson au BBQPréchauffer le BBQ à feu vif. Cuire les côtelettes environ 3 à 4 minutes par côté, selon l’épaisseur et la cuisson désirée."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Finition gourmandeJuste avant de retirer les côtelettes du BBQ, ajouter ½ cuillère à thé de beurre sur chacune, puis saupoudrer d’épices à steak de Montréal. Laisser fondre légèrement."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Repos et serviceRetirer du grill et laisser reposer 3 à 5 minutes avant de servir, pour une viande juteuse et savoureuse."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/cotelette-de-porc-bbq/"
+  },
+  {
+    "id": 55,
+    "slug": "filet-de-porc",
+    "category": "Plats principaux - Porc",
+    "title": "Filet de porc au four",
+    "excerpt": "Parmi les viandes les plus appréciées en cuisine familiale, le filet de porc se distingue par sa tendreté naturelle et sa capacité à s&rsquo;imprégner des saveurs qu’on lui apporte. Facile...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312252326-homemade-hot-pork-tenderloin.jpg",
+    "prep_time": 10,
+    "cook_time": 40,
+    "total_time": 50,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "filet de porc d’environ 600–700 g",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe d’huile d’olive",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "g",
+            "name": "ousses d’ail émincées",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à soupe de moutarde (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à soupe de thym ou d’herbes de Provence",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel, poivre",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "(Optionnel) 1 oignon émincé et quelques pommes de terre ou légumes pour un plat complet",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préchauffez le four à 200°C (chaleur tournante de préférence)."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Dans un bol, mélangez l’huile d’olive, l’ail, les herbes, le sel, le poivre et la moutarde si utilisée."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Badigeonnez le filet de porc avec cette préparation."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Déposez-le dans un plat allant au four. Ajoutez l’oignon émincé et, si vous le souhaitez, des pommes de terre ou légumes autour."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Enfournez pour 35 à 45 minutes, selon l’épaisseur du filet et votre cuisson souhaitée. Arrosez de jus de cuisson à mi-parcours."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Vérifiez la cuisson : la viande doit rester légèrement rosée à cœur pour rester juteuse (environ 65°C à cœur avec un thermomètre)."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Laissez reposer la viande 5 minutes hors du four, couverte de papier aluminium, avant de trancher et servir."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/filet-de-porc/"
+  },
+  {
+    "id": 8,
+    "slug": "nigiri-au-saumon",
+    "category": "Plats principaux - Poissons",
+    "title": "Nigiri au saumon – Recette japonaise authentique",
+    "excerpt": "Envie de voyager au Japon sans quitter votre cuisine ? Le nigiri au saumon est l’un des grands classiques de la cuisine japonaise. À la fois simple, raffiné et savoureux, ce...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312135696-sushi-salmon-and-tuna-nigiri.jpg",
+    "prep_time": 30,
+    "cook_time": 15,
+    "total_time": 45,
+    "servings": 10,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "150",
+            "unit": "g",
+            "name": "riz à sushi (riz japonais rond)",
+            "note": null
+          },
+          {
+            "quantity": "180",
+            "unit": "ml",
+            "name": "d’eau",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "vinaigre de riz",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "sucre",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ c. à café de sel",
+            "note": null
+          },
+          {
+            "quantity": "10",
+            "unit": null,
+            "name": "tranches de saumon cru ultra frais (env. 5 cm x 2 cm, 4 mm d’épaisseur)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Wasabi (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sauce soya pour tremper",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": "G",
+            "name": "ingembre mariné (optionnel)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Un petit bol d’eau froide + un peu de vinaigre (pour se mouiller les mains)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 2,
+        "title": "Façonnage des nigiris :",
+        "content": "Mouillez légèrement vos mains avec de l’eau vinaigrée pour éviter que le riz colle. Prenez une petite boule de riz (env. 20 g) et façonnez-la en ovale (comme une petite bouchée). Étalez une fine couche de wasabi (facultatif) sur la face intérieure d’une tranche de saumon. Déposez la tranche sur la boule de riz en appuyant doucement pour qu’elle adhère."
+      },
+      {
+        "step": 3,
+        "title": "Dressage :",
+        "content": "Disposez les nigiris sur une assiette. Servez avec de la sauce soya, du gingembre mariné, et un peu de wasabi à côté."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/nigiri-au-saumon/"
+  },
+  {
+    "id": 63,
+    "slug": "saumon-a-la-creme",
+    "category": "Plats principaux - Poissons",
+    "title": "Saumon à la crème",
+    "excerpt": "Un plat simple et délicieux qui ravira les amateurs de poisson. Ce plat est une excellente option pour un repas savoureux et équilibré. Que ce soit pour un dîner rapide...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312270666-grilled-salmon-with-cream-sauce.jpg",
+    "prep_time": 5,
+    "cook_time": 10,
+    "total_time": 15,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "pavés de saumon",
+            "note": null
+          },
+          {
+            "quantity": "20",
+            "unit": null,
+            "name": "cl de crème fraîche épaisse",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "échalote",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "g",
+            "name": "ousse d'ail",
+            "note": null
+          },
+          {
+            "quantity": "10",
+            "unit": null,
+            "name": "cl de vin blanc sec (optionnel)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à soupe de jus de citron",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à soupe d'huile d'olive",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "noix de beurre",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel, poivre",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Persil ou ciboulette (pour la touche finale)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Faire revenir l’échalote et l’ail :"
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Hacher finement l’échalote et l’ail."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Dans une poêle, faire chauffer l’huile d’olive et le beurre, puis faire revenir l’échalote et l’ail jusqu’à ce qu’ils deviennent translucides."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Cuire le saumon : Ajouter les pavés de saumon dans la poêle, côté peau en premier."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Cuire environ 4 à 5 minutes de chaque côté, jusqu'à ce qu’ils soient dorés."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Déglacer et ajouter la crème : Déglacer avec le vin blanc et laisser réduire quelques minutes."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Ajouter la crème fraîche et le jus de citron, bien mélanger."
+      },
+      {
+        "step": 8,
+        "title": "Étape 8",
+        "content": "Assaisonner avec du sel et du poivre selon votre goût."
+      },
+      {
+        "step": 9,
+        "title": "Étape 9",
+        "content": "Laisser mijoter et servir : Laisser cuire à feu doux pendant 2 à 3 minutes pour que la sauce épaississe légèrement."
+      },
+      {
+        "step": 10,
+        "title": "Étape 10",
+        "content": "Parsemer de persil ou de ciboulette avant de servir."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/saumon-a-la-creme/"
+  },
+  {
+    "id": 119,
+    "slug": "pate-au-saumon",
+    "category": "Plats principaux - Poissons",
+    "title": "Pâte au saumon",
+    "excerpt": "Cette recette de pâtes au saumon est un mélange parfait de saveurs méditerranéennes et nordiques. La tendresse du saumon rencontre la texture délicate des pâtes, le tout relevé par une...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312405325-pate-au-saumon.png",
+    "prep_time": 10,
+    "cook_time": 13,
+    "total_time": 25,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "300",
+            "unit": "g",
+            "name": "pâtes (de votre choix)",
+            "note": null
+          },
+          {
+            "quantity": "400",
+            "unit": "g",
+            "name": "filet de saumon, coupé en dés",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe d'huile d'olive",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon moyen, haché finement",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "g",
+            "name": "ousses d'ail, émincées",
+            "note": null
+          },
+          {
+            "quantity": "200",
+            "unit": "ml",
+            "name": "crème fraîche",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à soupe de jus de citron",
+            "note": null
+          },
+          {
+            "quantity": "100",
+            "unit": "g",
+            "name": "tomates cerises, coupées en deux",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre noir moulu, au goût",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Persil frais haché, pour garnir",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Cuire les pâtes dans une grande casserole d'eau bouillante salée selon les instructions sur l'emballage jusqu'à ce qu'elles soient al dente. Égoutter et réserver."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Pendant ce temps, dans une grande poêle, chauffer l'huile d'olive à feu moyen. Ajouter l'oignon et l'ail, et faire revenir jusqu'à ce qu'ils soient translucides."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Ajouter les dés de saumon dans la poêle et faire cuire pendant environ 5 minutes, ou jusqu'à ce qu'ils soient dorés et cuits à travers."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Réduire le feu à moyen-doux, puis verser la crème fraîche dans la poêle. Ajouter le jus de citron, les tomates cerises et assaisonner avec du sel et du poivre selon votre goût. Laisser mijoter pendant quelques minutes jusqu'à ce que la sauce épaississe légèrement."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Incorporer les pâtes cuites dans la poêle avec la sauce au saumon, en mélangeant délicatement pour les enrober uniformément."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Servir les pâtes au saumon chaudes, garnies de persil frais haché pour une touche de fraîcheur."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/pate-au-saumon/"
+  },
+  {
+    "id": 11,
+    "slug": "bortsch",
+    "category": "Soupes",
+    "title": "Authentique Soupe Bortsch Ukrainien",
+    "excerpt": "Le Bortsch est un plat emblématique de la cuisine ukrainienne, apprécié pour sa richesse en saveurs et sa couleur vibrante. Cette soupe rouge vif est préparée à partir de betteraves,...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312145528-Borchtch.png",
+    "prep_time": 20,
+    "cook_time": 60,
+    "total_time": 80,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "betteraves moyennes, pelées et râpées",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "pommes de terre, pelées et coupées en dés",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "carotte, pelée et coupée en dés",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon, haché finement",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "g",
+            "name": "ousses d'ail, émincées",
+            "note": null
+          },
+          {
+            "quantity": "400",
+            "unit": "g",
+            "name": "bœuf ou de porc, coupé en cubes",
+            "note": null
+          },
+          {
+            "quantity": "4",
+            "unit": "tasse",
+            "name": "s de bouillon de bœuf ou de légumes",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe de vinaigre de cidre",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe de concentré de tomate",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "feuille de laurier",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre noir moulu, au goût",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Crème sure (facultatif), pour garnir",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Aneth frais (facultatif), pour garnir",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Dans une grande casserole, faire chauffer un peu d'huile à feu moyen. Ajouter les oignons et l'ail, et faire revenir jusqu'à ce qu'ils soient tendres et légèrement dorés."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Ajouter la viande coupée en cubes dans la casserole et faire revenir jusqu'à ce qu'elle soit bien dorée de tous les côtés."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Incorporer les betteraves râpées, les pommes de terre, les carottes, le bouillon de bœuf ou de légumes, le vinaigre de cidre, le concentré de tomate et la feuille de laurier dans la casserole. Assaisonner avec du sel et du poivre noir moulu selon votre goût."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Porter à ébullition, puis réduire le feu et laisser mijoter à feu doux pendant environ 45 minutes à 1 heure, ou jusqu'à ce que les légumes soient tendres et la viande soit cuite."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Retirer la feuille de laurier de la soupe et ajuster l'assaisonnement si nécessaire."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Servir chaud, garni de crème sure et d'aneth frais si désiré."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/bortsch/"
+  },
+  {
+    "id": 12,
+    "slug": "soupe-de-tomates-roties",
+    "category": "Soupes",
+    "title": "Soupe de Tomates Rôties",
+    "excerpt": "Soupe de tomate : un classique réconfortant La soupe de tomates rôties fait partie de ces plats intemporels qui traversent les générations. Qu’il s’agisse d’une recette de soupe à la tomate...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312149300-tomato-soup.jpg",
+    "prep_time": 5,
+    "cook_time": 27,
+    "total_time": 35,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Tomates cerises ou tomates Roma, coupées en deux",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Huile d'olive extra vierge",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre noir moulu, au goût",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Ail émincé (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Herbes fraîches (thym, romarin, origan) ou séchées",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Parmesan râpé (facultatif)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préchauffez votre four à 180°C (350°F)."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Disposez les moitiés de tomates sur une plaque de cuisson recouverte de papier sulfurisé, côté coupé vers le haut."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Arrosez généreusement les tomates d'huile d'olive extra vierge. Assaisonnez avec du sel, du poivre et des herbes fraîches ou séchées selon votre goût. Ajoutez de l'ail émincé si désiré."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Enfournez les tomates dans le four préchauffé et faites-les rôtir pendant environ 20 à 30 minutes, ou jusqu'à ce qu'elles soient tendres et légèrement caramélisées."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Une fois cuites, retirez les tomates du four et laissez-les refroidir légèrement avant de les servir."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Garnissez éventuellement de parmesan râpé juste avant de servir."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/soupe-de-tomates-roties/"
+  },
+  {
+    "id": 59,
+    "slug": "soupe-poulet-et-nouilles",
+    "category": "Soupes",
+    "title": "Soupe poulet et nouilles",
+    "excerpt": "Une Soupe poulet et nouilles classique réconfortant et savoureux, idéal pour les journées fraîches. Ce plat est une excellente option pour un repas savoureux et équilibré. Que ce soit pour...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312260674-chicken-soup.jpg",
+    "prep_time": 10,
+    "cook_time": 20,
+    "total_time": 30,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "200",
+            "unit": "g",
+            "name": "poulet",
+            "note": null
+          },
+          {
+            "quantity": "100",
+            "unit": "g",
+            "name": "nouilles",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "carotte",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "l",
+            "name": "itre de bouillon de poulet",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Étape Faites cuire le poulet et émiettez-le. :"
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Étape Ajoutez le bouillon et portez à ébullition. :"
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Étape Ajoutez les nouilles et la carotte coupée. :"
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Étape Laissez mijoter 10 minutes. :"
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Étape Assaisonnez et servez chaud. :"
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/soupe-poulet-et-nouilles/"
+  },
+  {
+    "id": 61,
+    "slug": "soupe-aux-pois",
+    "category": "Soupes",
+    "title": "Soupe aux pois",
+    "excerpt": "Cette soupe aux pois est parfaite pour les journées froides et se prépare facilement. Ce plat est une excellente option pour un repas savoureux et équilibré. Que ce soit pour...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312265442-bowl-of-split-pea-soup.jpg",
+    "prep_time": 10,
+    "cook_time": 40,
+    "total_time": 50,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "200",
+            "unit": "g",
+            "name": "pois cassés",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "l",
+            "name": "itre d'eau",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "carotte",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Étape Faites tremper les pois cassés 2 heures. :"
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Étape Faites revenir l’oignon et la carotte. :"
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Étape Ajoutez les pois et l’eau. :"
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Étape Laissez mijoter 40 minutes. :"
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Étape Mixez et servez chaud. :"
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/soupe-aux-pois/"
+  },
+  {
+    "id": 65,
+    "slug": "soupe-won-ton",
+    "category": "Soupes",
+    "title": "Soupe won ton",
+    "excerpt": "Découvrez cette soupe asiatique délicieuse et simple à préparer. Ce plat est une excellente option pour un repas savoureux et équilibré. Que ce soit pour un dîner rapide en semaine...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312275295-delicious-of-wonton-soup-with-chili-oil-and-green-onion-chinese-food-asian-food-style.jpg",
+    "prep_time": 10,
+    "cook_time": 10,
+    "total_time": 20,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "200",
+            "unit": "g",
+            "name": "crevettes décortiquées et hachées",
+            "note": null
+          },
+          {
+            "quantity": "200",
+            "unit": "g",
+            "name": "viande de porc hachée",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "c.à soupe de sauce soja",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "c.à soupe d’huile de sésame",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "c.à café de gingembre râpé",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "g",
+            "name": "ousse d’ail hachée",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon vert émincé",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "c.à café de fécule de maïs",
+            "note": null
+          },
+          {
+            "quantity": "20",
+            "unit": null,
+            "name": "feuilles de pâte à wonton",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "œuf battu (pour sceller les raviolis)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "L",
+            "name": "bouillon de poulet",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "c.à soupe de sauce soja",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "c.à café d’huile de sésame",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "c.à café de gingembre râpé",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "g",
+            "name": "ousse d’ail hachée",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "oignons verts émincés",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Champignons émincés (optionnel)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Bok choy ou épinards (optionnel)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préparer la farce : Mélanger les crevettes, le porc haché, la sauce soja, l’huile de sésame, le gingembre, l’ail, l’oignon vert et la fécule de maïs dans un bol."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Façonner les wontons : Placer une petite cuillère de farce au centre d’une feuille de wonton."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Badigeonner les bords avec un peu d’œuf battu, puis replier en triangle en pressant bien pour sceller."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Rabattre les pointes et les coller ensemble pour former un petit sachet."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Préparer le bouillon : Faire chauffer le bouillon de poulet dans une casserole avec la sauce soja, l’huile de sésame, le gingembre et l’ail."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Ajouter les légumes si souhaité et laisser mijoter 10 minutes."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Cuire les wontons : Porter une casserole d’eau à ébullition et y plonger les wontons."
+      },
+      {
+        "step": 8,
+        "title": "Étape 8",
+        "content": "Cuire 3-5 minutes jusqu’à ce qu’ils flottent, puis les égoutter et les transférer dans le bouillon."
+      },
+      {
+        "step": 9,
+        "title": "Étape 9",
+        "content": "Servir : Répartir les wontons et le bouillon dans des bols, parsemer d’oignons verts et déguster chaud."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/soupe-won-ton/"
+  },
+  {
+    "id": 26,
+    "slug": "sucre-d-orge",
+    "category": "Desserts",
+    "title": "Sucre d'orge maison",
+    "excerpt": "J’ai redécouvert cette recette par une journée particulièrement chaude, en feuilletant mon vieux livre de famille. Il fait au moins 30 degrés dehors pendant que je l’écris, ce qui rend...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312183705-christmas-background-with-candy-cane-and-fir-tree-branches.jpg",
+    "prep_time": 20,
+    "cook_time": 20,
+    "total_time": 40,
+    "servings": 12,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "500",
+            "unit": "g",
+            "name": "sucre",
+            "note": null
+          },
+          {
+            "quantity": "125",
+            "unit": "mL",
+            "name": "sirop de glucose (ou sirop de maïs clair)",
+            "note": null
+          },
+          {
+            "quantity": "60",
+            "unit": "mL",
+            "name": "d'eau",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": null,
+            "name": "cuillère à thé de crème de tartre (ou quelques gouttes de jus de citron)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Quelques gouttes d'extrait de menthe poivrée ou de vanille",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Colorant alimentaire rouge (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Huile végétale neutre pour le plan de travail",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préparer le sirop :Dans une casserole à fond épais, mélanger le sucre, l’eau, le sirop de glucose et la crème de tartre. Chauffer doucement jusqu’à ce que le sucre soit complètement dissous."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Cuisson :Augmenter le feu et porter le mélange à 150 °C (300 °F) sans remuer. Utiliser un thermomètre à bonbon pour surveiller la température. Dès qu’elle est atteinte, retirer du feu."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Aromatiser :Ajouter l’extrait de menthe poivrée ou de vanille hors du feu et bien mélanger."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Coloration :Verser le sirop dans deux récipients résistants à la chaleur. Colorer l’un avec quelques gouttes de colorant rouge et laisser l’autre naturel."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Manipulation :Huiler légèrement un plan de travail ou une plaque en marbre. Verser les deux masses de sucre et laisser tiédir jusqu’à ce qu’elles soient malléables. Étirer chaque masse en longs rouleaux."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Former les cannes :Torsader les deux rouleaux ensemble, puis découper en morceaux de 15 cm. Courber une extrémité pour former la canne traditionnelle."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Durcissement :Laisser refroidir complètement à température ambiante jusqu’à ce que les cannes soient dures. Conserver dans un contenant hermétique, à l’abri de l’humidité."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/sucre-d-orge/"
+  },
+  {
+    "id": 40,
+    "slug": "croustade-aux-pommes-2",
+    "category": "Desserts",
+    "title": "Croustade aux pommes (Facile)",
+    "excerpt": "La croustade aux pommes est un grand classique des desserts d&rsquo;automne au Québec. Simple, chaleureuse et rapide à préparer, elle met en valeur les pommes du verger sous une garniture...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312220494-apple-and-pear-crumble-with-ice-cream-streusel-two-plate-with-apple-cobbler-top-view-vertical.jpg",
+    "prep_time": 15,
+    "cook_time": 40,
+    "total_time": 55,
+    "servings": 6,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "6",
+            "unit": null,
+            "name": "pommes pelées, évidées et tranchées (McIntosh ou Cortland de préférence)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "jus de citron",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "cassonade",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "cannelle moulue",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "pincée",
+            "name": "muscade (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "tasse",
+            "name": "flocons d’avoine à cuisson rapide",
+            "note": null
+          },
+          {
+            "quantity": "3/4",
+            "unit": "tasse",
+            "name": "farine tout usage",
+            "note": null
+          },
+          {
+            "quantity": "3/4",
+            "unit": "tasse",
+            "name": "cassonade bien tassée",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": "tasse",
+            "name": "beurre froid, coupé en cubes",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "pincée",
+            "name": "sel",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préchauffer le four",
+        "content": "Préchauffez votre four à 180 °C (350 °F)."
+      },
+      {
+        "step": 2,
+        "title": "Préparer les pommes",
+        "content": "Dans un grand bol, mélangez les pommes tranchées avec le jus de citron, la cassonade, la cannelle et la muscade. Versez ce mélange dans un plat allant au four beurré (environ 9&#215;9 po)."
+      },
+      {
+        "step": 3,
+        "title": "Préparer le crumble",
+        "content": "Dans un autre bol, mélangez les flocons d’avoine, la farine, la cassonade et le sel. Ajoutez le beurre froid et, du bout des doigts, sablez la pâte jusqu’à ce qu’elle forme des grumeaux grossiers."
+      },
+      {
+        "step": 4,
+        "title": "Monter la croustade",
+        "content": "Répartissez uniformément le mélange croustillant sur les pommes."
+      },
+      {
+        "step": 5,
+        "title": "Cuisson",
+        "content": "Faites cuire au centre du four pendant 35 à 40 minutes, ou jusqu’à ce que le dessus soit bien doré et que les pommes bouillonnent légèrement sur les côtés."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/croustade-aux-pommes-2/"
+  },
+  {
+    "id": 44,
+    "slug": "gaufre-belge",
+    "category": "Desserts",
+    "title": "Gaufre belge au yogourt grec, miel et noix (Délicieux)",
+    "excerpt": "Envie d’un dessert rapide, santé et délicieusement croquant ? Cette gaufre belge au yogourt grec, miel et noix est le parfait mariage entre la gourmandise et l’équilibre. Alliant la douceur...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312229620-Firefly_Une-gaufre-belge-doree-et-croustillante-posee-sur-une-assiette-en-ceramique-blanche-450431.jpg",
+    "prep_time": 5,
+    "cook_time": 3,
+    "total_time": 8,
+    "servings": 1,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "1",
+            "unit": "g",
+            "name": "aufre belge (du marché ou faite maison)",
+            "note": null
+          },
+          {
+            "quantity": "3",
+            "unit": "c. à soupe",
+            "name": "yogourt grec nature (ou vanille, selon préférence)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "petite poignée de noix concassées (ou céréales granola aux noix/noisettes)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "filet de sirop de noisette grillée (type 1883 Maison Routin France)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Réchauffer la gaufre",
+        "content": "Faites chauffer la gaufre belge : Au grille-pain (1 à 2 minutes pour une texture croustillante) Ou au four à 180°C (350°F) pendant 3 à 4 minutes Cela permet de raviver son croustillant et son parfum sucré."
+      },
+      {
+        "step": 2,
+        "title": "Ajouter le yogourt grec",
+        "content": "Déposez généreusement 3 cuillères à soupe de yogourt grec sur la gaufre chaude.Le contraste entre le froid du yogourt et la chaleur de la gaufre crée une sensation fondante irrésistible."
+      },
+      {
+        "step": 3,
+        "title": "Parsemer de noix ou céréales",
+        "content": "Ajoutez une petite poignée de noix concassées, de céréales granola aux noix, ou un mélange des deux pour un croquant savoureux et une touche de fibres."
+      },
+      {
+        "step": 4,
+        "title": "Napper de sirop de noisette grillée",
+        "content": "Terminez avec un filet de sirop noisette grillée 1883 Maison Routin.Son arôme intense de noisette caramélisée vient parfaire l’ensemble et apporter une finition digne des plus beaux cafés gourmets."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/gaufre-belge/"
+  },
+  {
+    "id": 46,
+    "slug": "gateau-roule-moelleux",
+    "category": "Desserts",
+    "title": "Gâteau roulé : la vraie recette de maman (moelleux et facile)",
+    "excerpt": "Le gâteau roulé est un grand classique de la pâtisserie française. Léger, moelleux et très simple à réaliser, il peut être garni de confiture, de chocolat, de crème pâtissière ou...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312232792-Firefly_Jellyroll-Cake-234557.jpg",
+    "prep_time": 20,
+    "cook_time": 12,
+    "total_time": 32,
+    "servings": 8,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "œufs (blancs et jaunes séparés)",
+            "note": null
+          },
+          {
+            "quantity": "120",
+            "unit": "g",
+            "name": "(2/3 tasse) de sucre",
+            "note": null
+          },
+          {
+            "quantity": "100",
+            "unit": "g",
+            "name": "(3/4 tasse) de farine",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "pincée",
+            "name": "sel",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "d’extrait de vanille",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "d’eau chaude",
+            "note": null
+          },
+          {
+            "quantity": "150",
+            "unit": null,
+            "name": "à 200 g de confiture de fraises, framboises ou abricots",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "OU 150 g de pâte à tartiner au chocolat",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "OU chantilly + fruits rouges",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sucre glace pour saupoudrer",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Fruits frais (optionnel)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Chocolat fondu pour décorer (optionnel)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préparer la génoise",
+        "content": "Préchauffez le four à 180°C (350°F). Séparez les blancs des jaunes. Battez les jaunes avec le sucre jusqu’à ce que le mélange blanchisse et devienne mousseux. Ajoutez l’extrait de vanille et l’eau chaude. Incorporez la farine tamisée petit à petit. Dans un autre bol, montez les blancs en neige ferme avec une pincée de sel. Incorporez délicatement les blancs à la pâte en soulevant avec une spatule."
+      },
+      {
+        "step": 2,
+        "title": "Cuisson du biscuit",
+        "content": "Étalez la pâte uniformément sur une plaque de cuisson recouverte de papier parchemin. Enfournez pour 10 à 12 minutes. Le biscuit doit être légèrement doré mais rester souple au toucher."
+      },
+      {
+        "step": 3,
+        "title": "Le roulage (étape clé)",
+        "content": "Dès la sortie du four, démoulez le biscuit sur un torchon propre légèrement humide et saupoudré de sucre. Retirez délicatement le papier cuisson. Roulez immédiatement le gâteau (sans garniture) dans le torchon pour lui donner sa forme. Laissez refroidir roulé."
+      },
+      {
+        "step": 4,
+        "title": "Garniture et finition",
+        "content": "Une fois le gâteau refroidi, déroulez-le délicatement. Étalez la garniture choisie uniformément : confiture, pâte à tartiner, chantilly, etc. Roulez à nouveau en serrant bien. Emballez dans du film plastique et laissez reposer au frais 30 minutes à 1 heure avant de servir. Saupoudrez de sucre glace juste avant de couper en tranches."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/gateau-roule-moelleux/"
+  },
+  {
+    "id": 48,
+    "slug": "tartelettes-aux-pommes",
+    "category": "Desserts",
+    "title": "Tartelettes aux pommes maison",
+    "excerpt": "Les tartelettes aux pommes sont des mini-desserts rustiques, simples et élégants, qui allient le croustillant de la pâte au fondant des pommes caramélisées. Ces petites merveilles, parfaites pour les goûters...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312237691-sweet-apple-tartlets.jpg",
+    "prep_time": 25,
+    "cook_time": 30,
+    "total_time": 55,
+    "servings": 6,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "1/4 tasse (150 g) de farine tout usage",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": "tasse",
+            "name": "(115 g) de beurre froid en dés",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "pincée",
+            "name": "sel",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "à 3 c. à soupe (30-45 ml) d’eau froide",
+            "note": null
+          },
+          {
+            "quantity": "3",
+            "unit": null,
+            "name": "pommes (type Cortland, Gala ou Golden)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "(30 g) de sucre de canne ou cassonade",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "(15 g) de beurre fondu",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "jus de citron",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": "c. à thé",
+            "name": "cannelle moulue",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "c. à thé",
+            "name": "muscade (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "(15 ml) de sirop d’érable ou miel (optionnel, pour le glaçage)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préparer la pâte brisée (si maison)",
+        "content": "Dans un bol, mélangez la farine et le sel. Ajoutez le beurre froid en petits morceaux et sablez avec les doigts ou un coupe-pâte jusqu’à obtention d’une texture granuleuse. Incorporez l’eau froide progressivement jusqu’à former une boule homogène. Emballez dans une pellicule plastique et réfrigérez pendant 20 minutes."
+      },
+      {
+        "step": 2,
+        "title": "Préparer les pommes",
+        "content": "Épluchez, épépinez et coupez les pommes en fines tranches (ou en petits cubes si vous préférez une texture plus fondante). Dans un bol, mélangez les tranches de pommes avec le jus de citron, le sucre, la cannelle, la muscade et le beurre fondu. Laissez macérer pendant que vous préparez les fonds de tartelettes."
+      },
+      {
+        "step": 3,
+        "title": "Monter les tartelettes",
+        "content": "Préchauffez le four à 180°C (350°F). Étalez la pâte sur une surface légèrement farinée. Découpez des cercles un peu plus grands que vos moules à tartelettes (ou utilisez un moule à muffins pour des versions mini). Foncez les moules avec la pâte, piquez le fond à la fourchette. Garnissez généreusement avec les pommes préparées. Badigeonnez le dessus avec un peu de sirop d’érable ou de miel pour une belle finition brillante."
+      },
+      {
+        "step": 4,
+        "title": "Cuisson",
+        "content": "Enfournez pour environ 30 minutes, ou jusqu’à ce que les pommes soient tendres et la pâte bien dorée. Laissez tiédir avant de démouler. Servez tiède ou à température ambiante."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/tartelettes-aux-pommes/"
+  },
+  {
+    "id": 49,
+    "slug": "jambon-a-la-biere-a-la-mijoteuse",
+    "category": "Desserts",
+    "title": "Jambon à la bière à la mijoteuse",
+    "excerpt": "Le jambon à la bière à la mijoteuse est l’une de ces recettes simples et profondément réconfortantes qui embaument la maison toute la journée. Ce plat, inspiré des traditions québécoises...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312240106-ham-hock-meat-sandwich.jpg",
+    "prep_time": 20,
+    "cook_time": 0,
+    "total_time": 20,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "jambon désossé de 1,5 à 2 kg (épaule ou picnic, déjà cuit ou fumé)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "bouteille de bière ambrée ou rousse (341 ml) – ex. Boréale Rousse, Rickard’s Red",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "tasse",
+            "name": "(60 ml) de sirop d’érable ou de miel",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "moutarde de Dijon",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "sauce Worcestershire",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon jaune coupé en quartiers",
+            "note": null
+          },
+          {
+            "quantity": "3",
+            "unit": "g",
+            "name": "ousses d’ail écrasées",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": "c. à thé",
+            "name": "clou de girofle moulu (ou quelques clous entiers à piquer dans le jambon)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Poivre du moulin (au goût)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préparation du jambon",
+        "content": "Si votre jambon est très salé (souvent le cas des jambons fumés), rincez-le sous l’eau froide et faites-le tremper dans l’eau pendant une heure. Égouttez avant cuisson. Retirez la couenne si elle est présente, mais laissez une mince couche de gras pour la cuisson."
+      },
+      {
+        "step": 2,
+        "title": "Montage dans la mijoteuse",
+        "content": "Placez l’oignon et l’ail dans le fond de la mijoteuse. Déposez le jambon par-dessus, côté gras vers le haut. Dans un bol, mélangez la bière, le sirop d’érable, la moutarde de Dijon, la sauce Worcestershire, les épices et les herbes (si utilisées). Versez ce mélange sur le jambon."
+      },
+      {
+        "step": 3,
+        "title": "Cuisson lente",
+        "content": "Couvrez et laissez cuire à basse température pendant 6 à 8 heures (selon la taille du jambon). La viande doit être fondante et s’effilocher à la fourchette. Pour un glaçage plus caramélisé, vous pouvez transférer le jambon dans un plat allant au four et le faire griller sous le gril (broil) pendant 5-7 minutes avec un peu de sirop d’érable supplémentaire"
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/jambon-a-la-biere-a-la-mijoteuse/"
+  },
+  {
+    "id": 50,
+    "slug": "pouding-aux-bleuets",
+    "category": "Desserts",
+    "title": "Recette de pouding aux bleuets maison facile",
+    "excerpt": "Le pouding aux bleuets est un dessert traditionnel québécois qui évoque la chaleur des étés passés à la campagne, les fins de repas chez grand-maman et les grandes tablées familiales....",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312242399-blueberry-cake.jpg",
+    "prep_time": 20,
+    "cook_time": 45,
+    "total_time": 75,
+    "servings": 8,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "3",
+            "unit": "tasse",
+            "name": "s (environ 450 g) de bleuets frais ou surgelés",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": "tasse",
+            "name": "(100 g) de sucre",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "(15 ml) de jus de citron",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "fécule de maïs (facultatif, pour épaissir)",
+            "note": null
+          },
+          {
+            "quantity": "1/3",
+            "unit": "tasse",
+            "name": "(75 g) de beurre ramolli",
+            "note": null
+          },
+          {
+            "quantity": "3/4",
+            "unit": "tasse",
+            "name": "(150 g) de sucre",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "œuf",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "(5 ml) d’extrait de vanille",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "1/2 tasse (190 g) de farine tout usage",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à thé",
+            "name": "(10 ml) de poudre à pâte",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "c. à thé",
+            "name": "sel",
+            "note": null
+          },
+          {
+            "quantity": "3/4",
+            "unit": "tasse",
+            "name": "(180 ml) de lait",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préchauffer le four et préparer la garniture",
+        "content": "Préchauffez votre four à 180°C (350°F). Dans une casserole moyenne, versez les bleuets, le sucre, le jus de citron et la fécule de maïs (si vous souhaitez une texture plus sirupeuse). Faites chauffer à feu moyen pendant 5 à 7 minutes en remuant doucement. Une fois que le mélange commence à épaissir et à bouillonner légèrement, retirez du feu. Versez cette garniture dans un moule carré de 9 x 9 pouces (23 x 23 cm) légèrement beurré ou tapissé de papier parchemin."
+      },
+      {
+        "step": 2,
+        "title": "Préparer la pâte à gâteau",
+        "content": "Dans un grand bol, crémez le beurre ramolli avec le sucre jusqu’à l’obtention d’un mélange pâle et mousseux. Ajoutez l’œuf et la vanille, puis mélangez jusqu’à homogénéité. Dans un autre bol, mélangez les ingrédients secs : farine, poudre à pâte et sel. Incorporez-les graduellement au mélange humide en alternant avec le lait. Ne mélangez pas trop : la pâte doit être lisse mais pas trop travaillée, pour conserver un maximum de moelleux."
+      },
+      {
+        "step": 3,
+        "title": "Monter le pouding aux bleuets",
+        "content": "Déposez doucement la pâte à gâteau sur la garniture de bleuets dans le moule. Étalez à l’aide d’une spatule pour bien couvrir tous les fruits. Ce n’est pas grave si quelques bleuets remontent à la surface pendant la cuisson — cela donnera un bel effet marbré."
+      },
+      {
+        "step": 4,
+        "title": "Cuisson",
+        "content": "Enfournez au centre du four pendant 40 à 45 minutes, ou jusqu’à ce que le dessus soit bien doré et qu’un cure-dent inséré au centre ressorte propre. Le pouding aux bleuets doit être bien levé et légèrement croustillant sur le dessus, tout en restant tendre à l’intérieur."
+      },
+      {
+        "step": 5,
+        "title": "Refroidissement et service",
+        "content": "Laissez tiédir une dizaine de minutes avant de servir. Le pouding aux bleuets est délicieux tiède, mais peut aussi se manger froid."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/pouding-aux-bleuets/"
+  },
+  {
+    "id": 85,
+    "slug": "biscuits-chocolat-moelleux",
+    "category": "Desserts",
+    "title": "Biscuits au Chocolat Moelleux",
+    "excerpt": "Les biscuits au chocolat moelleux sont un incontournable pour les amateurs de douceurs chocolatées. Leur texture fondante et leur goût intense en font une collation parfaite à partager avec vos...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312327397-delicious-cookies-with-pieces-of-milk-chocolate-on-a-plate-.jpg",
+    "prep_time": 15,
+    "cook_time": 12,
+    "total_time": 27,
+    "servings": 12,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "200",
+            "unit": "g",
+            "name": "farine",
+            "note": null
+          },
+          {
+            "quantity": "50",
+            "unit": "g",
+            "name": "cacao en poudre non sucré",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à café de bicarbonate de soude",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": null,
+            "name": "cuillère à café de sel",
+            "note": null
+          },
+          {
+            "quantity": "120",
+            "unit": "g",
+            "name": "beurre ramolli",
+            "note": null
+          },
+          {
+            "quantity": "150",
+            "unit": "g",
+            "name": "sucre brun",
+            "note": null
+          },
+          {
+            "quantity": "50",
+            "unit": "g",
+            "name": "sucre blanc",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "œuf",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à café d'extrait de vanille",
+            "note": null
+          },
+          {
+            "quantity": "100",
+            "unit": "g",
+            "name": "pépites de chocolat noir",
+            "note": null
+          },
+          {
+            "quantity": "50",
+            "unit": "g",
+            "name": "pépites de chocolat au lait",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préparation de la pâte",
+        "content": "Préparation de la pâte"
+      },
+      {
+        "step": 2,
+        "title": "Formation et cuisson des biscuits",
+        "content": "Formation et cuisson des biscuits"
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/biscuits-chocolat-moelleux/"
+  },
+  {
+    "id": 47,
+    "slug": "cannellonis-au-veau-gratines",
+    "category": "Pâtes",
+    "title": "Cannellonis au veau gratinés",
+    "excerpt": "Les cannellonis au veau sont un classique de la cuisine italienne, appréciés pour leur farce tendre et parfumée, généreusement nappée de sauce tomate maison et gratinée au four. Plus raffinés...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312235287-italian-cannelloni-pasta-casserole-cannelloni-with-ground-chicken-tomato-and-bechamel-sauce-tradi.jpg",
+    "prep_time": 30,
+    "cook_time": 45,
+    "total_time": 75,
+    "servings": 6,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "12",
+            "unit": null,
+            "name": "tubes de cannellonis (secs ou frais)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "d’huile d’olive",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon moyen, haché finement",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "g",
+            "name": "ousses d’ail, émincées",
+            "note": null
+          },
+          {
+            "quantity": "500",
+            "unit": "g",
+            "name": "veau haché",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "œuf",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": "tasse",
+            "name": "(50 g) de parmesan râpé",
+            "note": null
+          },
+          {
+            "quantity": "1/2",
+            "unit": "tasse",
+            "name": "(120 ml) de ricotta ou de mascarpone",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "tasse",
+            "name": "chapelure",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "c. à thé",
+            "name": "muscade moulue",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre au goût",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Persil frais haché (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "d’huile d’olive",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "boîte (796 ml) de tomates concassées ou passata",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "oignon haché",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "g",
+            "name": "ousse d’ail",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "concentré de tomate",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "sucre",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "d’origan séché",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "tasse",
+            "name": "(100 g) de mozzarella râpée",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "tasse",
+            "name": "parmesan râpé",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préparer la sauce tomate",
+        "content": "Dans une casserole, chauffer l’huile d’olive. Faire revenir l’oignon et l’ail pendant 3 minutes. Ajouter les tomates concassées, le concentré de tomate, l’origan, le sucre, le sel et le poivre. Laisser mijoter à feu doux 15 à 20 minutes, puis mixer légèrement si vous préférez une texture plus lisse."
+      },
+      {
+        "step": 2,
+        "title": "Préparer la farce au veau",
+        "content": "Dans une poêle, chauffer l’huile d’olive et faire revenir l’oignon et l’ail jusqu’à ce qu’ils soient tendres. Ajouter le veau haché et cuire jusqu’à ce qu’il soit bien doré. Saler et poivrer. Laisser tiédir légèrement, puis mélanger le veau avec l’œuf, le parmesan, la ricotta, la chapelure, la muscade et éventuellement du persil. Bien mélanger jusqu’à obtention d’une farce homogène."
+      },
+      {
+        "step": 3,
+        "title": "Garnir les cannellonis",
+        "content": "Si vous utilisez des cannellonis secs, vous pouvez les farcir sans cuisson préalable (ils cuiront dans la sauce au four). Sinon, faites-les précuire selon les indications du paquet. Remplissez chaque tube de cannelloni avec la farce à l’aide d’une poche à douille ou d’une petite cuillère."
+      },
+      {
+        "step": 4,
+        "title": "Montage du plat",
+        "content": "Préchauffez le four à 180°C (350°F). Étalez une fine couche de sauce tomate dans le fond d’un plat allant au four. Disposez les cannellonis farcis côte à côte. Nappez avec le reste de sauce tomate. Parsemez de mozzarella et de parmesan."
+      },
+      {
+        "step": 5,
+        "title": "Cuisson",
+        "content": "Couvrez le plat de papier aluminium. Cuire au four pendant 30 minutes, puis retirer le papier et poursuivre la cuisson 15 minutes supplémentaires pour gratiner."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/cannellonis-au-veau-gratines/"
+  },
+  {
+    "id": 60,
+    "slug": "salade-de-macaroni-jambon",
+    "category": "Pâtes",
+    "title": "Salade de macaroni jambon",
+    "excerpt": "Cette salade de macaroni et jambon est un plat simple, rapide et délicieux. Ce plat est une excellente option pour un repas savoureux et équilibré. Que ce soit pour un...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312263110-macaroni-salad-with-mayonnaise-and-vegetables-.jpg",
+    "prep_time": 10,
+    "cook_time": 10,
+    "total_time": 20,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "200",
+            "unit": "g",
+            "name": "macaroni",
+            "note": null
+          },
+          {
+            "quantity": "150",
+            "unit": "g",
+            "name": "jambon",
+            "note": null
+          },
+          {
+            "quantity": "100",
+            "unit": "g",
+            "name": "mayonnaise",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "moutarde",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Étape Faites cuire les macaronis et égouttez-les. :"
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Étape Ajoutez le jambon coupé en dés. :"
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Étape Mélangez avec la mayonnaise et la moutarde. :"
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Étape Assaisonnez et réfrigérez avant de servir. :"
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/salade-de-macaroni-jambon/"
+  },
+  {
+    "id": 67,
+    "slug": "pates-a-la-creme-avocat",
+    "category": "Pâtes",
+    "title": "Pâtes à la crème d'avocat",
+    "excerpt": "Les pâtes à la crème d&rsquo;avocat sont une alternative originale et gourmande aux sauces classiques. Onctueuse et riche en saveurs, cette crème d’avocat apporte une touche de fraîcheur et de...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312280925-pasta-with-avocado.jpg",
+    "prep_time": 10,
+    "cook_time": 10,
+    "total_time": 20,
+    "servings": 2,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "250",
+            "unit": "g",
+            "name": "pâtes",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "avocats mûrs",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "g",
+            "name": "ousse d'ail",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "citron",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe d'huile d'olive",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel, poivre",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Cuire les pâtes selon les instructions."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Mixer les avocats avec ail, citron et huile."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Égoutter les pâtes et les mélanger avec la sauce."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Assaisonner selon les goûts."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Servir avec du parmesan râpé."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/pates-a-la-creme-avocat/"
+  },
+  {
+    "id": 98,
+    "slug": "carbonara",
+    "category": "Pâtes",
+    "title": "Carbonara pates : la recette traditionnelle italienne",
+    "excerpt": "Vous cherchez pâtes carbonara recette simple et authentique ? Ce grand classique de la cuisine italienne séduit par sa richesse, sa simplicité et son goût irrésistible. Oubliez la crème : la...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312357503-ingredients-for-cooking-carbonara-pasta-spaghetti-alla-carbonara.jpg",
+    "prep_time": 10,
+    "cook_time": 10,
+    "total_time": 20,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "400",
+            "unit": "g",
+            "name": "pâtes (spaghetti ou rigatoni)",
+            "note": null
+          },
+          {
+            "quantity": "150",
+            "unit": "g",
+            "name": "guanciale (joue de porc salée et séchée)",
+            "note": null
+          },
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "jaunes d'œufs",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "œuf entier",
+            "note": null
+          },
+          {
+            "quantity": "100",
+            "unit": "g",
+            "name": "pecorino romano râpé",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Poivre noir fraîchement moulu",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel (avec modération, car le guanciale et le pecorino sont déjà salés)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préparer les ingrédients",
+        "content": "Commencez par découper le guanciale en petits lardons d'environ 1 cm de largeur. Il est essentiel d'utiliser du guanciale pour obtenir la texture et le goût authentiques de cette recette traditionnelle de pâtes à la carbonara. Si vous ne trouvez pas de guanciale, vous pouvez le remplacer par de la pancetta, mais ce ne sera pas tout à fait la même saveur."
+      },
+      {
+        "step": 2,
+        "title": "Cuire le guanciale",
+        "content": "Faites chauffer une poêle à feu moyen sans ajouter de matière grasse. Ajoutez les lardons de guanciale et faites-les revenir doucement jusqu'à ce qu'ils deviennent croustillants et que la graisse fonde. Cette étape est cruciale pour obtenir une sauce carbonara onctueuse et parfumée."
+      },
+      {
+        "step": 3,
+        "title": "Cuire les pâtes",
+        "content": "Pendant que le guanciale cuit, portez une grande casserole d'eau à ébullition. Ajoutez une petite quantité de sel, car le guanciale et le pecorino apportent déjà beaucoup de saveur. Faites cuire les pâtes selon les indications du paquet jusqu'à ce qu'elles soient al dente. Une fois la cuisson terminée, réservez une louche d'eau de cuisson, puis égouttez les pâtes."
+      },
+      {
+        "step": 4,
+        "title": "Préparer la sauce",
+        "content": "Dans un grand bol, fouettez les jaunes d'œufs et l'œuf entier avec le pecorino râpé. Ajoutez une bonne quantité de poivre noir fraîchement moulu pour relever la saveur des pâtes à la carbonara."
+      },
+      {
+        "step": 5,
+        "title": "Assembler la carbonara",
+        "content": "Ajoutez les pâtes bien chaudes dans la poêle contenant le guanciale. Retirez la poêle du feu pour éviter que les œufs ne coagulent trop vite. Versez immédiatement le mélange œufs-pecorino sur les pâtes, en remuant énergiquement pour obtenir une texture crèmeuse. Si la sauce est trop épaisse, ajoutez un peu d'eau de cuisson réservée afin d'obtenir une consistance parfaite."
+      },
+      {
+        "step": 6,
+        "title": "Dresser et servir",
+        "content": "Servez immédiatement les pâtes à la carbonara dans des assiettes chaudes. Ajoutez un supplément de pecorino râpé et un peu plus de poivre noir selon votre goût. Dégustez sans attendre pour profiter de toute la crémosité de cette recette traditionnelle."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/carbonara/"
+  },
+  {
+    "id": 4,
+    "slug": "salade-de-cocombre",
+    "category": "Salades",
+    "title": "Salade de cocombre maison : la recette idéale",
+    "excerpt": "Recette facile de salade de cocombre Savourez notre salade de cocombre croquante et rafraîchissante, assaisonnée d’une vinaigrette maison parfumée. Idéale pour accompagner vos grillades ou repas légers, cette recette rapide...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312124527-salad-from-cucumber-and-green-herbs.jpg",
+    "prep_time": 10,
+    "cook_time": 0,
+    "total_time": 10,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "2",
+            "unit": "g",
+            "name": "ros concombres frais",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à café de sel",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe de vinaigre de riz (ou vinaigre blanc)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à soupe d’huile de sésame ou d’olive",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à café de sucre",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "g",
+            "name": "ousse d’ail hachée finement",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à soupe de sauce soja (optionnelle pour la salade concombre asiatique)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "pincée",
+            "name": "piment en flocons (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Quelques feuilles de coriandre ou menthe fraîche",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préparer le concombre Laver les concombres et retirer les extrémités."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Les couper en fines rondelles ou en bâtonnets, selon votre préférence pour la salade de concombre recette traditionnelle ou moderne."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Saler et laisser dégorger Placer les rondelles dans un saladier et ajouter le sel."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Laisser reposer 10 minutes pour que l’eau s’écoule, puis égoutter."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Préparer la vinaigrette Mélanger le vinaigre, l’huile, le sucre, l’ail et la sauce soja."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Ajouter du piment si vous réalisez une salade concombre asiatique relevée."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Assembler la salade Verser la vinaigrette sur les concombres."
+      },
+      {
+        "step": 8,
+        "title": "Étape 8",
+        "content": "Bien mélanger et laisser mariner 5 minutes pour une salade de concombre facile mais savoureuse."
+      },
+      {
+        "step": 9,
+        "title": "Étape 9",
+        "content": "Servir Parsemer de coriandre ou menthe et servir frais."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/salade-de-cocombre/"
+  },
+  {
+    "id": 6,
+    "slug": "salade-de-macaroni-maman",
+    "category": "Salades",
+    "title": "Salade de Macaroni (version maman Ginette Bilodeau)",
+    "excerpt": "La salade de macaroni à ma maman est un classique à tous les partys familiaux. C’est grâce à elle que j’ai développé une certaine passion pour la cuisine, et cette...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312129348-20250731_1209_Salade-de-Macaroni-Coloree_simple_compose_01k1gkwxe8f9gvakh681enbsfq.jpg",
+    "prep_time": 20,
+    "cook_time": 10,
+    "total_time": 30,
+    "servings": 10,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ boîte de macaroni Barilla (environ 250 g)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "branche de céleri, coupée en petits cubes",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "poivron de la couleur de votre choix, en petits cubes",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "échalote (ou plus selon le goût), finement hachée",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "carotte, râpée",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "tasse",
+            "name": "fromage râpé (cheddar ou au goût)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre, au goût",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Mayonnaise (ajouter à la toute fin, au goût)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Cuisson du macaroniFaire bouillir une grande casserole d’eau salée. Cuire ½ boîte de macaroni Barilla jusqu’à ce qu’il soit al dente. Égoutter et refroidir immédiatement à l’eau froide. Réserver."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Préparer les légumesCouper le céleri, le poivron (de la couleur que vous aimez), et les échalotes en petits cubes. Râper la carotte. Mélanger tous les légumes ensemble dans un grand bol."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "AssemblageAjouter le macaroni refroidi aux légumes. Ajouter le fromage râpé. Assaisonner de sel et poivre."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "À la dernière minuteJuste avant de servir, incorporer la mayonnaise. Cela évitera que la salade devienne liquide. La mayonnaise ajoutée à l’avance peut rendre la salade trop mouillée. Ajoutez-la seulement juste avant de servir."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Cette salade peut être préparée à l’avance (sans mayo) et conservée au frigo."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Pour une touche de couleur supplémentaire : utilisez un mélange de poivrons rouge, orange et vert."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/salade-de-macaroni-maman/"
+  },
+  {
+    "id": 7,
+    "slug": "salade-de-kale-aux-raisins",
+    "category": "Salades",
+    "title": "Salade de kale aux raisins",
+    "excerpt": "Envie d’une salade fraîche, colorée et nourrissante ? Cette salade de kale allie croquant, douceur et fraîcheur grâce aux raisins juteux, aux tomates cerises éclatantes, aux petits pois tendres et aux...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312132007-healthy-kale-salad-full-of-vitamin-and-minerals-2025-03-24-02-44-38-utc-scaled.jpg",
+    "prep_time": 15,
+    "cook_time": 0,
+    "total_time": 15,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "4",
+            "unit": "tasse",
+            "name": "s de kale (chou frisé), lavé, équeuté et haché",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "tasse",
+            "name": "raisins rouges ou verts, coupés en deux",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "tasse",
+            "name": "tomates cerises, coupées en deux",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "tasse",
+            "name": "petits pois (frais ou surgelés, blanchis)",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "tasse",
+            "name": "graines de citrouille (pepitas), grillées ou nature",
+            "note": null
+          },
+          {
+            "quantity": "1/4",
+            "unit": "tasse",
+            "name": "fromage feta émietté (optionnel)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "d’huile d’olive extra vierge",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "jus de citron ou vinaigre balsamique blanc",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "sirop d’érable (ou miel)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre au goût",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Masser le kale : dans un grand bol, ajoutez un filet d’huile d’olive et une pincée de sel aux feuilles de kale. Massez 1 à 2 minutes pour les attendrir."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Ajouter les légumes et fruits : incorporez les raisins, tomates cerises, petits pois et graines de citrouille."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Préparer la vinaigrette : mélangez l’huile d’olive, le jus de citron, le sirop d’érable, le sel et le poivre dans un petit bol."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Assembler : versez la vinaigrette sur la salade, mélangez bien, puis ajoutez le fromage feta si désiré."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Repos : laissez la salade reposer 5 à 10 minutes pour que les saveurs se marient."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/salade-de-kale-aux-raisins/"
+  },
+  {
+    "id": 1,
+    "slug": "crepe-proteinee",
+    "category": "Déjeuner",
+    "title": "Crêpe Protéinée : Recette Santé Riche en Protéines",
+    "excerpt": "La crêpe protéinée est devenue un incontournable pour tous ceux qui souhaitent se préparer un déjeuner rapide, nourrissant et parfait pour soutenir leurs objectifs fitness. Cette recette de crêpe protéinée...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312117134-close-up-of-roll-pancakes-2025-02-22-02-05-28-utc-scaled.jpg",
+    "prep_time": 5,
+    "cook_time": 10,
+    "total_time": 17,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "1",
+            "unit": "scoop",
+            "name": "(30 g) de poudre protéinée (vanille, nature ou chocolat)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "œuf",
+            "note": null
+          },
+          {
+            "quantity": "120",
+            "unit": "ml",
+            "name": "lait d’amande ou de vache",
+            "note": null
+          },
+          {
+            "quantity": "40",
+            "unit": "g",
+            "name": "flocons d’avoine moulus",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "poudre à pâte",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à thé",
+            "name": "sirop d’érable (optionnel)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "pincée",
+            "name": "sel",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Huile ou beurre pour la cuisson",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Préparer les ingrédients secs",
+        "content": "Dans un bol, combinez les flocons d’avoine moulus, la poudre protéinée, la poudre à pâte et une pincée de sel. Cette base entièrement sèche permet d’obtenir une crêpe protéinée homogène qui ne colle pas à la poêle. Les flocons d’avoine apportent une texture légère et aérienne, idéale pour garder la crêpe moelleuse malgré la présence de protéines en poudre."
+      },
+      {
+        "step": 2,
+        "title": "Ajouter les ingrédients liquides",
+        "content": "Ajoutez l’œuf, le lait de votre choix et le sirop d’érable. Mélangez délicatement. Le lait d’amande apporte une texture fluide et légère, tandis que l’œuf renforce la tenue de la crêpe. Cette étape permet de créer une pâte souple, typique d’une crêpe santé protéine."
+      },
+      {
+        "step": 3,
+        "title": "Ajuster la consistance",
+        "content": "Selon la marque de poudre protéinée, la pâte peut devenir trop épaisse. Si c’est le cas, ajoutez un peu de lait jusqu’à obtenir une texture coulante, similaire à une pâte à crêpe classique. Cette étape est essentielle pour réussir une recette crepe protéinée qui cuira de manière uniforme."
+      },
+      {
+        "step": 4,
+        "title": "Cuire les crêpes",
+        "content": "Chauffez une poêle légèrement huilée à feu moyen. Versez une louche de pâte et laissez cuire jusqu'à formation de petites bulles en surface. Retournez la crêpe et poursuivez la cuisson environ 30 secondes. Les crêpes protéinées doivent être dorées, moelleuses et légèrement épaisses."
+      },
+      {
+        "step": 5,
+        "title": "Garnir et servir",
+        "content": "Servez vos crêpes avec : Yogourt grec Fruits (bananes, framboises, bleuets) Beurre d’arachide Sirop d’érable Graines de chia Ces garnitures renforcent le côté santé de la crêpe protéinée, tout en ajoutant fibres, bons gras et glucides de qualité."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/crepe-proteinee/"
+  },
+  {
+    "id": 18,
+    "slug": "pain-dore",
+    "category": "Déjeuner",
+    "title": "Pain doré maison moelleux et savoureux",
+    "excerpt": "Le pain doré, aussi appelé « French Toast », est le classique incontournable des brunchs et petits-déjeuners gourmands. Délicieusement dorées et croustillantes à l&rsquo;extérieur, moelleuses et parfumées à l&rsquo;intérieur, ces...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312164368-french-toast-with-strawberries-and-passion-fruit-2025-05-07-18-52-46-utc-scaled.jpg",
+    "prep_time": 10,
+    "cook_time": 10,
+    "total_time": 20,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "8",
+            "unit": null,
+            "name": "tranches épaisses de pain légèrement rassis (pain de mie, brioche ou baguette)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "œufs",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ tasse (125 ml) de lait",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe de sucre",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à thé d’extrait de vanille",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ cuillère à thé de cannelle moulue (optionnel)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Une pincée de sel",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe de beurre pour la cuisson",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Mélanger les ingrédients",
+        "content": "Dans un bol, fouetter ensemble les œufs, le lait, le sucre, l’extrait de vanille, la cannelle et le sel jusqu’à obtenir un mélange homogène."
+      },
+      {
+        "step": 2,
+        "title": "Tremper les tranches de pain",
+        "content": "Tremper rapidement chaque tranche de pain dans le mélange des deux côtés pour bien les imbiber sans trop les détremper."
+      },
+      {
+        "step": 3,
+        "title": "Cuire le pain doré",
+        "content": "Faire chauffer une grande poêle à feu moyen et faire fondre le beurre. Déposer les tranches de pain imbibées dans la poêle et cuire 2 à 3 minutes de chaque côté jusqu'à ce qu’elles soient dorées. Servez chaud avec du sirop d’érable, des fruits frais coupés, une touche de sucre à glacer ou même une cuillerée de yogourt grec pour une texture crémeuse."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/pain-dore/"
+  },
+  {
+    "id": 56,
+    "slug": "crepe-traditionnelle",
+    "category": "Déjeuner",
+    "title": "Recette Crêpe Traditionnelle Facile",
+    "excerpt": "Cette recette crêpe traditionnelle est un classique incontournable de la cuisine québécoise. Facile à préparer, elle donne des crêpes légères et moelleuses, parfaites pour le déjeuner ou le dessert.",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312254424-crepes.jpg",
+    "prep_time": 10,
+    "cook_time": 30,
+    "total_time": 40,
+    "servings": 12,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "250",
+            "unit": "g",
+            "name": "farine",
+            "note": null
+          },
+          {
+            "quantity": "3",
+            "unit": null,
+            "name": "œufs",
+            "note": null
+          },
+          {
+            "quantity": "50",
+            "unit": null,
+            "name": "cl de lait",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "pincée",
+            "name": "sel",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à soupe de sucre (facultatif, pour les crêpes sucrées)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cuillère à soupe d’huile neutre ou 30 g de beurre fondu",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "(Optionnel : 1 cuillère à soupe de rhum, de fleur d’oranger ou de vanille pour parfumer)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Dans un saladier, versez la farine et creusez un puits."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Ajoutez les œufs au centre, puis commencez à mélanger doucement au fouet."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Versez progressivement le lait tout en fouettant pour éviter les grumeaux."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Incorporez le sel, le sucre et l’huile ou le beurre fondu. Mélangez jusqu’à obtention d’une pâte lisse et fluide."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Laissez reposer la pâte 30 minutes à 1 heure (facultatif mais conseillé pour des crêpes plus souples)."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Faites chauffer une poêle antiadhésive, graissez légèrement si besoin, puis versez une louche de pâte en l’étalant bien."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Faites cuire les crèpes 1 à 2 minutes de chaque côté, jusqu’à ce qu’elles soient bien dorées."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/crepe-traditionnelle/"
+  },
+  {
+    "id": 9,
+    "slug": "ble-d-inde",
+    "category": "Accompagnements",
+    "title": "Blé d’Inde cuit dans l’eau et du lait",
+    "excerpt": "Il n’y a rien de plus réconfortant qu’un bon épi de blé d’Inde bien juteux, surtout en plein cœur de l’été québécois. Cette méthode traditionnelle consiste à faire cuire le...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312138737-happy-little-girl-holding-an-ear-of-corn-.jpg",
+    "prep_time": 5,
+    "cook_time": 12,
+    "total_time": 17,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "4",
+            "unit": null,
+            "name": "épis de blé d’Inde (maïs) frais, épluchés",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "feuilles de blé d’Inde (les plus vertes et souples)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "l",
+            "name": "itre d’eau",
+            "note": null
+          },
+          {
+            "quantity": "500",
+            "unit": "ml",
+            "name": "lait (2 tasses)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "sucre (optionnel, mais accentue la douceur naturelle du maïs)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel (au goût, à ajouter après cuisson)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préparer les épis :Enlever les feuilles et les soies (fils). Garder 2 belles feuilles de blé d’Inde de côté. Rincer les épis et les feuilles."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Faire bouillir :Dans une grande casserole, verser l’eau et le lait. Ajouter le sucre si désiré. Déposer les feuilles de maïs dans le fond de l’eau – elles vont parfumer le liquide."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Cuire le blé d’Inde :Porter à ébullition. Ajouter les épis de maïs. Réduire un peu le feu et cuire à petits bouillons pendant 10 à 15 minutes, selon la tendreté désirée."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Égoutter et servir :Retirer les épis avec des pinces, égoutter et servir immédiatement, nature ou avec du beurre et du sel au goût."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/ble-d-inde/"
+  },
+  {
+    "id": 86,
+    "slug": "bubble-tea-maison",
+    "category": "Boissons",
+    "title": "Bubble Tea Maison : Comment Préparer un Bubble Tea Délicieux chez Vous",
+    "excerpt": "Le Bubble Tea, aussi appelé Boba Tea, est une boisson originaire de Taïwan qui a conquis le monde entier. Cette boisson rafraîchissante et gourmande se compose d&rsquo;un thé infusé, de...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312329603-taiwan-milk-tea-with-bubble.jpg",
+    "prep_time": 15,
+    "cook_time": 25,
+    "total_time": 40,
+    "servings": 2,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "sachets de thé noir ou thé vert (au choix)",
+            "note": null
+          },
+          {
+            "quantity": "500",
+            "unit": "ml",
+            "name": "d'eau",
+            "note": null
+          },
+          {
+            "quantity": "100",
+            "unit": "g",
+            "name": "perles de tapioca noires",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe de sucre brun",
+            "note": null
+          },
+          {
+            "quantity": "200",
+            "unit": "ml",
+            "name": "lait entier ou lait végétal (lait d'amande, lait de coco, lait d'avoine, etc.)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe de sirop de sucre de canne ou miel",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": "G",
+            "name": "laçons (facultatif)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "sachets de thé à la saveur de votre choix (mangue, fraise, pêche, etc.)",
+            "note": null
+          },
+          {
+            "quantity": "150",
+            "unit": "ml",
+            "name": "jus de fruits (mangue, passion, fraise, etc.)",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "cuillères à soupe de sirop d'agave ou de sucre liquide",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": "G",
+            "name": "laçons",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Cuisson des perles de tapioca",
+        "content": "Cuisson des perles de tapioca"
+      },
+      {
+        "step": 2,
+        "title": "Infusion du thé",
+        "content": "Infusion du thé"
+      },
+      {
+        "step": 3,
+        "title": "Assemblage du Bubble Tea maison",
+        "content": "Assemblage du Bubble Tea maison"
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/bubble-tea-maison/"
+  },
+  {
+    "id": 101,
+    "slug": "amaretto-sour",
+    "category": "Boissons",
+    "title": "Amaretto Sour Facile",
+    "excerpt": "Comment faire un amaretto Sour ? Clasique dans le monde des cocktails qui marie la douceur de l&rsquo;amaretto à l&rsquo;acidité du citron, offrant une expérience gustative parfaitement équilibrée. Il est...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312364214-amaretto-sour.jpg",
+    "prep_time": 5,
+    "cook_time": 0,
+    "total_time": 5,
+    "servings": 1,
+    "servings_unit": "portions",
+    "difficulty": "facile",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "50",
+            "unit": "ml",
+            "name": "d’Amaretto (alcool à base de noyaux d’amandes)",
+            "note": null
+          },
+          {
+            "quantity": "25",
+            "unit": "ml",
+            "name": "jus de citron frais",
+            "note": null
+          },
+          {
+            "quantity": "15",
+            "unit": "ml",
+            "name": "sirop de sucre (ou de sirop simple)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "blanc d'œuf (facultatif, mais recommandé pour la texture)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": "G",
+            "name": "laçons",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "tranche de citron (pour la garniture)",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": null,
+            "name": "cerise au marasquin (pour la garniture)",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préparation des ingrédients Pour commencer, préparez tous vos ingrédients. Pressez un citron pour obtenir environ 25 ml de jus frais. Si vous optez pour un sirop de sucre maison, vous pouvez le préparer en mélangeant 1 part d'eau et 1 part de sucre, puis chauffez jusqu'à dissolution du sucre."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Secouer le cocktail Dans un shaker, versez l’Amaretto, le jus de citron frais, le sirop de sucre et le blanc d'œuf. Ajoutez une poignée de glaçons dans le shaker. Fermez le shaker et secouez vigoureusement pendant environ 10 à 15 secondes. Si vous utilisez un blanc d'œuf, cela va donner une texture onctueuse et une mousse légère sur le cocktail."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Filtrage Après avoir bien secoué votre mélange, ouvrez le shaker et filtrez le tout dans un verre à cocktail préalablement rempli de glaçons. Vous pouvez utiliser un tamis fin ou une passoire pour vous assurer que le mélange soit parfaitement lisse."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Décoration Pour la touche finale, ajoutez une tranche de citron sur le bord du verre, ainsi qu'une cerise au marasquin pour une garniture classique et élégante."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Dégustation Servez immédiatement et dégustez votre Amaretto Sour maison. La combinaison de l'amaretto et du citron est rafraîchissante et parfaitement équilibrée."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/amaretto-sour/"
+  },
+  {
+    "id": 83,
+    "slug": "poutine-mexicaine",
+    "category": "Poutine",
+    "title": "Poutine mexicaine épicée",
+    "excerpt": "Fusion parfaite entre le Québec et le Mexique, cette poutine mexicaine vous offre un mélange de saveurs relevées et fromagées. Les frites spirales épicées croustillantes sont recouvertes d’une sauce nacho...",
+    "featured_image": "https://cjbdgfcxewvxcojxbuab.supabase.co/storage/v1/object/public/recipe-images/1765312322454-poutine.jpg",
+    "prep_time": 15,
+    "cook_time": 30,
+    "total_time": 45,
+    "servings": 4,
+    "servings_unit": "portions",
+    "difficulty": "moyen",
+    "ingredients": [
+      {
+        "title": null,
+        "items": [
+          {
+            "quantity": "4",
+            "unit": "g",
+            "name": "rosses pommes de terre",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "paprika fumé",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "poudre de chili",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "d’ail en poudre",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à café",
+            "name": "sel",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": "c. à soupe",
+            "name": "d’huile d’olive",
+            "note": null
+          },
+          {
+            "quantity": "200",
+            "unit": "g",
+            "name": "fromage cheddar orange râpé",
+            "note": null
+          },
+          {
+            "quantity": "100",
+            "unit": "ml",
+            "name": "lait",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "beurre",
+            "note": null
+          },
+          {
+            "quantity": "1",
+            "unit": "c. à soupe",
+            "name": "farine",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ c. à café de poudre de chili",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ c. à café de cumin",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sel et poivre au goût",
+            "note": null
+          },
+          {
+            "quantity": "200",
+            "unit": "g",
+            "name": "fromage en grains",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "½ tasse de piments banane tranchés",
+            "note": null
+          },
+          {
+            "quantity": "2",
+            "unit": null,
+            "name": "oignons verts hachés",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "Sauce à poutine chaude (achetée ou maison)",
+            "note": null
+          },
+          {
+            "quantity": null,
+            "unit": null,
+            "name": "(Optionnel) ½ tasse de tomates coupées en dés",
+            "note": null
+          }
+        ]
+      }
+    ],
+    "instructions": [
+      {
+        "step": 1,
+        "title": "Étape 1",
+        "content": "Préchauffer le four à 220°C (425°F)."
+      },
+      {
+        "step": 2,
+        "title": "Étape 2",
+        "content": "Couper les pommes de terre en spirales avec un coupe-spirale ou en bâtonnets si nécessaire."
+      },
+      {
+        "step": 3,
+        "title": "Étape 3",
+        "content": "Mélanger les épices avec l’huile d’olive, enrober les frites et les disposer sur une plaque de cuisson."
+      },
+      {
+        "step": 4,
+        "title": "Étape 4",
+        "content": "Cuire au four 25-30 minutes en retournant à mi-cuisson, jusqu’à ce qu’elles soient croustillantes."
+      },
+      {
+        "step": 5,
+        "title": "Étape 5",
+        "content": "Dans une casserole, faire fondre le beurre, puis ajouter la farine et mélanger jusqu’à obtenir un roux doré."
+      },
+      {
+        "step": 6,
+        "title": "Étape 6",
+        "content": "Ajouter le lait progressivement en fouettant."
+      },
+      {
+        "step": 7,
+        "title": "Étape 7",
+        "content": "Incorporer le fromage râpé et les épices, puis mélanger jusqu’à obtenir une texture lisse."
+      },
+      {
+        "step": 8,
+        "title": "Étape 8",
+        "content": "Déposer les frites chaudes dans un bol ou une assiette."
+      },
+      {
+        "step": 9,
+        "title": "Étape 9",
+        "content": "Ajouter le fromage en grains."
+      },
+      {
+        "step": 10,
+        "title": "Étape 10",
+        "content": "Verser la sauce à poutine chaude sur le fromage pour le faire légèrement fondre."
+      },
+      {
+        "step": 11,
+        "title": "Étape 11",
+        "content": "Ajouter la sauce nacho, puis garnir de piments banane, d’oignons verts et de tomates en dés si désiré."
+      }
+    ],
+    "tips": null,
+    "url": "https://menucochon.com/recette/poutine-mexicaine/"
+  }
+]
