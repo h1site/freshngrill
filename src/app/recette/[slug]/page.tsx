@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   );
 
   return {
-    title: recipe.seoTitle || `${recipe.title} | Menucochon`,
+    title: recipe.seoTitle || recipe.title,
     description: metaDescription,
     alternates: {
       canonical: `/recette/${slug}/`,

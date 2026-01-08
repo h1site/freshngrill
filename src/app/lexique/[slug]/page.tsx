@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${term.term} - Définition | Lexique Culinaire | Menucochon`,
+    title: `${term.term} - Définition | Lexique Culinaire`,
     description: term.definition.substring(0, 160),
     alternates: {
       canonical: `/lexique/${slug}/`,
@@ -44,7 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary',
-      title: `${term.term} - Lexique Culinaire | Menucochon`,
+      title: `${term.term} - Lexique Culinaire`,
       description: term.definition.substring(0, 160),
     },
   };

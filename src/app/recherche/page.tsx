@@ -9,7 +9,7 @@ interface Props {
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const { q } = await searchParams;
   return {
-    title: q ? `Recherche: ${q} | Menucochon` : 'Recherche | Menucochon',
+    title: q ? `Recherche: ${q}` : 'Recherche',
     description: 'Recherchez parmi toutes nos recettes et articles de blog.',
     alternates: {
       canonical: '/recherche/',

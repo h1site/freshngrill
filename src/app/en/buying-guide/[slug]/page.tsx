@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: post.seoTitle || `${post.title} | Buying Guide | Menucochon`,
+    title: post.seoTitle || `${post.title} | Buying Guide`,
     description: post.seoDescription || post.excerpt,
     alternates: {
       canonical: `/en/buying-guide/${finalSlug}/`,

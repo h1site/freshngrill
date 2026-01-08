@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const categoryName = getCategoryName(category.name, 'fr');
 
   return {
-    title: `Recettes ${categoryName} | Menucochon`,
+    title: `Recettes ${categoryName}`,
     description: `Découvrez toutes nos délicieuses recettes de ${categoryName.toLowerCase()}. Des idées savoureuses pour régaler toute la famille.`,
     alternates: {
       canonical: `/categorie/${slug}/`,
@@ -51,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `Recettes ${categoryName} | Menucochon`,
+      title: `Recettes ${categoryName}`,
       description: `Découvrez toutes nos délicieuses recettes de ${categoryName.toLowerCase()}.`,
     },
   };
