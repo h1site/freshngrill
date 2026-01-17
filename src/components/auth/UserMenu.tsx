@@ -56,18 +56,30 @@ export default function UserMenu() {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       const target = event.target as Node;
-      // Check if click is outside both the button and the menu
-      if (
-        buttonRef.current && !buttonRef.current.contains(target) &&
-        dropdownRef.current && !dropdownRef.current.contains(target)
-      ) {
-        setIsOpen(false);
+
+      // Don't close if clicking on the button
+      if (buttonRef.current?.contains(target)) {
+        return;
       }
+
+      // Don't close if clicking inside the dropdown
+      if (dropdownRef.current?.contains(target)) {
+        return;
+      }
+
+      // Close the menu
+      setIsOpen(false);
     }
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+      // Use setTimeout to avoid immediate trigger on the same click that opened the menu
+      const timer = setTimeout(() => {
+        document.addEventListener('click', handleClickOutside);
+      }, 0);
+      return () => {
+        clearTimeout(timer);
+        document.removeEventListener('click', handleClickOutside);
+      };
     }
   }, [isOpen]);
 
@@ -164,31 +176,28 @@ export default function UserMenu() {
 
             {/* Menu items */}
             <div className="py-2">
-              <Link
+              <a
                 href="/profil"
-                onClick={() => setIsOpen(false)}
                 className="flex items-center gap-3 px-4 py-2 text-neutral-700 hover:bg-neutral-50 transition-colors"
               >
                 <User className="w-4 h-4" />
                 Mon profil
-              </Link>
-              <Link
+              </a>
+              <a
                 href="/profil/favoris"
-                onClick={() => setIsOpen(false)}
                 className="flex items-center gap-3 px-4 py-2 text-neutral-700 hover:bg-neutral-50 transition-colors"
               >
                 <Heart className="w-4 h-4" />
                 Mes favoris
-              </Link>
+              </a>
               {isAdmin && (
-                <Link
+                <a
                   href="/admin"
-                  onClick={() => setIsOpen(false)}
                   className="flex items-center gap-3 px-4 py-2 text-[#F77313] hover:bg-orange-50 transition-colors"
                 >
                   <Shield className="w-4 h-4" />
                   Administration
-                </Link>
+                </a>
               )}
             </div>
 
