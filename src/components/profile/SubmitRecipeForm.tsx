@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import {
   ChefHat, Clock, Users, Send, CheckCircle, AlertCircle,
   Loader2, Camera, Tag
@@ -162,27 +161,6 @@ export default function SubmitRecipeForm({ userName, userEmail, userAvatar }: Su
 
   return (
     <div className="max-w-2xl mx-auto">
-      {/* Info utilisateur */}
-      <div className="bg-white rounded-xl p-4 mb-6 flex items-center gap-4 shadow-sm">
-        {userAvatar ? (
-          <Image
-            src={userAvatar}
-            alt={userName}
-            width={48}
-            height={48}
-            className="w-12 h-12 rounded-full object-cover"
-          />
-        ) : (
-          <div className="w-12 h-12 rounded-full bg-[#F77313] flex items-center justify-center text-white font-bold">
-            {userName.charAt(0).toUpperCase()}
-          </div>
-        )}
-        <div>
-          <p className="font-medium text-neutral-900">{userName}</p>
-          <p className="text-sm text-neutral-500">{userEmail}</p>
-        </div>
-      </div>
-
       {/* Error Message */}
       {submitStatus === 'error' && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
