@@ -622,3 +622,10 @@ html {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Hide AdSense anchor ads on desktop */
+@media (min-width: 1024px) {
+  ins.adsbygoogle[data-anchor-status] {
+    display: none !important;
+  }
+}
