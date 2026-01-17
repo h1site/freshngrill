@@ -27,7 +27,8 @@ export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
-  const menuRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
   const supabase = createClient();
@@ -58,7 +59,7 @@ export default function UserMenu() {
       // Check if click is outside both the button and the menu
       if (
         buttonRef.current && !buttonRef.current.contains(target) &&
-        menuRef.current && !menuRef.current.contains(target)
+        dropdownRef.current && !dropdownRef.current.contains(target)
       ) {
         setIsOpen(false);
       }
@@ -115,7 +116,7 @@ export default function UserMenu() {
   const isAdmin = user.email === ADMIN_EMAIL;
 
   return (
-    <div ref={menuRef} className="relative">
+    <div ref={containerRef} className="relative">
       <button
         ref={buttonRef}
         onClick={() => {
@@ -148,7 +149,7 @@ export default function UserMenu() {
       <AnimatePresence>
         {isOpen && typeof document !== 'undefined' && createPortal(
           <motion.div
-            ref={menuRef}
+            ref={dropdownRef}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
