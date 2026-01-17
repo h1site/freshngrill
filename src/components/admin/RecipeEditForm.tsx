@@ -392,17 +392,8 @@ export default function RecipeEditForm({
         updated_at: new Date().toISOString(),
       };
 
-      const { data: updateData, error: updateError } = await supabase
-        .from('recipes')
-        .update(recipeData as never)
-        .eq('id', recipe.id)
-        .select();
-
-      if (updateError) throw updateError;
-
-      console.log('Recipe updated:', updateData);
-
-      // Sauvegarder/mettre à jour la traduction anglaise si titre rempli
+      // Prepare translation data if English title is provided
+      let translationData = null;
       if (enTranslation.title.trim()) {
         const cleanEnIngredients = enTranslation.ingredients
           .map(group => ({
@@ -415,8 +406,7 @@ export default function RecipeEditForm({
           .filter(inst => inst.content.trim())
           .map((inst, i) => ({ ...inst, step: i + 1 }));
 
-        const translationData = {
-          recipe_id: recipe.id,
+        translationData = {
           locale: 'en',
           slug_en: enTranslation.slug_en || null,
           title: enTranslation.title,
@@ -431,18 +421,30 @@ export default function RecipeEditForm({
           seo_description: enTranslation.seo_description || null,
           translated_at: new Date().toISOString(),
         };
+      }
 
-        if (hasEnTranslation && enTranslation.id) {
-          await supabase
-            .from('recipe_translations')
-            .update(translationData as never)
-            .eq('id', enTranslation.id);
-        } else {
-          await supabase
-            .from('recipe_translations')
-            .insert(translationData as never);
-          setHasEnTranslation(true);
-        }
+      // Use API route to update (bypasses RLS)
+      const response = await fetch(`/api/admin/recipes/${recipe.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          recipeData,
+          translationData,
+          hasExistingTranslation: hasEnTranslation,
+          translationId: enTranslation.id,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Erreur lors de la mise à jour');
+      }
+
+      console.log('Recipe updated:', result);
+
+      if (translationData && !hasEnTranslation) {
+        setHasEnTranslation(true);
       }
 
       setSuccess('Recette mise à jour!');
