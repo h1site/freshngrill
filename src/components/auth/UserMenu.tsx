@@ -17,13 +17,9 @@ interface UserProfile {
   };
 }
 
-interface UserMenuProps {
-  onSubmitRecipe?: () => void;
-}
-
 const ADMIN_EMAIL = 'info@h1site.com';
 
-export default function UserMenu({ onSubmitRecipe }: UserMenuProps) {
+export default function UserMenu() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -170,18 +166,13 @@ export default function UserMenu({ onSubmitRecipe }: UserMenuProps) {
               <MessageSquare className="w-4 h-4" />
               Mes commentaires
             </a>
-            {onSubmitRecipe && (
-              <button
-                onClick={() => {
-                  setIsOpen(false);
-                  onSubmitRecipe();
-                }}
-                className="flex items-center gap-3 px-4 py-2 w-full text-left text-neutral-700 hover:bg-neutral-50 transition-colors"
-              >
-                <ChefHat className="w-4 h-4" />
-                Soumettre une recette
-              </button>
-            )}
+            <a
+              href="/profil/soumettre-recette"
+              className="flex items-center gap-3 px-4 py-2 text-neutral-700 hover:bg-neutral-50 transition-colors"
+            >
+              <ChefHat className="w-4 h-4" />
+              Soumettre une recette
+            </a>
             {isAdmin && (
               <a
                 href="/admin"
