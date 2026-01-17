@@ -1,10 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import ImageUpload from './ImageUpload';
 import type { Database } from '@/types/database';
+
+// Lazy load TipTap to avoid SSR issues
+const TipTapEditor = lazy(() => import('./TipTapEditor'));
 
 // Types pour les ingrédients et instructions
 interface Ingredient {
@@ -681,34 +684,38 @@ export default function RecipeEditForm({
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Introduction</label>
-                <textarea
-                  rows={3}
-                  value={form.introduction}
-                  onChange={(e) => setForm({ ...form, introduction: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                  placeholder="Texte d'introduction affiché en haut de la recette..."
-                />
+                <Suspense fallback={<div className="h-32 bg-gray-100 rounded-md animate-pulse" />}>
+                  <TipTapEditor
+                    content={form.introduction}
+                    onChange={(value) => setForm({ ...form, introduction: value })}
+                    placeholder="Texte d'introduction affiché en haut de la recette..."
+                    minHeight="120px"
+                  />
+                </Suspense>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Astuces / Contenu additionnel</label>
-                <textarea
-                  rows={3}
-                  value={form.content}
-                  onChange={(e) => setForm({ ...form, content: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                  placeholder="Astuces et conseils pour réussir la recette..."
-                />
+                <Suspense fallback={<div className="h-32 bg-gray-100 rounded-md animate-pulse" />}>
+                  <TipTapEditor
+                    content={form.content}
+                    onChange={(value) => setForm({ ...form, content: value })}
+                    placeholder="Astuces et conseils pour réussir la recette..."
+                    minHeight="120px"
+                  />
+                </Suspense>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Conclusion</label>
-                <textarea
-                  rows={2}
-                  value={form.conclusion}
-                  onChange={(e) => setForm({ ...form, conclusion: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
+                <Suspense fallback={<div className="h-24 bg-gray-100 rounded-md animate-pulse" />}>
+                  <TipTapEditor
+                    content={form.conclusion}
+                    onChange={(value) => setForm({ ...form, conclusion: value })}
+                    placeholder="Texte de conclusion..."
+                    minHeight="80px"
+                  />
+                </Suspense>
               </div>
 
             </div>
@@ -1021,35 +1028,38 @@ export default function RecipeEditForm({
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Introduction</label>
-                <textarea
-                  rows={3}
-                  value={enTranslation.introduction}
-                  onChange={(e) => setEnTranslation({ ...enTranslation, introduction: e.target.value })}
-                  placeholder={form.introduction}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
+                <Suspense fallback={<div className="h-32 bg-gray-100 rounded-md animate-pulse" />}>
+                  <TipTapEditor
+                    content={enTranslation.introduction}
+                    onChange={(value) => setEnTranslation({ ...enTranslation, introduction: value })}
+                    placeholder="Introduction text..."
+                    minHeight="120px"
+                  />
+                </Suspense>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Tips / Additional content</label>
-                <textarea
-                  rows={3}
-                  value={enTranslation.content}
-                  onChange={(e) => setEnTranslation({ ...enTranslation, content: e.target.value })}
-                  placeholder={form.content}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
+                <Suspense fallback={<div className="h-32 bg-gray-100 rounded-md animate-pulse" />}>
+                  <TipTapEditor
+                    content={enTranslation.content}
+                    onChange={(value) => setEnTranslation({ ...enTranslation, content: value })}
+                    placeholder="Tips and advice for the recipe..."
+                    minHeight="120px"
+                  />
+                </Suspense>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Conclusion</label>
-                <textarea
-                  rows={2}
-                  value={enTranslation.conclusion}
-                  onChange={(e) => setEnTranslation({ ...enTranslation, conclusion: e.target.value })}
-                  placeholder={form.conclusion}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                />
+                <Suspense fallback={<div className="h-24 bg-gray-100 rounded-md animate-pulse" />}>
+                  <TipTapEditor
+                    content={enTranslation.conclusion}
+                    onChange={(value) => setEnTranslation({ ...enTranslation, conclusion: value })}
+                    placeholder="Conclusion text..."
+                    minHeight="80px"
+                  />
+                </Suspense>
               </div>
 
               <div>
