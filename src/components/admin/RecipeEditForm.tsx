@@ -392,12 +392,15 @@ export default function RecipeEditForm({
         updated_at: new Date().toISOString(),
       };
 
-      const { error: updateError } = await supabase
+      const { data: updateData, error: updateError } = await supabase
         .from('recipes')
         .update(recipeData as never)
-        .eq('id', recipe.id);
+        .eq('id', recipe.id)
+        .select();
 
       if (updateError) throw updateError;
+
+      console.log('Recipe updated:', updateData);
 
       // Sauvegarder/mettre à jour la traduction anglaise si titre rempli
       if (enTranslation.title.trim()) {
@@ -443,7 +446,10 @@ export default function RecipeEditForm({
       }
 
       setSuccess('Recette mise à jour!');
-      router.refresh();
+      // Force full page reload to get fresh data from server
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur lors de la mise à jour');
     } finally {
