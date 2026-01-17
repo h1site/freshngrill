@@ -6,7 +6,11 @@ import {
   getSimilarRecipes,
   getRecipeBySlugWithLocale,
   getNextRecipe,
+  getRecipesWithSimilarIngredients,
+  getRecipeByDifficultyProgression,
+  getSpicesInRecipe,
 } from '@/lib/recipes';
+import { getRelatedPostsForRecipe } from '@/lib/posts';
 import { optimizeMetaDescription } from '@/lib/utils';
 import RecipeHeader from '@/components/recipe/RecipeHeader';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
@@ -24,6 +28,11 @@ import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 import RecipeAmazonSuggestions from '@/components/amazon/RecipeAmazonSuggestions';
 import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 import NextRecipe from '@/components/recipe/NextRecipe';
+import RecipeExploreFooter from '@/components/recipe/RecipeExploreFooter';
+import RecipesByIngredients from '@/components/recipe/RecipesByIngredients';
+import RelatedArticles from '@/components/recipe/RelatedArticles';
+import RecipeSpiceLinks from '@/components/recipe/RecipeSpiceLinks';
+import DifficultyProgression from '@/components/recipe/DifficultyProgression';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -99,9 +108,22 @@ export default async function RecettePage({ params }: Props) {
     notFound();
   }
 
-  const [similarRecipes, nextRecipe] = await Promise.all([
+  const [
+    similarRecipes,
+    nextRecipe,
+    recipesWithSimilarIngredients,
+    easierRecipe,
+    harderRecipe,
+    spicesInRecipe,
+    relatedPosts,
+  ] = await Promise.all([
     getSimilarRecipes(recipe, 4),
     getNextRecipe(recipe, 'fr'),
+    getRecipesWithSimilarIngredients(recipe, 4, 'fr'),
+    getRecipeByDifficultyProgression(recipe, 'easier', 'fr'),
+    getRecipeByDifficultyProgression(recipe, 'harder', 'fr'),
+    getSpicesInRecipe(recipe, 6),
+    getRelatedPostsForRecipe(recipe.title, recipe.categories.map(c => c.slug), 3, 'fr'),
   ]);
 
   const breadcrumbs = [
@@ -216,22 +238,8 @@ export default async function RecettePage({ params }: Props) {
                 </div>
               )}
 
-              {/* 📍 3. Annonce display responsive avant carte recette */}
+              {/* 📍 3. Annonce display responsive avant étapes */}
               <GoogleAd className="my-6 print:hidden" />
-
-              {/* H2 - Ingrédients (Carte recette dans le contenu principal) */}
-              <div className="bg-white border-2 border-neutral-200 rounded-xl p-6 md:p-8 shadow-sm">
-                <RecipeIngredients
-                  ingredients={recipe.ingredients}
-                  servings={recipe.servings}
-                  servingsUnit={recipe.servingsUnit}
-                />
-                {recipe.nutrition && (
-                  <div className="mt-6 pt-6 border-t border-neutral-200">
-                    <RecipeNutrition nutrition={recipe.nutrition} />
-                  </div>
-                )}
-              </div>
 
               {/* H2 - Étapes complètes */}
               <RecipeInstructions instructions={recipe.instructions} />
@@ -240,6 +248,37 @@ export default async function RecettePage({ params }: Props) {
               {recipe.faq && (
                 <RecipeFAQ faq={recipe.faq} />
               )}
+
+              {/* Spices used in this recipe */}
+              {spicesInRecipe.length > 0 && (
+                <RecipeSpiceLinks spices={spicesInRecipe} locale="fr" />
+              )}
+
+              {/* Recipes with similar ingredients */}
+              {recipesWithSimilarIngredients.length > 0 && (
+                <RecipesByIngredients recipes={recipesWithSimilarIngredients} locale="fr" />
+              )}
+
+              {/* Difficulty progression */}
+              <DifficultyProgression
+                easierRecipe={easierRecipe}
+                harderRecipe={harderRecipe}
+                currentDifficulty={recipe.difficulty}
+                locale="fr"
+              />
+
+              {/* Related blog articles */}
+              {relatedPosts.length > 0 && (
+                <RelatedArticles posts={relatedPosts} locale="fr" />
+              )}
+
+              {/* Explore more links */}
+              <RecipeExploreFooter
+                categories={recipe.categories}
+                difficulty={recipe.difficulty}
+                origineTags={recipe.origineTags}
+                locale="fr"
+              />
 
               {/* Rating */}
               <div className="bg-neutral-50 p-8 rounded-lg text-center">
@@ -271,6 +310,20 @@ export default async function RecettePage({ params }: Props) {
 
             {/* Sidebar */}
             <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
+              {/* Carte recette - Ingrédients */}
+              <div className="bg-white border-2 border-neutral-200 rounded-xl p-6 shadow-sm">
+                <RecipeIngredients
+                  ingredients={recipe.ingredients}
+                  servings={recipe.servings}
+                  servingsUnit={recipe.servingsUnit}
+                />
+                {recipe.nutrition && (
+                  <div className="mt-6 pt-6 border-t border-neutral-200">
+                    <RecipeNutrition nutrition={recipe.nutrition} />
+                  </div>
+                )}
+              </div>
+
               {/* Amazon Suggestions dynamiques basées sur la recette */}
               <div className="print:hidden">
                 <RecipeAmazonSuggestions

@@ -577,3 +577,94 @@ export async function getAllPostsWithEnglishSlugs(): Promise<Array<{ id: number;
     categories: post.categories,
   }));
 }
+
+/**
+ * Get related blog posts for a recipe based on shared keywords/categories
+ */
+export async function getRelatedPostsForRecipe(
+  recipeTitle: string,
+  recipeCategories: string[],
+  limit: number = 3,
+  locale: 'fr' | 'en' = 'fr'
+): Promise<PostCard[]> {
+  // Extract keywords from recipe title
+  const keywords = recipeTitle
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(word => word.length > 3)
+    .slice(0, 5);
+
+  if (keywords.length === 0 && recipeCategories.length === 0) {
+    // Return recent posts as fallback
+    return locale === 'en' ? getRecentPostsWithEnglish(limit) : getRecentPosts(limit);
+  }
+
+  const { data, error } = await supabase
+    .from('posts_with_details')
+    .select('id, slug, title, excerpt, featured_image, author, categories, published_at, reading_time, content')
+    .order('published_at', { ascending: false })
+    .limit(50);
+
+  if (error) {
+    console.error('Error getRelatedPostsForRecipe:', error);
+    return [];
+  }
+
+  // Score each post by relevance
+  const scoredPosts: { post: any; score: number }[] = [];
+
+  for (const post of (data || []) as any[]) {
+    let score = 0;
+    const postTitle = post.title?.toLowerCase() || '';
+    const postContent = post.content?.toLowerCase() || '';
+    const postExcerpt = post.excerpt?.toLowerCase() || '';
+    const postCategories = (post.categories || []).map((c: any) => c.slug?.toLowerCase());
+
+    // Check keyword matches in title (high weight)
+    for (const keyword of keywords) {
+      if (postTitle.includes(keyword)) score += 3;
+      if (postExcerpt.includes(keyword)) score += 2;
+      if (postContent.includes(keyword)) score += 1;
+    }
+
+    // Check category matches
+    for (const cat of recipeCategories) {
+      const catLower = cat.toLowerCase();
+      if (postCategories.some((pc: string) => pc?.includes(catLower) || catLower.includes(pc))) {
+        score += 2;
+      }
+    }
+
+    if (score > 0) {
+      scoredPosts.push({ post, score });
+    }
+  }
+
+  // Sort by score and take top results
+  scoredPosts.sort((a, b) => b.score - a.score);
+  const topPosts = scoredPosts.slice(0, limit);
+
+  if (topPosts.length === 0) {
+    // Fallback to recent posts
+    return locale === 'en' ? getRecentPostsWithEnglish(limit) : getRecentPosts(limit);
+  }
+
+  let cards: PostCard[] = topPosts.map(({ post }) => ({
+    id: post.id,
+    slug: post.slug,
+    title: post.title,
+    excerpt: post.excerpt || '',
+    featuredImage: post.featured_image,
+    author: transformAuthor(post.author),
+    categories: post.categories || [],
+    publishedAt: post.published_at,
+    readingTime: post.reading_time || 5,
+  }));
+
+  // Enrich with English data if needed
+  if (locale === 'en' && cards.length > 0) {
+    cards = await enrichPostCardsWithEnglishData(cards);
+  }
+
+  return cards;
+}

@@ -1328,3 +1328,257 @@ export async function searchByIngredients(
     return b.matchedIngredients.length - a.matchedIngredients.length;
   });
 }
+
+/**
+ * Get recipes with similar ingredients (for internal linking)
+ * Returns recipes that share at least 3 key ingredients
+ */
+export async function getRecipesWithSimilarIngredients(
+  recipe: Recipe,
+  limit: number = 4,
+  locale: 'fr' | 'en' = 'fr'
+): Promise<RecipeCard[]> {
+  // Extract ingredient names from current recipe
+  const currentIngredients: string[] = [];
+  for (const group of recipe.ingredients || []) {
+    for (const item of group.items || []) {
+      if (item.name) {
+        // Normalize and extract base ingredient (remove quantities/modifiers)
+        const normalized = item.name.toLowerCase()
+          .replace(/\d+/g, '')
+          .replace(/\s*(g|kg|ml|l|tasse|c\.\s*à\s*soupe|c\.\s*à\s*thé|lb|oz)\s*/gi, '')
+          .trim();
+        if (normalized.length > 2) {
+          currentIngredients.push(normalized);
+        }
+      }
+    }
+  }
+
+  if (currentIngredients.length < 3) return [];
+
+  const { data, error } = await supabase
+    .from('recipes_with_categories')
+    .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes, ingredients')
+    .neq('id', recipe.id)
+    .limit(100);
+
+  if (error) {
+    console.error('Error getRecipesWithSimilarIngredients:', error);
+    return [];
+  }
+
+  // Score each recipe by shared ingredients
+  const scoredRecipes: { recipe: any; sharedCount: number }[] = [];
+
+  for (const r of (data || []) as any[]) {
+    if (!r.ingredients) continue;
+
+    const recipeIngredients: string[] = [];
+    for (const group of r.ingredients) {
+      for (const item of group.items || []) {
+        if (item.name) {
+          const normalized = item.name.toLowerCase()
+            .replace(/\d+/g, '')
+            .replace(/\s*(g|kg|ml|l|tasse|c\.\s*à\s*soupe|c\.\s*à\s*thé|lb|oz)\s*/gi, '')
+            .trim();
+          if (normalized.length > 2) {
+            recipeIngredients.push(normalized);
+          }
+        }
+      }
+    }
+
+    // Count shared ingredients (fuzzy match)
+    let sharedCount = 0;
+    for (const currIng of currentIngredients) {
+      const hasMatch = recipeIngredients.some(recIng =>
+        recIng.includes(currIng) || currIng.includes(recIng)
+      );
+      if (hasMatch) sharedCount++;
+    }
+
+    // Only include if at least 3 shared ingredients
+    if (sharedCount >= 3) {
+      scoredRecipes.push({ recipe: r, sharedCount });
+    }
+  }
+
+  // Sort by shared count and take top results
+  scoredRecipes.sort((a, b) => b.sharedCount - a.sharedCount);
+  const topRecipes = scoredRecipes.slice(0, limit);
+
+  // Transform to RecipeCard format
+  let cards: RecipeCard[] = topRecipes.map(({ recipe: r }) => ({
+    id: r.id,
+    slug: r.slug,
+    title: r.title,
+    featuredImage: r.featured_image || '',
+    prepTime: r.prep_time,
+    cookTime: r.cook_time,
+    totalTime: r.total_time,
+    difficulty: r.difficulty,
+    categories: r.categories || [],
+    likes: r.likes,
+  }));
+
+  // Enrich with English data if needed
+  if (locale === 'en' && cards.length > 0) {
+    cards = await enrichRecipeCardsWithEnglishSlugs(cards);
+  }
+
+  return cards;
+}
+
+/**
+ * Get recipe by difficulty for progression linking
+ */
+export async function getRecipeByDifficultyProgression(
+  recipe: Recipe,
+  direction: 'easier' | 'harder',
+  locale: 'fr' | 'en' = 'fr'
+): Promise<RecipeCard | null> {
+  const difficultyOrder = ['facile', 'moyen', 'difficile'];
+  const currentIndex = difficultyOrder.indexOf(recipe.difficulty);
+
+  let targetDifficulty: string | null = null;
+  if (direction === 'easier' && currentIndex > 0) {
+    targetDifficulty = difficultyOrder[currentIndex - 1];
+  } else if (direction === 'harder' && currentIndex < difficultyOrder.length - 1) {
+    targetDifficulty = difficultyOrder[currentIndex + 1];
+  }
+
+  if (!targetDifficulty) return null;
+
+  // Find a recipe in same category with target difficulty
+  const categoryIds = recipe.categories.map(c => c.id);
+
+  if (categoryIds.length > 0) {
+    const { data: recipeIds } = await supabase
+      .from('recipe_categories')
+      .select('recipe_id')
+      .in('category_id', categoryIds)
+      .neq('recipe_id', recipe.id);
+
+    if (recipeIds?.length) {
+      const uniqueIds = [...new Set((recipeIds as any[]).map(r => r.recipe_id))];
+
+      const { data, error } = await supabase
+        .from('recipes_with_categories')
+        .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
+        .in('id', uniqueIds)
+        .eq('difficulty', targetDifficulty)
+        .limit(1);
+
+      if (!error && data?.length) {
+        const r = data[0] as any;
+        let card: RecipeCard = {
+          id: r.id,
+          slug: r.slug,
+          title: r.title,
+          featuredImage: r.featured_image || '',
+          prepTime: r.prep_time,
+          cookTime: r.cook_time,
+          totalTime: r.total_time,
+          difficulty: r.difficulty,
+          categories: r.categories || [],
+          likes: r.likes,
+        };
+
+        if (locale === 'en') {
+          const enriched = await enrichRecipeCardsWithEnglishSlugs([card]);
+          card = enriched[0];
+        }
+
+        return card;
+      }
+    }
+  }
+
+  // Fallback: any recipe with target difficulty
+  const { data: fallback } = await supabase
+    .from('recipes_with_categories')
+    .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
+    .eq('difficulty', targetDifficulty)
+    .neq('id', recipe.id)
+    .limit(1);
+
+  if (fallback?.length) {
+    const r = fallback[0] as any;
+    let card: RecipeCard = {
+      id: r.id,
+      slug: r.slug,
+      title: r.title,
+      featuredImage: r.featured_image || '',
+      prepTime: r.prep_time,
+      cookTime: r.cook_time,
+      totalTime: r.total_time,
+      difficulty: r.difficulty,
+      categories: r.categories || [],
+      likes: r.likes,
+    };
+
+    if (locale === 'en') {
+      const enriched = await enrichRecipeCardsWithEnglishSlugs([card]);
+      card = enriched[0];
+    }
+
+    return card;
+  }
+
+  return null;
+}
+
+/**
+ * Find spices used in a recipe by matching ingredient names against spices database
+ */
+export async function getSpicesInRecipe(
+  recipe: Recipe,
+  limit: number = 6
+): Promise<{ slug: string; name: string; image: string | null }[]> {
+  // Extract all ingredient names
+  const ingredientNames: string[] = [];
+  for (const group of recipe.ingredients || []) {
+    for (const item of group.items || []) {
+      if (item.name) {
+        ingredientNames.push(item.name.toLowerCase());
+      }
+    }
+  }
+
+  if (ingredientNames.length === 0) return [];
+
+  // Get all published spices
+  const { data: spices, error } = await supabase
+    .from('spices')
+    .select('slug, name_fr, featured_image')
+    .eq('is_published', true);
+
+  if (error) {
+    console.error('Error getSpicesInRecipe:', error);
+    return [];
+  }
+
+  // Match spices against ingredients
+  const matchedSpices: { slug: string; name: string; image: string | null }[] = [];
+
+  for (const spice of (spices || []) as { slug: string; name_fr: string; featured_image: string | null }[]) {
+    const spiceName = spice.name_fr.toLowerCase();
+    // Check if any ingredient contains this spice name
+    const isUsed = ingredientNames.some(ing =>
+      ing.includes(spiceName) || spiceName.includes(ing.split(' ')[0])
+    );
+
+    if (isUsed) {
+      matchedSpices.push({
+        slug: spice.slug,
+        name: spice.name_fr,
+        image: spice.featured_image,
+      });
+    }
+
+    if (matchedSpices.length >= limit) break;
+  }
+
+  return matchedSpices;
+}

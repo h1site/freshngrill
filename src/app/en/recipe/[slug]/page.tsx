@@ -8,7 +8,11 @@ import {
   getSimilarRecipes,
   enrichRecipeCardsWithEnglishSlugs,
   getNextRecipe,
+  getRecipesWithSimilarIngredients,
+  getRecipeByDifficultyProgression,
+  getSpicesInRecipe,
 } from '@/lib/recipes';
+import { getRelatedPostsForRecipe } from '@/lib/posts';
 import { optimizeMetaDescription } from '@/lib/utils';
 import RecipeHeader from '@/components/recipe/RecipeHeader';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
@@ -26,6 +30,11 @@ import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 import RecipeAmazonSuggestions from '@/components/amazon/RecipeAmazonSuggestions';
 import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 import NextRecipe from '@/components/recipe/NextRecipe';
+import RecipeExploreFooter from '@/components/recipe/RecipeExploreFooter';
+import RecipesByIngredients from '@/components/recipe/RecipesByIngredients';
+import RelatedArticles from '@/components/recipe/RelatedArticles';
+import RecipeSpiceLinks from '@/components/recipe/RecipeSpiceLinks';
+import DifficultyProgression from '@/components/recipe/DifficultyProgression';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -115,9 +124,22 @@ export default async function RecipePageEN({ params }: Props) {
     redirect(`/en/recipe/${recipe.slugEn}/`);
   }
 
-  const [rawSimilarRecipes, nextRecipe] = await Promise.all([
+  const [
+    rawSimilarRecipes,
+    nextRecipe,
+    recipesWithSimilarIngredients,
+    easierRecipe,
+    harderRecipe,
+    spicesInRecipe,
+    relatedPosts,
+  ] = await Promise.all([
     getSimilarRecipes(recipe, 4),
     getNextRecipe(recipe, 'en'),
+    getRecipesWithSimilarIngredients(recipe, 4, 'en'),
+    getRecipeByDifficultyProgression(recipe, 'easier', 'en'),
+    getRecipeByDifficultyProgression(recipe, 'harder', 'en'),
+    getSpicesInRecipe(recipe, 6),
+    getRelatedPostsForRecipe(recipe.title, recipe.categories.map(c => c.slug), 3, 'en'),
   ]);
   // Convert to RecipeCard format and enrich with English slugs
   const similarRecipeCards = rawSimilarRecipes.map((r) => ({
@@ -246,23 +268,8 @@ export default async function RecipePageEN({ params }: Props) {
                 </div>
               )}
 
-              {/* 📍 3. Responsive display ad before recipe card */}
+              {/* 📍 3. Responsive display ad before steps */}
               <GoogleAd className="my-6 print:hidden" />
-
-              {/* H2 - Ingredients (Recipe card in main content) */}
-              <div className="bg-white border-2 border-neutral-200 rounded-xl p-6 md:p-8 shadow-sm">
-                <RecipeIngredients
-                  ingredients={recipe.ingredients}
-                  servings={recipe.servings}
-                  servingsUnit={recipe.servingsUnit}
-                  locale="en"
-                />
-                {recipe.nutrition && (
-                  <div className="mt-6 pt-6 border-t border-neutral-200">
-                    <RecipeNutrition nutrition={recipe.nutrition} locale="en" />
-                  </div>
-                )}
-              </div>
 
               {/* H2 - Complete steps */}
               <RecipeInstructions instructions={recipe.instructions} locale="en" />
@@ -271,6 +278,37 @@ export default async function RecipePageEN({ params }: Props) {
               {recipe.faq && (
                 <RecipeFAQ faq={recipe.faq} locale="en" />
               )}
+
+              {/* Spices used in this recipe */}
+              {spicesInRecipe.length > 0 && (
+                <RecipeSpiceLinks spices={spicesInRecipe} locale="en" />
+              )}
+
+              {/* Recipes with similar ingredients */}
+              {recipesWithSimilarIngredients.length > 0 && (
+                <RecipesByIngredients recipes={recipesWithSimilarIngredients} locale="en" />
+              )}
+
+              {/* Difficulty progression */}
+              <DifficultyProgression
+                easierRecipe={easierRecipe}
+                harderRecipe={harderRecipe}
+                currentDifficulty={recipe.difficulty}
+                locale="en"
+              />
+
+              {/* Related blog articles */}
+              {relatedPosts.length > 0 && (
+                <RelatedArticles posts={relatedPosts} locale="en" />
+              )}
+
+              {/* Explore more links */}
+              <RecipeExploreFooter
+                categories={recipe.categories}
+                difficulty={recipe.difficulty}
+                origineTags={recipe.origineTags}
+                locale="en"
+              />
 
               {/* Rating */}
               <div className="bg-neutral-50 p-8 rounded-lg text-center">
@@ -302,6 +340,21 @@ export default async function RecipePageEN({ params }: Props) {
 
             {/* Sidebar */}
             <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
+              {/* Recipe card - Ingredients */}
+              <div className="bg-white border-2 border-neutral-200 rounded-xl p-6 shadow-sm">
+                <RecipeIngredients
+                  ingredients={recipe.ingredients}
+                  servings={recipe.servings}
+                  servingsUnit={recipe.servingsUnit}
+                  locale="en"
+                />
+                {recipe.nutrition && (
+                  <div className="mt-6 pt-6 border-t border-neutral-200">
+                    <RecipeNutrition nutrition={recipe.nutrition} locale="en" />
+                  </div>
+                )}
+              </div>
+
               {/* Amazon Suggestions based on recipe */}
               <div className="print:hidden">
                 <RecipeAmazonSuggestions
