@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { FileJson, Check, AlertCircle, Loader2, Copy, Upload } from 'lucide-react';
+import { FileJson, Check, AlertCircle, Loader2, Upload, X } from 'lucide-react';
 import { createClient } from '@/lib/supabase-browser';
 
 interface IngredientItem {
@@ -48,7 +48,7 @@ interface RecipeJSON {
   total_time?: number;
   servings: number;
   servings_unit?: string;
-  difficulty: 'facile' | 'moyen' | 'difficile';
+  difficulty: 'facile' | 'moyen' | 'difficile' | 'easy' | 'medium' | 'hard';
   ingredients: IngredientGroup[];
   instructions: InstructionStep[];
   nutrition?: Nutrition;
@@ -61,8 +61,9 @@ interface RecipeJSON {
 }
 
 interface TranslationJSON {
-  locale: string;
+  locale?: string;
   slug_en?: string;
+  slug?: string;
   title: string;
   excerpt?: string;
   introduction?: string;
@@ -72,6 +73,7 @@ interface TranslationJSON {
   instructions?: InstructionStep[];
   seo_title?: string;
   seo_description?: string;
+  faq?: string;
 }
 
 interface ImportJSON {
@@ -79,18 +81,115 @@ interface ImportJSON {
   translation?: TranslationJSON;
 }
 
+type ImportMode = 'combined' | 'separate';
+
 export default function ImportJSONPage() {
   const router = useRouter();
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputFrRef = useRef<HTMLInputElement>(null);
+  const fileInputEnRef = useRef<HTMLInputElement>(null);
+  const fileInputCombinedRef = useRef<HTMLInputElement>(null);
 
+  const [importMode, setImportMode] = useState<ImportMode>('separate');
+
+  // Combined mode state
   const [jsonInput, setJsonInput] = useState('');
+
+  // Separate mode state
+  const [jsonInputFr, setJsonInputFr] = useState('');
+  const [jsonInputEn, setJsonInputEn] = useState('');
+
   const [parsedData, setParsedData] = useState<ImportJSON | null>(null);
   const [parseError, setParseError] = useState('');
   const [importing, setImporting] = useState(false);
   const [result, setResult] = useState<{ success: boolean; message: string; recipeId?: number } | null>(null);
 
-  // Parse JSON input
-  const handleParse = () => {
+  // Parse JSON from separate inputs
+  const handleParseSeparate = () => {
+    setParseError('');
+    setParsedData(null);
+    setResult(null);
+
+    if (!jsonInputFr.trim()) {
+      setParseError('Veuillez coller le JSON français');
+      return;
+    }
+
+    try {
+      // Parse French JSON
+      let frData: { recipe: RecipeJSON };
+      const frParsed = JSON.parse(jsonInputFr);
+
+      // Handle both formats: { recipe: {...} } or just {...}
+      if (frParsed.recipe) {
+        frData = frParsed;
+      } else if (frParsed.slug && frParsed.title) {
+        frData = { recipe: frParsed };
+      } else {
+        setParseError('Le JSON français doit contenir un objet "recipe" ou être une recette directement');
+        return;
+      }
+
+      // Validate required fields
+      if (!frData.recipe.slug || !frData.recipe.title) {
+        setParseError('La recette française doit avoir un "slug" et un "title"');
+        return;
+      }
+
+      if (!frData.recipe.ingredients || !Array.isArray(frData.recipe.ingredients)) {
+        setParseError('La recette française doit avoir des "ingredients"');
+        return;
+      }
+
+      if (!frData.recipe.instructions || !Array.isArray(frData.recipe.instructions)) {
+        setParseError('La recette française doit avoir des "instructions"');
+        return;
+      }
+
+      // Parse English JSON if provided
+      let enData: TranslationJSON | undefined;
+      if (jsonInputEn.trim()) {
+        try {
+          const enParsed = JSON.parse(jsonInputEn);
+
+          // Handle both formats: { recipe: {...} } or just {...}
+          if (enParsed.recipe) {
+            enData = {
+              ...enParsed.recipe,
+              slug_en: enParsed.recipe.slug,
+              locale: 'en'
+            };
+          } else if (enParsed.slug && enParsed.title) {
+            enData = {
+              ...enParsed,
+              slug_en: enParsed.slug,
+              locale: 'en'
+            };
+          } else {
+            setParseError('Le JSON anglais doit contenir un objet "recipe" ou être une recette directement');
+            return;
+          }
+
+          if (!enData?.title) {
+            setParseError('La traduction anglaise doit avoir un "title"');
+            return;
+          }
+        } catch (err) {
+          setParseError(`JSON anglais invalide: ${err instanceof Error ? err.message : 'Erreur de syntaxe'}`);
+          return;
+        }
+      }
+
+      setParsedData({
+        recipe: frData.recipe,
+        translation: enData
+      });
+    } catch (err) {
+      setParseError(`JSON français invalide: ${err instanceof Error ? err.message : 'Erreur de syntaxe'}`);
+    }
+  };
+
+  // Parse JSON from combined input
+  const handleParseCombined = () => {
     setParseError('');
     setParsedData(null);
     setResult(null);
@@ -131,22 +230,28 @@ export default function ImportJSONPage() {
   };
 
   // Handle file upload
-  const handleFileUpload = async (file: File) => {
+  const handleFileUpload = async (file: File, target: 'fr' | 'en' | 'combined') => {
     try {
       const text = await file.text();
-      setJsonInput(text);
 
-      // Auto-parse after loading file
-      try {
-        const data = JSON.parse(text) as ImportJSON;
-        if (data.recipe && data.recipe.slug && data.recipe.title) {
-          setParsedData(data);
-          setParseError('');
+      if (target === 'combined') {
+        setJsonInput(text);
+        // Auto-parse after loading file
+        try {
+          const data = JSON.parse(text) as ImportJSON;
+          if (data.recipe && data.recipe.slug && data.recipe.title) {
+            setParsedData(data);
+            setParseError('');
+          }
+        } catch {
+          // Let user click parse button
         }
-      } catch {
-        // Let user click parse button
+      } else if (target === 'fr') {
+        setJsonInputFr(text);
+      } else {
+        setJsonInputEn(text);
       }
-    } catch (err) {
+    } catch {
       setParseError('Erreur lors de la lecture du fichier');
     }
   };
@@ -162,6 +267,12 @@ export default function ImportJSONPage() {
       const supabase = createClient();
       const { recipe, translation } = parsedData;
 
+      // Map difficulty if English
+      let difficulty = recipe.difficulty;
+      if (difficulty === 'easy') difficulty = 'facile';
+      if (difficulty === 'medium') difficulty = 'moyen';
+      if (difficulty === 'hard') difficulty = 'difficile';
+
       // Prepare recipe data
       const recipeData = {
         slug: recipe.slug,
@@ -176,7 +287,7 @@ export default function ImportJSONPage() {
         total_time: recipe.total_time || (recipe.prep_time || 0) + (recipe.cook_time || 0) + (recipe.rest_time || 0),
         servings: recipe.servings || 4,
         servings_unit: recipe.servings_unit || 'portions',
-        difficulty: recipe.difficulty || 'facile',
+        difficulty: difficulty,
         ingredients: recipe.ingredients,
         instructions: recipe.instructions,
         nutrition: recipe.nutrition || null,
@@ -186,7 +297,7 @@ export default function ImportJSONPage() {
         seo_title: recipe.seo_title || null,
         seo_description: recipe.seo_description || null,
         faq: recipe.faq || null,
-        status: 'draft',
+        published_at: new Date().toISOString(),
         likes: 0,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
@@ -210,7 +321,7 @@ export default function ImportJSONPage() {
         const translationData = {
           recipe_id: newRecipeId,
           locale: 'en',
-          slug_en: translation.slug_en || null,
+          slug_en: translation.slug_en || translation.slug || null,
           title: translation.title,
           excerpt: translation.excerpt || null,
           introduction: translation.introduction || null,
@@ -220,6 +331,7 @@ export default function ImportJSONPage() {
           instructions: translation.instructions || null,
           seo_title: translation.seo_title || null,
           seo_description: translation.seo_description || null,
+          faq: translation.faq || null,
           translated_at: new Date().toISOString(),
         };
 
@@ -235,7 +347,7 @@ export default function ImportJSONPage() {
 
       setResult({
         success: true,
-        message: `Recette "${recipe.title}" créée avec succès!`,
+        message: `Recette "${recipe.title}" créée avec succès!${translation?.title ? ' (avec traduction anglaise)' : ''}`,
         recipeId: newRecipeId,
       });
 
@@ -252,18 +364,20 @@ export default function ImportJSONPage() {
   // Clear form
   const handleClear = () => {
     setJsonInput('');
+    setJsonInputFr('');
+    setJsonInputEn('');
     setParsedData(null);
     setParseError('');
     setResult(null);
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Import JSON (ChatGPT)</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Import JSON</h1>
           <p className="text-gray-600 mt-1">
-            Collez le JSON généré par ChatGPT pour créer une recette
+            Importez une recette depuis un fichier JSON ou en copiant-collant le contenu
           </p>
         </div>
         <button
@@ -274,118 +388,223 @@ export default function ImportJSONPage() {
         </button>
       </div>
 
-      {/* Instructions */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-        <h3 className="font-medium text-blue-800 mb-2 flex items-center gap-2">
-          <FileJson className="w-5 h-5" />
-          Format attendu
-        </h3>
-        <p className="text-sm text-blue-700 mb-2">
-          Le JSON doit contenir un objet <code className="bg-blue-100 px-1 rounded">recipe</code> avec les champs requis,
-          et optionnellement un objet <code className="bg-blue-100 px-1 rounded">translation</code> pour l&apos;anglais.
-        </p>
-        <details className="text-sm text-blue-600">
-          <summary className="cursor-pointer hover:text-blue-800">Voir le format complet</summary>
-          <pre className="mt-2 bg-white p-3 rounded border border-blue-200 overflow-x-auto text-xs">
+      {/* Mode Selection */}
+      <div className="bg-white rounded-lg shadow p-4 mb-6">
+        <div className="flex gap-4">
+          <button
+            onClick={() => { setImportMode('separate'); handleClear(); }}
+            className={`flex-1 py-3 px-4 rounded-lg border-2 transition-all ${
+              importMode === 'separate'
+                ? 'border-orange-500 bg-orange-50 text-orange-700'
+                : 'border-gray-200 hover:border-gray-300'
+            }`}
+          >
+            <div className="font-medium">Fichiers séparés</div>
+            <div className="text-sm text-gray-500 mt-1">
+              Un fichier/JSON pour le français, un pour l&apos;anglais
+            </div>
+          </button>
+          <button
+            onClick={() => { setImportMode('combined'); handleClear(); }}
+            className={`flex-1 py-3 px-4 rounded-lg border-2 transition-all ${
+              importMode === 'combined'
+                ? 'border-orange-500 bg-orange-50 text-orange-700'
+                : 'border-gray-200 hover:border-gray-300'
+            }`}
+          >
+            <div className="font-medium">Fichier combiné</div>
+            <div className="text-sm text-gray-500 mt-1">
+              Un seul JSON avec recipe + translation
+            </div>
+          </button>
+        </div>
+      </div>
+
+      {/* Separate Mode */}
+      {importMode === 'separate' && (
+        <div className="grid grid-cols-2 gap-6 mb-6">
+          {/* French JSON */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center justify-between mb-3">
+              <label className="font-medium text-gray-700 flex items-center gap-2">
+                <span className="text-lg">🇫🇷</span> JSON Français
+                <span className="text-red-500">*</span>
+              </label>
+              <label className="flex items-center gap-2 text-sm text-gray-500 cursor-pointer hover:text-gray-700">
+                <Upload className="w-4 h-4" />
+                <span>Fichier</span>
+                <input
+                  ref={fileInputFrRef}
+                  type="file"
+                  accept=".json"
+                  onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'fr')}
+                  className="hidden"
+                />
+              </label>
+            </div>
+            <textarea
+              value={jsonInputFr}
+              onChange={(e) => {
+                setJsonInputFr(e.target.value);
+                setParsedData(null);
+                setParseError('');
+              }}
+              placeholder='{ "recipe": { "slug": "...", "title": "...", ... } }'
+              rows={14}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg font-mono text-xs focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            />
+            {jsonInputFr && (
+              <button
+                onClick={() => setJsonInputFr('')}
+                className="mt-2 text-sm text-gray-500 hover:text-red-500 flex items-center gap-1"
+              >
+                <X className="w-3 h-3" /> Effacer
+              </button>
+            )}
+          </div>
+
+          {/* English JSON */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center justify-between mb-3">
+              <label className="font-medium text-gray-700 flex items-center gap-2">
+                <span className="text-lg">🇬🇧</span> JSON Anglais
+                <span className="text-gray-400 text-sm">(optionnel)</span>
+              </label>
+              <label className="flex items-center gap-2 text-sm text-gray-500 cursor-pointer hover:text-gray-700">
+                <Upload className="w-4 h-4" />
+                <span>Fichier</span>
+                <input
+                  ref={fileInputEnRef}
+                  type="file"
+                  accept=".json"
+                  onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'en')}
+                  className="hidden"
+                />
+              </label>
+            </div>
+            <textarea
+              value={jsonInputEn}
+              onChange={(e) => {
+                setJsonInputEn(e.target.value);
+                setParsedData(null);
+                setParseError('');
+              }}
+              placeholder='{ "recipe": { "slug": "...", "title": "...", ... } }'
+              rows={14}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg font-mono text-xs focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            />
+            {jsonInputEn && (
+              <button
+                onClick={() => setJsonInputEn('')}
+                className="mt-2 text-sm text-gray-500 hover:text-red-500 flex items-center gap-1"
+              >
+                <X className="w-3 h-3" /> Effacer
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Combined Mode */}
+      {importMode === 'combined' && (
+        <>
+          {/* Instructions */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <h3 className="font-medium text-blue-800 mb-2 flex items-center gap-2">
+              <FileJson className="w-5 h-5" />
+              Format attendu
+            </h3>
+            <p className="text-sm text-blue-700 mb-2">
+              Le JSON doit contenir un objet <code className="bg-blue-100 px-1 rounded">recipe</code> avec les champs requis,
+              et optionnellement un objet <code className="bg-blue-100 px-1 rounded">translation</code> pour l&apos;anglais.
+            </p>
+            <details className="text-sm text-blue-600">
+              <summary className="cursor-pointer hover:text-blue-800">Voir le format complet</summary>
+              <pre className="mt-2 bg-white p-3 rounded border border-blue-200 overflow-x-auto text-xs">
 {`{
   "recipe": {
     "slug": "pate-chinois",
     "title": "Pâté Chinois",
     "excerpt": "Description courte...",
     "introduction": "Introduction...",
-    "conclusion": "Conclusion...",
     "prep_time": 30,
     "cook_time": 45,
-    "rest_time": 5,
     "servings": 6,
-    "servings_unit": "portions",
     "difficulty": "facile",
-    "ingredients": [
-      {
-        "title": "Pour la viande",
-        "items": [
-          { "quantity": "750", "unit": "g", "name": "boeuf haché", "note": "" }
-        ]
-      }
-    ],
-    "instructions": [
-      { "step": 1, "title": "Titre", "content": "Description...", "tip": "" }
-    ],
-    "nutrition": { "calories": 485, "protein": 28, ... },
-    "tags": ["classique", "québécois"],
-    "cuisine": "Québécoise",
-    "seo_title": "Titre SEO",
-    "seo_description": "Description SEO",
-    "faq": "{\\"faq\\":[...]}"
+    "ingredients": [...],
+    "instructions": [...]
   },
   "translation": {
-    "locale": "en",
     "slug_en": "shepherds-pie",
     "title": "Shepherd's Pie",
     ...
   }
 }`}
-          </pre>
-        </details>
-      </div>
-
-      {/* File Upload */}
-      <div className="mb-4">
-        <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer hover:text-gray-800">
-          <Upload className="w-4 h-4" />
-          <span>Ou importer un fichier JSON</span>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".json"
-            onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])}
-            className="hidden"
-          />
-        </label>
-      </div>
-
-      {/* JSON Input */}
-      <div className="bg-white rounded-lg shadow p-6 mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <label className="font-medium text-gray-700">JSON de la recette</label>
-          <div className="flex gap-2">
-            <button
-              onClick={handleClear}
-              className="text-sm text-gray-500 hover:text-gray-700"
-            >
-              Effacer
-            </button>
+              </pre>
+            </details>
           </div>
+
+          {/* File Upload */}
+          <div className="mb-4">
+            <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer hover:text-gray-800">
+              <Upload className="w-4 h-4" />
+              <span>Importer un fichier JSON</span>
+              <input
+                ref={fileInputCombinedRef}
+                type="file"
+                accept=".json"
+                onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0], 'combined')}
+                className="hidden"
+              />
+            </label>
+          </div>
+
+          {/* JSON Input */}
+          <div className="bg-white rounded-lg shadow p-6 mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <label className="font-medium text-gray-700">JSON de la recette</label>
+              <button
+                onClick={handleClear}
+                className="text-sm text-gray-500 hover:text-gray-700"
+              >
+                Effacer
+              </button>
+            </div>
+            <textarea
+              value={jsonInput}
+              onChange={(e) => {
+                setJsonInput(e.target.value);
+                setParsedData(null);
+                setParseError('');
+              }}
+              placeholder='{ "recipe": { ... }, "translation": { ... } }'
+              rows={16}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            />
+          </div>
+        </>
+      )}
+
+      {/* Error */}
+      {parseError && (
+        <div className="mb-6 flex items-center gap-2 text-red-600 bg-red-50 border border-red-200 rounded-lg p-4">
+          <AlertCircle className="w-5 h-5 flex-shrink-0" />
+          {parseError}
         </div>
-        <textarea
-          value={jsonInput}
-          onChange={(e) => {
-            setJsonInput(e.target.value);
-            setParsedData(null);
-            setParseError('');
-          }}
-          placeholder='Collez le JSON ici... { "recipe": { ... }, "translation": { ... } }'
-          rows={16}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-        />
+      )}
 
-        {parseError && (
-          <div className="mt-3 flex items-center gap-2 text-red-600 text-sm">
-            <AlertCircle className="w-4 h-4" />
-            {parseError}
-          </div>
-        )}
-
-        <div className="mt-4 flex justify-end">
+      {/* Parse Button */}
+      {!parsedData && (
+        <div className="flex justify-end mb-6">
           <button
-            onClick={handleParse}
-            disabled={!jsonInput.trim()}
-            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50"
+            onClick={importMode === 'separate' ? handleParseSeparate : handleParseCombined}
+            disabled={importMode === 'separate' ? !jsonInputFr.trim() : !jsonInput.trim()}
+            className="px-6 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50"
           >
             Valider le JSON
           </button>
         </div>
-      </div>
+      )}
 
       {/* Parsed Preview */}
       {parsedData && (
@@ -397,7 +616,9 @@ export default function ImportJSONPage() {
 
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="p-4 bg-gray-50 rounded-lg">
-              <h4 className="text-sm font-medium text-gray-500 mb-2">Français</h4>
+              <h4 className="text-sm font-medium text-gray-500 mb-2 flex items-center gap-2">
+                <span>🇫🇷</span> Français
+              </h4>
               <p className="font-semibold text-lg">{parsedData.recipe.title}</p>
               <p className="text-sm text-gray-600">/{parsedData.recipe.slug}</p>
               <div className="mt-2 flex flex-wrap gap-2 text-xs">
@@ -413,30 +634,44 @@ export default function ImportJSONPage() {
               </div>
             </div>
 
-            {parsedData.translation?.title && (
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <h4 className="text-sm font-medium text-gray-500 mb-2">English</h4>
-                <p className="font-semibold text-lg">{parsedData.translation.title}</p>
-                <p className="text-sm text-gray-600">/{parsedData.translation.slug_en || parsedData.recipe.slug}</p>
-              </div>
-            )}
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <h4 className="text-sm font-medium text-gray-500 mb-2 flex items-center gap-2">
+                <span>🇬🇧</span> English
+              </h4>
+              {parsedData.translation?.title ? (
+                <>
+                  <p className="font-semibold text-lg">{parsedData.translation.title}</p>
+                  <p className="text-sm text-gray-600">/{parsedData.translation.slug_en || parsedData.translation.slug || parsedData.recipe.slug}</p>
+                </>
+              ) : (
+                <p className="text-gray-400 italic">Pas de traduction anglaise</p>
+              )}
+            </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 text-sm">
+          <div className="grid grid-cols-4 gap-4 text-sm">
             <div>
-              <span className="text-gray-500">Ingrédients:</span>
+              <span className="text-gray-500">Ingrédients FR:</span>
               <span className="ml-2 font-medium">
                 {parsedData.recipe.ingredients.reduce((acc, g) => acc + g.items.length, 0)}
               </span>
             </div>
             <div>
-              <span className="text-gray-500">Étapes:</span>
+              <span className="text-gray-500">Étapes FR:</span>
               <span className="ml-2 font-medium">{parsedData.recipe.instructions.length}</span>
             </div>
             <div>
-              <span className="text-gray-500">FAQ:</span>
+              <span className="text-gray-500">Ingrédients EN:</span>
               <span className="ml-2 font-medium">
-                {parsedData.recipe.faq ? '✓' : '✗'}
+                {parsedData.translation?.ingredients
+                  ? parsedData.translation.ingredients.reduce((acc, g) => acc + g.items.length, 0)
+                  : '—'}
+              </span>
+            </div>
+            <div>
+              <span className="text-gray-500">Étapes EN:</span>
+              <span className="ml-2 font-medium">
+                {parsedData.translation?.instructions?.length || '—'}
               </span>
             </div>
           </div>
@@ -464,6 +699,14 @@ export default function ImportJSONPage() {
                   >
                     Éditer la recette
                   </button>
+                  <a
+                    href={`/recette/${parsedData?.recipe.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-blue-600 hover:text-blue-800 underline"
+                  >
+                    Voir la recette
+                  </a>
                   <button
                     onClick={handleClear}
                     className="text-sm text-gray-600 hover:text-gray-800"

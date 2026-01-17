@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
-import { User, LogOut, Heart, Settings, Shield } from 'lucide-react';
+import { User, LogOut, Heart, Shield } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface UserProfile {
@@ -25,7 +26,9 @@ export default function UserMenu() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
   const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
   const supabase = createClient();
 
@@ -51,14 +54,21 @@ export default function UserMenu() {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      // Check if click is outside both the button and the menu
+      if (
+        buttonRef.current && !buttonRef.current.contains(target) &&
+        menuRef.current && !menuRef.current.contains(target)
+      ) {
         setIsOpen(false);
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isOpen]);
 
   const checkUser = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -107,7 +117,17 @@ export default function UserMenu() {
   return (
     <div ref={menuRef} className="relative">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        ref={buttonRef}
+        onClick={() => {
+          if (!isOpen && buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            setMenuPosition({
+              top: rect.bottom + 8,
+              right: window.innerWidth - rect.right,
+            });
+          }
+          setIsOpen(!isOpen);
+        }}
         className="flex items-center gap-2 focus:outline-none"
       >
         {avatarUrl ? (
@@ -126,12 +146,14 @@ export default function UserMenu() {
       </button>
 
       <AnimatePresence>
-        {isOpen && (
+        {isOpen && typeof document !== 'undefined' && createPortal(
           <motion.div
+            ref={menuRef}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-neutral-200 overflow-hidden z-[100]"
+            style={{ top: menuPosition.top, right: menuPosition.right }}
+            className="fixed w-56 bg-white rounded-xl shadow-xl border border-neutral-200 overflow-hidden z-[9999]"
           >
             {/* User info */}
             <div className="px-4 py-3 border-b border-neutral-100">
@@ -179,7 +201,8 @@ export default function UserMenu() {
                 Déconnexion
               </button>
             </div>
-          </motion.div>
+          </motion.div>,
+          document.body
         )}
       </AnimatePresence>
     </div>
