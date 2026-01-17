@@ -505,8 +505,8 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
         onClose={() => setShowNowPlaying(false)}
       />
 
-      <header className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 overflow-x-hidden ${headerBg}`}>
-        <div className="container mx-auto px-2 sm:px-4 xl:px-2 overflow-hidden">
+      <header className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${headerBg}`}>
+        <div className="container mx-auto px-2 sm:px-4 xl:px-2">
           <div className="flex items-center justify-between h-14 md:h-16 w-full">
           {/* Logo */}
           <Link href={`${urlPrefix}/`} className="flex items-center group flex-shrink-0">
@@ -547,7 +547,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                 {/* Blog Dropdown */}
                 {item.hasBlogMenu && isBlogMenuOpen && (
                   <div
-                    className="absolute left-0 top-full pt-2 z-50"
+                    className="absolute left-0 top-full pt-2 z-[60]"
                     onMouseEnter={handleBlogMenuEnter}
                     onMouseLeave={handleBlogMenuLeave}
                   >
@@ -678,7 +678,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
-              className="hidden lg:block absolute left-0 right-0 top-full bg-neutral-900 border-t border-neutral-800 shadow-2xl"
+              className="hidden lg:block absolute left-0 right-0 top-full bg-neutral-900 border-t border-neutral-800 shadow-2xl z-[60]"
               onMouseEnter={handleMegaMenuEnter}
               onMouseLeave={handleMegaMenuLeave}
             >

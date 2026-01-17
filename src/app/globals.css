@@ -625,6 +625,11 @@ html {
 
 /* Hide AdSense anchor ads on desktop - including container to remove whitespace */
 @media (min-width: 1024px) {
+  /* Override body padding that AdSense adds for anchor ad space */
+  body {
+    padding-bottom: 0 !important;
+  }
+
   /* Target the noablate anchor ad specifically */
   ins.adsbygoogle-noablate,
   ins.adsbygoogle-noablate *,
