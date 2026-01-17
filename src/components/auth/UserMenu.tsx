@@ -82,7 +82,10 @@ export default function UserMenu() {
     router.refresh();
   };
 
-  const handleToggle = () => {
+  const handleToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('UserMenu toggle clicked, isOpen:', !isOpen);
     setIsOpen(!isOpen);
   };
 
@@ -115,7 +118,7 @@ export default function UserMenu() {
         className="cursor-pointer"
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => e.key === 'Enter' && handleToggle()}
+        onKeyDown={(e) => e.key === 'Enter' && handleToggle(e as unknown as React.MouseEvent)}
       >
         {avatarUrl ? (
           <Image
