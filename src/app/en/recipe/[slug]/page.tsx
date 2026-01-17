@@ -20,6 +20,7 @@ import RecipeFAQ from '@/components/recipe/RecipeFAQ';
 import RecipeComments from '@/components/recipe/RecipeComments';
 import RecipeRating from '@/components/recipe/RecipeRating';
 import GoogleAd from '@/components/ads/GoogleAd';
+import GoogleAdInArticle from '@/components/ads/GoogleAdInArticle';
 import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 import RecipeAmazonSuggestions from '@/components/amazon/RecipeAmazonSuggestions';
@@ -176,7 +177,7 @@ export default async function RecipePageEN({ params }: Props) {
         <section className="container mx-auto px-4 py-16 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
             {/* Main column */}
-            <div className="lg:col-span-2 space-y-16">
+            <div className="lg:col-span-2 space-y-12">
               {/* Introduction */}
               {recipe.introduction && (
                 <div className="relative pl-8 border-l-4 border-[#F77313] bg-gradient-to-r from-neutral-100 to-transparent py-6 -ml-4 pl-12">
@@ -196,32 +197,10 @@ export default async function RecipePageEN({ params }: Props) {
                 </div>
               )}
 
-              {/* Ad after introduction */}
-              <GoogleAd slot="7610644087" className="my-8 print:hidden" />
+              {/* 📍 1. Responsive display ad after intro */}
+              <GoogleAd className="my-6 print:hidden" />
 
-              {/* Instructions */}
-              <RecipeInstructions instructions={recipe.instructions} locale="en" />
-
-              {/* Conclusion */}
-              {recipe.conclusion && (
-                <div className="bg-neutral-50 p-8 md:p-10 rounded-lg border border-neutral-200">
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className="w-10 h-10 bg-[#F77313]/10 rounded-full flex items-center justify-center">
-                      <span className="text-xl">✨</span>
-                    </div>
-                    <h2 className="font-display text-2xl tracking-wide text-black">
-                      To Conclude
-                    </h2>
-                    <div className="flex-1 h-px bg-neutral-300" />
-                  </div>
-                  <div
-                    className="recipe-conclusion"
-                    dangerouslySetInnerHTML={{ __html: recipe.conclusion }}
-                  />
-                </div>
-              )}
-
-              {/* Tips */}
+              {/* Tips / Chef's advice */}
               {recipe.content && (
                 <div className="bg-gradient-to-br from-neutral-900 to-black p-8 md:p-10 rounded-lg shadow-2xl">
                   <div className="flex items-center gap-4 mb-8 pb-6 border-b border-white/10">
@@ -245,8 +224,48 @@ export default async function RecipePageEN({ params }: Props) {
                 </div>
               )}
 
-              {/* Ad before FAQ */}
-              <GoogleAd slot="7610644087" className="my-8 print:hidden" />
+              {/* 📍 2. In-article ad (1 per page only - best CTR) */}
+              <GoogleAdInArticle className="my-6 print:hidden" />
+
+              {/* Conclusion / Serving suggestions */}
+              {recipe.conclusion && (
+                <div className="bg-neutral-50 p-8 md:p-10 rounded-lg border border-neutral-200">
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="w-10 h-10 bg-[#F77313]/10 rounded-full flex items-center justify-center">
+                      <span className="text-xl">✨</span>
+                    </div>
+                    <h2 className="font-display text-2xl tracking-wide text-black">
+                      Serving Suggestions
+                    </h2>
+                    <div className="flex-1 h-px bg-neutral-300" />
+                  </div>
+                  <div
+                    className="recipe-conclusion"
+                    dangerouslySetInnerHTML={{ __html: recipe.conclusion }}
+                  />
+                </div>
+              )}
+
+              {/* 📍 3. Responsive display ad before recipe card */}
+              <GoogleAd className="my-6 print:hidden" />
+
+              {/* H2 - Ingredients (Recipe card in main content) */}
+              <div className="bg-white border-2 border-neutral-200 rounded-xl p-6 md:p-8 shadow-sm">
+                <RecipeIngredients
+                  ingredients={recipe.ingredients}
+                  servings={recipe.servings}
+                  servingsUnit={recipe.servingsUnit}
+                  locale="en"
+                />
+                {recipe.nutrition && (
+                  <div className="mt-6 pt-6 border-t border-neutral-200">
+                    <RecipeNutrition nutrition={recipe.nutrition} locale="en" />
+                  </div>
+                )}
+              </div>
+
+              {/* H2 - Complete steps */}
+              <RecipeInstructions instructions={recipe.instructions} locale="en" />
 
               {/* FAQ */}
               {recipe.faq && (
@@ -282,20 +301,7 @@ export default async function RecipePageEN({ params }: Props) {
             </div>
 
             {/* Sidebar */}
-            <aside className="space-y-8">
-              {/* Ingredients + Nutrition */}
-              <div>
-                <RecipeIngredients
-                  ingredients={recipe.ingredients}
-                  servings={recipe.servings}
-                  servingsUnit={recipe.servingsUnit}
-                  locale="en"
-                />
-                {recipe.nutrition && (
-                  <RecipeNutrition nutrition={recipe.nutrition} locale="en" />
-                )}
-              </div>
-
+            <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
               {/* Amazon Suggestions based on recipe */}
               <div className="print:hidden">
                 <RecipeAmazonSuggestions
@@ -307,6 +313,9 @@ export default async function RecipePageEN({ params }: Props) {
                 />
               </div>
 
+              {/* 📍 4. Ad in sidebar (desktop only) */}
+              <GoogleAd className="hidden lg:block print:hidden" />
+
               {/* Amazon Products - Generic Equipment */}
               <div className="print:hidden">
                 <AmazonKitchenProducts
@@ -316,9 +325,6 @@ export default async function RecipePageEN({ params }: Props) {
                   variant="sidebar"
                 />
               </div>
-
-              {/* Ad in sidebar */}
-              <GoogleAd slot="7610644087" className="print:hidden" />
             </aside>
           </div>
         </section>
