@@ -625,7 +625,14 @@ html {
 
 /* Hide AdSense anchor ads on desktop - including container to remove whitespace */
 @media (min-width: 1024px) {
-  ins.adsbygoogle[data-anchor-status] {
+  /* Target the anchor ad and all its wrappers */
+  ins.adsbygoogle[data-anchor-status],
+  ins.adsbygoogle[data-anchor-status] *,
+  div:has(> ins.adsbygoogle[data-anchor-status]),
+  div:has(> div > ins.adsbygoogle[data-anchor-status]),
+  [data-anchor-status],
+  [data-ad-status="filled"][style*="position: fixed"],
+  [data-ad-status="filled"][style*="bottom: 0"] {
     display: none !important;
     height: 0 !important;
     min-height: 0 !important;
@@ -633,16 +640,21 @@ html {
     padding: 0 !important;
     margin: 0 !important;
     visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
   }
 
-  /* Hide the fixed/sticky container that wraps anchor ads */
-  body > div[style*="position: fixed"][style*="bottom"],
-  body > div[style*="position:fixed"][style*="bottom"],
-  body > ins.adsbygoogle[data-anchor-status],
+  /* Hide any fixed positioned ad containers at the bottom */
+  body > div[style*="position: fixed"][style*="bottom: 0"],
+  body > div[style*="position:fixed"][style*="bottom:0"],
+  body > div[style*="position: fixed"][style*="bottom:0"],
+  body > div[style*="position:fixed"][style*="bottom: 0"],
   div[id^="google_ads_iframe_"][style*="position: fixed"],
-  div[id^="aswift_"][style*="position: fixed"] {
+  div[id^="aswift_"][style*="position: fixed"],
+  div[id^="aswift_"][style*="bottom"] {
     display: none !important;
     height: 0 !important;
+    min-height: 0 !important;
     visibility: hidden !important;
   }
 }
