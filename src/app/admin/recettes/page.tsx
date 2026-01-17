@@ -12,35 +12,52 @@ interface RecipeListItem {
   featured_image: string | null;
 }
 
-async function getRecipes(search?: string): Promise<RecipeListItem[]> {
+const PAGE_SIZE = 50;
+
+async function getRecipes(search?: string, page: number = 1): Promise<{ recipes: RecipeListItem[], total: number }> {
   const supabase = await createClient();
 
+  // Get total count
+  let countQuery = supabase
+    .from('recipes')
+    .select('*', { count: 'exact', head: true });
+
+  if (search) {
+    countQuery = countQuery.ilike('title', `%${search}%`);
+  }
+
+  const { count } = await countQuery;
+
+  // Get paginated data
   let query = supabase
     .from('recipes')
     .select('id, title, slug, difficulty, likes, created_at, featured_image')
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
 
   if (search) {
     query = query.ilike('title', `%${search}%`);
   }
 
-  const { data, error } = await query.limit(100);
+  const { data, error } = await query;
 
   if (error) {
     console.error('Error fetching recipes:', error);
-    return [];
+    return { recipes: [], total: 0 };
   }
 
-  return (data as RecipeListItem[] | null) || [];
+  return { recipes: (data as RecipeListItem[] | null) || [], total: count || 0 };
 }
 
 export default async function RecipesListPage({
   searchParams,
 }: {
-  searchParams: Promise<{ search?: string }>;
+  searchParams: Promise<{ search?: string; page?: string }>;
 }) {
   const params = await searchParams;
-  const recipes = await getRecipes(params.search);
+  const currentPage = parseInt(params.page || '1', 10);
+  const { recipes, total } = await getRecipes(params.search, currentPage);
+  const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return (
     <div>
@@ -186,8 +203,64 @@ export default async function RecipesListPage({
         </table>
       </div>
 
-      <div className="mt-4 text-sm text-gray-500">
-        {recipes.length} recette{recipes.length > 1 ? 's' : ''}
+      <div className="mt-4 flex items-center justify-between">
+        <div className="text-sm text-gray-500">
+          {total} recette{total > 1 ? 's' : ''} au total
+          {totalPages > 1 && ` • Page ${currentPage} sur ${totalPages}`}
+        </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center gap-2">
+            {currentPage > 1 && (
+              <Link
+                href={`/admin/recettes?page=${currentPage - 1}${params.search ? `&search=${params.search}` : ''}`}
+                className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+              >
+                ← Précédent
+              </Link>
+            )}
+
+            {/* Page numbers */}
+            <div className="flex items-center gap-1">
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter(page => {
+                  // Show first, last, current, and pages around current
+                  return page === 1 ||
+                         page === totalPages ||
+                         Math.abs(page - currentPage) <= 2;
+                })
+                .map((page, index, arr) => {
+                  // Add ellipsis if there's a gap
+                  const showEllipsisBefore = index > 0 && page - arr[index - 1] > 1;
+                  return (
+                    <span key={page} className="flex items-center">
+                      {showEllipsisBefore && <span className="px-2 text-gray-400">...</span>}
+                      <Link
+                        href={`/admin/recettes?page=${page}${params.search ? `&search=${params.search}` : ''}`}
+                        className={`px-3 py-1 text-sm rounded ${
+                          page === currentPage
+                            ? 'bg-orange-600 text-white'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                      >
+                        {page}
+                      </Link>
+                    </span>
+                  );
+                })}
+            </div>
+
+            {currentPage < totalPages && (
+              <Link
+                href={`/admin/recettes?page=${currentPage + 1}${params.search ? `&search=${params.search}` : ''}`}
+                className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+              >
+                Suivant →
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
