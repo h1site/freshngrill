@@ -623,9 +623,26 @@ html {
   overflow: hidden;
 }
 
-/* Hide AdSense anchor ads on desktop */
+/* Hide AdSense anchor ads on desktop - including container to remove whitespace */
 @media (min-width: 1024px) {
   ins.adsbygoogle[data-anchor-status] {
     display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* Hide the fixed/sticky container that wraps anchor ads */
+  body > div[style*="position: fixed"][style*="bottom"],
+  body > div[style*="position:fixed"][style*="bottom"],
+  body > ins.adsbygoogle[data-anchor-status],
+  div[id^="google_ads_iframe_"][style*="position: fixed"],
+  div[id^="aswift_"][style*="position: fixed"] {
+    display: none !important;
+    height: 0 !important;
+    visibility: hidden !important;
   }
 }
