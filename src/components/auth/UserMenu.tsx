@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
-import { User, LogOut, Heart, Shield } from 'lucide-react';
+import { User, LogOut, Heart, Shield, ChefHat, MessageSquare } from 'lucide-react';
 
 interface UserProfile {
   id: string;
@@ -17,9 +17,13 @@ interface UserProfile {
   };
 }
 
+interface UserMenuProps {
+  onSubmitRecipe?: () => void;
+}
+
 const ADMIN_EMAIL = 'info@h1site.com';
 
-export default function UserMenu() {
+export default function UserMenu({ onSubmitRecipe }: UserMenuProps) {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -157,8 +161,27 @@ export default function UserMenu() {
               className="flex items-center gap-3 px-4 py-2 text-neutral-700 hover:bg-neutral-50 transition-colors"
             >
               <Heart className="w-4 h-4" />
-              Mes favoris
+              Mes recettes favorites
             </a>
+            <a
+              href="/profil/commentaires"
+              className="flex items-center gap-3 px-4 py-2 text-neutral-700 hover:bg-neutral-50 transition-colors"
+            >
+              <MessageSquare className="w-4 h-4" />
+              Mes commentaires
+            </a>
+            {onSubmitRecipe && (
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  onSubmitRecipe();
+                }}
+                className="flex items-center gap-3 px-4 py-2 w-full text-left text-neutral-700 hover:bg-neutral-50 transition-colors"
+              >
+                <ChefHat className="w-4 h-4" />
+                Soumettre une recette
+              </button>
+            )}
             {isAdmin && (
               <a
                 href="/admin"

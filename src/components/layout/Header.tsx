@@ -652,7 +652,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
             </Link>
 
             {/* User Menu */}
-            <UserMenu />
+            <UserMenu onSubmitRecipe={() => setIsSubmitRecipeModalOpen(true)} />
 
             {/* Language Switcher */}
             <div className="hidden md:block">

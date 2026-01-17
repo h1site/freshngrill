@@ -216,6 +216,9 @@ export default async function ProfilPage() {
                 <MessageSquare className="w-5 h-5 text-blue-500" />
                 Mes commentaires
               </h2>
+              <Link href="/profil/commentaires" className="text-[#F77313] text-sm hover:underline">
+                Voir tout
+              </Link>
             </div>
             <div className="divide-y divide-neutral-100">
               {userComments.length === 0 ? (
