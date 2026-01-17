@@ -11,6 +11,11 @@ export const metadata: Metadata = {
   description: 'Partagez votre recette avec la communauté Menucochon.',
 };
 
+interface UserProfile {
+  display_name: string | null;
+  avatar_url: string | null;
+}
+
 export default async function SoumettreRecettePage() {
   const user = await getUser();
 
@@ -27,8 +32,9 @@ export default async function SoumettreRecettePage() {
     .eq('id', user.id)
     .single();
 
-  const displayName = profile?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || '';
-  const avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url || '';
+  const userProfile = profile as UserProfile | null;
+  const displayName = userProfile?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0] || '';
+  const avatarUrl = userProfile?.avatar_url || user.user_metadata?.avatar_url || '';
 
   return (
     <main className="min-h-screen bg-neutral-50">
