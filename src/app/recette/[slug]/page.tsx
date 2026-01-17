@@ -192,7 +192,13 @@ export default async function RecettePage({ params }: Props) {
               {/* 📍 1. Annonce display responsive après intro */}
               <GoogleAd className="my-6 print:hidden" />
 
-              {/* Astuces / Conseils du chef (H2 - Profil et usages) */}
+              {/* H2 - Étapes complètes */}
+              <RecipeInstructions instructions={recipe.instructions} />
+
+              {/* 📍 2. Annonce in-article (1 seule par page - meilleur CTR) */}
+              <GoogleAdInArticle className="my-6 print:hidden" />
+
+              {/* Astuces / Conseils du chef */}
               {recipe.content && (
                 <div className="bg-gradient-to-br from-neutral-900 to-black p-8 md:p-10 rounded-lg shadow-2xl">
                   <div className="flex items-center gap-4 mb-8 pb-6 border-b border-white/10">
@@ -216,8 +222,8 @@ export default async function RecettePage({ params }: Props) {
                 </div>
               )}
 
-              {/* 📍 2. Annonce in-article (1 seule par page - meilleur CTR) */}
-              <GoogleAdInArticle className="my-6 print:hidden" />
+              {/* 📍 3. Annonce display responsive avant conclusion */}
+              <GoogleAd className="my-6 print:hidden" />
 
               {/* Conclusion / Suggestions de service */}
               {recipe.conclusion && (
@@ -237,12 +243,6 @@ export default async function RecettePage({ params }: Props) {
                   />
                 </div>
               )}
-
-              {/* 📍 3. Annonce display responsive avant étapes */}
-              <GoogleAd className="my-6 print:hidden" />
-
-              {/* H2 - Étapes complètes */}
-              <RecipeInstructions instructions={recipe.instructions} />
 
               {/* FAQ */}
               {recipe.faq && (

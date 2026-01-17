@@ -222,6 +222,12 @@ export default async function RecipePageEN({ params }: Props) {
               {/* 📍 1. Responsive display ad after intro */}
               <GoogleAd className="my-6 print:hidden" />
 
+              {/* H2 - Complete steps */}
+              <RecipeInstructions instructions={recipe.instructions} locale="en" />
+
+              {/* 📍 2. In-article ad (1 per page only - best CTR) */}
+              <GoogleAdInArticle className="my-6 print:hidden" />
+
               {/* Tips / Chef's advice */}
               {recipe.content && (
                 <div className="bg-gradient-to-br from-neutral-900 to-black p-8 md:p-10 rounded-lg shadow-2xl">
@@ -246,8 +252,8 @@ export default async function RecipePageEN({ params }: Props) {
                 </div>
               )}
 
-              {/* 📍 2. In-article ad (1 per page only - best CTR) */}
-              <GoogleAdInArticle className="my-6 print:hidden" />
+              {/* 📍 3. Responsive display ad before conclusion */}
+              <GoogleAd className="my-6 print:hidden" />
 
               {/* Conclusion / Serving suggestions */}
               {recipe.conclusion && (
@@ -267,12 +273,6 @@ export default async function RecipePageEN({ params }: Props) {
                   />
                 </div>
               )}
-
-              {/* 📍 3. Responsive display ad before steps */}
-              <GoogleAd className="my-6 print:hidden" />
-
-              {/* H2 - Complete steps */}
-              <RecipeInstructions instructions={recipe.instructions} locale="en" />
 
               {/* FAQ */}
               {recipe.faq && (
