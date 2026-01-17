@@ -1,13 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
-import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase-browser';
 import { User, LogOut, Heart, Shield } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface UserProfile {
   id: string;
@@ -26,10 +23,7 @@ export default function UserMenu() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const supabase = createClient();
 
@@ -55,31 +49,14 @@ export default function UserMenu() {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      const target = event.target as Node;
-
-      // Don't close if clicking on the button
-      if (buttonRef.current?.contains(target)) {
-        return;
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
       }
-
-      // Don't close if clicking inside the dropdown
-      if (dropdownRef.current?.contains(target)) {
-        return;
-      }
-
-      // Close the menu
-      setIsOpen(false);
     }
 
     if (isOpen) {
-      // Use setTimeout to avoid immediate trigger on the same click that opened the menu
-      const timer = setTimeout(() => {
-        document.addEventListener('click', handleClickOutside);
-      }, 0);
-      return () => {
-        clearTimeout(timer);
-        document.removeEventListener('click', handleClickOutside);
-      };
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
     }
   }, [isOpen]);
 
@@ -105,6 +82,10 @@ export default function UserMenu() {
     router.refresh();
   };
 
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
   if (isLoading) {
     return (
       <div className="w-9 h-9 rounded-full bg-neutral-700 animate-pulse" />
@@ -113,13 +94,13 @@ export default function UserMenu() {
 
   if (!user) {
     return (
-      <Link
+      <a
         href="/login"
         className="flex items-center gap-2 px-3 py-1.5 text-sm text-white hover:text-[#F77313] transition-colors"
       >
         <User className="w-5 h-5" />
         <span className="hidden sm:inline">Connexion</span>
-      </Link>
+      </a>
     );
   }
 
@@ -128,20 +109,13 @@ export default function UserMenu() {
   const isAdmin = user.email === ADMIN_EMAIL;
 
   return (
-    <div ref={containerRef} className="relative">
-      <button
-        ref={buttonRef}
-        onClick={() => {
-          if (!isOpen && buttonRef.current) {
-            const rect = buttonRef.current.getBoundingClientRect();
-            setMenuPosition({
-              top: rect.bottom + 8,
-              right: window.innerWidth - rect.right,
-            });
-          }
-          setIsOpen(!isOpen);
-        }}
-        className="flex items-center gap-2 focus:outline-none"
+    <div ref={menuRef} className="relative">
+      <div
+        onClick={handleToggle}
+        className="cursor-pointer"
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => e.key === 'Enter' && handleToggle()}
       >
         {avatarUrl ? (
           <Image
@@ -149,72 +123,62 @@ export default function UserMenu() {
             alt={displayName}
             width={36}
             height={36}
-            className="w-9 h-9 rounded-full object-cover border-2 border-transparent hover:border-[#F77313] transition-colors"
+            className="w-9 h-9 rounded-full object-cover border-2 border-transparent hover:border-[#F77313] transition-colors pointer-events-none"
           />
         ) : (
           <div className="w-9 h-9 rounded-full bg-[#F77313] flex items-center justify-center text-white font-bold text-sm hover:bg-[#e56610] transition-colors">
             {displayName.charAt(0).toUpperCase()}
           </div>
         )}
-      </button>
+      </div>
 
-      <AnimatePresence>
-        {isOpen && typeof document !== 'undefined' && createPortal(
-          <motion.div
-            ref={dropdownRef}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            style={{ top: menuPosition.top, right: menuPosition.right }}
-            className="fixed w-56 bg-white rounded-xl shadow-xl border border-neutral-200 overflow-hidden z-[9999]"
-          >
-            {/* User info */}
-            <div className="px-4 py-3 border-b border-neutral-100">
-              <p className="font-medium text-neutral-900 truncate">{displayName}</p>
-              <p className="text-sm text-neutral-500 truncate">{user.email}</p>
-            </div>
+      {isOpen && (
+        <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-neutral-200 overflow-hidden z-[9999]">
+          {/* User info */}
+          <div className="px-4 py-3 border-b border-neutral-100">
+            <p className="font-medium text-neutral-900 truncate">{displayName}</p>
+            <p className="text-sm text-neutral-500 truncate">{user.email}</p>
+          </div>
 
-            {/* Menu items */}
-            <div className="py-2">
+          {/* Menu items */}
+          <div className="py-2">
+            <a
+              href="/profil"
+              className="flex items-center gap-3 px-4 py-2 text-neutral-700 hover:bg-neutral-50 transition-colors"
+            >
+              <User className="w-4 h-4" />
+              Mon profil
+            </a>
+            <a
+              href="/profil/favoris"
+              className="flex items-center gap-3 px-4 py-2 text-neutral-700 hover:bg-neutral-50 transition-colors"
+            >
+              <Heart className="w-4 h-4" />
+              Mes favoris
+            </a>
+            {isAdmin && (
               <a
-                href="/profil"
-                className="flex items-center gap-3 px-4 py-2 text-neutral-700 hover:bg-neutral-50 transition-colors"
+                href="/admin"
+                className="flex items-center gap-3 px-4 py-2 text-[#F77313] hover:bg-orange-50 transition-colors"
               >
-                <User className="w-4 h-4" />
-                Mon profil
+                <Shield className="w-4 h-4" />
+                Administration
               </a>
-              <a
-                href="/profil/favoris"
-                className="flex items-center gap-3 px-4 py-2 text-neutral-700 hover:bg-neutral-50 transition-colors"
-              >
-                <Heart className="w-4 h-4" />
-                Mes favoris
-              </a>
-              {isAdmin && (
-                <a
-                  href="/admin"
-                  className="flex items-center gap-3 px-4 py-2 text-[#F77313] hover:bg-orange-50 transition-colors"
-                >
-                  <Shield className="w-4 h-4" />
-                  Administration
-                </a>
-              )}
-            </div>
+            )}
+          </div>
 
-            {/* Logout */}
-            <div className="border-t border-neutral-100 py-2">
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-3 px-4 py-2 w-full text-red-600 hover:bg-red-50 transition-colors"
-              >
-                <LogOut className="w-4 h-4" />
-                Déconnexion
-              </button>
-            </div>
-          </motion.div>,
-          document.body
-        )}
-      </AnimatePresence>
+          {/* Logout */}
+          <div className="border-t border-neutral-100 py-2">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 px-4 py-2 w-full text-left text-red-600 hover:bg-red-50 transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              Déconnexion
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
