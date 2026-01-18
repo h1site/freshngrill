@@ -4,6 +4,16 @@ import { siteConfig } from '@/lib/config';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+interface Spice {
+  id: number;
+  slug: string;
+  name_fr: string;
+  definition_fr: string | null;
+  featured_image: string | null;
+  origin: string[] | null;
+  created_at: string;
+}
+
 function escapeXml(text: string): string {
   return text
     .replace(/&/g, '&amp;')
@@ -26,7 +36,9 @@ export async function GET() {
     .select('id, slug, name_fr, definition_fr, featured_image, origin, created_at')
     .order('name_fr');
 
-  const rssItems = (spices || []).map((spice) => {
+  const spiceList = (spices || []) as Spice[];
+
+  const rssItems = spiceList.map((spice) => {
     const description = spice.definition_fr || '';
     const pubDate = new Date(spice.created_at).toUTCString();
     const imageTag = spice.featured_image
