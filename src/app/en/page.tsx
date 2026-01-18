@@ -12,6 +12,7 @@ import { YouTubeSection } from '@/components/home/YouTubeSection';
 import { HomeSEOSection } from '@/components/home/HomeSEOSection';
 import { FeaturedRecipesSection } from '@/components/home/FeaturedRecipesSection';
 import WebSiteSchema from '@/components/schema/WebSiteSchema';
+import HomePageAd from '@/components/ads/HomePageAd';
 
 // Featured recipes for Menucochon (slugs)
 const FEATURED_RECIPE_SLUGS = [
@@ -110,27 +111,36 @@ export default async function EnglishHomePage() {
         />
       )}
 
+      {/* AD #1 - After Hero (Top Viewability) */}
+      <HomePageAd position="after-hero" />
+
       {/* 3. Featured Recipes Section - Menucochon's Best */}
       {featuredRecipes.length > 0 && (
         <FeaturedRecipesSection recipes={featuredRecipes} locale="en" />
       )}
+
+      {/* AD #2 - After Featured Recipes (In-feed / Scroll) */}
+      <HomePageAd position="after-featured" />
 
       {/* 4. Categories Section */}
       {categories.length > 0 && (
         <MagazineCategorySection categories={categories} locale="en" />
       )}
 
-      {/* 4. Blog Section */}
+      {/* 5. Blog Section */}
       {recentPosts.length > 0 && (
         <MagazineBlogSection posts={recentPosts} locale="en" />
       )}
 
-      {/* 5. YouTube Section */}
+      {/* 6. YouTube Section */}
       {recentVideos.length > 0 && (
         <YouTubeSection videos={recentVideos} locale="en" />
       )}
 
-      {/* 6. Newsletter Section */}
+      {/* AD #3 - After YouTube (Deep Scroll) */}
+      <HomePageAd position="after-youtube" />
+
+      {/* 7. Newsletter Section */}
       <NewsletterSection locale="en" />
 
       {/* 6. SEO Section - About Menucochon */}
