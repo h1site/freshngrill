@@ -24,8 +24,10 @@ export async function GET() {
   const rssItems = recipes.slice(0, 50).map((recipe) => {
     const description = recipe.excerpt || recipe.seoDescription || '';
     const pubDate = new Date(recipe.publishedAt).toUTCString();
-    const imageTag = recipe.featuredImage
-      ? `<enclosure url="${escapeXml(recipe.featuredImage)}" type="image/jpeg" />`
+    // Utiliser l'image Pinterest si disponible, sinon l'image principale
+    const imageUrl = recipe.pinterestImage || recipe.featuredImage;
+    const imageTag = imageUrl
+      ? `<enclosure url="${escapeXml(imageUrl)}" type="image/jpeg" />`
       : '';
 
     return `

@@ -135,6 +135,17 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       { name: t.contact, href: routes.contact },
       { name: t.privacy, href: routes.privacy },
     ],
+    rss: locale === 'en' ? [
+      { name: 'Recipes', href: '/en/rss/recipes' },
+      { name: 'Blog', href: '/en/rss/blog' },
+      { name: 'Spices', href: '/rss/epices' },
+      { name: 'Lexicon', href: '/rss/lexique' },
+    ] : [
+      { name: 'Recettes', href: '/rss/recettes' },
+      { name: 'Blog', href: '/rss/blog' },
+      { name: 'Épices', href: '/rss/epices' },
+      { name: 'Lexique', href: '/rss/lexique' },
+    ],
   };
 
   return (
@@ -269,6 +280,24 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
                   >
                     {link.name}
                   </Link>
+                </li>
+              ))}
+            </ul>
+            {/* RSS Feeds */}
+            <h4 className="font-display text-lg tracking-wide mt-8 mb-4 text-[#F77313] flex items-center gap-2">
+              <Rss className="w-4 h-4" />
+              RSS
+            </h4>
+            <ul className="space-y-2">
+              {links.rss.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-neutral-400 hover:text-white transition-colors text-sm flex items-center gap-2"
+                  >
+                    <Rss className="w-3 h-3" />
+                    {link.name}
+                  </a>
                 </li>
               ))}
             </ul>
