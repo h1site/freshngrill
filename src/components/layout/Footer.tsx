@@ -138,11 +138,13 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
     rss: locale === 'en' ? [
       { name: 'Recipes', href: '/en/rss/recipes' },
       { name: 'Blog', href: '/en/rss/blog' },
+      { name: 'Buying Guide', href: '/rss/guide-achat' },
       { name: 'Spices', href: '/rss/epices' },
       { name: 'Lexicon', href: '/rss/lexique' },
     ] : [
       { name: 'Recettes', href: '/rss/recettes' },
       { name: 'Blog', href: '/rss/blog' },
+      { name: 'Guide d\'achat', href: '/rss/guide-achat' },
       { name: 'Épices', href: '/rss/epices' },
       { name: 'Lexique', href: '/rss/lexique' },
     ],
