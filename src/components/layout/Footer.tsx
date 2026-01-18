@@ -155,11 +155,20 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
         body: JSON.stringify({ email, locale }),
       });
 
-      if (response.ok) {
-        setMessage({ type: 'success', text: t.subscribeSuccess });
-        setEmail('');
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        if (data.alreadySubscribed) {
+          setMessage({ type: 'success', text: data.message });
+        } else if (data.reactivated) {
+          setMessage({ type: 'success', text: data.message });
+          setEmail('');
+        } else {
+          setMessage({ type: 'success', text: data.message });
+          setEmail('');
+        }
       } else {
-        setMessage({ type: 'error', text: t.subscribeError });
+        setMessage({ type: 'error', text: data.error || t.subscribeError });
       }
     } catch {
       setMessage({ type: 'error', text: t.subscribeError });

@@ -34,8 +34,28 @@ CREATE POLICY "Allow anonymous insert" ON newsletter_subscribers
   TO anon
   WITH CHECK (true);
 
--- Policy pour permettre la lecture aux admins seulement
+-- Policy pour permettre la lecture par email (anon) - nécessaire pour vérifier les doublons
+CREATE POLICY "Allow anonymous select by email" ON newsletter_subscribers
+  FOR SELECT
+  TO anon
+  USING (true);
+
+-- Policy pour permettre la mise à jour (réactivation) depuis l'API (anon)
+CREATE POLICY "Allow anonymous update" ON newsletter_subscribers
+  FOR UPDATE
+  TO anon
+  USING (true)
+  WITH CHECK (true);
+
+-- Policy pour permettre la lecture aux admins
 CREATE POLICY "Allow admin read" ON newsletter_subscribers
   FOR SELECT
   TO authenticated
   USING (true);
+
+-- Policy pour permettre la mise à jour aux admins
+CREATE POLICY "Allow admin update" ON newsletter_subscribers
+  FOR UPDATE
+  TO authenticated
+  USING (true)
+  WITH CHECK (true);
