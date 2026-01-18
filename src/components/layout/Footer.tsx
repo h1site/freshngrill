@@ -1,10 +1,10 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Facebook, Instagram, Rss, Youtube } from 'lucide-react';
+import { Facebook, Instagram, Rss, Youtube, Mail, Send } from 'lucide-react';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import type { Locale } from '@/i18n/config';
 import type { Dictionary } from '@/i18n/getDictionary';
@@ -16,6 +16,9 @@ interface FooterProps {
 
 export default function Footer({ locale: localeProp = 'fr', dictionary }: FooterProps) {
   const pathname = usePathname();
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Detect actual locale from pathname (client-side, always up-to-date)
   const locale: Locale = useMemo(() => {
@@ -44,18 +47,17 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
     shop: '/boutique',
   };
 
-  // Traductions inline pour chaque locale (client-side, always up-to-date)
+  // Traductions inline pour chaque locale
   const translations = {
     fr: {
-      tagline: 'Des recettes gourmandes et faciles à réaliser pour tous les jours. Découvrez notre collection de plats délicieux.',
+      tagline: 'Des recettes gourmandes et faciles à réaliser pour tous les jours.',
       recipes: 'Recettes',
       allRecipes: 'Toutes les recettes',
       popularRecipes: 'Recettes populaires',
       quickRecipes: 'Recettes rapides',
       easyRecipes: 'Recettes faciles',
       quebecRecipes: 'Recettes québécoises',
-      seasonalRecipes: 'Recettes de saison',
-      budgetRecipes: 'Recettes économiques',
+      submitRecipe: 'Soumettre une recette',
       categories: 'Catégories',
       starters: 'Entrées',
       mainDishes: 'Plats principaux',
@@ -63,43 +65,43 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       vegetarian: 'Végétarien',
       soups: 'Soupes et potages',
       salads: 'Salades',
-      snacks: 'Collations',
-      drinks: 'Boissons',
-      blog: 'Blog',
-      allArticles: 'Tous les articles',
-      cookingTips: 'Conseils cuisine',
-      news: 'Actualités',
+      discover: 'Découvrir',
       buyingGuide: "Guide d'achat",
       spices: 'La Route des Épices',
       lexicon: 'Lexique culinaire',
-      techniques: 'Techniques de cuisine',
-      ingredients: 'Ingrédients',
+      videos: 'Vidéos',
+      magicFridge: 'Frigo magique',
+      blog: 'Blog',
       info: 'Informations',
       about: 'À propos',
       contact: 'Contact',
       privacy: 'Confidentialité',
       shop: 'Boutique',
-      videos: 'Vidéos',
       sitemap: 'Plan du site',
-      submitRecipe: 'Soumettre une recette',
       terms: 'Conditions d\'utilisation',
-      magicFridge: 'Frigo magique',
+      newsletter: 'Infolettre',
+      newsletterText: 'Recevez nos meilleures recettes et conseils cuisine directement dans votre boîte courriel.',
+      emailPlaceholder: 'Votre adresse courriel',
+      subscribe: 'S\'abonner',
+      subscribing: 'Inscription...',
+      subscribeSuccess: 'Merci pour votre inscription!',
+      subscribeError: 'Erreur lors de l\'inscription. Réessayez.',
+      followUs: 'Suivez-nous',
       copyright: '© {year} Menucochon. Tous droits réservés.',
       madeWith: 'Fait avec',
       inQuebec: 'au Québec',
-      createdBy: 'Création de l\'agence Web',
+      createdBy: 'Création',
       h1site: 'H1site.com'
     },
     en: {
-      tagline: 'Delicious and easy-to-make recipes for every day. Discover our collection of tasty dishes.',
+      tagline: 'Delicious and easy-to-make recipes for every day.',
       recipes: 'Recipes',
       allRecipes: 'All Recipes',
       popularRecipes: 'Popular Recipes',
       quickRecipes: 'Quick Recipes',
       easyRecipes: 'Easy Recipes',
       quebecRecipes: 'Quebec Recipes',
-      seasonalRecipes: 'Seasonal Recipes',
-      budgetRecipes: 'Budget Recipes',
+      submitRecipe: 'Submit a Recipe',
       categories: 'Categories',
       starters: 'Starters',
       mainDishes: 'Main Dishes',
@@ -107,37 +109,64 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       vegetarian: 'Vegetarian',
       soups: 'Soups',
       salads: 'Salads',
-      snacks: 'Snacks',
-      drinks: 'Drinks',
-      blog: 'Blog',
-      allArticles: 'All Articles',
-      cookingTips: 'Cooking Tips',
-      news: 'News',
+      discover: 'Discover',
       buyingGuide: 'Buying Guide',
       spices: 'Spice Route',
       lexicon: 'Culinary Lexicon',
-      techniques: 'Cooking Techniques',
-      ingredients: 'Ingredients',
+      videos: 'Videos',
+      magicFridge: 'Magic Fridge',
+      blog: 'Blog',
       info: 'Information',
       about: 'About',
       contact: 'Contact',
       privacy: 'Privacy',
       shop: 'Shop',
-      videos: 'Videos',
       sitemap: 'Sitemap',
-      submitRecipe: 'Submit a Recipe',
       terms: 'Terms of Use',
-      magicFridge: 'Magic Fridge',
+      newsletter: 'Newsletter',
+      newsletterText: 'Get our best recipes and cooking tips delivered straight to your inbox.',
+      emailPlaceholder: 'Your email address',
+      subscribe: 'Subscribe',
+      subscribing: 'Subscribing...',
+      subscribeSuccess: 'Thanks for subscribing!',
+      subscribeError: 'Error subscribing. Please try again.',
+      followUs: 'Follow Us',
       copyright: '© {year} Menucochon. All rights reserved.',
       madeWith: 'Made with',
       inQuebec: 'in Quebec',
-      createdBy: 'Created by Web Agency',
+      createdBy: 'Created by',
       h1site: 'H1site.com'
     }
   };
 
-  // Use the correct translations based on detected locale
   const t = translations[locale];
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setMessage(null);
+
+    try {
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, locale }),
+      });
+
+      if (response.ok) {
+        setMessage({ type: 'success', text: t.subscribeSuccess });
+        setEmail('');
+      } else {
+        setMessage({ type: 'error', text: t.subscribeError });
+      }
+    } catch {
+      setMessage({ type: 'error', text: t.subscribeError });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const links = {
     recettes: [
@@ -146,8 +175,6 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       { name: t.quickRecipes, href: `${routes.recipe}?temps=30` },
       { name: t.easyRecipes, href: `${routes.recipe}?difficulte=facile` },
       { name: t.quebecRecipes, href: `${routes.recipe}?origine=quebec` },
-      { name: t.seasonalRecipes, href: `${routes.recipe}?saison=actuelle` },
-      { name: t.budgetRecipes, href: `${routes.recipe}?budget=economique` },
       { name: t.submitRecipe, href: locale === 'en' ? '/en/profile/submit-recipe' : '/profil/soumettre-recette' },
     ],
     categories: [
@@ -157,122 +184,147 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
       { name: t.vegetarian, href: `${routes.recipe}?categorie=vegetarien` },
       { name: t.soups, href: `${routes.recipe}?categorie=soupes` },
       { name: t.salads, href: `${routes.recipe}?categorie=salades` },
-      { name: t.snacks, href: `${routes.recipe}?categorie=collations` },
-      { name: t.drinks, href: `${routes.recipe}?categorie=boissons` },
     ],
-    blog: [
-      { name: t.allArticles, href: routes.blog },
-      { name: t.cookingTips, href: `${routes.blog}?categorie=conseils` },
-      { name: t.news, href: `${routes.blog}?categorie=actualites` },
+    discover: [
+      { name: t.blog, href: routes.blog },
       { name: t.buyingGuide, href: locale === 'en' ? '/en/buying-guide' : '/guide-achat' },
       { name: t.spices, href: locale === 'en' ? '/en/spices' : '/epices' },
       { name: t.lexicon, href: locale === 'en' ? '/en/lexicon' : '/lexique' },
-      { name: t.techniques, href: `${routes.blog}?categorie=techniques` },
-      { name: t.ingredients, href: `${routes.blog}?categorie=ingredients` },
+      { name: t.videos, href: locale === 'en' ? '/en/videos' : '/videos' },
+      { name: t.magicFridge, href: locale === 'en' ? '/en/frigo' : '/frigo' },
     ],
     info: [
       { name: t.shop, href: routes.shop },
-      { name: t.videos, href: locale === 'en' ? '/en/videos' : '/videos' },
-      { name: t.magicFridge, href: locale === 'en' ? '/en/frigo' : '/frigo' },
       { name: t.about, href: routes.about },
       { name: t.contact, href: routes.contact },
       { name: t.privacy, href: routes.privacy },
       { name: t.terms, href: locale === 'en' ? '/en/terms' : '/conditions-utilisation' },
       { name: t.sitemap, href: locale === 'en' ? '/en/sitemap' : '/plan-du-site' },
     ],
-    rss: locale === 'en' ? [
-      { name: 'Recipes', href: '/en/rss/recipes' },
-      { name: 'Blog', href: '/en/rss/blog' },
-      { name: 'Buying Guide', href: '/rss/guide-achat' },
-      { name: 'Spices', href: '/rss/epices' },
-      { name: 'Lexicon', href: '/rss/lexique' },
-    ] : [
-      { name: 'Recettes', href: '/rss/recettes' },
-      { name: 'Blog', href: '/rss/blog' },
-      { name: 'Guide d\'achat', href: '/rss/guide-achat' },
-      { name: 'Épices', href: '/rss/epices' },
-      { name: 'Lexique', href: '/rss/lexique' },
-    ],
   };
 
   return (
     <footer className="bg-black text-white pb-16 md:pb-0">
-      <div className="container mx-auto px-4 py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
+      {/* Newsletter Section */}
+      <div className="bg-[#F77313]">
+        <div className="container mx-auto px-4 py-10">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4 text-center md:text-left">
+              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <Mail className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-display text-xl tracking-wide">{t.newsletter}</h3>
+                <p className="text-white/80 text-sm">{t.newsletterText}</p>
+              </div>
+            </div>
+            <form onSubmit={handleNewsletterSubmit} className="flex w-full md:w-auto gap-2">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={t.emailPlaceholder}
+                required
+                className="flex-1 md:w-80 px-4 py-3 rounded-lg bg-white/20 border border-white/30 placeholder-white/60 text-white focus:outline-none focus:ring-2 focus:ring-white/50"
+              />
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-6 py-3 bg-black text-white rounded-lg hover:bg-neutral-800 transition-colors flex items-center gap-2 disabled:opacity-50"
+              >
+                <span className="hidden sm:inline">{isSubmitting ? t.subscribing : t.subscribe}</span>
+                <Send className="w-5 h-5" />
+              </button>
+            </form>
+          </div>
+          {message && (
+            <p className={`text-center mt-4 text-sm ${message.type === 'success' ? 'text-white' : 'text-red-200'}`}>
+              {message.text}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {/* Main Footer */}
+      <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 lg:gap-6">
           {/* Brand */}
-          <div className="lg:col-span-1">
-            <Link href={`${urlPrefix}/`} className="inline-block mb-6">
+          <div className="col-span-2 md:col-span-3 lg:col-span-2">
+            <Link href={`${urlPrefix}/`} className="inline-block mb-4">
               <Image
                 src="/images/logos/menucochon-blanc.svg"
                 alt="Menucochon"
-                width={250}
-                height={56}
-                className="h-14 w-auto"
+                width={200}
+                height={45}
+                className="h-11 w-auto"
               />
             </Link>
-            <p className="text-neutral-400 text-sm leading-relaxed">
+            <p className="text-neutral-400 text-sm leading-relaxed mb-6 max-w-xs">
               {t.tagline}
             </p>
+
             {/* Réseaux sociaux */}
-            <div className="flex items-center gap-4 mt-6">
+            <p className="text-sm text-neutral-500 mb-3">{t.followUs}</p>
+            <div className="flex items-center gap-3">
               <a
                 href="https://www.facebook.com/menucochon"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-neutral-800 hover:bg-[#F77313] rounded-full flex items-center justify-center transition-colors"
+                className="w-9 h-9 bg-neutral-800 hover:bg-[#1877F2] rounded-full flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
-                <Facebook className="w-5 h-5" />
+                <Facebook className="w-4 h-4" />
               </a>
               <a
                 href="https://www.instagram.com/menucochon"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-neutral-800 hover:bg-[#F77313] rounded-full flex items-center justify-center transition-colors"
+                className="w-9 h-9 bg-neutral-800 hover:bg-[#E4405F] rounded-full flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
-                <Instagram className="w-5 h-5" />
+                <Instagram className="w-4 h-4" />
               </a>
               <a
                 href="https://www.youtube.com/@menucochon"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-neutral-800 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors"
+                className="w-9 h-9 bg-neutral-800 hover:bg-[#FF0000] rounded-full flex items-center justify-center transition-colors"
                 aria-label="YouTube"
               >
-                <Youtube className="w-5 h-5" />
+                <Youtube className="w-4 h-4" />
               </a>
               <a
                 href="https://ca.pinterest.com/menucochon/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 bg-neutral-800 hover:bg-[#E60023] rounded-full flex items-center justify-center transition-colors"
+                className="w-9 h-9 bg-neutral-800 hover:bg-[#E60023] rounded-full flex items-center justify-center transition-colors"
                 aria-label="Pinterest"
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
                 </svg>
               </a>
               <a
                 href={locale === 'en' ? '/en/rss/recipes' : '/rss/recettes'}
-                className="w-10 h-10 bg-neutral-800 hover:bg-[#F77313] rounded-full flex items-center justify-center transition-colors"
+                className="w-9 h-9 bg-neutral-800 hover:bg-[#F77313] rounded-full flex items-center justify-center transition-colors"
                 aria-label={locale === 'en' ? 'RSS Feed' : 'Flux RSS'}
               >
-                <Rss className="w-5 h-5" />
+                <Rss className="w-4 h-4" />
               </a>
             </div>
-            {/* Language Switcher Mobile */}
-            <div className="mt-6 md:hidden">
+
+            {/* Language Switcher */}
+            <div className="mt-6">
               <LanguageSwitcher locale={locale} />
             </div>
           </div>
 
           {/* Recettes */}
           <div>
-            <h3 className="font-display text-xl tracking-wide mb-6 text-[#F77313]">
+            <h3 className="font-display text-base tracking-wide mb-4 text-[#F77313]">
               {t.recipes}
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {links.recettes.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -288,10 +340,10 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
 
           {/* Catégories */}
           <div>
-            <h3 className="font-display text-xl tracking-wide mb-6 text-[#F77313]">
+            <h3 className="font-display text-base tracking-wide mb-4 text-[#F77313]">
               {t.categories}
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {links.categories.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -305,13 +357,13 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
             </ul>
           </div>
 
-          {/* Blog */}
+          {/* Découvrir */}
           <div>
-            <h3 className="font-display text-xl tracking-wide mb-6 text-[#F77313]">
-              {t.blog}
+            <h3 className="font-display text-base tracking-wide mb-4 text-[#F77313]">
+              {t.discover}
             </h3>
-            <ul className="space-y-3">
-              {links.blog.map((link) => (
+            <ul className="space-y-2">
+              {links.discover.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -326,10 +378,10 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
 
           {/* Informations */}
           <div>
-            <h3 className="font-display text-xl tracking-wide mb-6 text-[#F77313]">
+            <h3 className="font-display text-base tracking-wide mb-4 text-[#F77313]">
               {t.info}
             </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {links.info.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -341,50 +393,28 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
                 </li>
               ))}
             </ul>
-            {/* RSS Feeds */}
-            <h4 className="font-display text-lg tracking-wide mt-8 mb-4 text-[#F77313] flex items-center gap-2">
-              <Rss className="w-4 h-4" />
-              RSS
-            </h4>
-            <ul className="space-y-2">
-              {links.rss.map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-neutral-400 hover:text-white transition-colors text-sm flex items-center gap-2"
-                  >
-                    <Rss className="w-3 h-3" />
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="border-t border-neutral-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-neutral-400 text-sm">
+        <div className="border-t border-neutral-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-neutral-500 text-sm">
             {t.copyright.replace('{year}', currentYear.toString())}
           </p>
-          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-neutral-400 text-sm">
-            <div className="flex items-center gap-2">
-              <span>{t.madeWith}</span>
-              <span className="text-[#F77313]">♥</span>
-              <span>{t.inQuebec}</span>
-            </div>
-            <span className="hidden md:inline">•</span>
-            <div className="flex items-center gap-1">
-              <span>{t.createdBy}</span>
-              <a
-                href="https://h1site.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#F77313] hover:text-white transition-colors"
-              >
-                {t.h1site}
-              </a>
-            </div>
+          <div className="flex items-center gap-2 text-neutral-500 text-sm">
+            <span>{t.madeWith}</span>
+            <span className="text-[#F77313]">&#9829;</span>
+            <span>{t.inQuebec}</span>
+            <span className="mx-2">|</span>
+            <span>{t.createdBy}</span>
+            <a
+              href="https://h1site.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#F77313] hover:text-white transition-colors"
+            >
+              {t.h1site}
+            </a>
           </div>
         </div>
       </div>
