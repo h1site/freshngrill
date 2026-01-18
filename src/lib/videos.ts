@@ -95,6 +95,21 @@ export const VIDEOS: Video[] = [
     tags: ['bloopers', 'fous rires', 'poulet', 'mole', 'cuisine'],
     tagsEn: ['bloopers', 'laughs', 'chicken', 'mole', 'cooking'],
   },
+  {
+    id: '5',
+    slug: 'choux-de-bruxelles-irresistibles',
+    slugEn: 'irresistible-brussels-sprouts',
+    youtubeId: 'KPkrlGxuCnw',
+    title: 'Comment rendre les choux de Bruxelles irrésistibles ?',
+    titleEn: 'How to Make Brussels Sprouts Irresistible?',
+    description: 'Découvrez notre astuce pour transformer les choux de Bruxelles en un accompagnement irrésistible que tout le monde va adorer!',
+    descriptionEn: 'Discover our tip to transform Brussels sprouts into an irresistible side dish everyone will love!',
+    thumbnail: getYouTubeThumbnail('KPkrlGxuCnw'),
+    duration: '0:60',
+    publishedAt: '2025-01-18',
+    tags: ['shorts', 'choux de bruxelles', 'légumes', 'astuce', 'cuisine'],
+    tagsEn: ['shorts', 'brussels sprouts', 'vegetables', 'tip', 'cooking'],
+  },
 ];
 
 // Get all videos
