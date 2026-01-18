@@ -80,6 +80,8 @@ export const metadata: Metadata = {
       'application/rss+xml': [
         { url: '/rss/recettes', title: 'Menucochon - Recettes RSS' },
         { url: '/rss/blog', title: 'Menucochon - Blog RSS' },
+        { url: '/rss/epices', title: 'Menucochon - Épices RSS' },
+        { url: '/rss/lexique', title: 'Menucochon - Lexique RSS' },
       ],
     },
   },
