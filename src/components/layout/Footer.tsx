@@ -206,16 +206,16 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
   return (
     <footer className="bg-black text-white pb-16 md:pb-0">
       {/* Newsletter Section */}
-      <div className="bg-[#F77313]">
+      <div className="bg-neutral-900 border-b border-neutral-800">
         <div className="container mx-auto px-4 py-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4 text-center md:text-left">
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                <Mail className="w-6 h-6" />
+              <div className="w-12 h-12 bg-[#F77313] rounded-full flex items-center justify-center flex-shrink-0">
+                <Mail className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h3 className="font-display text-xl tracking-wide">{t.newsletter}</h3>
-                <p className="text-white/80 text-sm">{t.newsletterText}</p>
+                <h3 className="font-display text-xl tracking-wide text-white">{t.newsletter}</h3>
+                <p className="text-neutral-400 text-sm">{t.newsletterText}</p>
               </div>
             </div>
             <form onSubmit={handleNewsletterSubmit} className="flex w-full md:w-auto gap-2">
@@ -225,12 +225,12 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t.emailPlaceholder}
                 required
-                className="flex-1 md:w-80 px-4 py-3 rounded-lg bg-white/20 border border-white/30 placeholder-white/60 text-white focus:outline-none focus:ring-2 focus:ring-white/50"
+                className="flex-1 md:w-80 px-4 py-3 rounded-lg bg-neutral-800 border border-neutral-700 placeholder-neutral-500 text-white focus:outline-none focus:ring-2 focus:ring-[#F77313] focus:border-[#F77313]"
               />
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-3 bg-black text-white rounded-lg hover:bg-neutral-800 transition-colors flex items-center gap-2 disabled:opacity-50"
+                className="px-6 py-3 bg-[#F77313] text-white rounded-lg hover:bg-[#e56a0f] transition-colors flex items-center gap-2 disabled:opacity-50"
               >
                 <span className="hidden sm:inline">{isSubmitting ? t.subscribing : t.subscribe}</span>
                 <Send className="w-5 h-5" />
@@ -238,7 +238,7 @@ export default function Footer({ locale: localeProp = 'fr', dictionary }: Footer
             </form>
           </div>
           {message && (
-            <p className={`text-center mt-4 text-sm ${message.type === 'success' ? 'text-white' : 'text-red-200'}`}>
+            <p className={`text-center mt-4 text-sm ${message.type === 'success' ? 'text-green-400' : 'text-red-400'}`}>
               {message.text}
             </p>
           )}
