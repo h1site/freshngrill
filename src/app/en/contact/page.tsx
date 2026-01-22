@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Mail, Phone, Building2, User, MessageSquare, Send, CheckCircle, AlertCircle, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
+import { Mail, Phone, Building2, User, MessageSquare, Send, CheckCircle, AlertCircle, ShieldCheck, Megaphone } from 'lucide-react';
 
 // Generate a simple math captcha
 function generateCaptcha() {
@@ -318,6 +319,30 @@ export default function ContactPage() {
               <p className="text-neutral-500 text-sm">
                 We usually respond within 24 to 48 hours.
               </p>
+            </div>
+
+            {/* Advertising CTA */}
+            <div className="mt-12 bg-neutral-900 text-white p-6 md:p-8 rounded-2xl">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <div className="w-16 h-16 bg-[#F77313] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Megaphone className="w-8 h-8 text-white" />
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h3 className="font-display text-xl mb-2">Want to advertise on Menucochon?</h3>
+                  <p className="text-neutral-400 text-sm mb-4">
+                    Banner ads from $100/month or sponsored articles with permanent dofollow link at $150.
+                  </p>
+                  <Link
+                    href="/en/advertising"
+                    className="inline-flex items-center gap-2 bg-[#F77313] text-white px-5 py-2 font-medium hover:bg-[#e56610] transition-colors rounded-lg text-sm"
+                  >
+                    View our advertising options
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

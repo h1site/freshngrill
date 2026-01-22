@@ -11,6 +11,7 @@ import { MagazineBlogSection } from '@/components/home/MagazineBlogSection';
 import { YouTubeSection } from '@/components/home/YouTubeSection';
 import { HomeSEOSection } from '@/components/home/HomeSEOSection';
 import { FeaturedRecipesSection } from '@/components/home/FeaturedRecipesSection';
+import { AdvertisingCTA } from '@/components/home/AdvertisingCTA';
 import WebSiteSchema from '@/components/schema/WebSiteSchema';
 import HomePageAd from '@/components/ads/HomePageAd';
 
@@ -141,7 +142,10 @@ export default async function HomePage() {
       {/* 6. SEO Section - About Menucochon */}
       <HomeSEOSection locale="fr" />
 
-      {/* 7. CTA Section */}
+      {/* 7. Advertising CTA */}
+      <AdvertisingCTA locale="fr" />
+
+      {/* 8. CTA Section */}
       <MagazineCTA recipe={allRecipes[Math.floor(Math.random() * Math.min(5, allRecipes.length))]} />
     </main>
   );

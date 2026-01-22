@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   getAllRecipeSlugs,
   getSimilarRecipes,
@@ -322,6 +323,30 @@ export default async function RecettePage({ params }: Props) {
                     <RecipeNutrition nutrition={recipe.nutrition} />
                   </div>
                 )}
+              </div>
+
+              {/* Advertising CTA */}
+              <div className="bg-neutral-900 text-white p-5 rounded-xl print:hidden">
+                <div className="text-center">
+                  <span className="text-[#F77313] text-xs font-medium uppercase tracking-widest">
+                    Partenariat
+                  </span>
+                  <h3 className="font-display text-lg mt-2 mb-3">
+                    Votre publicité sur Menucochon?
+                  </h3>
+                  <p className="text-neutral-400 text-sm mb-4">
+                    Rejoignez des milliers de passionnés de cuisine québécoise.
+                  </p>
+                  <Link
+                    href="/publicite"
+                    className="inline-flex items-center gap-2 bg-[#F77313] text-white px-4 py-2 text-sm font-medium hover:bg-[#e56610] transition-colors rounded-lg"
+                  >
+                    En savoir plus
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
 
               {/* Amazon Suggestions dynamiques basées sur la recette */}

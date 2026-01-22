@@ -215,7 +215,16 @@ export default function AboutPage() {
               In addition to Menucochon, I also own several other web projects
               and work as a Technology Manager at Rennaï, a beauty boutique.
             </p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <a
+                href="https://registreduquebec.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-neutral-100 p-4 rounded-lg hover:bg-neutral-200 transition-colors text-center"
+              >
+                <p className="font-bold text-black">Registre du Québec</p>
+                <p className="text-sm text-neutral-500">Business Search</p>
+              </a>
               <a
                 href="https://kracradio.com"
                 target="_blank"

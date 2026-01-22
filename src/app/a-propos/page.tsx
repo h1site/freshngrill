@@ -215,7 +215,16 @@ export default function AProposPage() {
               En plus de Menucochon, je suis également propriétaire de plusieurs autres projets web
               et je travaille comme responsable technologie chez Rennaï, une boutique beauté.
             </p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <a
+                href="https://registreduquebec.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-neutral-100 p-4 rounded-lg hover:bg-neutral-200 transition-colors text-center"
+              >
+                <p className="font-bold text-black">Registre du Québec</p>
+                <p className="text-sm text-neutral-500">Recherche entreprises</p>
+              </a>
               <a
                 href="https://kracradio.com"
                 target="_blank"
