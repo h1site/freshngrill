@@ -12,6 +12,7 @@ import { YouTubeSection } from '@/components/home/YouTubeSection';
 import { HomeSEOSection } from '@/components/home/HomeSEOSection';
 import { FeaturedRecipesSection } from '@/components/home/FeaturedRecipesSection';
 import { AdvertisingCTA } from '@/components/home/AdvertisingCTA';
+import { FrigoMagiqueCTA } from '@/components/home/FrigoMagiqueCTA';
 import WebSiteSchema from '@/components/schema/WebSiteSchema';
 import HomePageAd from '@/components/ads/HomePageAd';
 
@@ -118,10 +119,20 @@ export default async function HomePage() {
       {/* AD #2 - After Featured Recipes (In-feed / Scroll) */}
       <HomePageAd position="after-featured" />
 
-      {/* 4. Categories Section */}
-      {categories.length > 0 && (
-        <MagazineCategorySection categories={categories} />
-      )}
+      {/* 4. Combined Section - Frigo Magique CTA + Categories */}
+      <section className="py-12 md:py-16 bg-white">
+        <div className="container mx-auto px-4">
+          {/* Frigo Magique CTA */}
+          <div className="mb-16">
+            <FrigoMagiqueCTA locale="fr" />
+          </div>
+
+          {/* Categories */}
+          {categories.length > 0 && (
+            <MagazineCategorySection categories={categories} />
+          )}
+        </div>
+      </section>
 
       {/* 5. Blog Section */}
       {recentPosts.length > 0 && (

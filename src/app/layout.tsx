@@ -5,7 +5,8 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/layout/ScrollToTop';
-import MobileRadioBar from '@/components/KracRadio/MobileRadioBar';
+import MobileBottomControls from '@/components/layout/MobileBottomControls';
+import CookieConsent from '@/components/layout/CookieConsent';
 import { siteConfig } from '@/lib/config';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/i18n/getDictionary';
@@ -119,7 +120,29 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
-        {/* Google Analytics */}
+        {/* Google Analytics with Consent Mode */}
+        <Script id="google-consent-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+
+            // Default consent mode (GDPR compliant)
+            gtag('consent', 'default', {
+              'analytics_storage': 'denied',
+              'ad_storage': 'denied',
+              'wait_for_update': 500
+            });
+
+            // Check if user has already given consent
+            const consent = localStorage.getItem('cookie-consent');
+            if (consent === 'accepted') {
+              gtag('consent', 'update', {
+                'analytics_storage': 'granted',
+                'ad_storage': 'granted'
+              });
+            }
+          `}
+        </Script>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KSP0R9W4MP"
           strategy="afterInteractive"
@@ -129,7 +152,9 @@ export default async function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-KSP0R9W4MP');
+            gtag('config', 'G-KSP0R9W4MP', {
+              'anonymize_ip': true
+            });
           `}
         </Script>
         {/* Google AdSense */}
@@ -147,7 +172,8 @@ export default async function RootLayout({
               {!isHomepage && <div className="h-14 md:h-16" />}
               {children}
               <Footer locale={locale} dictionary={dictionary} />
-              <MobileRadioBar locale={locale} />
+              <MobileBottomControls locale={locale} />
+              <CookieConsent locale={locale} />
             </CartProvider>
           </LanguageProvider>
         </LocaleProvider>

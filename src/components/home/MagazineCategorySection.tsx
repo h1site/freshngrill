@@ -86,7 +86,7 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
   const categoryParam = locale === 'en' ? 'category' : 'categorie';
 
   return (
-    <section className="py-20 md:py-32 bg-white relative overflow-hidden">
+    <div className="relative">
       {/* Decorative Background */}
       <div className="absolute inset-0 opacity-[0.03]">
         <div className="absolute inset-0" style={{
@@ -94,22 +94,22 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
         }} />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <span className="text-[#F77313] text-sm font-semibold uppercase tracking-[0.2em]">
             {t.explore}
           </span>
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-display text-black mt-3">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display text-black mt-3">
             {t.byCategory}
           </h2>
-          <div className="w-24 h-1 bg-[#F77313] mx-auto mt-6" />
+          <div className="w-20 h-1 bg-[#F77313] mx-auto mt-4" />
         </div>
 
         {/* Categories Grid - Horizontal Scroll on Mobile */}
         <div className="relative">
           {/* Mobile Scroll */}
-          <div className="flex lg:hidden gap-4 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
+          <div className="flex lg:hidden gap-3 overflow-x-auto pb-4 -mx-4 px-4 snap-x snap-mandatory scrollbar-hide">
             {categories.map((category) => {
               const style = getCategoryStyle(category.slug);
               const Icon = style.icon;
@@ -117,19 +117,19 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
               return (
                 <div
                   key={category.id}
-                  className="snap-start flex-shrink-0 w-40"
+                  className="snap-start flex-shrink-0 w-36"
                 >
                   <Link
                     href={`${recipeBasePath}?${categoryParam}=${category.slug}`}
-                    className="group block text-center p-6 bg-neutral-50 border border-neutral-100 hover:border-[#F77313]/30 hover:shadow-lg transition-all duration-300"
+                    className="group block text-center p-4 bg-neutral-50 border border-neutral-100 hover:border-[#F77313]/30 hover:shadow-lg transition-all duration-300"
                   >
                     <div
-                      className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                      className="w-14 h-14 mx-auto mb-3 rounded-full flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                       style={{ backgroundColor: `${style.color}15` }}
                     >
-                      <Icon className="w-8 h-8" style={{ color: style.color }} />
+                      <Icon className="w-7 h-7" style={{ color: style.color }} />
                     </div>
-                    <h3 className="font-display text-lg text-black group-hover:text-[#F77313] transition-colors">
+                    <h3 className="font-display text-base text-black group-hover:text-[#F77313] transition-colors">
                       {getCategoryName(category.name, locale)}
                     </h3>
                   </Link>
@@ -139,7 +139,7 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
           </div>
 
           {/* Desktop Grid */}
-          <div className="hidden lg:grid grid-cols-4 xl:grid-cols-5 gap-6">
+          <div className="hidden lg:grid grid-cols-4 xl:grid-cols-5 gap-4">
             {categories.map((category) => {
               const style = getCategoryStyle(category.slug);
               const Icon = style.icon;
@@ -155,30 +155,30 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
                       className={`absolute inset-0 bg-gradient-to-br ${style.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
                     />
 
-                    <div className="relative p-8 text-center">
+                    <div className="relative p-6 text-center">
                       {/* Icon */}
                       <div
-                        className="w-20 h-20 mx-auto mb-5 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110"
+                        className="w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110"
                         style={{ backgroundColor: `${style.color}10` }}
                       >
                         <Icon
-                          className="w-10 h-10 transition-transform duration-500 group-hover:scale-110"
+                          className="w-8 h-8 transition-transform duration-500 group-hover:scale-110"
                           style={{ color: style.color }}
                         />
                       </div>
 
                       {/* Name */}
-                      <h3 className="font-display text-xl text-black group-hover:text-[#F77313] transition-colors duration-300">
+                      <h3 className="font-display text-lg text-black group-hover:text-[#F77313] transition-colors duration-300">
                         {getCategoryName(category.name, locale)}
                       </h3>
 
                       {/* Arrow */}
-                      <div className="mt-4 flex justify-center">
+                      <div className="mt-3 flex justify-center">
                         <div
-                          className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
+                          className="w-7 h-7 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
                           style={{ backgroundColor: style.color }}
                         >
-                          <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                         </div>
@@ -191,6 +191,6 @@ export function MagazineCategorySection({ categories, locale = 'fr' }: MagazineC
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -1,16 +1,17 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Play, Pause, X } from 'lucide-react';
+import { Play, Pause, X, MessageCircle } from 'lucide-react';
 import { Radio, SpeakerHigh } from '@phosphor-icons/react';
 import { useKracRadio, KracRadioModal, KRACRADIO_CHANNELS } from './KracRadio';
 import type { Locale } from '@/i18n/config';
 
 interface Props {
   locale?: Locale;
+  onOpenChatbot?: () => void;
 }
 
-export default function MobileRadioBar({ locale = 'fr' }: Props) {
+export default function MobileRadioBar({ locale = 'fr', onOpenChatbot }: Props) {
   const [isDismissed, setIsDismissed] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -117,6 +118,17 @@ export default function MobileRadioBar({ locale = 'fr' }: Props) {
                 <Play className="w-4 h-4 fill-current ml-0.5" />
               )}
             </button>
+
+            {/* Chatbot Button */}
+            {onOpenChatbot && (
+              <button
+                onClick={onOpenChatbot}
+                className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-[#F77313] text-white hover:bg-[#e56610] transition-all shadow-lg"
+                title={locale === 'en' ? 'Need help?' : "Besoin d'aide?"}
+              >
+                <MessageCircle className="w-4 h-4" />
+              </button>
+            )}
 
             {/* Dismiss Button */}
             <button

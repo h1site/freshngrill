@@ -30,6 +30,7 @@ export default function FrigoPage() {
   const [recipes, setRecipes] = useState<RecipeMatch[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadingIngredients, setLoadingIngredients] = useState(true);
+  const [showIngredientPanel, setShowIngredientPanel] = useState(false);
 
   // Charger les ingrédients au mount
   useEffect(() => {
@@ -38,6 +39,27 @@ export default function FrigoPage() {
         const response = await fetch('/api/ingredients');
         const data = await response.json();
         setIngredients(data);
+
+        // Vérifier si des ingrédients sont passés en URL
+        if (typeof window !== 'undefined') {
+          const params = new URLSearchParams(window.location.search);
+          const ingredientsParam = params.get('ingredients');
+
+          if (ingredientsParam) {
+            const ingredientNames = ingredientsParam.split(',').map(i => i.trim().toLowerCase());
+            const matchedIds: number[] = [];
+
+            for (const ing of data) {
+              if (ingredientNames.some(name => ing.name.toLowerCase().includes(name) || name.includes(ing.name.toLowerCase()))) {
+                matchedIds.push(ing.id);
+              }
+            }
+
+            if (matchedIds.length > 0) {
+              setSelectedIngredients(matchedIds);
+            }
+          }
+        }
       } catch (error) {
         console.error('Erreur chargement ingrédients:', error);
       } finally {
@@ -103,19 +125,19 @@ export default function FrigoPage() {
   return (
     <main className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="bg-black py-12 md:py-16">
+      <section className="bg-black py-6 md:py-8 lg:py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl">
-            <div className="flex items-center gap-3 mb-6">
-              <Refrigerator className="w-6 h-6 text-[#F77313]" />
-              <span className="text-[#F77313] text-sm font-medium uppercase tracking-widest">
+            <div className="flex items-center gap-2 mb-3 md:mb-4">
+              <Refrigerator className="w-4 h-4 md:w-5 md:h-5 text-[#F77313]" />
+              <span className="text-[#F77313] text-[10px] md:text-xs font-medium uppercase tracking-widest">
                 Dans mon frigo
               </span>
             </div>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white mb-6">
+            <h1 className="font-display text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-white mb-3 md:mb-4">
               Qu'est-ce que je peux cuisiner?
             </h1>
-            <p className="text-neutral-400 text-lg md:text-xl leading-relaxed">
+            <p className="text-neutral-400 text-sm md:text-base lg:text-lg leading-relaxed">
               Sélectionnez les ingrédients que vous avez sous la main et découvrez
               les recettes que vous pouvez préparer.
             </p>
@@ -123,11 +145,11 @@ export default function FrigoPage() {
         </div>
       </section>
 
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 py-8 pb-24 md:pb-8">
+        <div className="grid lg:grid-cols-3 gap-6">
           {/* Sidebar - Ingrédients */}
-          <aside className="lg:col-span-1">
-            <div className="sticky top-4 bg-neutral-50 border border-neutral-200 p-6">
+          <aside className="hidden lg:block lg:col-span-1">
+            <div className="sticky top-20 bg-neutral-50 border border-neutral-200 p-4">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="font-display text-xl text-black">
                   Mes ingrédients
@@ -221,50 +243,51 @@ export default function FrigoPage() {
           {/* Résultats */}
           <section className="lg:col-span-2">
             {selectedIngredients.length === 0 ? (
-              <div className="text-center py-16 bg-neutral-50 border border-neutral-200">
-                <ChefHat className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
-                <h3 className="font-display text-2xl text-neutral-400 mb-2">
+              <div className="text-center py-12 md:py-16 bg-neutral-50 border border-neutral-200 rounded-xl">
+                <ChefHat className="w-12 h-12 md:w-16 md:h-16 text-neutral-300 mx-auto mb-3 md:mb-4" />
+                <h3 className="font-display text-xl md:text-2xl text-neutral-400 mb-2 px-4">
                   Sélectionnez vos ingrédients
                 </h3>
-                <p className="text-neutral-500">
-                  Choisissez au moins un ingrédient dans la liste à gauche
+                <p className="text-sm md:text-base text-neutral-500 px-4">
+                  <span className="md:hidden">Utilisez le bouton en bas pour choisir vos ingrédients</span>
+                  <span className="hidden md:inline">Choisissez au moins un ingrédient dans la liste à gauche</span>
                 </p>
               </div>
             ) : loading ? (
-              <div className="text-center py-16">
-                <div className="animate-spin w-8 h-8 border-2 border-[#F77313] border-t-transparent rounded-full mx-auto mb-4" />
-                <p className="text-neutral-500">Recherche en cours...</p>
+              <div className="text-center py-12 md:py-16">
+                <div className="animate-spin w-8 h-8 border-2 border-[#F77313] border-t-transparent rounded-full mx-auto mb-3 md:mb-4" />
+                <p className="text-sm md:text-base text-neutral-500">Recherche en cours...</p>
               </div>
             ) : recipes.length === 0 ? (
-              <div className="text-center py-16 bg-neutral-50 border border-neutral-200">
-                <ChefHat className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
-                <h3 className="font-display text-2xl text-neutral-400 mb-2">
+              <div className="text-center py-12 md:py-16 bg-neutral-50 border border-neutral-200 rounded-xl">
+                <ChefHat className="w-12 h-12 md:w-16 md:h-16 text-neutral-300 mx-auto mb-3 md:mb-4" />
+                <h3 className="font-display text-xl md:text-2xl text-neutral-400 mb-2 px-4">
                   Aucune recette trouvée
                 </h3>
-                <p className="text-neutral-500">
+                <p className="text-sm md:text-base text-neutral-500 px-4">
                   Essayez d'ajouter plus d'ingrédients
                 </p>
               </div>
             ) : (
               <>
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="font-display text-2xl text-black">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-4 md:mb-6">
+                  <h2 className="font-display text-xl md:text-2xl text-black">
                     {recipes.length} recette{recipes.length > 1 ? 's' : ''} possible{recipes.length > 1 ? 's' : ''}
                   </h2>
-                  <span className="text-sm text-neutral-500">
+                  <span className="text-xs md:text-sm text-neutral-500">
                     Triées par correspondance
                   </span>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3 md:space-y-4">
                   {recipes.map((recipe) => (
                     <Link
                       key={recipe.id}
                       href={`/recette/${recipe.slug}`}
-                      className="group flex gap-4 p-4 border border-neutral-200 hover:border-[#F77313] transition-colors"
+                      className="group flex gap-3 md:gap-4 p-3 md:p-4 border border-neutral-200 hover:border-[#F77313] transition-colors rounded-lg md:rounded-none"
                     >
                       {/* Image */}
-                      <div className="relative w-32 h-32 flex-shrink-0 bg-neutral-100">
+                      <div className="relative w-20 h-20 md:w-32 md:h-32 flex-shrink-0 bg-neutral-100 rounded-lg md:rounded-none overflow-hidden">
                         {recipe.featuredImage ? (
                           <Image
                             src={recipe.featuredImage}
@@ -274,27 +297,27 @@ export default function FrigoPage() {
                           />
                         ) : (
                           <div className="absolute inset-0 flex items-center justify-center">
-                            <ChefHat className="w-8 h-8 text-neutral-300" />
+                            <ChefHat className="w-6 h-6 md:w-8 md:h-8 text-neutral-300" />
                           </div>
                         )}
                       </div>
 
                       {/* Content */}
-                      <div className="flex-1 py-1">
-                        <h3 className="font-display text-xl text-black group-hover:text-[#F77313] transition-colors mb-2">
+                      <div className="flex-1 min-w-0 py-0.5 md:py-1">
+                        <h3 className="font-display text-base md:text-xl text-black group-hover:text-[#F77313] transition-colors mb-1.5 md:mb-2 line-clamp-2">
                           {recipe.title}
                         </h3>
 
                         {/* Match indicator */}
-                        <div className="mb-3">
-                          <div className="flex items-center gap-2 text-sm">
-                            <div className="flex-1 h-2 bg-neutral-200 overflow-hidden">
+                        <div className="mb-2 md:mb-3">
+                          <div className="flex items-center gap-2 text-xs md:text-sm">
+                            <div className="flex-1 h-1.5 md:h-2 bg-neutral-200 rounded-full overflow-hidden">
                               <div
-                                className="h-full bg-[#F77313]"
+                                className="h-full bg-[#F77313] rounded-full"
                                 style={{ width: `${recipe.matchPercentage}%` }}
                               />
                             </div>
-                            <span className={`font-medium ${
+                            <span className={`font-bold text-xs md:text-sm ${
                               recipe.matchPercentage >= 80
                                 ? 'text-green-600'
                                 : recipe.matchPercentage >= 50
@@ -304,22 +327,22 @@ export default function FrigoPage() {
                               {recipe.matchPercentage}%
                             </span>
                           </div>
-                          <p className="text-xs text-neutral-500 mt-1">
+                          <p className="text-[10px] md:text-xs text-neutral-500 mt-1">
                             {recipe.matchingIngredients}/{recipe.totalIngredients} ingrédients
                           </p>
                         </div>
 
                         {/* Meta */}
-                        <div className="flex items-center gap-4 text-sm text-neutral-500">
+                        <div className="flex items-center gap-3 md:gap-4 text-xs md:text-sm text-neutral-500">
                           {recipe.totalTime && (
                             <span className="flex items-center gap-1">
-                              <Clock className="w-4 h-4" />
+                              <Clock className="w-3 h-3 md:w-4 md:h-4" />
                               {recipe.totalTime} min
                             </span>
                           )}
                           {recipe.difficulty && (
                             <span className="flex items-center gap-1">
-                              <Flame className="w-4 h-4" />
+                              <Flame className="w-3 h-3 md:w-4 md:h-4" />
                               {recipe.difficulty}
                             </span>
                           )}
@@ -327,7 +350,7 @@ export default function FrigoPage() {
                       </div>
 
                       {/* Arrow */}
-                      <div className="flex items-center">
+                      <div className="hidden md:flex items-center flex-shrink-0">
                         <ArrowRight className="w-5 h-5 text-neutral-300 group-hover:text-[#F77313] group-hover:translate-x-1 transition-all" />
                       </div>
                     </Link>
@@ -338,6 +361,152 @@ export default function FrigoPage() {
           </section>
         </div>
       </div>
+
+      {/* Mobile Ingredient Panel */}
+      {showIngredientPanel && (
+        <div
+          className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowIngredientPanel(false)}
+        >
+          <div
+            className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl max-h-[85vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Panel Header */}
+            <div className="flex-shrink-0 px-4 py-4 border-b border-neutral-200 flex items-center justify-between">
+              <div>
+                <h2 className="font-display text-xl text-black">
+                  Mes ingrédients
+                </h2>
+                <p className="text-sm text-neutral-500">
+                  {selectedIngredients.length} sélectionné{selectedIngredients.length > 1 ? 's' : ''}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowIngredientPanel(false)}
+                className="p-2 hover:bg-neutral-100 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Selected Ingredients */}
+            {selectedIngredients.length > 0 && (
+              <div className="flex-shrink-0 px-4 py-3 border-b border-neutral-200">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium text-neutral-500 uppercase">Sélection</span>
+                  <button
+                    onClick={clearAll}
+                    className="text-xs text-[#F77313] font-medium"
+                  >
+                    Tout effacer
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedIngredients.map(id => {
+                    const ing = ingredients.find(i => i.id === id);
+                    return ing ? (
+                      <button
+                        key={id}
+                        onClick={() => toggleIngredient(id)}
+                        className="inline-flex items-center gap-1 bg-[#F77313] text-white text-sm px-3 py-1.5 rounded-full"
+                      >
+                        {ing.name}
+                        <X className="w-3 h-3" />
+                      </button>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Search */}
+            <div className="flex-shrink-0 px-4 py-3 border-b border-neutral-200">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Rechercher un ingrédient..."
+                  className="w-full pl-10 pr-4 py-2.5 border border-neutral-300 rounded-full focus:border-[#F77313] focus:ring-2 focus:ring-[#F77313]/20 outline-none text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Ingredient List */}
+            <div className="flex-1 overflow-y-auto px-4 py-3">
+              {loadingIngredients ? (
+                <div className="text-center py-8 text-neutral-500">
+                  Chargement...
+                </div>
+              ) : Object.keys(groupedIngredients).length === 0 ? (
+                <div className="text-center py-8 text-neutral-500">
+                  {ingredients.length === 0
+                    ? 'Aucun ingrédient disponible'
+                    : 'Aucun ingrédient trouvé'}
+                </div>
+              ) : (
+                Object.entries(groupedIngredients)
+                  .sort(([a], [b]) => a.localeCompare(b))
+                  .map(([letter, ings]) => (
+                    <div key={letter} className="mb-4">
+                      <div className="text-xs font-bold text-neutral-400 uppercase mb-2 sticky top-0 bg-white py-1">
+                        {letter}
+                      </div>
+                      <div className="space-y-1">
+                        {ings.map(ing => (
+                          <button
+                            key={ing.id}
+                            onClick={() => toggleIngredient(ing.id)}
+                            className={`w-full text-left px-4 py-3 text-sm rounded-lg transition-colors flex items-center justify-between ${
+                              selectedIngredients.includes(ing.id)
+                                ? 'bg-[#F77313]/10 text-[#F77313] font-medium'
+                                : 'hover:bg-neutral-50 active:bg-neutral-100'
+                            }`}
+                          >
+                            {ing.name}
+                            {selectedIngredients.includes(ing.id) && (
+                              <Check className="w-5 h-5" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))
+              )}
+            </div>
+
+            {/* Apply Button */}
+            <div className="flex-shrink-0 px-4 py-4 border-t border-neutral-200 bg-neutral-50">
+              <button
+                onClick={() => setShowIngredientPanel(false)}
+                className="w-full py-3 bg-[#F77313] hover:bg-[#e56610] text-white font-semibold rounded-full transition-colors"
+              >
+                Voir {recipes.length} recette{recipes.length !== 1 ? 's' : ''}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Floating Button */}
+      <button
+        onClick={() => setShowIngredientPanel(true)}
+        className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-40 bg-black text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 hover:bg-neutral-900 transition-all"
+      >
+        <Refrigerator className="w-5 h-5" />
+        <span className="font-medium">
+          {selectedIngredients.length > 0
+            ? `${selectedIngredients.length} ingrédient${selectedIngredients.length > 1 ? 's' : ''}`
+            : 'Choisir mes ingrédients'}
+        </span>
+        {selectedIngredients.length > 0 && (
+          <span className="bg-[#F77313] text-white text-xs font-bold px-2 py-0.5 rounded-full">
+            {recipes.length}
+          </span>
+        )}
+      </button>
     </main>
   );
 }

@@ -779,14 +779,24 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
 
                 {/* Footer du mega menu */}
                 <div className="mt-8 pt-6 border-t border-neutral-800 flex items-center justify-between">
-                  <Link
-                    href={routes.recipe}
-                    onClick={() => setIsMegaMenuOpen(false)}
-                    className="text-[#F77313] hover:text-white transition-colors text-sm font-medium flex items-center gap-2"
-                  >
-                    <ChefHat className="w-4 h-4" />
-                    {t.header?.menu?.seeAllRecipes || 'See all recipes'}
-                  </Link>
+                  <div className="flex items-center gap-6">
+                    <Link
+                      href={routes.recipe}
+                      onClick={() => setIsMegaMenuOpen(false)}
+                      className="text-[#F77313] hover:text-white transition-colors text-sm font-medium flex items-center gap-2"
+                    >
+                      <ChefHat className="w-4 h-4" />
+                      {t.header?.menu?.seeAllRecipes || 'See all recipes'}
+                    </Link>
+                    <Link
+                      href={locale === 'en' ? '/en/frigo' : '/frigo'}
+                      onClick={() => setIsMegaMenuOpen(false)}
+                      className="bg-gradient-to-r from-orange-500 to-[#F77313] hover:from-orange-600 hover:to-[#e56610] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                    >
+                      <Refrigerator className="w-4 h-4" />
+                      {locale === 'en' ? 'Magic Fridge' : 'Frigo Magique'}
+                    </Link>
+                  </div>
                   <div className="flex items-center gap-6">
                     <Link
                       href={routes.lexicon}
