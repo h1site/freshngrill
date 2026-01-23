@@ -187,8 +187,35 @@ export default function FloatingChatbot({ locale = 'fr', isOpenExternal, onToggl
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (emailRegex.test(messageText)) {
         setAwaitingEmail(false);
-        // Here you would normally send the email to your newsletter service
-        addBotMessage(t.newsletterSuccess);
+
+        // Subscribe to newsletter
+        try {
+          const response = await fetch('/api/newsletter/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: messageText,
+              name: userName || '',
+              locale: currentLocale
+            }),
+          });
+
+          if (response.ok) {
+            addBotMessage(t.newsletterSuccess);
+          } else {
+            addBotMessage(
+              currentLocale === 'en'
+                ? 'Oops, something went wrong. Please try again later or use the form at the bottom of the page.'
+                : 'Oups, quelque chose s\'est mal passé. Réessayez plus tard ou utilisez le formulaire en bas de page.'
+            );
+          }
+        } catch (error) {
+          addBotMessage(
+            currentLocale === 'en'
+              ? 'Oops, something went wrong. Please try again later or use the form at the bottom of the page.'
+              : 'Oups, quelque chose s\'est mal passé. Réessayez plus tard ou utilisez le formulaire en bas de page.'
+          );
+        }
       } else {
         addBotMessage(t.invalidEmail);
       }
