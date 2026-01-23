@@ -287,12 +287,11 @@ export default function FloatingChatbot({ locale = 'fr', isOpenExternal, onToggl
   const detectIngredientSearch = (message: string): string[] | null => {
     const normalized = message.toLowerCase().trim();
 
-    // Patterns that indicate ingredient search
+    // Only match if the message explicitly mentions ingredients or cooking with specific items
     const searchPatterns = [
       /recette.{0,20}(avec|contenant|à base de|au|aux)\s+(.+)/i,
-      /qu[\'e]?(?:est[- ]ce que)?.*(?:faire|cuisiner|préparer).{0,20}avec\s+(.+)/i,
-      /(avec|j\'ai|j ai)\s+(?:des?\s+)?(.+)/i,
-      /^(.+?)\s*(?:et|,)\s*(.+)$/i, // "pommes et bananes" ou "pommes, bananes"
+      /(?:faire|cuisiner|préparer).{0,20}avec\s+(.+)/i,
+      /j\s*(?:'|')?ai\s+(?:des?\s+)?(.+)/i,
     ];
 
     // Try to match patterns
@@ -302,27 +301,6 @@ export default function FloatingChatbot({ locale = 'fr', isOpenExternal, onToggl
         // Extract ingredients from the matched groups
         const ingredientsText = match[match.length - 1];
         return extractIngredients(ingredientsText);
-      }
-    }
-
-    // If single word (might be an ingredient)
-    const words = normalized.split(/\s+/);
-    if (words.length === 1 && words[0].length >= 3) {
-      // Check if it's not a common question word
-      const questionWords = ['comment', 'quoi', 'pourquoi', 'qui', 'quand', 'où', 'how', 'what', 'why', 'who', 'when', 'where'];
-      if (!questionWords.includes(words[0])) {
-        return [words[0]];
-      }
-    }
-
-    // Multiple words without specific pattern - might be a list of ingredients
-    if (words.length >= 2 && words.length <= 5) {
-      // Remove common words
-      const stopWords = ['recette', 'recipe', 'avec', 'with', 'des', 'de', 'les', 'the', 'and', 'et', 'ou', 'or'];
-      const filteredWords = words.filter(w => !stopWords.includes(w) && w.length >= 3);
-
-      if (filteredWords.length > 0 && filteredWords.length <= 4) {
-        return filteredWords;
       }
     }
 
