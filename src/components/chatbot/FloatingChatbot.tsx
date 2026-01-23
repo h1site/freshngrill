@@ -195,27 +195,7 @@ export default function FloatingChatbot({ locale = 'fr', isOpenExternal, onToggl
       return;
     }
 
-    // Check if it's an ingredient search
-    const ingredients = detectIngredientSearch(messageText);
-
-    if (ingredients && ingredients.length > 0) {
-      // Build Frigo Magique URL with ingredients
-      const ingredientsParam = ingredients.join(',');
-      const fridgeUrl = currentLocale === 'en'
-        ? `/en/frigo?ingredients=${encodeURIComponent(ingredientsParam)}`
-        : `/frigo?ingredients=${encodeURIComponent(ingredientsParam)}`;
-
-      // Show redirect message with link to Frigo Magique
-      addBotMessage(t.redirectToFridge(ingredients.join(', ')), {
-        type: 'link',
-        url: fridgeUrl,
-        label: currentLocale === 'en' ? 'Open Magic Fridge' : 'Ouvrir le Frigo Magique'
-      });
-
-      return;
-    }
-
-    // Normal FAQ matching
+    // First, try FAQ matching (prioritize over ingredient search)
     const match = matchFAQ(messageText, currentLocale);
 
     if (match) {
@@ -269,12 +249,34 @@ export default function FloatingChatbot({ locale = 'fr', isOpenExternal, onToggl
           );
         }, 1500);
       }
-    } else {
-      addBotMessage(t.noMatch, {
-        type: 'contact-form',
-        label: t.contactButton
-      });
+      return;
     }
+
+    // If no FAQ match, check if it's an ingredient search
+    const ingredients = detectIngredientSearch(messageText);
+
+    if (ingredients && ingredients.length > 0) {
+      // Build Frigo Magique URL with ingredients
+      const ingredientsParam = ingredients.join(',');
+      const fridgeUrl = currentLocale === 'en'
+        ? `/en/frigo?ingredients=${encodeURIComponent(ingredientsParam)}`
+        : `/frigo?ingredients=${encodeURIComponent(ingredientsParam)}`;
+
+      // Show redirect message with link to Frigo Magique
+      addBotMessage(t.redirectToFridge(ingredients.join(', ')), {
+        type: 'link',
+        url: fridgeUrl,
+        label: currentLocale === 'en' ? 'Open Magic Fridge' : 'Ouvrir le Frigo Magique'
+      });
+
+      return;
+    }
+
+    // No FAQ match and no ingredients detected - show no match message
+    addBotMessage(t.noMatch, {
+      type: 'contact-form',
+      label: t.contactButton
+    });
   };
 
   const handleQuickReply = (label: string) => {

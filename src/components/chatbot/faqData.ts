@@ -387,24 +387,6 @@ export const faqData: FAQItem[] = [
     }
   },
 
-  // RECETTES
-  {
-    id: 'rec-count',
-    keywords: ['combien', 'recette', 'recettes', 'how many', 'recipes', 'nombre', 'count', 'disponibles', 'available', 'quantite'],
-    question: {
-      fr: 'Combien de recettes avez-vous?',
-      en: 'How many recipes do you have?'
-    },
-    answer: {
-      fr: "Plus de 500 recettes québécoises et internationales! Nouveautés ajoutées régulièrement. Plats principaux, desserts, soupes, salades et plus.",
-      en: 'Over 500 Quebec and international recipes! New additions regularly. Main dishes, desserts, soups, salads and more.'
-    },
-    action: {
-      type: 'link',
-      url: { fr: '/recettes', en: '/en/recipes' },
-      label: { fr: 'Voir les recettes', en: 'View recipes' }
-    }
-  },
   {
     id: 'rec-categories',
     keywords: ['categorie', 'category', 'type recette', 'recipe type', 'plat principal', 'dessert', 'soupe'],
@@ -558,7 +540,7 @@ export function getWelcomeSuggestions(locale: 'fr' | 'en' = 'fr'): FAQItem[] {
     faqData.find(f => f.id === 'feat-fridge')!,
     faqData.find(f => f.id === 'feat-favorites')!,
     faqData.find(f => f.id === 'feat-converter')!,
-    faqData.find(f => f.id === 'rec-count')!,
+    faqData.find(f => f.id === 'feat-lexicon')!,
   ];
 }
 
@@ -570,7 +552,6 @@ export function getMoreSuggestions(excludeId: string, locale: 'fr' | 'en' = 'fr'
     faqData.find(f => f.id === 'feat-fridge')!,
     faqData.find(f => f.id === 'feat-favorites')!,
     faqData.find(f => f.id === 'feat-converter')!,
-    faqData.find(f => f.id === 'rec-count')!,
     faqData.find(f => f.id === 'feat-lexicon')!,
     faqData.find(f => f.id === 'feat-spices')!,
     faqData.find(f => f.id === 'feat-tools')!,
