@@ -5,7 +5,8 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/layout/ScrollToTop';
-import MobileBottomControls from '@/components/layout/MobileBottomControls';
+// DISABLED FOR ANALYTICS TEST - Re-enable after 2-3 days
+// import MobileBottomControls from '@/components/layout/MobileBottomControls';
 import CookieConsent from '@/components/layout/CookieConsent';
 import { siteConfig } from '@/lib/config';
 import { headers } from 'next/headers';
@@ -172,7 +173,8 @@ export default async function RootLayout({
               {!isHomepage && <div className="h-14 md:h-16" />}
               {children}
               <Footer locale={locale} dictionary={dictionary} />
-              <MobileBottomControls locale={locale} />
+              {/* DISABLED FOR ANALYTICS TEST - Re-enable after 2-3 days */}
+              {/* <MobileBottomControls locale={locale} /> */}
               <CookieConsent locale={locale} />
             </CartProvider>
           </LanguageProvider>
