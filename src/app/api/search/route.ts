@@ -125,13 +125,12 @@ export async function GET(request: Request) {
     .map(variant => `title.ilike.%${variant}%,excerpt.ilike.%${variant}%,content.ilike.%${variant}%`)
     .join(',');
 
-  // Rechercher dans les recettes
+  // Rechercher dans les recettes (chercher plus de résultats pour pouvoir les scorer)
   const { data: recipes, error: recipesError } = await supabase
     .from('recipes')
     .select('id, slug, title, featured_image, total_time, difficulty, excerpt')
     .or(recipeConditions)
-    .order('likes', { ascending: false })
-    .limit(actualLimit);
+    .limit(actualLimit * 3);
 
   if (recipesError) {
     console.error('Erreur recherche recettes:', recipesError);
@@ -143,8 +142,7 @@ export async function GET(request: Request) {
     .select('id, slug, title, featured_image, excerpt')
     .or(postConditions)
     .eq('status', 'publish')
-    .order('published_at', { ascending: false })
-    .limit(actualLimit);
+    .limit(actualLimit * 3);
 
   if (postsError) {
     console.error('Erreur recherche posts:', postsError);
@@ -154,15 +152,63 @@ export async function GET(request: Request) {
   type RecipeResult = { id: number; slug: string; title: string; featured_image: string | null; total_time: number | null; difficulty: string | null; excerpt: string | null };
   type PostResult = { id: number; slug: string; title: string; featured_image: string | null; excerpt: string | null };
 
-  // Dédupliquer les résultats (au cas où les variantes trouvent les mêmes items)
+  // Fonction pour calculer le score de pertinence
+  const calculateRelevanceScore = (item: { title: string; excerpt?: string | null }, searchWords: string[]): number => {
+    let score = 0;
+    const titleLower = removeAccents(item.title.toLowerCase());
+    const excerptLower = removeAccents((item.excerpt || '').toLowerCase());
+
+    for (const word of searchWords) {
+      const wordLower = removeAccents(word.toLowerCase());
+
+      // Score très élevé si le mot est dans le titre
+      if (titleLower.includes(wordLower)) {
+        score += 100;
+        // Bonus si le titre commence par ce mot
+        if (titleLower.startsWith(wordLower)) {
+          score += 50;
+        }
+      }
+
+      // Score moyen si dans l'excerpt
+      if (excerptLower.includes(wordLower)) {
+        score += 20;
+      }
+    }
+
+    // Bonus si tous les mots de la recherche sont dans le titre
+    const allWordsInTitle = searchWords.every(word =>
+      titleLower.includes(removeAccents(word.toLowerCase()))
+    );
+    if (allWordsInTitle) {
+      score += 200;
+    }
+
+    return score;
+  };
+
+  // Dédupliquer et scorer les résultats
   const typedRecipes = (recipes || []) as RecipeResult[];
   const typedPosts = (posts || []) as PostResult[];
 
   const uniqueRecipes = Array.from(new Map(typedRecipes.map(r => [r.id, r])).values());
   const uniquePosts = Array.from(new Map(typedPosts.map(p => [p.id, p])).values());
 
+  // Trier par pertinence
+  const scoredRecipes = uniqueRecipes
+    .map(recipe => ({ ...recipe, score: calculateRelevanceScore(recipe, queryWords) }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, actualLimit)
+    .map(({ score, ...recipe }) => recipe);
+
+  const scoredPosts = uniquePosts
+    .map(post => ({ ...post, score: calculateRelevanceScore(post, queryWords) }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, actualLimit)
+    .map(({ score, ...post }) => post);
+
   return NextResponse.json({
-    recipes: uniqueRecipes,
-    posts: uniquePosts,
+    recipes: scoredRecipes,
+    posts: scoredPosts,
   });
 }
