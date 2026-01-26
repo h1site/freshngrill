@@ -558,6 +558,17 @@ const nextConfig: NextConfig = {
         destination: '/en/recipe/mug-cake',
         permanent: true,
       },
+      // Crêpes maison SEO rename - Jan 26, 2025
+      {
+        source: '/recette/crepes-maison-recette-de-base',
+        destination: '/recette/crepe-de-base',
+        permanent: true,
+      },
+      {
+        source: '/recette/crepes-maison-recette-de-base/',
+        destination: '/recette/crepe-de-base/',
+        permanent: true,
+      },
     ];
   },
 };
