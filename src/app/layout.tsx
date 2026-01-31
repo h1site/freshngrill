@@ -9,6 +9,7 @@ import ScrollToTop from '@/components/layout/ScrollToTop';
 // import MobileBottomControls from '@/components/layout/MobileBottomControls';
 // REMOVED - Cookie consent was blocking 50%+ of GA tracking
 // import CookieConsent from '@/components/layout/CookieConsent';
+import PageTracker from '@/components/analytics/PageTracker';
 import { siteConfig } from '@/lib/config';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/i18n/getDictionary';
@@ -156,6 +157,7 @@ export default async function RootLayout({
               {/* <MobileBottomControls locale={locale} /> */}
               {/* REMOVED - Cookie consent was blocking 50%+ of GA tracking */}
               {/* <CookieConsent locale={locale} /> */}
+              <PageTracker />
             </CartProvider>
           </LanguageProvider>
         </LocaleProvider>
