@@ -7,7 +7,8 @@ import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/layout/ScrollToTop';
 // DISABLED FOR ANALYTICS TEST - Re-enable after 2-3 days
 // import MobileBottomControls from '@/components/layout/MobileBottomControls';
-import CookieConsent from '@/components/layout/CookieConsent';
+// REMOVED - Cookie consent was blocking 50%+ of GA tracking
+// import CookieConsent from '@/components/layout/CookieConsent';
 import { siteConfig } from '@/lib/config';
 import { headers } from 'next/headers';
 import { getDictionary } from '@/i18n/getDictionary';
@@ -121,29 +122,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
-        {/* Google Analytics with Consent Mode */}
-        <Script id="google-consent-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-
-            // Default consent mode (GDPR compliant)
-            gtag('consent', 'default', {
-              'analytics_storage': 'denied',
-              'ad_storage': 'denied',
-              'wait_for_update': 500
-            });
-
-            // Check if user has already given consent
-            const consent = localStorage.getItem('cookie-consent');
-            if (consent === 'accepted') {
-              gtag('consent', 'update', {
-                'analytics_storage': 'granted',
-                'ad_storage': 'granted'
-              });
-            }
-          `}
-        </Script>
+        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KSP0R9W4MP"
           strategy="afterInteractive"
@@ -175,7 +154,8 @@ export default async function RootLayout({
               <Footer locale={locale} dictionary={dictionary} />
               {/* DISABLED FOR ANALYTICS TEST - Re-enable after 2-3 days */}
               {/* <MobileBottomControls locale={locale} /> */}
-              <CookieConsent locale={locale} />
+              {/* REMOVED - Cookie consent was blocking 50%+ of GA tracking */}
+              {/* <CookieConsent locale={locale} /> */}
             </CartProvider>
           </LanguageProvider>
         </LocaleProvider>
