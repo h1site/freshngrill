@@ -147,9 +147,9 @@ async function generatePinterestImage(recipe: {
           {/* Marker underline */}
           <img
             src={markerSvg}
-            width={350}
-            height={35}
-            style={{ width: 350, height: 35, marginBottom: 24 }}
+            width={700}
+            height={70}
+            style={{ width: 700, height: 70, marginBottom: 24 }}
           />
 
           {/* Title - single line */}
