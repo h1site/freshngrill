@@ -35,11 +35,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Limiter la taille (50MB)
-    const maxSize = 50 * 1024 * 1024;
+    // Limiter la taille (4.5MB - limite Vercel serverless)
+    const maxSize = 4.5 * 1024 * 1024;
     if (file.size > maxSize) {
       return NextResponse.json(
-        { error: 'Fichier trop volumineux. Maximum 50MB.' },
+        { error: 'Fichier trop volumineux. Maximum 4.5MB sur Vercel.' },
         { status: 400 }
       );
     }

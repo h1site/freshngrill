@@ -17,6 +17,15 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
 
   const handleFile = async (file: File) => {
     setError('');
+
+    // Vercel serverless limit is 4.5MB
+    const maxSizeMB = 4.5;
+    const maxSizeBytes = maxSizeMB * 1024 * 1024;
+    if (file.size > maxSizeBytes) {
+      setError(`Image trop volumineuse (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum ${maxSizeMB}MB pour l'upload direct. Réduisez la taille de l'image.`);
+      return;
+    }
+
     setIsUploading(true);
 
     try {
@@ -27,6 +36,18 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
         method: 'POST',
         body: formData,
       });
+
+      // Handle non-JSON responses (like Vercel errors)
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        console.error('Upload error (non-JSON):', text);
+        throw new Error(text.includes('Request Entity Too Large')
+          ? 'Image trop volumineuse. Essayez une image plus petite (max 4.5MB sur Vercel).'
+          : text.includes('FUNCTION_INVOCATION_TIMEOUT')
+          ? 'Timeout. L\'image est trop grande à traiter. Essayez une image plus petite.'
+          : `Erreur serveur: ${text.substring(0, 100)}`);
+      }
 
       const data = await response.json();
 
@@ -141,7 +162,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
               <span className="text-orange-600 font-medium">Cliquez pour choisir</span> ou glissez une image
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 50MB, converti en WebP)
+              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 4.5MB, converti en WebP 1200x800)
             </p>
           </div>
         )}
