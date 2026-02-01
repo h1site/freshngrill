@@ -97,7 +97,7 @@ async function generatePinterestImage(recipe: {
     title.length > 20 ? 56 :
     64;
 
-  // Generate text overlay using satori with JSX - Modern Pinterest style
+  // Generate text overlay using satori with JSX - Pinterest style inspired by screenshot
   const svg = await satori(
     <div
       style={{
@@ -108,66 +108,70 @@ async function generatePinterestImage(recipe: {
         position: 'relative',
       }}
     >
-      {/* Top white transparent banner with title */}
+      {/* Top: Small white box with "Vos Recettes Cochonnes" */}
       <div
         style={{
           position: 'absolute',
-          top: 0,
+          top: 60,
           left: 0,
           right: 0,
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: 'white',
+            padding: '16px 40px',
+            borderRadius: 4,
+          }}
+        >
+          <div
+            style={{
+              color: '#1a1a1a',
+              fontSize: 32,
+              fontFamily: 'Bebas Neue',
+              letterSpacing: 3,
+              textTransform: 'uppercase',
+            }}
+          >
+            Vos Recettes Cochonnes
+          </div>
+        </div>
+      </div>
+
+      {/* Middle: Dark banner with recipe title */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: 0,
+          right: 0,
+          transform: 'translateY(-50%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
-        {/* Full-width semi-transparent banner */}
         <div
           style={{
             width: '100%',
-            backgroundColor: 'rgba(255, 255, 255, 0.65)',
+            backgroundColor: 'rgba(26, 26, 26, 0.9)',
             padding: '50px 40px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          {/* 5 Stars */}
           <div
             style={{
-              display: 'flex',
-              gap: 16,
-              marginBottom: 20,
-            }}
-          >
-            {[0, 1, 2, 3, 4].map((i) => (
-              <img
-                key={i}
-                src={starSvg}
-                width={80}
-                height={80}
-                style={{ width: 80, height: 80 }}
-              />
-            ))}
-          </div>
-
-          {/* Marker underline */}
-          <img
-            src={markerSvg}
-            width={700}
-            height={70}
-            style={{ width: 700, height: 70, marginBottom: 24 }}
-          />
-
-          {/* Title - single line */}
-          <div
-            style={{
-              color: '#1a1a1a',
+              color: 'white',
               fontSize: titleFontSize,
               fontFamily: 'Bebas Neue',
               textAlign: 'center',
-              lineHeight: 1.1,
-              letterSpacing: 2,
-              maxWidth: '90%',
+              lineHeight: 1.2,
+              letterSpacing: 3,
+              maxWidth: '95%',
             }}
           >
             {title}
@@ -175,7 +179,7 @@ async function generatePinterestImage(recipe: {
         </div>
       </div>
 
-      {/* Bottom dark orange banner with domain */}
+      {/* Bottom: Orange banner with domain */}
       <div
         style={{
           position: 'absolute',
