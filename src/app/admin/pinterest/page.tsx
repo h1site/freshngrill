@@ -19,6 +19,7 @@ interface RecipeStatus {
   title: string;
   hasFeaturedImage: boolean;
   hasPinterestImage: boolean;
+  pinterestImageUrl: string | null;
 }
 
 interface Stats {
@@ -384,16 +385,26 @@ export default function PinterestBatchPage() {
                   )}
                 </td>
                 <td className="px-4 py-3 text-center">
-                  {recipe.hasFeaturedImage && (
+                  {recipe.pinterestImageUrl ? (
                     <a
-                      href={`/api/og/pinterest?slug=${recipe.slug}&locale=fr`}
+                      href={recipe.pinterestImageUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-orange-600 hover:text-orange-700"
+                      className="block relative w-12 h-18 mx-auto rounded overflow-hidden hover:ring-2 hover:ring-orange-500 transition-all"
                     >
-                      <ImageIcon className="w-4 h-4" />
-                      Voir
+                      <Image
+                        src={recipe.pinterestImageUrl}
+                        alt={recipe.title}
+                        width={48}
+                        height={72}
+                        className="object-cover"
+                        unoptimized
+                      />
                     </a>
+                  ) : (
+                    <div className="w-12 h-18 mx-auto bg-gray-200 rounded flex items-center justify-center">
+                      <ImageIcon className="w-4 h-4 text-gray-400" />
+                    </div>
                   )}
                 </td>
               </tr>
@@ -407,7 +418,7 @@ export default function PinterestBatchPage() {
         <h3 className="font-semibold text-blue-800 mb-2">Comment ça fonctionne</h3>
         <ul className="text-sm text-blue-700 space-y-1">
           <li>• Les images Pinterest sont générées au format 1000x1500 pixels (ratio 2:3)</li>
-          <li>• Chaque image inclut le titre de la recette, la difficulté et le temps de cuisson</li>
+          <li>• Chaque image inclut 5 étoiles, une barre orange et le titre en police Bebas Neue</li>
           <li>• Les images sont stockées dans Supabase Storage et liées à chaque recette</li>
           <li>• Une fois générées, les images sont utilisées automatiquement pour le partage Pinterest</li>
         </ul>

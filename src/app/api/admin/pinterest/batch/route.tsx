@@ -9,9 +9,9 @@ const PINTEREST_HEIGHT = 1500;
 
 // Load fonts for satori (needs TTF/OTF format - WOFF/WOFF2 not supported)
 async function loadBebasNeue(): Promise<ArrayBuffer> {
-  // Bebas Neue - bold condensed display font
+  // Bebas Neue - bold condensed display font from Google Fonts
   const response = await fetch(
-    'https://github.com/dharmatype/Bebas-Neue/raw/master/fonts/BebasNeue-Regular.ttf'
+    'https://fonts.gstatic.com/s/bebasneue/v14/JTUSjIg69CK48gW7PXoo9Wlhyw.ttf'
   );
   if (!response.ok) {
     throw new Error(`Failed to load Bebas Neue font: ${response.status}`);
@@ -282,6 +282,7 @@ export async function GET(_request: NextRequest) {
         title: r.title,
         hasFeaturedImage: !!r.featured_image,
         hasPinterestImage: !!r.pinterest_image,
+        pinterestImageUrl: r.pinterest_image || null,
       })),
     });
   } catch (error) {
