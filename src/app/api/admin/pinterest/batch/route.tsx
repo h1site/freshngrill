@@ -3,20 +3,24 @@ import sharp from 'sharp';
 import satori from 'satori';
 import { createClient } from '@/lib/supabase-server';
 import { supabase as publicSupabase, createAdminClient } from '@/lib/supabase';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 const PINTEREST_WIDTH = 1000;
 const PINTEREST_HEIGHT = 1500;
 
 // Load fonts for satori (needs TTF/OTF format - WOFF/WOFF2 not supported)
-async function loadBebasNeue(): Promise<ArrayBuffer> {
-  // Bebas Neue via jsDelivr CDN (reliable)
-  const response = await fetch(
-    'https://cdn.jsdelivr.net/gh/dharmatype/Bebas-Neue@master/fonts/BebasNeue-Regular.ttf'
-  );
-  if (!response.ok) {
-    throw new Error(`Failed to load Bebas Neue font: ${response.status}`);
-  }
-  return response.arrayBuffer();
+// Font is bundled in public/fonts for reliability
+let cachedFont: ArrayBuffer | null = null;
+
+function loadBebasNeue(): ArrayBuffer {
+  if (cachedFont) return cachedFont;
+
+  // Read font from public folder
+  const fontPath = join(process.cwd(), 'public', 'fonts', 'BebasNeue-Regular.ttf');
+  const fontBuffer = readFileSync(fontPath);
+  cachedFont = fontBuffer.buffer.slice(fontBuffer.byteOffset, fontBuffer.byteOffset + fontBuffer.byteLength);
+  return cachedFont;
 }
 
 // Helper function to split title into two lines
@@ -65,8 +69,8 @@ async function generatePinterestImage(recipe: {
   }
   const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
 
-  // Load Bebas Neue font
-  const fontData = await loadBebasNeue();
+  // Load Bebas Neue font (cached after first load)
+  const fontData = loadBebasNeue();
 
   // Split title for display
   const titleParts = splitTitle(recipe.title);
