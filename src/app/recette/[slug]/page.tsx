@@ -65,7 +65,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   );
 
   // Pinterest image URL (2:3 ratio - 1000x1500)
-  const pinterestImageUrl = `https://menucochon.com/api/og/pinterest?slug=${slug}&locale=fr`;
+  // Use stored image if available, otherwise fallback to dynamic API
+  const pinterestImageUrl = recipe.pinterestImage
+    || `https://menucochon.com/api/og/pinterest?slug=${slug}&locale=fr`;
 
   return {
     title: recipe.seoTitle || recipe.title,
