@@ -12,6 +12,7 @@ const PINTEREST_HEIGHT = 1500;
 // Load fonts for satori (needs TTF/OTF format - WOFF/WOFF2 not supported)
 // Font is bundled in public/fonts for reliability
 let cachedFont: ArrayBuffer | null = null;
+let cachedStarSvg: string | null = null;
 
 function loadBebasNeueBold(): ArrayBuffer {
   if (cachedFont) return cachedFont;
@@ -23,37 +24,20 @@ function loadBebasNeueBold(): ArrayBuffer {
   return cachedFont;
 }
 
-// Helper function to split title into two lines
-function splitTitle(title: string): { line1: string; line2: string } {
-  const upperTitle = title.toUpperCase();
+function loadStarSvg(): string {
+  if (cachedStarSvg) return cachedStarSvg;
 
-  // Common patterns for splitting
-  const patterns = [
-    /^(.+?)\s+(À LA|AU|AUX|DE|DU|DES|ET|&)\s+(.+)$/i,
-    /^(.+?)\s+(WITH|AND|&)\s+(.+)$/i,
-  ];
+  // Read star SVG from public folder
+  const svgPath = join(process.cwd(), 'public', 'images', 'favourite.svg');
+  const svgContent = readFileSync(svgPath, 'utf-8');
+  // Convert to data URI for use in img src
+  cachedStarSvg = `data:image/svg+xml;base64,${Buffer.from(svgContent).toString('base64')}`;
+  return cachedStarSvg;
+}
 
-  for (const pattern of patterns) {
-    const match = upperTitle.match(pattern);
-    if (match) {
-      return {
-        line1: match[1].trim(),
-        line2: `${match[2]} ${match[3]}`.trim(),
-      };
-    }
-  }
-
-  // If no pattern matches, split roughly in half by words
-  const words = upperTitle.split(' ');
-  if (words.length >= 2) {
-    const mid = Math.ceil(words.length / 2);
-    return {
-      line1: words.slice(0, mid).join(' '),
-      line2: words.slice(mid).join(' '),
-    };
-  }
-
-  return { line1: upperTitle, line2: '' };
+// Format title - single line, uppercase
+function formatTitle(title: string): string {
+  return title.toUpperCase();
 }
 
 
@@ -71,14 +55,14 @@ async function generatePinterestImage(recipe: {
 
   // Load Bebas Neue Bold font (cached after first load)
   const fontData = loadBebasNeueBold();
+  const starSvg = loadStarSvg();
 
-  // Split title for display
-  const titleParts = splitTitle(recipe.title);
+  // Format title for display (single line, uppercase)
+  const title = formatTitle(recipe.title);
   const domain = 'menucochon.com';
 
-  // Calculate font size based on total title length
-  const totalLength = titleParts.line1.length + titleParts.line2.length;
-  const titleFontSize = totalLength > 30 ? 56 : totalLength > 20 ? 68 : 80;
+  // Calculate font size based on title length
+  const titleFontSize = title.length > 35 ? 48 : title.length > 25 ? 56 : title.length > 18 ? 64 : 72;
 
   // Generate text overlay using satori with JSX - Modern Pinterest style
   const svg = await satori(
@@ -118,13 +102,20 @@ async function generatePinterestImage(recipe: {
           {/* 5 Stars */}
           <div
             style={{
-              color: '#FF6B35',
-              fontSize: 36,
-              letterSpacing: 8,
+              display: 'flex',
+              gap: 12,
               marginBottom: 20,
             }}
           >
-            ★ ★ ★ ★ ★
+            {[0, 1, 2, 3, 4].map((i) => (
+              <img
+                key={i}
+                src={starSvg}
+                width={40}
+                height={40}
+                style={{ width: 40, height: 40 }}
+              />
+            ))}
           </div>
 
           {/* Orange accent line */}
@@ -137,7 +128,7 @@ async function generatePinterestImage(recipe: {
             }}
           />
 
-          {/* Title line 1 */}
+          {/* Title - single line */}
           <div
             style={{
               color: '#1a1a1a',
@@ -145,30 +136,12 @@ async function generatePinterestImage(recipe: {
               fontFamily: 'Bebas Neue',
               textAlign: 'center',
               lineHeight: 1.1,
-              letterSpacing: 3,
-              textTransform: 'uppercase',
+              letterSpacing: 2,
+              maxWidth: '90%',
             }}
           >
-            {titleParts.line1}
+            {title}
           </div>
-
-          {/* Title line 2 */}
-          {titleParts.line2 && (
-            <div
-              style={{
-                color: '#1a1a1a',
-                fontSize: titleFontSize,
-                fontFamily: 'Bebas Neue',
-                textAlign: 'center',
-                lineHeight: 1.1,
-                letterSpacing: 3,
-                textTransform: 'uppercase',
-                marginTop: 8,
-              }}
-            >
-              {titleParts.line2}
-            </div>
-          )}
         </div>
       </div>
 
