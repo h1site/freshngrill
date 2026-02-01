@@ -7,11 +7,15 @@ import { supabase as publicSupabase, createAdminClient } from '@/lib/supabase';
 const PINTEREST_WIDTH = 1000;
 const PINTEREST_HEIGHT = 1500;
 
-// Load font for satori (Google Font - Inter)
+// Load font for satori (needs TTF/OTF format - WOFF/WOFF2 not supported)
 async function loadFont(): Promise<ArrayBuffer> {
+  // Use Noto Sans Bold - static TTF from Google Fonts
   const response = await fetch(
-    'https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiJ-Ek-_EeA.woff2'
+    'https://raw.githubusercontent.com/googlefonts/noto-fonts/main/hinted/ttf/NotoSans/NotoSans-Bold.ttf'
   );
+  if (!response.ok) {
+    throw new Error(`Failed to load font: ${response.status}`);
+  }
   return response.arrayBuffer();
 }
 
@@ -167,7 +171,7 @@ async function generatePinterestImage(recipe: {
       height: PINTEREST_HEIGHT,
       fonts: [
         {
-          name: 'Inter',
+          name: 'Noto Sans',
           data: fontData,
           weight: 700,
           style: 'normal',
