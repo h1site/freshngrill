@@ -7,14 +7,14 @@ import { supabase as publicSupabase, createAdminClient } from '@/lib/supabase';
 const PINTEREST_WIDTH = 1000;
 const PINTEREST_HEIGHT = 1500;
 
-// Load font for satori (needs TTF/OTF format - WOFF/WOFF2 not supported)
-async function loadFont(): Promise<ArrayBuffer> {
-  // Use Noto Sans Bold - static TTF from Google Fonts
+// Load fonts for satori (needs TTF/OTF format - WOFF/WOFF2 not supported)
+async function loadBebasNeue(): Promise<ArrayBuffer> {
+  // Bebas Neue - bold condensed display font
   const response = await fetch(
-    'https://raw.githubusercontent.com/googlefonts/noto-fonts/main/hinted/ttf/NotoSans/NotoSans-Bold.ttf'
+    'https://github.com/dharmatype/Bebas-Neue/raw/master/fonts/BebasNeue-Regular.ttf'
   );
   if (!response.ok) {
-    throw new Error(`Failed to load font: ${response.status}`);
+    throw new Error(`Failed to load Bebas Neue font: ${response.status}`);
   }
   return response.arrayBuffer();
 }
@@ -52,26 +52,11 @@ function splitTitle(title: string): { line1: string; line2: string } {
   return { line1: upperTitle, line2: '' };
 }
 
-// Helper function to get subtitle based on recipe properties
-function getSubtitle(recipe: { difficulty?: string; total_time?: number }): string {
-  const difficulty = recipe.difficulty || 'facile';
-  const time = recipe.total_time || 30;
-
-  const difficultyText: Record<string, string> = {
-    facile: 'Facile',
-    moyen: 'Moyen',
-    difficile: 'Difficile',
-  };
-
-  return `${difficultyText[difficulty] || difficulty} • ${time} min`;
-}
 
 // Generate Pinterest image for a recipe using satori
 async function generatePinterestImage(recipe: {
   title: string;
   featured_image: string;
-  difficulty?: string;
-  total_time?: number;
 }): Promise<Buffer> {
   // Download the original image
   const imageResponse = await fetch(recipe.featured_image);
@@ -80,17 +65,16 @@ async function generatePinterestImage(recipe: {
   }
   const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
 
-  // Load font
-  const fontData = await loadFont();
+  // Load Bebas Neue font
+  const fontData = await loadBebasNeue();
 
   // Split title for display
   const titleParts = splitTitle(recipe.title);
-  const subtitle = getSubtitle(recipe);
   const domain = 'menucochon.com';
 
-  // Calculate font sizes based on title length
-  const line1FontSize = titleParts.line1.length > 15 ? 52 : titleParts.line1.length > 10 ? 60 : 72;
-  const line2FontSize = titleParts.line2.length > 15 ? 48 : titleParts.line2.length > 10 ? 56 : 64;
+  // Calculate font size based on total title length
+  const totalLength = titleParts.line1.length + titleParts.line2.length;
+  const titleFontSize = totalLength > 30 ? 56 : totalLength > 20 ? 68 : 80;
 
   // Generate text overlay using satori with JSX - Modern Pinterest style
   const svg = await satori(
@@ -103,45 +87,7 @@ async function generatePinterestImage(recipe: {
         position: 'relative',
       }}
     >
-      {/* Top gradient overlay for domain visibility */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 150,
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)',
-        }}
-      />
-
-      {/* Domain at top */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 40,
-          left: 0,
-          right: 0,
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <div
-          style={{
-            backgroundColor: '#FF6B35',
-            color: 'white',
-            fontSize: 28,
-            fontWeight: 700,
-            padding: '12px 32px',
-            borderRadius: 8,
-            letterSpacing: 1,
-          }}
-        >
-          {domain}
-        </div>
-      </div>
-
-      {/* Center white banner with title */}
+      {/* Center white transparent banner with title */}
       <div
         style={{
           position: 'absolute',
@@ -154,64 +100,83 @@ async function generatePinterestImage(recipe: {
           alignItems: 'center',
         }}
       >
-        {/* White banner background */}
+        {/* Full-width white transparent banner */}
         <div
           style={{
-            backgroundColor: 'white',
-            padding: '40px 50px',
+            width: '100%',
+            backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            padding: '50px 40px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
           }}
         >
-          {/* Main title line 1 */}
+          {/* 5 Stars */}
+          <div
+            style={{
+              color: '#FF6B35',
+              fontSize: 36,
+              letterSpacing: 8,
+              marginBottom: 20,
+            }}
+          >
+            ★ ★ ★ ★ ★
+          </div>
+
+          {/* Orange accent line */}
+          <div
+            style={{
+              width: 180,
+              height: 4,
+              backgroundColor: '#FF6B35',
+              marginBottom: 24,
+            }}
+          />
+
+          {/* Title line 1 */}
           <div
             style={{
               color: '#1a1a1a',
-              fontSize: line1FontSize,
-              fontWeight: 700,
+              fontSize: titleFontSize,
+              fontFamily: 'Bebas Neue',
               textAlign: 'center',
-              lineHeight: 1.2,
+              lineHeight: 1.1,
+              letterSpacing: 3,
+              textTransform: 'uppercase',
             }}
           >
             {titleParts.line1}
           </div>
-          {/* Orange accent bar */}
-          <div
-            style={{
-              width: 120,
-              height: 6,
-              backgroundColor: '#FF6B35',
-              borderRadius: 3,
-              margin: '20px 0',
-            }}
-          />
-          {/* Main title line 2 */}
-          <div
-            style={{
-              color: '#FF6B35',
-              fontSize: line2FontSize,
-              fontWeight: 700,
-              textAlign: 'center',
-              textTransform: 'uppercase',
-              letterSpacing: 2,
-            }}
-          >
-            {titleParts.line2}
-          </div>
+
+          {/* Title line 2 */}
+          {titleParts.line2 && (
+            <div
+              style={{
+                color: '#1a1a1a',
+                fontSize: titleFontSize,
+                fontFamily: 'Bebas Neue',
+                textAlign: 'center',
+                lineHeight: 1.1,
+                letterSpacing: 3,
+                textTransform: 'uppercase',
+                marginTop: 8,
+              }}
+            >
+              {titleParts.line2}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Bottom black banner with subtitle */}
+      {/* Bottom dark orange banner with domain */}
       <div
         style={{
           position: 'absolute',
           bottom: 0,
           left: 0,
           right: 0,
-          backgroundColor: '#1a1a1a',
-          padding: '30px 40px',
+          backgroundColor: '#D4541E',
+          padding: '28px 40px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -221,11 +186,12 @@ async function generatePinterestImage(recipe: {
           style={{
             color: 'white',
             fontSize: 32,
-            fontWeight: 700,
-            letterSpacing: 1,
+            fontFamily: 'Bebas Neue',
+            letterSpacing: 4,
+            textTransform: 'uppercase',
           }}
         >
-          {subtitle}
+          {domain}
         </div>
       </div>
     </div>,
@@ -234,9 +200,9 @@ async function generatePinterestImage(recipe: {
       height: PINTEREST_HEIGHT,
       fonts: [
         {
-          name: 'Noto Sans',
+          name: 'Bebas Neue',
           data: fontData,
-          weight: 700,
+          weight: 400,
           style: 'normal',
         },
       ],
@@ -391,8 +357,6 @@ export async function POST(request: NextRequest) {
         const imageBuffer = await generatePinterestImage({
           title: recipe.title,
           featured_image: recipe.featured_image!,
-          difficulty: recipe.difficulty || undefined,
-          total_time: recipe.total_time || undefined,
         });
         console.log(`  Image generated, buffer size: ${imageBuffer.length} bytes`);
 
