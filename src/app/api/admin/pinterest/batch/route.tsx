@@ -13,11 +13,11 @@ const PINTEREST_HEIGHT = 1500;
 // Font is bundled in public/fonts for reliability
 let cachedFont: ArrayBuffer | null = null;
 
-function loadBebasNeue(): ArrayBuffer {
+function loadBebasNeueBold(): ArrayBuffer {
   if (cachedFont) return cachedFont;
 
-  // Read font from public folder
-  const fontPath = join(process.cwd(), 'public', 'fonts', 'BebasNeue-Regular.ttf');
+  // Read Bold font from public folder
+  const fontPath = join(process.cwd(), 'public', 'fonts', 'BebasNeue-Bold.otf');
   const fontBuffer = readFileSync(fontPath);
   cachedFont = fontBuffer.buffer.slice(fontBuffer.byteOffset, fontBuffer.byteOffset + fontBuffer.byteLength);
   return cachedFont;
@@ -69,8 +69,8 @@ async function generatePinterestImage(recipe: {
   }
   const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
 
-  // Load Bebas Neue font (cached after first load)
-  const fontData = loadBebasNeue();
+  // Load Bebas Neue Bold font (cached after first load)
+  const fontData = loadBebasNeueBold();
 
   // Split title for display
   const titleParts = splitTitle(recipe.title);
@@ -206,7 +206,7 @@ async function generatePinterestImage(recipe: {
         {
           name: 'Bebas Neue',
           data: fontData,
-          weight: 400,
+          weight: 700,
           style: 'normal',
         },
       ],
