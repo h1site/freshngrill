@@ -101,14 +101,13 @@ async function generatePinterestImage(recipe: {
         position: 'relative',
       }}
     >
-      {/* Center white transparent banner with title */}
+      {/* Top white transparent banner with title */}
       <div
         style={{
           position: 'absolute',
-          top: '50%',
+          top: 0,
           left: 0,
           right: 0,
-          transform: 'translateY(-50%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -129,7 +128,7 @@ async function generatePinterestImage(recipe: {
           <div
             style={{
               display: 'flex',
-              gap: 12,
+              gap: 16,
               marginBottom: 20,
             }}
           >
@@ -137,9 +136,9 @@ async function generatePinterestImage(recipe: {
               <img
                 key={i}
                 src={starSvg}
-                width={40}
-                height={40}
-                style={{ width: 40, height: 40 }}
+                width={80}
+                height={80}
+                style={{ width: 80, height: 80 }}
               />
             ))}
           </div>
