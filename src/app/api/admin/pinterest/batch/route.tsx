@@ -120,11 +120,11 @@ async function generatePinterestImage(recipe: {
           alignItems: 'center',
         }}
       >
-        {/* Full-width white transparent banner */}
+        {/* Full-width semi-transparent banner */}
         <div
           style={{
             width: '100%',
-            backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            backgroundColor: 'rgba(255, 255, 255, 0.65)',
             padding: '50px 40px',
             display: 'flex',
             flexDirection: 'column',
