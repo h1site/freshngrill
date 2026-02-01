@@ -64,6 +64,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     `Découvrez notre recette de ${recipe.title}. Instructions faciles, ingrédients simples.`
   );
 
+  // Pinterest image URL (2:3 ratio - 1000x1500)
+  const pinterestImageUrl = `https://menucochon.com/api/og/pinterest?slug=${slug}&locale=fr`;
+
   return {
     title: recipe.seoTitle || recipe.title,
     description: metaDescription,
@@ -77,9 +80,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: recipe.title,
       description: recipe.excerpt,
-      images: recipe.featuredImage
-        ? [{ url: recipe.featuredImage, width: 1200, height: 630, alt: recipe.title }]
-        : [],
+      images: [
+        // Pinterest image first (2:3 ratio preferred by Pinterest)
+        { url: pinterestImageUrl, width: 1000, height: 1500, alt: recipe.title },
+        // Standard OG image second
+        ...(recipe.featuredImage
+          ? [{ url: recipe.featuredImage, width: 1200, height: 630, alt: recipe.title }]
+          : []),
+      ],
       type: 'article',
       url: `/recette/${slug}/`,
       siteName: 'Menucochon',
