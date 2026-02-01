@@ -13,6 +13,7 @@ const PINTEREST_HEIGHT = 1500;
 // Font is bundled in public/fonts for reliability
 let cachedFont: ArrayBuffer | null = null;
 let cachedStarSvg: string | null = null;
+let cachedRecipeSvg: string | null = null;
 
 function loadBebasNeueBold(): ArrayBuffer {
   if (cachedFont) return cachedFont;
@@ -33,6 +34,17 @@ function loadStarSvg(): string {
   // Convert to data URI for use in img src
   cachedStarSvg = `data:image/svg+xml;base64,${Buffer.from(svgContent).toString('base64')}`;
   return cachedStarSvg;
+}
+
+function loadRecipeSvg(): string {
+  if (cachedRecipeSvg) return cachedRecipeSvg;
+
+  // Read recipe SVG from public folder
+  const svgPath = join(process.cwd(), 'public', 'images', 'recipe.svg');
+  const svgContent = readFileSync(svgPath, 'utf-8');
+  // Convert to data URI for use in img src
+  cachedRecipeSvg = `data:image/svg+xml;base64,${Buffer.from(svgContent).toString('base64')}`;
+  return cachedRecipeSvg;
 }
 
 // Format title - single line, uppercase
@@ -56,6 +68,7 @@ async function generatePinterestImage(recipe: {
   // Load Bebas Neue Bold font (cached after first load)
   const fontData = loadBebasNeueBold();
   const starSvg = loadStarSvg();
+  const recipeSvg = loadRecipeSvg();
 
   // Format title for display (single line, uppercase)
   const title = formatTitle(recipe.title);
@@ -142,6 +155,14 @@ async function generatePinterestImage(recipe: {
           >
             {title}
           </div>
+
+          {/* Recipe icon below title */}
+          <img
+            src={recipeSvg}
+            width={50}
+            height={50}
+            style={{ width: 50, height: 50, marginTop: 20 }}
+          />
         </div>
       </div>
 
