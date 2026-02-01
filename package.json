@@ -37,6 +37,7 @@
     "next": "16.0.8",
     "react": "19.2.1",
     "react-dom": "19.2.1",
+    "satori": "^0.19.1",
     "sharp": "^0.34.5",
     "stripe": "^20.1.0",
     "tailwind-merge": "^3.4.0"

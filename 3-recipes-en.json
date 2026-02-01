@@ -1,0 +1,92 @@
+{
+  "recipes": [
+    {
+      "slug": "beer-ham",
+      "title": "Beer Ham",
+      "excerpt": "Tender, juicy ham slow-cooked with beer for rich flavor.",
+      "introduction": "A ham that enjoys a beer before hitting the oven? That’s already a win. This recipe delivers juicy meat and a flavorful sauce with minimal effort.\n\nIt fills the house with comforting aromas while the oven does the heavy lifting.",
+      "prep_time": 15,
+      "cook_time": 120,
+      "rest_time": 10,
+      "total_time": 145,
+      "servings": 8,
+      "servings_unit": "servings",
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "title": "Ingredients",
+          "items": [
+            {
+              "quantity": "1.5",
+              "unit": "kg",
+              "name": "ham",
+              "note": "boneless or bone-in"
+            },
+            {
+              "quantity": "750",
+              "unit": "ml",
+              "name": "beer",
+              "note": "lager or ale"
+            },
+            {
+              "quantity": "2",
+              "unit": "tbsp",
+              "name": "mustard",
+              "note": ""
+            },
+            {
+              "quantity": "2",
+              "unit": "tbsp",
+              "name": "honey",
+              "note": ""
+            },
+            {
+              "quantity": "1",
+              "unit": "",
+              "name": "onion",
+              "note": "sliced"
+            },
+            {
+              "quantity": "",
+              "unit": "",
+              "name": "pepper",
+              "note": "to taste"
+            }
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "title": "Prep",
+          "content": "Preheat oven to 180°C and place ham in a roasting dish.",
+          "tip": ""
+        },
+        {
+          "step": 2,
+          "title": "Add beer",
+          "content": "Pour beer around the ham for gentle cooking.",
+          "tip": ""
+        },
+        {
+          "step": 3,
+          "title": "Glaze",
+          "content": "Mix mustard and honey and brush over ham.",
+          "tip": ""
+        },
+        {
+          "step": 4,
+          "title": "Cook",
+          "content": "Cover and bake for about 2 hours, basting occasionally.",
+          "tip": ""
+        },
+        {
+          "step": 5,
+          "title": "Rest",
+          "content": "Let rest 10 minutes before slicing.",
+          "tip": ""
+        }
+      ]
+    }
+  ]
+}

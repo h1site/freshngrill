@@ -1,0 +1,244 @@
+{
+  "recipes": [
+    {
+      "slug": "jambon-a-la-biere",
+      "title": "Jambon à la bière",
+      "excerpt": "Jambon tendre et savoureux mijoté à la bière, parfait pour un repas convivial sans prétention.",
+      "introduction": "Un jambon qui prend une petite bière avant d’entrer au four? Disons que ça commence bien. Cette recette transforme un jambon ordinaire en plat ultra juteux, avec une sauce parfumée qui fait saliver la tablée.\n\nC’est le genre de plat qui embaume la maison et donne l’impression que tu cuisines depuis des heures… alors que le four fait presque tout le travail.",
+      "prep_time": 15,
+      "cook_time": 120,
+      "rest_time": 10,
+      "total_time": 145,
+      "servings": 8,
+      "servings_unit": "portions",
+      "difficulty": "facile",
+      "ingredients": [
+        {
+          "title": "Ingrédients",
+          "items": [
+            {
+              "quantity": "1.5",
+              "unit": "kg",
+              "name": "jambon",
+              "note": "désossé ou avec os"
+            },
+            {
+              "quantity": "750",
+              "unit": "ml",
+              "name": "bière blonde",
+              "note": ""
+            },
+            {
+              "quantity": "2",
+              "unit": "c. à soupe",
+              "name": "moutarde",
+              "note": ""
+            },
+            {
+              "quantity": "2",
+              "unit": "c. à soupe",
+              "name": "miel",
+              "note": ""
+            },
+            {
+              "quantity": "1",
+              "unit": "",
+              "name": "oignon",
+              "note": "émincé"
+            },
+            {
+              "quantity": "",
+              "unit": "",
+              "name": "poivre",
+              "note": "au goût"
+            }
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "title": "Préparer la base",
+          "content": "Préchauffez le four à 180 °C. Déposez le jambon dans un grand plat allant au four et ajoutez l’oignon.",
+          "tip": ""
+        },
+        {
+          "step": 2,
+          "title": "Ajouter la bière",
+          "content": "Versez la bière autour du jambon, pas directement dessus, pour une cuisson douce et uniforme.",
+          "tip": "Utilisez une bière blonde ou ambrée, pas trop amère."
+        },
+        {
+          "step": 3,
+          "title": "Badigeonner",
+          "content": "Mélangez la moutarde et le miel, puis badigeonnez le jambon pour créer une croûte savoureuse.",
+          "tip": ""
+        },
+        {
+          "step": 4,
+          "title": "Cuisson lente",
+          "content": "Couvrez et enfournez pour environ 2 heures, en arrosant occasionnellement.",
+          "tip": "Arroser garde la viande juteuse."
+        },
+        {
+          "step": 5,
+          "title": "Repos",
+          "content": "Laissez reposer 10 minutes avant de trancher pour conserver les jus.",
+          "tip": ""
+        }
+      ]
+    },
+    {
+      "slug": "pain-de-menage",
+      "title": "Pain de ménage",
+      "excerpt": "Pain blanc maison moelleux et réconfortant, parfait pour les rôties et sandwichs.",
+      "introduction": "Le pain de ménage, c’est l’odeur du four qui dit « tout va bien ». Simple, économique et tellement meilleur que celui de l’épicerie.\n\nC’est la base parfaite pour les toasts du matin, les sandwichs du midi et même pour saucer une bonne soupe.",
+      "prep_time": 20,
+      "cook_time": 35,
+      "rest_time": 60,
+      "total_time": 115,
+      "servings": 1,
+      "servings_unit": "pain",
+      "difficulty": "moyen",
+      "ingredients": [
+        {
+          "title": "Ingrédients",
+          "items": [
+            {
+              "quantity": "3",
+              "unit": "tasses",
+              "name": "farine tout usage",
+              "note": ""
+            },
+            {
+              "quantity": "1",
+              "unit": "tasse",
+              "name": "eau tiède",
+              "note": ""
+            },
+            {
+              "quantity": "2",
+              "unit": "c. à soupe",
+              "name": "sucre",
+              "note": ""
+            },
+            {
+              "quantity": "2",
+              "unit": "c. à soupe",
+              "name": "huile",
+              "note": ""
+            },
+            {
+              "quantity": "1",
+              "unit": "c. à thé",
+              "name": "sel",
+              "note": ""
+            },
+            {
+              "quantity": "2",
+              "unit": "c. à thé",
+              "name": "levure sèche",
+              "note": ""
+            }
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "title": "Activer la levure",
+          "content": "Mélangez l’eau tiède, le sucre et la levure. Laissez mousser 10 minutes.",
+          "tip": ""
+        },
+        {
+          "step": 2,
+          "title": "Former la pâte",
+          "content": "Ajoutez la farine, le sel et l’huile. Pétrissez jusqu’à obtenir une pâte souple.",
+          "tip": ""
+        },
+        {
+          "step": 3,
+          "title": "Première levée",
+          "content": "Couvrez et laissez lever 1 heure dans un endroit tiède.",
+          "tip": "La pâte doit doubler de volume."
+        },
+        {
+          "step": 4,
+          "title": "Cuisson",
+          "content": "Façonnez, déposez dans un moule et cuire à 180 °C pendant 35 minutes.",
+          "tip": ""
+        }
+      ]
+    },
+    {
+      "slug": "soupe-poulet-orge",
+      "title": "Soupe poulet et orge",
+      "excerpt": "Soupe nourrissante et réconfortante, parfaite pour les journées froides.",
+      "introduction": "Cette soupe, c’est un câlin dans un bol. Elle réchauffe, elle nourrit et elle a ce petit quelque chose qui fait dire « encore une louche ».\n\nParfaite pour utiliser du poulet et remplir le congélateur.",
+      "prep_time": 15,
+      "cook_time": 45,
+      "rest_time": 0,
+      "total_time": 60,
+      "servings": 6,
+      "servings_unit": "bols",
+      "difficulty": "facile",
+      "ingredients": [
+        {
+          "title": "Ingrédients",
+          "items": [
+            {
+              "quantity": "1.5",
+              "unit": "L",
+              "name": "bouillon de poulet",
+              "note": ""
+            },
+            {
+              "quantity": "1/2",
+              "unit": "tasse",
+              "name": "orge perlé",
+              "note": ""
+            },
+            {
+              "quantity": "2",
+              "unit": "tasses",
+              "name": "poulet cuit",
+              "note": "effiloché"
+            },
+            {
+              "quantity": "2",
+              "unit": "tasses",
+              "name": "légumes mélangés",
+              "note": ""
+            },
+            {
+              "quantity": "",
+              "unit": "",
+              "name": "sel et poivre",
+              "note": "au goût"
+            }
+          ]
+        }
+      ],
+      "instructions": [
+        {
+          "step": 1,
+          "title": "Assembler",
+          "content": "Mettre tous les ingrédients dans une grande casserole.",
+          "tip": ""
+        },
+        {
+          "step": 2,
+          "title": "Cuire",
+          "content": "Porter à ébullition puis mijoter jusqu’à ce que l’orge soit tendre.",
+          "tip": "Remuer à l’occasion."
+        },
+        {
+          "step": 3,
+          "title": "Assaisonner",
+          "content": "Ajuster sel et poivre avant de servir.",
+          "tip": ""
+        }
+      ]
+    }
+  ]
+}

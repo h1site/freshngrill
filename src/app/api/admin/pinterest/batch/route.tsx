@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
+import satori from 'satori';
 import { createClient } from '@/lib/supabase-server';
 import { supabase as publicSupabase, createAdminClient } from '@/lib/supabase';
 
 const PINTEREST_WIDTH = 1000;
 const PINTEREST_HEIGHT = 1500;
+
+// Load font for satori (Google Font - Inter)
+async function loadFont(): Promise<ArrayBuffer> {
+  const response = await fetch(
+    'https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiJ-Ek-_EeA.woff2'
+  );
+  return response.arrayBuffer();
+}
 
 // Helper function to split title into two lines
 function splitTitle(title: string): { line1: string; line2: string } {
@@ -53,17 +62,7 @@ function getSubtitle(recipe: { difficulty?: string; total_time?: number }): stri
   return `${difficultyText[difficulty] || difficulty} • ${time} min`;
 }
 
-// Helper function to escape XML special characters
-function escapeXml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
-}
-
-// Generate Pinterest image for a recipe
+// Generate Pinterest image for a recipe using satori
 async function generatePinterestImage(recipe: {
   title: string;
   featured_image: string;
@@ -77,80 +76,112 @@ async function generatePinterestImage(recipe: {
   }
   const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
 
+  // Load font
+  const fontData = await loadFont();
+
   // Split title for display
   const titleParts = splitTitle(recipe.title);
   const subtitle = getSubtitle(recipe);
   const domain = 'menucochon.com';
 
-  const centerY = PINTEREST_HEIGHT / 2;
+  // Calculate font sizes
+  const line1FontSize = titleParts.line1.length > 12 ? 90 : 110;
+  const line2FontSize = titleParts.line2.length > 12 ? 80 : 90;
 
-  // Create SVG overlay
-  const svgOverlay = `
-    <svg width="${PINTEREST_WIDTH}" height="${PINTEREST_HEIGHT}">
-      <defs>
-        <linearGradient id="centerGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:rgba(0,0,0,0.3)" />
-          <stop offset="35%" style="stop-color:rgba(0,0,0,0.6)" />
-          <stop offset="50%" style="stop-color:rgba(0,0,0,0.7)" />
-          <stop offset="65%" style="stop-color:rgba(0,0,0,0.6)" />
-          <stop offset="100%" style="stop-color:rgba(0,0,0,0.3)" />
-        </linearGradient>
-      </defs>
+  // Generate text overlay using satori with JSX
+  const svg = await satori(
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 35%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0.3) 100%)',
+      }}
+    >
+      {/* Domain at top */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 50,
+          color: 'white',
+          fontSize: 32,
+          fontWeight: 700,
+          letterSpacing: 2,
+          opacity: 0.9,
+        }}
+      >
+        {domain}
+      </div>
+      {/* Main title line 1 */}
+      <div
+        style={{
+          color: 'white',
+          fontSize: line1FontSize,
+          fontWeight: 700,
+          letterSpacing: 3,
+          textAlign: 'center',
+          marginBottom: 20,
+        }}
+      >
+        {titleParts.line1}
+      </div>
+      {/* Main title line 2 */}
+      <div
+        style={{
+          color: '#FF6B35',
+          fontSize: line2FontSize,
+          fontWeight: 700,
+          letterSpacing: 3,
+          textAlign: 'center',
+        }}
+      >
+        {titleParts.line2}
+      </div>
+      {/* Decorative line */}
+      <div
+        style={{
+          width: 200,
+          height: 4,
+          backgroundColor: '#FF6B35',
+          borderRadius: 2,
+          marginTop: 50,
+          marginBottom: 30,
+        }}
+      />
+      {/* Subtitle */}
+      <div
+        style={{
+          color: 'white',
+          fontSize: 32,
+          opacity: 0.95,
+        }}
+      >
+        {subtitle}
+      </div>
+    </div>,
+    {
+      width: PINTEREST_WIDTH,
+      height: PINTEREST_HEIGHT,
+      fonts: [
+        {
+          name: 'Inter',
+          data: fontData,
+          weight: 700,
+          style: 'normal',
+        },
+      ],
+    }
+  );
 
-      <rect x="0" y="0" width="${PINTEREST_WIDTH}" height="${PINTEREST_HEIGHT}" fill="url(#centerGradient)" />
+  // Convert SVG to PNG buffer using sharp
+  const overlayBuffer = await sharp(Buffer.from(svg))
+    .png()
+    .toBuffer();
 
-      <!-- Domain at top -->
-      <text x="${PINTEREST_WIDTH / 2}" y="80"
-            font-family="Georgia, serif"
-            font-size="32"
-            font-weight="bold"
-            fill="white"
-            text-anchor="middle"
-            letter-spacing="2"
-            opacity="0.9">
-        ${domain}
-      </text>
-
-      <!-- Main title -->
-      <text x="${PINTEREST_WIDTH / 2}" y="${centerY - 30}"
-            font-family="Georgia, serif"
-            font-size="${titleParts.line1.length > 12 ? 90 : 110}"
-            font-weight="bold"
-            fill="white"
-            text-anchor="middle"
-            letter-spacing="3">
-        ${escapeXml(titleParts.line1)}
-      </text>
-
-      <!-- Second line -->
-      <text x="${PINTEREST_WIDTH / 2}" y="${centerY + 80}"
-            font-family="Georgia, serif"
-            font-size="${titleParts.line2.length > 12 ? 80 : 90}"
-            font-weight="bold"
-            fill="#FF6B35"
-            text-anchor="middle"
-            letter-spacing="3">
-        ${escapeXml(titleParts.line2)}
-      </text>
-
-      <!-- Decorative line -->
-      <rect x="${PINTEREST_WIDTH / 2 - 100}" y="${centerY + 130}"
-            width="200" height="4"
-            fill="#FF6B35" rx="2" />
-
-      <!-- Subtitle -->
-      <text x="${PINTEREST_WIDTH / 2}" y="${centerY + 180}"
-            font-family="Arial, sans-serif"
-            font-size="32"
-            fill="white"
-            text-anchor="middle"
-            opacity="0.95">
-        ${escapeXml(subtitle)}
-      </text>
-    </svg>
-  `;
-
-  // Process image
+  // Process image: resize background and composite with text overlay
   const processedImage = await sharp(imageBuffer)
     .resize(PINTEREST_WIDTH, PINTEREST_HEIGHT, {
       fit: 'cover',
@@ -158,7 +189,7 @@ async function generatePinterestImage(recipe: {
     })
     .composite([
       {
-        input: Buffer.from(svgOverlay),
+        input: overlayBuffer,
         top: 0,
         left: 0,
       },
