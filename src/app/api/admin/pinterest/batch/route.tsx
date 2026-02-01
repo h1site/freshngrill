@@ -87,8 +87,15 @@ async function generatePinterestImage(recipe: {
   const title = formatTitle(recipe.title);
   const domain = 'menucochon.com';
 
-  // Calculate font size based on title length
-  const titleFontSize = title.length > 35 ? 48 : title.length > 25 ? 56 : title.length > 18 ? 64 : 72;
+  // Calculate font size based on title length (must fit on single line ~80 chars max)
+  const titleFontSize =
+    title.length > 70 ? 28 :
+    title.length > 60 ? 32 :
+    title.length > 50 ? 36 :
+    title.length > 40 ? 42 :
+    title.length > 30 ? 48 :
+    title.length > 20 ? 56 :
+    64;
 
   // Generate text overlay using satori with JSX - Modern Pinterest style
   const svg = await satori(
