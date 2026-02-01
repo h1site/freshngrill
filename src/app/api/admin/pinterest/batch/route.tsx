@@ -121,6 +121,7 @@ async function generatePinterestImage(recipe: {
       >
         <div
           style={{
+            display: 'flex',
             backgroundColor: 'white',
             padding: '16px 40px',
             borderRadius: 4,
@@ -128,6 +129,7 @@ async function generatePinterestImage(recipe: {
         >
           <div
             style={{
+              display: 'flex',
               color: '#1a1a1a',
               fontSize: 32,
               fontFamily: 'Bebas Neue',
@@ -165,6 +167,7 @@ async function generatePinterestImage(recipe: {
         >
           <div
             style={{
+              display: 'flex',
               color: 'white',
               fontSize: titleFontSize,
               fontFamily: 'Bebas Neue',
@@ -195,6 +198,7 @@ async function generatePinterestImage(recipe: {
       >
         <div
           style={{
+            display: 'flex',
             color: 'white',
             fontSize: 32,
             fontFamily: 'Bebas Neue',
