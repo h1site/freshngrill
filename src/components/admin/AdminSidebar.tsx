@@ -13,6 +13,7 @@ const navigation = [
   { name: 'Commentaires', href: '/admin/commentaires', icon: CommentIcon },
   { name: 'Réseaux sociaux', href: '/admin/social', icon: ShareIcon },
   { name: 'Images Pinterest', href: '/admin/pinterest', icon: PinterestIcon },
+  { name: 'Statistiques', href: '/admin/stats', icon: StatsIcon },
   { name: 'Audit SEO', href: '/admin/seo', icon: ChartIcon },
   { name: 'Erreurs 404', href: '/admin/404-errors', icon: AlertIcon },
   { name: 'Messages', href: '/admin/messages', icon: MailIcon },
@@ -111,6 +112,14 @@ function PinterestIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+    </svg>
+  );
+}
+
+function StatsIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
     </svg>
   );
 }
