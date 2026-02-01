@@ -47,18 +47,25 @@ export default function PinterestBatchPage() {
     loadRecipes();
   }, []);
 
+  const [loadError, setLoadError] = useState<string | null>(null);
+
   const loadRecipes = async () => {
     setLoading(true);
+    setLoadError(null);
     try {
       const response = await fetch('/api/admin/pinterest/batch');
       const data = await response.json();
+      console.log('Load response:', data);
 
       if (response.ok) {
         setRecipes(data.recipes || []);
         setStats(data.stats || null);
+      } else {
+        setLoadError(data.error || `Erreur HTTP ${response.status}`);
       }
     } catch (error) {
       console.error('Erreur chargement:', error);
+      setLoadError(error instanceof Error ? error.message : 'Erreur de connexion');
     }
     setLoading(false);
   };
@@ -105,8 +112,16 @@ export default function PinterestBatchPage() {
         });
 
         const data = await response.json();
+        console.log('API Response:', data);
 
-        if (response.ok && data.results) {
+        if (!response.ok) {
+          // API returned an error
+          allResults.failed.push(...batch.map(id => ({
+            id,
+            slug: recipes.find(r => r.id === id)?.slug || 'unknown',
+            error: data.error || `HTTP ${response.status}`,
+          })));
+        } else if (data.results) {
           allResults.success.push(...data.results.success);
           allResults.failed.push(...data.results.failed);
         }
@@ -120,6 +135,14 @@ export default function PinterestBatchPage() {
       setSelectedRecipes([]);
     } catch (error) {
       console.error('Erreur génération:', error);
+      setResults({
+        success: [],
+        failed: selectedRecipes.map(id => ({
+          id,
+          slug: recipes.find(r => r.id === id)?.slug || 'unknown',
+          error: error instanceof Error ? error.message : 'Erreur réseau',
+        })),
+      });
     }
 
     setProcessing(false);
@@ -129,6 +152,21 @@ export default function PinterestBatchPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500" />
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+        <h2 className="text-lg font-semibold text-red-800 mb-2">Erreur de chargement</h2>
+        <p className="text-red-600 mb-4">{loadError}</p>
+        <button
+          onClick={loadRecipes}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+        >
+          Réessayer
+        </button>
       </div>
     );
   }
