@@ -14,6 +14,7 @@ const PINTEREST_HEIGHT = 1500;
 let cachedFont: ArrayBuffer | null = null;
 let cachedStarSvg: string | null = null;
 let cachedRecipeSvg: string | null = null;
+let cachedMarkerSvg: string | null = null;
 
 function loadBebasNeueBold(): ArrayBuffer {
   if (cachedFont) return cachedFont;
@@ -47,6 +48,17 @@ function loadRecipeSvg(): string {
   return cachedRecipeSvg;
 }
 
+function loadMarkerSvg(): string {
+  if (cachedMarkerSvg) return cachedMarkerSvg;
+
+  // Read marker SVG from public folder
+  const svgPath = join(process.cwd(), 'public', 'images', 'marker.svg');
+  const svgContent = readFileSync(svgPath, 'utf-8');
+  // Convert to data URI for use in img src
+  cachedMarkerSvg = `data:image/svg+xml;base64,${Buffer.from(svgContent).toString('base64')}`;
+  return cachedMarkerSvg;
+}
+
 // Format title - single line, uppercase
 function formatTitle(title: string): string {
   return title.toUpperCase();
@@ -69,6 +81,7 @@ async function generatePinterestImage(recipe: {
   const fontData = loadBebasNeueBold();
   const starSvg = loadStarSvg();
   const recipeSvg = loadRecipeSvg();
+  const markerSvg = loadMarkerSvg();
 
   // Format title for display (single line, uppercase)
   const title = formatTitle(recipe.title);
@@ -131,14 +144,12 @@ async function generatePinterestImage(recipe: {
             ))}
           </div>
 
-          {/* Orange accent line */}
-          <div
-            style={{
-              width: 180,
-              height: 4,
-              backgroundColor: '#FF6B35',
-              marginBottom: 24,
-            }}
+          {/* Marker underline */}
+          <img
+            src={markerSvg}
+            width={200}
+            height={20}
+            style={{ width: 200, height: 20, marginBottom: 24 }}
           />
 
           {/* Title - single line */}
