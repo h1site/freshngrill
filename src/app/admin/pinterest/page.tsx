@@ -112,18 +112,31 @@ export default function PinterestBatchPage() {
         });
 
         const data = await response.json();
-        console.log('API Response:', data);
+        console.log('API Response for batch:', batch, data);
 
         if (!response.ok) {
           // API returned an error
+          console.error('API Error:', data.error);
           allResults.failed.push(...batch.map(id => ({
             id,
             slug: recipes.find(r => r.id === id)?.slug || 'unknown',
             error: data.error || `HTTP ${response.status}`,
           })));
         } else if (data.results) {
+          console.log('Batch processed:', data.processed, 'success:', data.success, 'failed:', data.failed);
           allResults.success.push(...data.results.success);
           allResults.failed.push(...data.results.failed);
+
+          // Handle case where recipes were filtered out (already have Pinterest image)
+          if (data.processed === 0 && batch.length > 0) {
+            allResults.failed.push(...batch.map(id => ({
+              id,
+              slug: recipes.find(r => r.id === id)?.slug || 'unknown',
+              error: 'Recette déjà traitée (cochez "Écraser" pour régénérer)',
+            })));
+          }
+        } else {
+          console.warn('Unexpected response format:', data);
         }
 
         setProgress({ current: Math.min(i + batchSize, selectedRecipes.length), total: selectedRecipes.length });

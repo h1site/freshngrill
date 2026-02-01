@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { createClient } from '@/lib/supabase-server';
-import { supabase as publicSupabase } from '@/lib/supabase';
+import { supabase as publicSupabase, createAdminClient } from '@/lib/supabase';
 
 const PINTEREST_WIDTH = 1000;
 const PINTEREST_HEIGHT = 1500;
@@ -228,17 +228,21 @@ export async function GET(_request: NextRequest) {
 
 // POST: Generate Pinterest images for recipes
 export async function POST(request: NextRequest) {
+  console.log('=== Pinterest Batch POST Started ===');
   try {
     const supabase = await createClient();
+    const adminClient = createAdminClient();
 
     // Check authentication
     const { data: { user } } = await supabase.auth.getUser();
+    console.log('User authenticated:', user?.email);
     if (!user) {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 });
     }
 
     const body = await request.json();
     const { recipeIds, overwrite = false } = body;
+    console.log('Request body:', { recipeIds, overwrite });
 
     // Get recipes to process
     let query = publicSupabase
@@ -250,12 +254,14 @@ export async function POST(request: NextRequest) {
     }
 
     const { data, error } = await query;
+    console.log('Query result:', { count: data?.length, error: error?.message });
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     const recipes = data as RecipeData[] | null;
+    console.log('Recipes found:', recipes?.map(r => ({ id: r.id, slug: r.slug, hasFeatured: !!r.featured_image, hasPinterest: !!r.pinterest_image })));
 
     if (!recipes || recipes.length === 0) {
       return NextResponse.json({ error: 'Aucune recette trouvée' }, { status: 404 });
@@ -267,6 +273,7 @@ export async function POST(request: NextRequest) {
       if (overwrite) return true;
       return !r.pinterest_image;
     });
+    console.log('Recipes to process:', recipesToProcess.length, recipesToProcess.map(r => r.slug));
 
     const results: {
       success: { id: number; slug: string; url: string }[];
@@ -278,22 +285,27 @@ export async function POST(request: NextRequest) {
 
     // Process each recipe
     for (const recipe of recipesToProcess) {
+      console.log(`Processing recipe: ${recipe.slug} (ID: ${recipe.id})`);
       try {
         // Generate the Pinterest image
+        console.log(`  Generating image for: ${recipe.title}`);
+        console.log(`  Featured image URL: ${recipe.featured_image}`);
         const imageBuffer = await generatePinterestImage({
           title: recipe.title,
           featured_image: recipe.featured_image!,
           difficulty: recipe.difficulty || undefined,
           total_time: recipe.total_time || undefined,
         });
+        console.log(`  Image generated, buffer size: ${imageBuffer.length} bytes`);
 
         // Generate unique filename
         const timestamp = Date.now();
         const randomStr = Math.random().toString(36).substring(2, 8);
         const fileName = `pinterest/${recipe.slug}-${timestamp}-${randomStr}.jpg`;
+        console.log(`  Uploading to: ${fileName}`);
 
-        // Upload to Supabase Storage
-        const { data: uploadData, error: uploadError } = await supabase.storage
+        // Upload to Supabase Storage (using admin client for proper permissions)
+        const { data: uploadData, error: uploadError } = await adminClient.storage
           .from('recipe-images')
           .upload(fileName, imageBuffer, {
             contentType: 'image/jpeg',
@@ -302,23 +314,28 @@ export async function POST(request: NextRequest) {
           });
 
         if (uploadError) {
+          console.error(`  Upload error:`, uploadError);
           throw new Error(`Upload failed: ${uploadError.message}`);
         }
+        console.log(`  Upload success:`, uploadData);
 
         // Get public URL
-        const { data: publicUrlData } = supabase.storage
+        const { data: publicUrlData } = adminClient.storage
           .from('recipe-images')
           .getPublicUrl(uploadData.path);
+        console.log(`  Public URL:`, publicUrlData.publicUrl);
 
-        // Update recipe with Pinterest image URL
-        const { error: updateError } = await (supabase
+        // Update recipe with Pinterest image URL (using admin client)
+        const { error: updateError } = await (adminClient
           .from('recipes') as any)
           .update({ pinterest_image: publicUrlData.publicUrl })
           .eq('id', recipe.id);
 
         if (updateError) {
+          console.error(`  Update error:`, updateError);
           throw new Error(`Database update failed: ${updateError.message}`);
         }
+        console.log(`  Recipe updated successfully`);
 
         results.success.push({
           id: recipe.id,
@@ -326,6 +343,7 @@ export async function POST(request: NextRequest) {
           url: publicUrlData.publicUrl,
         });
       } catch (err) {
+        console.error(`  Error processing ${recipe.slug}:`, err);
         results.failed.push({
           id: recipe.id,
           slug: recipe.slug,
@@ -333,6 +351,7 @@ export async function POST(request: NextRequest) {
         });
       }
     }
+    console.log('=== Pinterest Batch Results ===', { success: results.success.length, failed: results.failed.length });
 
     return NextResponse.json({
       processed: recipesToProcess.length,
