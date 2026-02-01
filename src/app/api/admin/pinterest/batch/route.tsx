@@ -166,14 +166,6 @@ async function generatePinterestImage(recipe: {
           >
             {title}
           </div>
-
-          {/* Recipe icon below title */}
-          <img
-            src={recipeSvg}
-            width={80}
-            height={80}
-            style={{ width: 80, height: 80, marginTop: 24 }}
-          />
         </div>
       </div>
 
