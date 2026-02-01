@@ -88,11 +88,11 @@ async function generatePinterestImage(recipe: {
   const subtitle = getSubtitle(recipe);
   const domain = 'menucochon.com';
 
-  // Calculate font sizes
-  const line1FontSize = titleParts.line1.length > 12 ? 90 : 110;
-  const line2FontSize = titleParts.line2.length > 12 ? 80 : 90;
+  // Calculate font sizes based on title length
+  const line1FontSize = titleParts.line1.length > 15 ? 52 : titleParts.line1.length > 10 ? 60 : 72;
+  const line2FontSize = titleParts.line2.length > 15 ? 48 : titleParts.line2.length > 10 ? 56 : 64;
 
-  // Generate text overlay using satori with JSX
+  // Generate text overlay using satori with JSX - Modern Pinterest style
   const svg = await satori(
     <div
       style={{
@@ -100,70 +100,133 @@ async function generatePinterestImage(recipe: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 35%, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0.3) 100%)',
+        position: 'relative',
       }}
     >
+      {/* Top gradient overlay for domain visibility */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 150,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)',
+        }}
+      />
+
       {/* Domain at top */}
       <div
         style={{
           position: 'absolute',
-          top: 50,
-          color: 'white',
-          fontSize: 32,
-          fontWeight: 700,
-          letterSpacing: 2,
-          opacity: 0.9,
+          top: 40,
+          left: 0,
+          right: 0,
+          display: 'flex',
+          justifyContent: 'center',
         }}
       >
-        {domain}
+        <div
+          style={{
+            backgroundColor: '#FF6B35',
+            color: 'white',
+            fontSize: 28,
+            fontWeight: 700,
+            padding: '12px 32px',
+            borderRadius: 8,
+            letterSpacing: 1,
+          }}
+        >
+          {domain}
+        </div>
       </div>
-      {/* Main title line 1 */}
+
+      {/* Center white banner with title */}
       <div
         style={{
-          color: 'white',
-          fontSize: line1FontSize,
-          fontWeight: 700,
-          letterSpacing: 3,
-          textAlign: 'center',
-          marginBottom: 20,
+          position: 'absolute',
+          top: '50%',
+          left: 0,
+          right: 0,
+          transform: 'translateY(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        {titleParts.line1}
+        {/* White banner background */}
+        <div
+          style={{
+            backgroundColor: 'white',
+            padding: '40px 50px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+          }}
+        >
+          {/* Main title line 1 */}
+          <div
+            style={{
+              color: '#1a1a1a',
+              fontSize: line1FontSize,
+              fontWeight: 700,
+              textAlign: 'center',
+              lineHeight: 1.2,
+            }}
+          >
+            {titleParts.line1}
+          </div>
+          {/* Orange accent bar */}
+          <div
+            style={{
+              width: 120,
+              height: 6,
+              backgroundColor: '#FF6B35',
+              borderRadius: 3,
+              margin: '20px 0',
+            }}
+          />
+          {/* Main title line 2 */}
+          <div
+            style={{
+              color: '#FF6B35',
+              fontSize: line2FontSize,
+              fontWeight: 700,
+              textAlign: 'center',
+              textTransform: 'uppercase',
+              letterSpacing: 2,
+            }}
+          >
+            {titleParts.line2}
+          </div>
+        </div>
       </div>
-      {/* Main title line 2 */}
+
+      {/* Bottom black banner with subtitle */}
       <div
         style={{
-          color: '#FF6B35',
-          fontSize: line2FontSize,
-          fontWeight: 700,
-          letterSpacing: 3,
-          textAlign: 'center',
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          backgroundColor: '#1a1a1a',
+          padding: '30px 40px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
-        {titleParts.line2}
-      </div>
-      {/* Decorative line */}
-      <div
-        style={{
-          width: 200,
-          height: 4,
-          backgroundColor: '#FF6B35',
-          borderRadius: 2,
-          marginTop: 50,
-          marginBottom: 30,
-        }}
-      />
-      {/* Subtitle */}
-      <div
-        style={{
-          color: 'white',
-          fontSize: 32,
-          opacity: 0.95,
-        }}
-      >
-        {subtitle}
+        <div
+          style={{
+            color: 'white',
+            fontSize: 32,
+            fontWeight: 700,
+            letterSpacing: 1,
+          }}
+        >
+          {subtitle}
+        </div>
       </div>
     </div>,
     {
