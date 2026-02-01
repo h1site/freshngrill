@@ -4,6 +4,65 @@ import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { Upload, X, Loader2 } from 'lucide-react';
 
+// Compress image client-side to fit Vercel's 4.5MB limit
+async function compressImage(file: File, maxSizeMB: number = 4): Promise<File> {
+  // If already small enough, return as-is
+  if (file.size <= maxSizeMB * 1024 * 1024) {
+    return file;
+  }
+
+  return new Promise((resolve, reject) => {
+    const img = document.createElement('img');
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    img.onload = () => {
+      // Calculate new dimensions (max 2000px)
+      let { width, height } = img;
+      const maxDim = 2000;
+      if (width > maxDim || height > maxDim) {
+        if (width > height) {
+          height = (height / width) * maxDim;
+          width = maxDim;
+        } else {
+          width = (width / height) * maxDim;
+          height = maxDim;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx?.drawImage(img, 0, 0, width, height);
+
+      // Try different quality levels until file is small enough
+      const tryCompress = (quality: number) => {
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Failed to compress image'));
+              return;
+            }
+            if (blob.size <= maxSizeMB * 1024 * 1024 || quality <= 0.3) {
+              const compressedFile = new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), {
+                type: 'image/jpeg',
+              });
+              resolve(compressedFile);
+            } else {
+              tryCompress(quality - 0.1);
+            }
+          },
+          'image/jpeg',
+          quality
+        );
+      };
+      tryCompress(0.85);
+    };
+
+    img.onerror = () => reject(new Error('Failed to load image'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+
 interface ImageUploadProps {
   value: string;
   onChange: (url: string) => void;
@@ -18,19 +77,22 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
   const handleFile = async (file: File) => {
     setError('');
 
-    // Max file size 4MB (Vercel Hobby plan limit is 4.5MB but headers add overhead)
-    const maxSizeMB = 4;
-    const maxSizeBytes = maxSizeMB * 1024 * 1024;
-    if (file.size > maxSizeBytes) {
-      setError(`Image trop volumineuse (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum ${maxSizeMB}MB sur Vercel. Réduisez la taille de l'image.`);
+    // Max original file size 20MB (will be compressed to fit Vercel's 4MB limit)
+    const maxOriginalSizeMB = 20;
+    if (file.size > maxOriginalSizeMB * 1024 * 1024) {
+      setError(`Image trop volumineuse (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum ${maxOriginalSizeMB}MB.`);
       return;
     }
 
     setIsUploading(true);
 
     try {
+      // Compress image if needed (Vercel limit is 4.5MB, we target 4MB)
+      const compressedFile = await compressImage(file, 4);
+      console.log(`Original: ${(file.size / 1024 / 1024).toFixed(2)}MB, Compressed: ${(compressedFile.size / 1024 / 1024).toFixed(2)}MB`);
+
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', compressedFile);
 
       const response = await fetch('/api/upload', {
         method: 'POST',
@@ -162,7 +224,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
               <span className="text-orange-600 font-medium">Cliquez pour choisir</span> ou glissez une image
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 4MB, converti en WebP 1200x800)
+              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 20MB, compressé automatiquement)
             </p>
           </div>
         )}

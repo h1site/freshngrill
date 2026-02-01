@@ -35,11 +35,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Limiter la taille (4MB - Vercel Hobby limit is 4.5MB but headers add overhead)
+    // Limiter la taille (4MB after client compression - Vercel limit is 4.5MB)
     const maxSize = 4 * 1024 * 1024;
     if (file.size > maxSize) {
       return NextResponse.json(
-        { error: 'Fichier trop volumineux. Maximum 4MB sur Vercel.' },
+        { error: 'Fichier trop volumineux après compression. Maximum 4MB.' },
         { status: 400 }
       );
     }
