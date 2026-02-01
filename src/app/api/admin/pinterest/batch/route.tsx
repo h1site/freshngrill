@@ -9,9 +9,9 @@ const PINTEREST_HEIGHT = 1500;
 
 // Load fonts for satori (needs TTF/OTF format - WOFF/WOFF2 not supported)
 async function loadBebasNeue(): Promise<ArrayBuffer> {
-  // Bebas Neue - bold condensed display font from Google Fonts
+  // Bebas Neue via jsDelivr CDN (reliable)
   const response = await fetch(
-    'https://fonts.gstatic.com/s/bebasneue/v14/JTUSjIg69CK48gW7PXoo9Wlhyw.ttf'
+    'https://cdn.jsdelivr.net/gh/dharmatype/Bebas-Neue@master/fonts/BebasNeue-Regular.ttf'
   );
   if (!response.ok) {
     throw new Error(`Failed to load Bebas Neue font: ${response.status}`);
