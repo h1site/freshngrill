@@ -18,11 +18,11 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
   const handleFile = async (file: File) => {
     setError('');
 
-    // Vercel serverless limit is 4.5MB
-    const maxSizeMB = 4.5;
+    // Max file size 10MB
+    const maxSizeMB = 10;
     const maxSizeBytes = maxSizeMB * 1024 * 1024;
     if (file.size > maxSizeBytes) {
-      setError(`Image trop volumineuse (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum ${maxSizeMB}MB pour l'upload direct. Réduisez la taille de l'image.`);
+      setError(`Image trop volumineuse (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum ${maxSizeMB}MB. Réduisez la taille de l'image.`);
       return;
     }
 
@@ -43,7 +43,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
         const text = await response.text();
         console.error('Upload error (non-JSON):', text);
         throw new Error(text.includes('Request Entity Too Large')
-          ? 'Image trop volumineuse. Essayez une image plus petite (max 4.5MB sur Vercel).'
+          ? 'Image trop volumineuse pour Vercel. Essayez une image plus petite.'
           : text.includes('FUNCTION_INVOCATION_TIMEOUT')
           ? 'Timeout. L\'image est trop grande à traiter. Essayez une image plus petite.'
           : `Erreur serveur: ${text.substring(0, 100)}`);
@@ -162,7 +162,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
               <span className="text-orange-600 font-medium">Cliquez pour choisir</span> ou glissez une image
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 4.5MB, converti en WebP 1200x800)
+              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 10MB, converti en WebP 1200x800)
             </p>
           </div>
         )}
