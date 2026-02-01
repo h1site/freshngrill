@@ -34,6 +34,7 @@ import RecipesByIngredients from '@/components/recipe/RecipesByIngredients';
 import RelatedArticles from '@/components/recipe/RelatedArticles';
 import RecipeSpiceLinks from '@/components/recipe/RecipeSpiceLinks';
 import DifficultyProgression from '@/components/recipe/DifficultyProgression';
+import RecipeVideo from '@/components/recipe/RecipeVideo';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -206,6 +207,17 @@ export default async function RecettePage({ params }: Props) {
               {/* H2 - Étapes complètes */}
               <RecipeInstructions instructions={recipe.instructions} />
 
+              {/* Vidéo de la recette (placée après les instructions) */}
+              {recipe.videoUrl && (
+                <div className="mt-8">
+                  <RecipeVideo
+                    videoUrl={recipe.videoUrl}
+                    title={recipe.title}
+                    locale="fr"
+                  />
+                </div>
+              )}
+
               {/* 📍 2. Annonce in-article (1 seule par page - meilleur CTR) */}
               <GoogleAdInArticle className="my-6 print:hidden" />
 
@@ -305,18 +317,6 @@ export default async function RecettePage({ params }: Props) {
               <div className="mt-12">
                 <RecipeComments recipeId={recipe.id} slug={recipe.slug} />
               </div>
-
-              {/* Video */}
-              {recipe.videoUrl && (
-                <div className="aspect-video overflow-hidden">
-                  <iframe
-                    src={recipe.videoUrl.replace('watch?v=', 'embed/')}
-                    className="w-full h-full"
-                    allowFullScreen
-                    title={`Vidéo: ${recipe.title}`}
-                  />
-                </div>
-              )}
             </div>
 
             {/* Sidebar */}
