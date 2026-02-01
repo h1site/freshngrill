@@ -18,11 +18,11 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
   const handleFile = async (file: File) => {
     setError('');
 
-    // Max file size 10MB
-    const maxSizeMB = 10;
+    // Max file size 4MB (Vercel Hobby plan limit is 4.5MB but headers add overhead)
+    const maxSizeMB = 4;
     const maxSizeBytes = maxSizeMB * 1024 * 1024;
     if (file.size > maxSizeBytes) {
-      setError(`Image trop volumineuse (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum ${maxSizeMB}MB. Réduisez la taille de l'image.`);
+      setError(`Image trop volumineuse (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum ${maxSizeMB}MB sur Vercel. Réduisez la taille de l'image.`);
       return;
     }
 
@@ -162,7 +162,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
               <span className="text-orange-600 font-medium">Cliquez pour choisir</span> ou glissez une image
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 10MB, converti en WebP 1200x800)
+              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 4MB, converti en WebP 1200x800)
             </p>
           </div>
         )}
