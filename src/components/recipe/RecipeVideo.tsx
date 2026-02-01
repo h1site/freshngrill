@@ -37,11 +37,12 @@ export default function RecipeVideo({ videoUrl, title, locale = 'fr' }: RecipeVi
   if (!videoId) return null;
 
   // YouTube embed parameters to keep users on site:
+  // - youtube-nocookie.com: Privacy-enhanced mode, better iframe compatibility
   // - rel=0: Only show videos from the same channel (not random suggestions)
   // - modestbranding=1: Reduce YouTube logo
   // - autoplay=1: Start playing when clicked (only works after user interaction)
   // - playsinline=1: Play inline on mobile
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1&playsinline=1`;
+  const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=1&playsinline=1`;
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
   const fallbackThumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
@@ -81,8 +82,9 @@ export default function RecipeVideo({ videoUrl, title, locale = 'fr' }: RecipeVi
           <iframe
             src={embedUrl}
             className="absolute inset-0 w-full h-full"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
             title={title}
           />
         ) : (
