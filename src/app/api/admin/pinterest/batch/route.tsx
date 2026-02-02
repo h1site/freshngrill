@@ -59,9 +59,9 @@ function loadMarkerSvg(): string {
   return cachedMarkerSvg;
 }
 
-// Format title - single line, uppercase
+// Format title - keep original case
 function formatTitle(title: string): string {
-  return title.toUpperCase();
+  return title;
 }
 
 
@@ -121,12 +121,12 @@ async function generatePinterestImage(recipe: {
           alignItems: 'center',
         }}
       >
-        {/* Dark banner with recipe title */}
+        {/* Dark blue banner with recipe title */}
         <div
           style={{
             width: '100%',
-            backgroundColor: 'rgba(45, 55, 72, 0.92)',
-            padding: '40px 50px',
+            backgroundColor: 'rgba(30, 41, 59, 0.95)',
+            padding: '35px 50px 45px 50px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -139,8 +139,8 @@ async function generatePinterestImage(recipe: {
               fontSize: titleFontSize,
               fontFamily: 'Bebas Neue',
               textAlign: 'center',
-              lineHeight: 1.2,
-              letterSpacing: 2,
+              lineHeight: 1.15,
+              letterSpacing: 1,
               maxWidth: '95%',
             }}
           >
@@ -148,23 +148,23 @@ async function generatePinterestImage(recipe: {
           </div>
         </div>
 
-        {/* Orange pill button with domain - positioned right below banner */}
+        {/* Orange pill button with domain - overlapping bottom of banner */}
         <div
           style={{
             display: 'flex',
             backgroundColor: '#D4541E',
-            padding: '14px 50px',
-            borderRadius: 6,
-            marginTop: -20,
+            padding: '12px 40px',
+            borderRadius: 4,
+            marginTop: -24,
           }}
         >
           <div
             style={{
               display: 'flex',
               color: 'white',
-              fontSize: 28,
+              fontSize: 26,
               fontFamily: 'Bebas Neue',
-              letterSpacing: 2,
+              letterSpacing: 1,
             }}
           >
             {domain}
