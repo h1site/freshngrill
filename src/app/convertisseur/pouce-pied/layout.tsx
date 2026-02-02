@@ -1,35 +1,38 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Pouce en Pied ⚡ Convertisseur GRATUIT + Tableau',
+  title: 'Pouce en Pied → Tableau COMPLET 1-120 po + Calculateur Instantané',
   description:
-    '✓ Convertir pouce en pied instantanément! 72 po = 6 pi, 60 po = 5 pi, 48 po = 4 pi. Calculateur + tableau complet pouces en pieds. Conversion rapide po → pi.',
+    '🔢 Tableau de conversion pouces en pieds de 1 à 120 po. Calculateur instantané + formule + tailles en pieds et pouces (TV, hauteur). Plus complet que Google!',
   alternates: {
     canonical: '/convertisseur/pouce-pied/',
   },
   keywords: [
     'pouces en pieds',
+    'tableau conversion pouces pieds',
+    'calculer taille en pieds et pouces',
     '70 pouce en pied',
     '72 pouces en pieds',
     '52 pouces en pieds',
     '42 pouces en pieds',
     '68 pouce en pied',
     'conversion pouce pied',
-    'calculateur pouces pieds',
+    'taille ecran tv en pieds',
+    'hauteur en pieds pouces',
   ],
   openGraph: {
-    title: 'Pouces en Pieds - Convertisseur Gratuit | Menucochon',
+    title: 'Pouce en Pied → Tableau Complet + Calculateur Gratuit',
     description:
-      '70 pouces = 5,83 pieds | 72 pouces = 6 pieds | 52 pouces = 4,33 pieds.',
+      'Tableau de conversion 1-120 pouces en pieds. Calculateur instantané + formule + tailles TV et hauteurs.',
     siteName: 'Menucochon',
     locale: 'fr_CA',
     type: 'website',
   },
   twitter: {
     card: 'summary',
-    title: 'Pouces en Pieds - Convertisseur | Menucochon',
+    title: 'Pouce en Pied → Tableau + Calculateur',
     description:
-      '70 po = 5,83 pi | 72 po = 6 pi. Calculateur gratuit et tableau de conversion.',
+      'Tableau complet 1-120 po en pieds. Calculateur instantané + formule + tailles TV.',
   },
   robots: {
     index: true,

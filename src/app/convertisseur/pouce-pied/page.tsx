@@ -542,6 +542,40 @@ export default function PoucePiedPage() {
         }}
       />
 
+      {/* Schema HowTo pour rich snippets */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": "Comment convertir des pouces en pieds",
+            "description": "Guide simple pour convertir des pouces en pieds avec formule et exemples.",
+            "totalTime": "PT1M",
+            "step": [
+              {
+                "@type": "HowToStep",
+                "position": 1,
+                "name": "Prenez votre mesure en pouces",
+                "text": "Notez le nombre de pouces que vous souhaitez convertir. Par exemple: 72 pouces."
+              },
+              {
+                "@type": "HowToStep",
+                "position": 2,
+                "name": "Divisez par 12",
+                "text": "Divisez le nombre de pouces par 12 (car 1 pied = 12 pouces). Exemple: 72 ÷ 12 = 6 pieds."
+              },
+              {
+                "@type": "HowToStep",
+                "position": 3,
+                "name": "Calculez le reste en pouces",
+                "text": "Si le résultat n'est pas entier, le reste représente les pouces supplémentaires. Exemple: 70 ÷ 12 = 5 pieds et 10 pouces."
+              }
+            ]
+          })
+        }}
+      />
+
       {/* CTA Recettes */}
       <section className="bg-[#F77313] py-12">
         <div className="container mx-auto px-4">
