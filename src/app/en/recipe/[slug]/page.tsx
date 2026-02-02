@@ -30,6 +30,7 @@ import SetLanguageSlugs from '@/components/SetLanguageSlugs';
 import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 import RecipeAmazonSuggestions from '@/components/amazon/RecipeAmazonSuggestions';
 import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
+import FAQSchema from '@/components/schema/FAQSchema';
 import NextRecipe from '@/components/recipe/NextRecipe';
 import RecipeExploreFooter from '@/components/recipe/RecipeExploreFooter';
 import RecipesByIngredients from '@/components/recipe/RecipesByIngredients';
@@ -179,6 +180,7 @@ export default async function RecipePageEN({ params }: Props) {
     <>
       <SetLanguageSlugs slugFr={recipe.slugFr || recipe.slug} slugEn={recipe.slugEn || slug} />
       <RecipeSchema recipe={recipe} locale="en" />
+      {recipe.faq && <FAQSchema faq={recipe.faq} recipeTitle={recipe.title} locale="en" />}
       <BreadcrumbSchema items={breadcrumbs} />
 
       <main className="min-h-screen bg-white">
