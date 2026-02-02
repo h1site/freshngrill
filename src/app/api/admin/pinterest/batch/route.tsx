@@ -97,7 +97,7 @@ async function generatePinterestImage(recipe: {
     title.length > 20 ? 56 :
     64;
 
-  // Generate text overlay using satori with JSX - Pinterest style inspired by screenshot
+  // Generate text overlay using satori with JSX - Exact Pinterest design
   const svg = await satori(
     <div
       style={{
@@ -108,41 +108,7 @@ async function generatePinterestImage(recipe: {
         position: 'relative',
       }}
     >
-      {/* Top: Small white box with "Vos Recettes Cochonnes" */}
-      <div
-        style={{
-          position: 'absolute',
-          top: 60,
-          left: 0,
-          right: 0,
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            backgroundColor: 'white',
-            padding: '16px 40px',
-            borderRadius: 4,
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              color: '#1a1a1a',
-              fontSize: 32,
-              fontFamily: 'Bebas Neue',
-              letterSpacing: 3,
-              textTransform: 'uppercase',
-            }}
-          >
-            Vos Recettes Cochonnes
-          </div>
-        </div>
-      </div>
-
-      {/* Middle: Dark banner with recipe title */}
+      {/* Center: Dark banner with title + orange button below */}
       <div
         style={{
           position: 'absolute',
@@ -155,11 +121,12 @@ async function generatePinterestImage(recipe: {
           alignItems: 'center',
         }}
       >
+        {/* Dark banner with recipe title */}
         <div
           style={{
             width: '100%',
-            backgroundColor: 'rgba(26, 26, 26, 0.9)',
-            padding: '50px 40px',
+            backgroundColor: 'rgba(45, 55, 72, 0.92)',
+            padding: '40px 50px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -173,40 +140,35 @@ async function generatePinterestImage(recipe: {
               fontFamily: 'Bebas Neue',
               textAlign: 'center',
               lineHeight: 1.2,
-              letterSpacing: 3,
+              letterSpacing: 2,
               maxWidth: '95%',
             }}
           >
             {title}
           </div>
         </div>
-      </div>
 
-      {/* Bottom: Orange banner with domain */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          backgroundColor: '#D4541E',
-          padding: '28px 40px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
+        {/* Orange pill button with domain - positioned right below banner */}
         <div
           style={{
             display: 'flex',
-            color: 'white',
-            fontSize: 32,
-            fontFamily: 'Bebas Neue',
-            letterSpacing: 4,
-            textTransform: 'uppercase',
+            backgroundColor: '#D4541E',
+            padding: '14px 50px',
+            borderRadius: 6,
+            marginTop: -20,
           }}
         >
-          {domain}
+          <div
+            style={{
+              display: 'flex',
+              color: 'white',
+              fontSize: 28,
+              fontFamily: 'Bebas Neue',
+              letterSpacing: 2,
+            }}
+          >
+            {domain}
+          </div>
         </div>
       </div>
     </div>,
