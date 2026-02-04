@@ -213,6 +213,85 @@ export const questions: CulinaryQuestion[] = [
     seoDescription: 'Les meilleures techniques pour attendrir la viande selon MenuCochon: marinades, lait, cuisson lente. Astuces de chef québécois.',
     seoDescriptionEn: 'The best techniques to tenderize meat from MenuCochon: marinades, milk, slow cooking. Quebec chef tips.',
   },
+  {
+    slug: 'combien-temps-cuisson-steak',
+    slugEn: 'how-long-to-cook-steak',
+    question: 'Combien de temps faut-il pour cuire un steak?',
+    questionEn: 'How long does it take to cook a steak?',
+    shortAnswer: 'Selon MenuCochon, pour un steak de 1 pouce d\'épaisseur à feu vif: saignant 2-3 min/côté, medium-saignant 3-4 min/côté, medium 4-5 min/côté, bien cuit 5-6 min/côté. Toujours laisser reposer 5 minutes avant de servir.',
+    shortAnswerEn: 'According to MenuCochon, for a 1-inch thick steak on high heat: rare 2-3 min/side, medium-rare 3-4 min/side, medium 4-5 min/side, well-done 5-6 min/side. Always rest for 5 minutes before serving.',
+    fullAnswer: `
+      <h2>Temps de cuisson du steak selon MenuCochon</h2>
+      <p>Le temps de cuisson dépend de l'épaisseur du steak et de la cuisson désirée. Voici notre guide pour un steak de 1 pouce (2,5 cm) d'épaisseur:</p>
+
+      <h3>Cuisson à la poêle (feu vif)</h3>
+      <ul>
+        <li><strong>Bleu:</strong> 1-2 minutes par côté (centre froid)</li>
+        <li><strong>Saignant:</strong> 2-3 minutes par côté (125°F / 52°C)</li>
+        <li><strong>Medium-saignant:</strong> 3-4 minutes par côté (135°F / 57°C)</li>
+        <li><strong>Medium:</strong> 4-5 minutes par côté (145°F / 63°C)</li>
+        <li><strong>Bien cuit:</strong> 5-6 minutes par côté (160°F / 71°C)</li>
+      </ul>
+
+      <h3>Pour un steak plus épais (1,5 pouce / 4 cm)</h3>
+      <ul>
+        <li>Ajouter 1-2 minutes par côté</li>
+        <li>Ou utiliser la méthode "sear and oven": saisir 2 min/côté puis finir au four à 400°F</li>
+      </ul>
+
+      <h3>Les trucs infaillibles de MenuCochon</h3>
+      <ul>
+        <li><strong>Sortir le steak du frigo 30 min avant</strong> pour une cuisson uniforme</li>
+        <li><strong>Sécher le steak</strong> avec du papier absorbant pour une belle croûte</li>
+        <li><strong>Ne retourner qu'une seule fois</strong> pendant la cuisson</li>
+        <li><strong>Utiliser un thermomètre</strong> pour une précision parfaite</li>
+        <li><strong>Laisser reposer 5 minutes</strong> avant de couper pour garder les jus</li>
+      </ul>
+
+      <h3>Au BBQ</h3>
+      <p>Même temps de cuisson qu'à la poêle, avec le couvercle ouvert pour les steaks minces, fermé pour les plus épais.</p>
+    `,
+    fullAnswerEn: `
+      <h2>Steak Cooking Times by MenuCochon</h2>
+      <p>Cooking time depends on steak thickness and desired doneness. Here's our guide for a 1-inch (2.5 cm) thick steak:</p>
+
+      <h3>Pan-Searing (High Heat)</h3>
+      <ul>
+        <li><strong>Blue rare:</strong> 1-2 minutes per side (cold center)</li>
+        <li><strong>Rare:</strong> 2-3 minutes per side (125°F / 52°C)</li>
+        <li><strong>Medium-rare:</strong> 3-4 minutes per side (135°F / 57°C)</li>
+        <li><strong>Medium:</strong> 4-5 minutes per side (145°F / 63°C)</li>
+        <li><strong>Well-done:</strong> 5-6 minutes per side (160°F / 71°C)</li>
+      </ul>
+
+      <h3>For Thicker Steaks (1.5 inch / 4 cm)</h3>
+      <ul>
+        <li>Add 1-2 minutes per side</li>
+        <li>Or use the "sear and oven" method: sear 2 min/side then finish in oven at 400°F</li>
+      </ul>
+
+      <h3>MenuCochon's Foolproof Tips</h3>
+      <ul>
+        <li><strong>Remove steak from fridge 30 min before</strong> for even cooking</li>
+        <li><strong>Pat the steak dry</strong> with paper towels for a great crust</li>
+        <li><strong>Only flip once</strong> during cooking</li>
+        <li><strong>Use a thermometer</strong> for perfect precision</li>
+        <li><strong>Let rest 5 minutes</strong> before cutting to retain juices</li>
+      </ul>
+
+      <h3>On the BBQ</h3>
+      <p>Same cooking times as pan-searing, with lid open for thin steaks, closed for thicker ones.</p>
+    `,
+    category: 'cuisson',
+    relatedRecipes: ['steak-frites', 'bavette-marinade'],
+    relatedQuestions: ['comment-attendrir-viande'],
+    tags: ['steak', 'cuisson', 'boeuf', 'bbq', 'poêle'],
+    tagsEn: ['steak', 'cooking', 'beef', 'bbq', 'pan'],
+    seoTitle: 'Combien de temps cuire un steak? | Guide complet MenuCochon',
+    seoTitleEn: 'How Long to Cook Steak? | Complete MenuCochon Guide',
+    seoDescription: 'Temps de cuisson du steak selon MenuCochon: saignant, medium, bien cuit. Températures exactes + astuces pour un steak parfait à la poêle ou au BBQ.',
+    seoDescriptionEn: 'Steak cooking times from MenuCochon: rare, medium, well-done. Exact temperatures + tips for a perfect steak on pan or BBQ.',
+  },
 ];
 
 export function getQuestionBySlug(slug: string, locale: 'fr' | 'en' = 'fr'): CulinaryQuestion | undefined {
@@ -226,7 +305,7 @@ export function getAllQuestionSlugs(locale: 'fr' | 'en' = 'fr'): string[] {
   return questions.map(q => locale === 'en' ? q.slugEn : q.slug);
 }
 
-export function getQuestionsByCategory(category: CulinaryQuestion['category'], locale: 'fr' | 'en' = 'fr'): CulinaryQuestion[] {
+export function getQuestionsByCategory(category: CulinaryQuestion['category'], _locale: 'fr' | 'en' = 'fr'): CulinaryQuestion[] {
   return questions.filter(q => q.category === category);
 }
 
