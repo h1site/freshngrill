@@ -13,6 +13,7 @@ const navigation = [
   { name: 'Commentaires', href: '/admin/commentaires', icon: CommentIcon },
   { name: 'Réseaux sociaux', href: '/admin/social', icon: ShareIcon },
   { name: 'Images Pinterest', href: '/admin/pinterest', icon: PinterestIcon },
+  { name: 'Pinterest EN', href: '/admin/pinterest-en', icon: PinterestIcon },
   { name: 'Statistiques', href: '/admin/stats', icon: StatsIcon },
   { name: 'Audit SEO', href: '/admin/seo', icon: ChartIcon },
   { name: 'Erreurs 404', href: '/admin/404-errors', icon: AlertIcon },

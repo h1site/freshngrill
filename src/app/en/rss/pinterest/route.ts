@@ -1,4 +1,4 @@
-import { getAllRecipes } from '@/lib/recipes';
+import { getAllRecipes, enrichRecipesWithEnglishData } from '@/lib/recipes';
 import { siteConfig } from '@/lib/config';
 
 export const dynamic = 'force-dynamic';
@@ -18,18 +18,21 @@ function stripHtml(html: string): string {
 }
 
 export async function GET() {
-  const recipes = await getAllRecipes();
+  const allRecipes = await getAllRecipes();
+  // Enrich recipes with English slugs and titles
+  const recipes = await enrichRecipesWithEnglishData(allRecipes);
   const baseUrl = siteConfig.url;
 
-  // Only include recipes with Pinterest images
+  // Only include recipes with Pinterest images (prefer English image if available)
   const recipesWithPinterest = recipes
-    .filter((recipe) => recipe.pinterestImage)
+    .filter((recipe) => recipe.pinterestImageEn || recipe.pinterestImage)
     .slice(0, 100);
 
   const rssItems = recipesWithPinterest.map((recipe) => {
     const description = recipe.excerpt || recipe.seoDescription || '';
     const pubDate = new Date(recipe.publishedAt).toUTCString();
-    const pinterestImage = recipe.pinterestImage!;
+    // Prefer English Pinterest image, fall back to French
+    const pinterestImage = recipe.pinterestImageEn || recipe.pinterestImage!;
     const slug = recipe.slugEn || recipe.slug;
 
     return `

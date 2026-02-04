@@ -11,6 +11,7 @@ function transformRecipe(data: any): Recipe {
     content: data.content || '',
     featuredImage: data.featured_image || '',
     pinterestImage: data.pinterest_image || undefined,
+    pinterestImageEn: data.pinterest_image_en || undefined,
     images: data.images || [],
     // Champs ACF
     introduction: data.introduction || undefined,
