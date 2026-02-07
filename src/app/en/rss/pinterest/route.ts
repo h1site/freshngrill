@@ -29,7 +29,8 @@ export async function GET() {
     .slice(0, 100);
 
   const rssItems = recipesWithPinterest.map((recipe) => {
-    const description = recipe.excerpt || recipe.seoDescription || '';
+    const title = recipe.pinterestTitleEn || recipe.pinterestTitle || recipe.title;
+    const description = recipe.pinterestDescriptionEn || recipe.pinterestDescription || recipe.excerpt || recipe.seoDescription || '';
     const pubDate = new Date(recipe.publishedAt).toUTCString();
     // Prefer English Pinterest image, fall back to French
     const pinterestImage = recipe.pinterestImageEn || recipe.pinterestImage!;
@@ -37,14 +38,14 @@ export async function GET() {
 
     return `
     <item>
-      <title>${escapeXml(recipe.title)}</title>
+      <title>${escapeXml(title)}</title>
       <link>${baseUrl}/en/recipe/${slug}/</link>
       <guid isPermaLink="true">${baseUrl}/en/recipe/${slug}/</guid>
       <description>${escapeXml(stripHtml(description))}</description>
       <pubDate>${pubDate}</pubDate>
       <enclosure url="${escapeXml(pinterestImage)}" type="image/jpeg" length="0" />
       <media:content url="${escapeXml(pinterestImage)}" type="image/jpeg" medium="image" width="1000" height="1500">
-        <media:title type="plain">${escapeXml(recipe.title)}</media:title>
+        <media:title type="plain">${escapeXml(title)}</media:title>
         <media:description type="plain">${escapeXml(stripHtml(description))}</media:description>
       </media:content>
       <media:thumbnail url="${escapeXml(pinterestImage)}" width="1000" height="1500" />
