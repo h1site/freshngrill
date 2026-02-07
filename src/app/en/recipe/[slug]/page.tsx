@@ -78,11 +78,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     `Discover our ${recipe.title} recipe. Easy instructions, simple ingredients.`
   );
 
-  // Pinterest image URL (2:3 ratio - 1000x1500)
-  // Use stored image if available, otherwise fallback to dynamic API
-  const pinterestImageUrl = recipe.pinterestImage
-    || `https://menucochon.com/api/og/pinterest?slug=${frSlug}&locale=en`;
-
   return {
     title: recipe.seoTitle || recipe.title,
     description: metaDescription,
@@ -96,14 +91,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: recipe.title,
       description: recipe.excerpt,
-      images: [
-        // Pinterest image first (2:3 ratio preferred by Pinterest)
-        { url: pinterestImageUrl, width: 1000, height: 1500, alt: recipe.title },
-        // Standard OG image second
-        ...(recipe.featuredImage
-          ? [{ url: recipe.featuredImage, width: 1200, height: 630, alt: recipe.title }]
-          : []),
-      ],
+      images: recipe.featuredImage
+        ? [{ url: recipe.featuredImage, width: 1200, height: 630, alt: recipe.title }]
+        : [],
       type: 'article',
       url: `/en/recipe/${enSlug}/`,
       siteName: 'Menucochon',
