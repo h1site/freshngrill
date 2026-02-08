@@ -249,6 +249,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
           breads: 'Pains', drinks: 'Boissons', worldCuisines: 'Cuisines du monde',
           seeAllRecipes: 'Voir toutes les recettes', culinaryLexicon: 'Lexique culinaire',
           holidayRecipes: 'Recettes des fêtes', canning: 'Mise en conserve',
+          gameDayFeast: 'Festin Sportif', valentines: 'Saint-Valentin',
           submitRecipe: 'Soumettre une recette'
         }
       },
@@ -279,6 +280,7 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
           breads: 'Breads', drinks: 'Drinks', worldCuisines: 'World Cuisines',
           seeAllRecipes: 'See all recipes', culinaryLexicon: 'Culinary Lexicon',
           holidayRecipes: 'Holiday Recipes', canning: 'Canning',
+          gameDayFeast: 'Game Day Feast', valentines: "Valentine's Day",
           submitRecipe: 'Submit a recipe'
         }
       },
@@ -792,12 +794,12 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                   </div>
                   <div className="flex items-center gap-6">
                     <Link
-                      href={routes.lexicon}
+                      href={`${routes.recipe}?${locale === 'en' ? 'category' : 'categorie'}=saint-valentin`}
                       onClick={() => setIsMegaMenuOpen(false)}
                       className="text-neutral-400 hover:text-white transition-colors text-sm flex items-center gap-2"
                     >
-                      <span className="text-base">📖</span>
-                      {t.header?.menu?.culinaryLexicon || 'Culinary lexicon'}
+                      <span className="text-base">❤️</span>
+                      {t.header?.menu?.valentines || 'Saint-Valentin'}
                     </Link>
                     <Link
                       href={`${routes.recipe}?${locale === 'en' ? 'category' : 'categorie'}=fetes`}
@@ -814,6 +816,14 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                     >
                       <span className="text-base">🫙</span>
                       {t.header?.menu?.canning || 'Canning'}
+                    </Link>
+                    <Link
+                      href={`${routes.recipe}?${locale === 'en' ? 'category' : 'categorie'}=festin-sportif`}
+                      onClick={() => setIsMegaMenuOpen(false)}
+                      className="text-neutral-400 hover:text-white transition-colors text-sm flex items-center gap-2"
+                    >
+                      <span className="text-base">🏈</span>
+                      {t.header?.menu?.gameDayFeast || 'Game Day Feast'}
                     </Link>
                     <Link
                       href={locale === 'en' ? '/en/videos' : '/videos'}
