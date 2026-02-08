@@ -170,13 +170,13 @@ export default async function RecettePage({ params }: Props) {
         </header>
 
         {/* Contenu principal */}
-        <section className="container mx-auto px-4 py-16 md:py-20">
+        <section className="container mx-auto px-4 py-8 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
             {/* Colonne principale */}
-            <div className="lg:col-span-2 space-y-12 order-2 lg:order-1">
+            <div className="lg:col-span-2 space-y-12">
               {/* Introduction */}
               {recipe.introduction && (
-                <div className="relative pl-8 border-l-4 border-[#F77313] bg-gradient-to-r from-neutral-100 to-transparent py-6 -ml-4 pl-12">
+                <div className="relative py-4 lg:py-6 lg:border-l-4 lg:border-[#F77313] lg:bg-gradient-to-r lg:from-neutral-100 lg:to-transparent lg:-ml-4 lg:pl-12">
                   <div
                     className="recipe-introduction"
                     dangerouslySetInnerHTML={{ __html: recipe.introduction }}
@@ -186,7 +186,7 @@ export default async function RecettePage({ params }: Props) {
 
               {/* Description/Excerpt (si pas d'introduction et excerpt non tronqué) */}
               {!recipe.introduction && recipe.excerpt && !recipe.excerpt.endsWith('...') && (
-                <div className="relative pl-8 border-l-4 border-[#F77313] bg-gradient-to-r from-neutral-100 to-transparent py-6 -ml-4 pl-12">
+                <div className="relative py-4 lg:py-6 lg:border-l-4 lg:border-[#F77313] lg:bg-gradient-to-r lg:from-neutral-100 lg:to-transparent lg:-ml-4 lg:pl-12">
                   <p className="recipe-introduction">
                     {recipe.excerpt}
                   </p>
@@ -196,8 +196,57 @@ export default async function RecettePage({ params }: Props) {
               {/* 📍 1. Annonce display responsive après intro */}
               <GoogleAd className="my-6 print:hidden" />
 
+              {/* Ingrédients inline - mobile seulement */}
+              <div className="lg:hidden -mx-4 [&>:first-child]:px-4 [&>:first-child]:py-6 [&>:first-child]:rounded-none">
+                <RecipeIngredients
+                  ingredients={recipe.ingredients}
+                  servings={recipe.servings}
+                  servingsUnit={recipe.servingsUnit}
+                />
+                {recipe.nutrition && (
+                  <div className="bg-neutral-900 px-4 py-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs">
+                    {recipe.nutrition.calories !== undefined && (
+                      <span className="text-white font-bold">{recipe.nutrition.calories} kcal</span>
+                    )}
+                    {recipe.nutrition.protein !== undefined && (
+                      <span className="text-white/70">{recipe.nutrition.protein}g protéines</span>
+                    )}
+                    {recipe.nutrition.fat !== undefined && (
+                      <span className="text-white/70">{recipe.nutrition.fat}g lipides</span>
+                    )}
+                    {recipe.nutrition.carbs !== undefined && (
+                      <span className="text-white/70">{recipe.nutrition.carbs}g glucides</span>
+                    )}
+                  </div>
+                )}
+              </div>
+
               {/* H2 - Étapes complètes */}
               <RecipeInstructions instructions={recipe.instructions} />
+
+              {/* Partenariat CTA - mobile seulement */}
+              <div className="lg:hidden bg-neutral-900 text-white p-5 rounded-xl print:hidden">
+                <div className="text-center">
+                  <span className="text-[#F77313] text-xs font-medium uppercase tracking-widest">
+                    Partenariat
+                  </span>
+                  <h3 className="font-display text-lg mt-2 mb-3">
+                    Votre publicité sur Menucochon?
+                  </h3>
+                  <p className="text-neutral-400 text-sm mb-4">
+                    Rejoignez des milliers de passionnés de cuisine québécoise.
+                  </p>
+                  <Link
+                    href="/publicite"
+                    className="inline-flex items-center gap-2 bg-[#F77313] text-white px-4 py-2 text-sm font-medium hover:bg-[#e56610] transition-colors rounded-lg"
+                  >
+                    En savoir plus
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
 
               {/* Vidéo de la recette (placée après les instructions) */}
               {recipe.videoUrl && (
@@ -312,9 +361,9 @@ export default async function RecettePage({ params }: Props) {
             </div>
 
             {/* Sidebar */}
-            <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start order-1 lg:order-2">
-              {/* Carte recette - Ingrédients */}
-              <div className="bg-white border-2 border-neutral-200 rounded-xl p-6 shadow-sm">
+            <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
+              {/* Carte recette - Ingrédients (desktop seulement, mobile version est inline) */}
+              <div className="hidden lg:block bg-white border-2 border-neutral-200 rounded-xl p-6 shadow-sm">
                 <RecipeIngredients
                   ingredients={recipe.ingredients}
                   servings={recipe.servings}
@@ -327,8 +376,8 @@ export default async function RecettePage({ params }: Props) {
                 )}
               </div>
 
-              {/* Advertising CTA */}
-              <div className="bg-neutral-900 text-white p-5 rounded-xl print:hidden">
+              {/* Advertising CTA (desktop seulement, mobile version est après instructions) */}
+              <div className="hidden lg:block bg-neutral-900 text-white p-5 rounded-xl print:hidden">
                 <div className="text-center">
                   <span className="text-[#F77313] text-xs font-medium uppercase tracking-widest">
                     Partenariat

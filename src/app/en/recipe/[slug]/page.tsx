@@ -200,13 +200,13 @@ export default async function RecipePageEN({ params }: Props) {
         </header>
 
         {/* Main content */}
-        <section className="container mx-auto px-4 py-16 md:py-20">
+        <section className="container mx-auto px-4 py-8 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
             {/* Main column */}
-            <div className="lg:col-span-2 space-y-12 order-2 lg:order-1">
+            <div className="lg:col-span-2 space-y-12">
               {/* Introduction */}
               {recipe.introduction && (
-                <div className="relative pl-8 border-l-4 border-[#F77313] bg-gradient-to-r from-neutral-100 to-transparent py-6 -ml-4 pl-12">
+                <div className="relative py-4 lg:py-6 lg:border-l-4 lg:border-[#F77313] lg:bg-gradient-to-r lg:from-neutral-100 lg:to-transparent lg:-ml-4 lg:pl-12">
                   <div
                     className="recipe-introduction"
                     dangerouslySetInnerHTML={{ __html: recipe.introduction }}
@@ -216,7 +216,7 @@ export default async function RecipePageEN({ params }: Props) {
 
               {/* Description/Excerpt (if no introduction and excerpt not truncated) */}
               {!recipe.introduction && recipe.excerpt && !recipe.excerpt.endsWith('...') && (
-                <div className="relative pl-8 border-l-4 border-[#F77313] bg-gradient-to-r from-neutral-100 to-transparent py-6 -ml-4 pl-12">
+                <div className="relative py-4 lg:py-6 lg:border-l-4 lg:border-[#F77313] lg:bg-gradient-to-r lg:from-neutral-100 lg:to-transparent lg:-ml-4 lg:pl-12">
                   <p className="recipe-introduction">
                     {recipe.excerpt}
                   </p>
@@ -226,8 +226,58 @@ export default async function RecipePageEN({ params }: Props) {
               {/* 📍 1. Responsive display ad after intro */}
               <GoogleAd className="my-6 print:hidden" />
 
+              {/* Ingredients inline - mobile only */}
+              <div className="lg:hidden -mx-4 [&>:first-child]:px-4 [&>:first-child]:py-6 [&>:first-child]:rounded-none">
+                <RecipeIngredients
+                  ingredients={recipe.ingredients}
+                  servings={recipe.servings}
+                  servingsUnit={recipe.servingsUnit}
+                  locale="en"
+                />
+                {recipe.nutrition && (
+                  <div className="bg-neutral-900 px-4 py-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs">
+                    {recipe.nutrition.calories !== undefined && (
+                      <span className="text-white font-bold">{recipe.nutrition.calories} kcal</span>
+                    )}
+                    {recipe.nutrition.protein !== undefined && (
+                      <span className="text-white/70">{recipe.nutrition.protein}g protein</span>
+                    )}
+                    {recipe.nutrition.fat !== undefined && (
+                      <span className="text-white/70">{recipe.nutrition.fat}g fat</span>
+                    )}
+                    {recipe.nutrition.carbs !== undefined && (
+                      <span className="text-white/70">{recipe.nutrition.carbs}g carbs</span>
+                    )}
+                  </div>
+                )}
+              </div>
+
               {/* H2 - Complete steps */}
               <RecipeInstructions instructions={recipe.instructions} locale="en" />
+
+              {/* Partnership CTA - mobile only */}
+              <div className="lg:hidden bg-neutral-900 text-white p-5 rounded-xl print:hidden">
+                <div className="text-center">
+                  <span className="text-[#F77313] text-xs font-medium uppercase tracking-widest">
+                    Partnership
+                  </span>
+                  <h3 className="font-display text-lg mt-2 mb-3">
+                    Advertise on Menucochon?
+                  </h3>
+                  <p className="text-neutral-400 text-sm mb-4">
+                    Reach thousands of Quebec cuisine enthusiasts.
+                  </p>
+                  <Link
+                    href="/en/advertising"
+                    className="inline-flex items-center gap-2 bg-[#F77313] text-white px-4 py-2 text-sm font-medium hover:bg-[#e56610] transition-colors rounded-lg"
+                  >
+                    Learn more
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
 
               {/* Recipe video (placed after instructions) */}
               {recipe.videoUrl && (
@@ -342,9 +392,9 @@ export default async function RecipePageEN({ params }: Props) {
             </div>
 
             {/* Sidebar */}
-            <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start order-1 lg:order-2">
-              {/* Recipe card - Ingredients */}
-              <div className="bg-white border-2 border-neutral-200 rounded-xl p-6 shadow-sm">
+            <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
+              {/* Recipe card - Ingredients (desktop only, mobile version is inline) */}
+              <div className="hidden lg:block bg-white border-2 border-neutral-200 rounded-xl p-6 shadow-sm">
                 <RecipeIngredients
                   ingredients={recipe.ingredients}
                   servings={recipe.servings}
@@ -358,8 +408,8 @@ export default async function RecipePageEN({ params }: Props) {
                 )}
               </div>
 
-              {/* Advertising CTA */}
-              <div className="bg-neutral-900 text-white p-5 rounded-xl print:hidden">
+              {/* Advertising CTA (desktop only, mobile version is after instructions) */}
+              <div className="hidden lg:block bg-neutral-900 text-white p-5 rounded-xl print:hidden">
                 <div className="text-center">
                   <span className="text-[#F77313] text-xs font-medium uppercase tracking-widest">
                     Partnership
