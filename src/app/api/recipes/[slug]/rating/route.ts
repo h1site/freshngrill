@@ -14,6 +14,7 @@ interface RouteContext {
 export async function GET(request: NextRequest, context: RouteContext) {
   try {
     const { slug } = await context.params;
+    const userId = request.nextUrl.searchParams.get('userId');
 
     // First get recipe ID
     const { data: recipe, error: recipeError } = await supabase
@@ -32,14 +33,14 @@ export async function GET(request: NextRequest, context: RouteContext) {
     // Get ratings from recipe_ratings table
     const { data: ratings, error: ratingsError } = await supabase
       .from('recipe_ratings')
-      .select('rating')
+      .select('rating, user_id')
       .eq('recipe_id', recipe.id);
 
     if (ratingsError) {
-      // Table might not exist yet, return defaults
       return NextResponse.json({
         averageRating: 0,
         ratingCount: 0,
+        userRating: null,
       });
     }
 
@@ -48,9 +49,19 @@ export async function GET(request: NextRequest, context: RouteContext) {
       ? Math.round((ratings.reduce((sum, r) => sum + r.rating, 0) / ratingCount) * 10) / 10
       : 0;
 
+    // Check if current user has already rated
+    let userRating = null;
+    if (userId && ratings) {
+      const existing = ratings.find(r => r.user_id === userId);
+      if (existing) {
+        userRating = existing.rating;
+      }
+    }
+
     return NextResponse.json({
       averageRating,
       ratingCount,
+      userRating,
     });
   } catch (error) {
     console.error('Error fetching rating:', error);
@@ -61,18 +72,25 @@ export async function GET(request: NextRequest, context: RouteContext) {
   }
 }
 
-// POST - Submit a new rating
+// POST - Submit a new rating (requires user_id)
 export async function POST(request: NextRequest, context: RouteContext) {
   try {
     const { slug } = await context.params;
     const body = await request.json();
-    const { rating } = body;
+    const { rating, userId } = body;
 
-    // Validate rating
+    // Validate
     if (!rating || rating < 1 || rating > 5 || !Number.isInteger(rating)) {
       return NextResponse.json(
         { error: 'Rating must be an integer between 1 and 5' },
         { status: 400 }
+      );
+    }
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
       );
     }
 
@@ -90,26 +108,37 @@ export async function POST(request: NextRequest, context: RouteContext) {
       );
     }
 
-    // Get client IP for duplicate prevention (optional)
-    const forwarded = request.headers.get('x-forwarded-for');
-    const ip = forwarded ? forwarded.split(',')[0] : 'unknown';
-
-    // Insert new rating
-    const { error: insertError } = await supabase
+    // Check if user already rated this recipe
+    const { data: existing } = await supabase
       .from('recipe_ratings')
-      .insert({
-        recipe_id: recipe.id,
-        rating,
-        ip_address: ip,
-      });
+      .select('id')
+      .eq('recipe_id', recipe.id)
+      .eq('user_id', userId)
+      .single();
 
-    if (insertError) {
-      console.error('Error inserting rating:', insertError);
-      // If table doesn't exist, return success anyway (rating stored in localStorage)
-      return NextResponse.json({
-        averageRating: rating,
-        ratingCount: 1,
-      });
+    if (existing) {
+      // Update existing rating
+      await supabase
+        .from('recipe_ratings')
+        .update({ rating })
+        .eq('id', existing.id);
+    } else {
+      // Insert new rating
+      const { error: insertError } = await supabase
+        .from('recipe_ratings')
+        .insert({
+          recipe_id: recipe.id,
+          rating,
+          user_id: userId,
+        });
+
+      if (insertError) {
+        console.error('Error inserting rating:', insertError);
+        return NextResponse.json(
+          { error: 'Failed to save rating' },
+          { status: 500 }
+        );
+      }
     }
 
     // Get updated ratings

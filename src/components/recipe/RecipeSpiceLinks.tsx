@@ -34,14 +34,14 @@ export default function RecipeSpiceLinks({ spices, locale = 'fr' }: Props) {
   const t = translations[locale];
 
   return (
-    <section className="bg-gradient-to-br from-orange-50 to-amber-50 border border-orange-200 rounded-lg p-6 md:p-8 print:hidden">
+    <section className="bg-gradient-to-br from-[#F77313] to-[#d45f0a] rounded-lg p-6 md:p-8 print:hidden">
       <div className="flex items-center gap-3 mb-2">
-        <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-          <Sparkles className="w-5 h-5 text-orange-600" />
+        <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+          <Sparkles className="w-5 h-5 text-white" />
         </div>
         <div>
-          <h2 className="font-display text-xl text-black">{t.title}</h2>
-          <p className="text-neutral-600 text-sm">{t.subtitle}</p>
+          <h2 className="font-display text-xl text-white">{t.title}</h2>
+          <p className="text-white/70 text-sm">{t.subtitle}</p>
         </div>
       </div>
 
@@ -50,7 +50,7 @@ export default function RecipeSpiceLinks({ spices, locale = 'fr' }: Props) {
           <Link
             key={spice.slug}
             href={`${t.spicePath}/${spice.slug}/`}
-            className="group flex items-center gap-2 px-4 py-2 bg-white border border-orange-200 rounded-full hover:border-[#F77313] hover:bg-[#F77313]/5 transition-colors"
+            className="group flex items-center gap-2 px-4 py-2 bg-white rounded-full hover:bg-neutral-100 transition-colors"
           >
             {spice.image && (
               <div className="relative w-6 h-6 rounded-full overflow-hidden">
@@ -63,7 +63,7 @@ export default function RecipeSpiceLinks({ spices, locale = 'fr' }: Props) {
                 />
               </div>
             )}
-            <span className="text-sm font-medium text-neutral-700 group-hover:text-[#F77313] transition-colors">
+            <span className="text-sm font-medium text-neutral-800">
               {spice.name}
             </span>
           </Link>
