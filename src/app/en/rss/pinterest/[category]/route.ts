@@ -71,7 +71,7 @@ export async function GET(
   xmlns:media="http://search.yahoo.com/mrss/"
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Menucochon - ${board.nameEn}</title>
+    <title>Menucochon - ${escapeXml(board.nameEn)}</title>
     <link>${baseUrl}/en/recipe/</link>
     <description>${escapeXml(board.descriptionEn)}</description>
     <language>en-CA</language>
