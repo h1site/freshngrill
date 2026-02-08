@@ -13,6 +13,7 @@ import { HomeSEOSection } from '@/components/home/HomeSEOSection';
 import { FeaturedRecipesSection } from '@/components/home/FeaturedRecipesSection';
 import { AdvertisingCTA } from '@/components/home/AdvertisingCTA';
 import { FrigoMagiqueCTA } from '@/components/home/FrigoMagiqueCTA';
+import { LatestRecipesCarousel } from '@/components/home/LatestRecipesCarousel';
 import WebSiteSchema from '@/components/schema/WebSiteSchema';
 import HomePageAd from '@/components/ads/HomePageAd';
 
@@ -90,6 +91,7 @@ export default async function HomePage() {
   // Get featured recipe (most recent)
   const featuredRecipe = allRecipes[0];
   const sideRecipes = allRecipes.slice(1, 4);
+  const latestRecipes = allRecipes.slice(4, 29); // 25 latest (after hero ones)
 
   return (
     <main className="min-h-screen">
@@ -106,6 +108,11 @@ export default async function HomePage() {
           sideRecipes={sideRecipes}
           showDiscoverCTA
         />
+      )}
+
+      {/* 2. Latest Recipes Carousel */}
+      {latestRecipes.length > 0 && (
+        <LatestRecipesCarousel recipes={latestRecipes} locale="fr" />
       )}
 
       {/* AD #1 - After Hero (Top Viewability) */}
