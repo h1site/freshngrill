@@ -77,8 +77,8 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
   const handleFile = async (file: File) => {
     setError('');
 
-    // Max original file size 20MB (will be compressed to fit Vercel's 4MB limit)
-    const maxOriginalSizeMB = 20;
+    // Max original file size 50MB (will be compressed to fit Vercel's 4MB limit)
+    const maxOriginalSizeMB = 50;
     if (file.size > maxOriginalSizeMB * 1024 * 1024) {
       setError(`Image trop volumineuse (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum ${maxOriginalSizeMB}MB.`);
       return;
@@ -224,7 +224,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
               <span className="text-orange-600 font-medium">Cliquez pour choisir</span> ou glissez une image
             </p>
             <p className="text-xs text-gray-400 mt-1">
-              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 20MB, compressé automatiquement)
+              JPG, PNG, WebP, GIF, AVIF ou HEIC (max 50MB, compressé automatiquement)
             </p>
           </div>
         )}
