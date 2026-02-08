@@ -150,12 +150,12 @@ export function LatestRecipesCarousel({ recipes, locale = 'fr' }: LatestRecipesC
                   )}
                 </div>
 
-                {/* Content */}
-                <div className="p-4">
-                  <h3 className="font-display text-base lg:text-lg text-white leading-tight line-clamp-2 group-hover:text-[#F77313] transition-colors mb-2">
+                {/* Content - fixed height so all cards are equal */}
+                <div className="p-4 flex flex-col justify-between h-[88px]">
+                  <h3 className="font-display text-base lg:text-lg text-white leading-tight line-clamp-2 group-hover:text-[#F77313] transition-colors">
                     {recipe.title}
                   </h3>
-                  <div className="flex items-center gap-3 text-neutral-500 text-xs">
+                  <div className="flex items-center gap-3 text-neutral-500 text-xs mt-auto">
                     {recipe.totalTime > 0 && (
                       <span className="flex items-center gap-1">
                         <Clock className="w-3.5 h-3.5" />
