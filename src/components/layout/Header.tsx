@@ -159,6 +159,18 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSubmitRecipeModalOpen, setIsSubmitRecipeModalOpen] = useState(false);
 
+  // Blog mega menu - recent posts
+  const [blogPosts, setBlogPosts] = useState<Array<{
+    id: number;
+    slug: string;
+    title: string;
+    featuredImage: string | null;
+    categories: Array<{ name: string }>;
+    publishedAt: string;
+    readingTime: number;
+  }>>([]);
+  const blogPostsFetchedRef = useRef(false);
+
   // Detect scroll for transparent header
   useEffect(() => {
     if (!transparent) return;
@@ -476,6 +488,14 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
       clearTimeout(blogMenuTimeoutRef.current);
     }
     setIsBlogMenuOpen(true);
+    // Fetch blog posts on first hover
+    if (!blogPostsFetchedRef.current) {
+      blogPostsFetchedRef.current = true;
+      fetch(`/api/posts/recent?locale=${locale}&limit=4`)
+        .then((res) => res.json())
+        .then((data) => setBlogPosts(data))
+        .catch(() => {});
+    }
   };
 
   const handleBlogMenuLeave = () => {
@@ -544,30 +564,112 @@ export default function Header({ locale: localeProp = 'fr', dictionary, transpar
                   }`} />
                 </Link>
 
-                {/* Blog Dropdown */}
+                {/* Blog Mega Menu */}
                 {item.hasBlogMenu && isBlogMenuOpen && (
                   <div
-                    className="absolute left-0 top-full pt-2 z-[60]"
+                    className="fixed left-0 right-0 top-full pt-0 z-[60]"
                     onMouseEnter={handleBlogMenuEnter}
                     onMouseLeave={handleBlogMenuLeave}
                   >
-                    <div className="bg-neutral-900 border border-neutral-800 rounded-xl shadow-2xl p-3 min-w-[200px]">
-                      <Link
-                        href={routes.blog}
-                        onClick={() => setIsBlogMenuOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
-                      >
-                        <FileText className="w-4 h-4 text-[#F77313]" />
-                        <span className="text-sm font-medium">{locale === 'en' ? 'Articles' : 'Articles'}</span>
-                      </Link>
-                      <Link
-                        href={locale === 'en' ? '/en/videos' : '/videos'}
-                        onClick={() => setIsBlogMenuOpen(false)}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
-                      >
-                        <Youtube className="w-4 h-4 text-red-500" />
-                        <span className="text-sm font-medium">{locale === 'en' ? 'Videos' : 'Vidéos'}</span>
-                      </Link>
+                    <div className="bg-neutral-900 border-t border-neutral-800 shadow-2xl">
+                      <div className="container mx-auto px-4 py-6">
+                        <div className="grid grid-cols-5 gap-5">
+                          {/* Latest Articles */}
+                          {blogPosts.slice(0, 4).map((post) => (
+                            <Link
+                              key={post.id}
+                              href={`${locale === 'en' ? '/en/blog' : '/blog'}/${post.slug}`}
+                              onClick={() => setIsBlogMenuOpen(false)}
+                              className="group block"
+                            >
+                              <div className="relative aspect-[16/9] rounded-lg overflow-hidden mb-2.5">
+                                {post.featuredImage ? (
+                                  <Image
+                                    src={post.featuredImage}
+                                    alt={post.title}
+                                    fill
+                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                    sizes="250px"
+                                  />
+                                ) : (
+                                  <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center">
+                                    <FileText className="w-8 h-8 text-neutral-700" />
+                                  </div>
+                                )}
+                              </div>
+                              {post.categories?.[0] && (
+                                <span className="text-[#F77313] text-[10px] font-bold uppercase tracking-wider">
+                                  {post.categories[0].name}
+                                </span>
+                              )}
+                              <h4 className="text-neutral-200 text-sm font-medium line-clamp-2 group-hover:text-white transition-colors mt-0.5 leading-snug">
+                                {post.title}
+                              </h4>
+                              <span className="text-neutral-500 text-xs mt-1 flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                {post.readingTime} min
+                              </span>
+                            </Link>
+                          ))}
+
+                          {/* Sidebar: Links + Videos */}
+                          <div className="flex flex-col gap-4">
+                            <div className="bg-neutral-800/50 rounded-lg p-4 flex-1">
+                              <div className="flex items-center gap-2 mb-3">
+                                <FileText className="w-4 h-4 text-[#F77313]" />
+                                <h3 className="text-white font-display text-sm">
+                                  {locale === 'en' ? 'Blog' : 'Blog'}
+                                </h3>
+                              </div>
+                              <Link
+                                href={routes.blog}
+                                onClick={() => setIsBlogMenuOpen(false)}
+                                className="text-neutral-400 hover:text-white text-sm flex items-center gap-2 py-1.5 transition-colors"
+                              >
+                                <span className="text-[#F77313]">→</span>
+                                {locale === 'en' ? 'All articles' : 'Tous les articles'}
+                              </Link>
+                              <Link
+                                href={locale === 'en' ? '/en/videos' : '/videos'}
+                                onClick={() => setIsBlogMenuOpen(false)}
+                                className="text-neutral-400 hover:text-white text-sm flex items-center gap-2 py-1.5 transition-colors"
+                              >
+                                <Youtube className="w-3.5 h-3.5 text-red-500" />
+                                {locale === 'en' ? 'Videos' : 'Vidéos'}
+                              </Link>
+                            </div>
+                            {/* Featured video */}
+                            {VIDEOS[0] && (
+                              <Link
+                                href={locale === 'en' ? `/en/video/${VIDEOS[0].slugEn}` : `/video/${VIDEOS[0].slug}`}
+                                onClick={() => setIsBlogMenuOpen(false)}
+                                className="block group"
+                              >
+                                <div className="relative aspect-video rounded-lg overflow-hidden">
+                                  <Image
+                                    src={VIDEOS[0].thumbnail}
+                                    alt={locale === 'en' ? VIDEOS[0].titleEn : VIDEOS[0].title}
+                                    fill
+                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                    sizes="200px"
+                                  />
+                                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+                                      <Play className="w-4 h-4 text-white ml-0.5" fill="white" />
+                                    </div>
+                                  </div>
+                                  <div className="absolute bottom-1 right-1 bg-black/80 text-white text-[10px] px-1.5 py-0.5 rounded">
+                                    {VIDEOS[0].duration}
+                                  </div>
+                                </div>
+                                <p className="text-neutral-400 text-xs font-medium line-clamp-1 mt-1.5 group-hover:text-white transition-colors">
+                                  {locale === 'en' ? VIDEOS[0].titleEn : VIDEOS[0].title}
+                                </p>
+                              </Link>
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
