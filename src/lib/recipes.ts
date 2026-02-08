@@ -60,6 +60,7 @@ export async function getAllRecipes(): Promise<Recipe[]> {
   const { data, error } = await supabase
     .from('recipes_with_categories')
     .select('*')
+    .not('featured_image', 'is', null)
     .order('published_at', { ascending: false });
 
   if (error) {
@@ -239,6 +240,7 @@ export async function getRecipeCards(): Promise<RecipeCard[]> {
   const { data, error } = await supabase
     .from('recipes_with_categories')
     .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
+    .not('featured_image', 'is', null)
     .order('published_at', { ascending: false });
 
   if (error) {
@@ -283,6 +285,7 @@ export async function getRecipesByCategory(categorySlug: string): Promise<Recipe
     .from('recipes_with_categories')
     .select('*')
     .in('id', (recipeIds as any[]).map(r => r.recipe_id))
+    .not('featured_image', 'is', null)
     .order('published_at', { ascending: false });
 
   if (error) {
@@ -301,6 +304,7 @@ export async function getRecipesByTag(tag: string): Promise<Recipe[]> {
     .from('recipes_with_categories')
     .select('*')
     .contains('tags', [tag])
+    .not('featured_image', 'is', null)
     .order('published_at', { ascending: false });
 
   if (error) {
@@ -321,6 +325,7 @@ export async function searchRecipes(query: string): Promise<Recipe[]> {
     .from('recipes_with_categories')
     .select('*')
     .or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm}`)
+    .not('featured_image', 'is', null)
     .order('published_at', { ascending: false });
 
   if (error) {
@@ -338,6 +343,7 @@ export async function getPopularRecipes(limit: number = 10): Promise<Recipe[]> {
   const { data, error } = await supabase
     .from('recipes_with_categories')
     .select('*')
+    .not('featured_image', 'is', null)
     .order('likes', { ascending: false })
     .limit(limit);
 
@@ -356,6 +362,7 @@ export async function getRecentRecipes(limit: number = 10): Promise<Recipe[]> {
   const { data, error } = await supabase
     .from('recipes_with_categories')
     .select('*')
+    .not('featured_image', 'is', null)
     .order('published_at', { ascending: false })
     .limit(limit);
 
@@ -374,7 +381,8 @@ export async function getRecipesBySlugs(slugs: string[]): Promise<Recipe[]> {
   const { data, error } = await supabase
     .from('recipes_with_categories')
     .select('*')
-    .in('slug', slugs);
+    .in('slug', slugs)
+    .not('featured_image', 'is', null);
 
   if (error) {
     console.error('Erreur getRecipesBySlugs:', error);
@@ -410,6 +418,7 @@ export async function getNextRecipe(recipe: Recipe, locale: 'fr' | 'en' = 'fr'):
         .from('recipes_with_categories')
         .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes, published_at')
         .in('id', uniqueIds)
+        .not('featured_image', 'is', null)
         .order('published_at', { ascending: false })
         .limit(1);
 
@@ -456,6 +465,7 @@ export async function getNextRecipe(recipe: Recipe, locale: 'fr' | 'en' = 'fr'):
     .from('recipes_with_categories')
     .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
     .neq('id', recipe.id)
+    .not('featured_image', 'is', null)
     .order('published_at', { ascending: false })
     .limit(1);
 
@@ -517,7 +527,8 @@ export async function getSimilarRecipes(recipe: Recipe, limit: number = 4): Prom
       const { data, error } = await supabase
         .from('recipes_with_categories')
         .select('*')
-        .in('id', uniqueIds);
+        .in('id', uniqueIds)
+        .not('featured_image', 'is', null);
 
       if (!error && data?.length) {
         return data.map(transformRecipe);
@@ -530,6 +541,7 @@ export async function getSimilarRecipes(recipe: Recipe, limit: number = 4): Prom
     .from('recipes_with_categories')
     .select('*')
     .neq('id', recipe.id)
+    .not('featured_image', 'is', null)
     .order('published_at', { ascending: false })
     .limit(limit);
 
@@ -872,7 +884,8 @@ export async function getFilteredRecipeCards(filters: RecipeFilters): Promise<Re
 
   let query = supabase
     .from('recipes_with_categories')
-    .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes');
+    .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
+    .not('featured_image', 'is', null);
 
   if (filters.difficulty) {
     query = query.eq('difficulty', filters.difficulty);
@@ -1030,7 +1043,8 @@ export async function enrichRecipesWithEnglishData(recipes: Recipe[]): Promise<(
 export async function filterRecipes(filters: RecipeFilters): Promise<Recipe[]> {
   let query = supabase
     .from('recipes_with_categories')
-    .select('*');
+    .select('*')
+    .not('featured_image', 'is', null);
 
   if (filters.difficulty) {
     query = query.eq('difficulty', filters.difficulty);
@@ -1102,7 +1116,8 @@ export async function getMostLikedRecipes(limit: number = 10): Promise<RecipeCar
   const { data, error } = await supabase
     .from('recipes_with_categories')
     .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
-    .in('id', sortedRecipeIds);
+    .in('id', sortedRecipeIds)
+    .not('featured_image', 'is', null);
 
   if (error) {
     console.error('Erreur getMostLikedRecipes:', error);
@@ -1136,6 +1151,7 @@ export async function getPopularRecipeCards(limit: number = 10): Promise<RecipeC
   const { data, error } = await supabase
     .from('recipes_with_categories')
     .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
+    .not('featured_image', 'is', null)
     .order('likes', { ascending: false })
     .limit(limit);
 
@@ -1243,7 +1259,8 @@ export async function searchByIngredients(
 
   const { data, error } = await supabase
     .from('recipes_with_categories')
-    .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes, ingredients');
+    .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes, ingredients')
+    .not('featured_image', 'is', null);
 
   if (error) {
     console.error('Erreur searchByIngredients:', error);
@@ -1366,6 +1383,7 @@ export async function getRecipesWithSimilarIngredients(
     .from('recipes_with_categories')
     .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes, ingredients')
     .neq('id', recipe.id)
+    .not('featured_image', 'is', null)
     .limit(100);
 
   if (error) {
@@ -1473,6 +1491,7 @@ export async function getRecipeByDifficultyProgression(
         .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
         .in('id', uniqueIds)
         .eq('difficulty', targetDifficulty)
+        .not('featured_image', 'is', null)
         .limit(1);
 
       if (!error && data?.length) {
@@ -1506,6 +1525,7 @@ export async function getRecipeByDifficultyProgression(
     .select('id, slug, title, featured_image, prep_time, cook_time, total_time, difficulty, categories, likes')
     .eq('difficulty', targetDifficulty)
     .neq('id', recipe.id)
+    .not('featured_image', 'is', null)
     .limit(1);
 
   if (fallback?.length) {

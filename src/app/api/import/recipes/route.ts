@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase-server';
 import { extractIngredientsFromRecipe, parseAllIngredients } from '@/lib/ingredient-extractor';
+import { submitRecipeUrls } from '@/lib/indexnow';
 
 interface InstructionStep {
   step: number;
@@ -332,6 +333,9 @@ export async function POST(request: NextRequest) {
           });
           continue;
         }
+
+        // 6. Notify IndexNow (fire and forget)
+        submitRecipeUrls(recipeFr.slug, recipeEn.slug_en).catch(() => {});
 
         results.success++;
       } catch (err) {

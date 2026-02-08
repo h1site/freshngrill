@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { createClient as createServerClient } from '@/lib/supabase-server';
+import { submitRecipeUrls } from '@/lib/indexnow';
 
 // Create admin client with service role key to bypass RLS
 const supabaseAdmin = createClient(
@@ -79,6 +80,13 @@ export async function PUT(
           translationResult = data;
         }
       }
+    }
+
+    // Notify IndexNow about the update (fire and forget)
+    const slug = updatedRecipe?.slug;
+    const slugEn = translationResult?.slug_en || translationData?.slug_en;
+    if (slug) {
+      submitRecipeUrls(slug, slugEn).catch(() => {});
     }
 
     return NextResponse.json({
