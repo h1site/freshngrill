@@ -13,6 +13,7 @@ const supabase = createClient(
 
 async function main() {
   const { data, error } = await supabase.storage.updateBucket('recipe-images', {
+    public: true,
     fileSizeLimit: 50 * 1024 * 1024, // 50MB
   });
 
