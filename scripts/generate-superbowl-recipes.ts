@@ -143,7 +143,7 @@ async function generateImage(prompt: string, slug: string): Promise<Buffer | nul
       quality: 'standard',
     });
 
-    const imageUrl = response.data[0].url;
+    const imageUrl = response.data?.[0]?.url;
     if (!imageUrl) return null;
 
     const imageResponse = await fetch(imageUrl);
