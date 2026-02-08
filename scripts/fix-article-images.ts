@@ -78,9 +78,9 @@ async function main() {
   if (remainingFr.length > 0 || remainingEn.length > 0) {
     console.log(`\nRemaining image URLs to check:`);
     console.log(`  FR: ${remainingFr.length} images`);
-    remainingFr.forEach(m => console.log(`    ${m}`));
+    remainingFr.forEach((m: string) => console.log(`    ${m}`));
     console.log(`  EN: ${remainingEn.length} images`);
-    remainingEn.forEach(m => console.log(`    ${m}`));
+    remainingEn.forEach((m: string) => console.log(`    ${m}`));
 
     // Try to match remaining URLs by finding the slug in context
     // Look at the surrounding HTML to find which recipe each image belongs to
