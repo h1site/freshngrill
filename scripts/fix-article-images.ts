@@ -114,7 +114,7 @@ async function main() {
     const imgSrcPatternEn = /src="(https:\/\/[^"]*recipe-images\/recipes\/[^"]*)"/g;
 
     let idx = 0;
-    contentFr = contentFr.replace(imgSrcPatternFr, (match, url) => {
+    contentFr = contentFr.replace(imgSrcPatternFr, (match: string, url: string) => {
       if (idx < SLUGS.length) {
         const newUrl = imageMap.get(SLUGS[idx]);
         idx++;
@@ -127,7 +127,7 @@ async function main() {
     });
 
     idx = 0;
-    contentEn = contentEn.replace(imgSrcPatternEn, (match, url) => {
+    contentEn = contentEn.replace(imgSrcPatternEn, (match: string, url: string) => {
       if (idx < SLUGS.length) {
         const newUrl = imageMap.get(SLUGS[idx]);
         idx++;
