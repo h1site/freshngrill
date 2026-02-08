@@ -6,12 +6,9 @@ import {
   getAllRecipeSlugs,
   getSimilarRecipes,
   getRecipeBySlugWithLocale,
-  getNextRecipe,
-  getRecipesWithSimilarIngredients,
-  getRecipeByDifficultyProgression,
   getSpicesInRecipe,
 } from '@/lib/recipes';
-import { getRelatedPostsForRecipe } from '@/lib/posts';
+import { getRecentPosts } from '@/lib/posts';
 import { optimizeMetaDescription } from '@/lib/utils';
 import RecipeHeader from '@/components/recipe/RecipeHeader';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
@@ -29,12 +26,8 @@ import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 import RecipeAmazonSuggestions from '@/components/amazon/RecipeAmazonSuggestions';
 import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 import FAQSchema from '@/components/schema/FAQSchema';
-import NextRecipe from '@/components/recipe/NextRecipe';
-import RecipeExploreFooter from '@/components/recipe/RecipeExploreFooter';
-import RecipesByIngredients from '@/components/recipe/RecipesByIngredients';
-import RelatedArticles from '@/components/recipe/RelatedArticles';
+import { Clock, ArrowRight } from 'lucide-react';
 import RecipeSpiceLinks from '@/components/recipe/RecipeSpiceLinks';
-import DifficultyProgression from '@/components/recipe/DifficultyProgression';
 import RecipeVideo from '@/components/recipe/RecipeVideo';
 
 interface Props {
@@ -113,20 +106,12 @@ export default async function RecettePage({ params }: Props) {
 
   const [
     similarRecipes,
-    nextRecipe,
-    recipesWithSimilarIngredients,
-    easierRecipe,
-    harderRecipe,
     spicesInRecipe,
-    relatedPosts,
+    latestPosts,
   ] = await Promise.all([
-    getSimilarRecipes(recipe, 4),
-    getNextRecipe(recipe, 'fr'),
-    getRecipesWithSimilarIngredients(recipe, 4, 'fr'),
-    getRecipeByDifficultyProgression(recipe, 'easier', 'fr'),
-    getRecipeByDifficultyProgression(recipe, 'harder', 'fr'),
+    getSimilarRecipes(recipe, 12),
     getSpicesInRecipe(recipe, 6),
-    getRelatedPostsForRecipe(recipe.title, recipe.categories.map(c => c.slug), 3, 'fr'),
+    getRecentPosts(6),
   ]);
 
   const breadcrumbs = [
@@ -313,37 +298,6 @@ export default async function RecettePage({ params }: Props) {
                 <RecipeFAQ faq={recipe.faq} />
               )}
 
-              {/* Spices used in this recipe */}
-              {spicesInRecipe.length > 0 && (
-                <RecipeSpiceLinks spices={spicesInRecipe} locale="fr" />
-              )}
-
-              {/* Recipes with similar ingredients */}
-              {recipesWithSimilarIngredients.length > 0 && (
-                <RecipesByIngredients recipes={recipesWithSimilarIngredients} locale="fr" />
-              )}
-
-              {/* Difficulty progression */}
-              <DifficultyProgression
-                easierRecipe={easierRecipe}
-                harderRecipe={harderRecipe}
-                currentDifficulty={recipe.difficulty}
-                locale="fr"
-              />
-
-              {/* Related blog articles */}
-              {relatedPosts.length > 0 && (
-                <RelatedArticles posts={relatedPosts} locale="fr" />
-              )}
-
-              {/* Explore more links */}
-              <RecipeExploreFooter
-                categories={recipe.categories}
-                difficulty={recipe.difficulty}
-                origineTags={recipe.origineTags}
-                locale="fr"
-              />
-
               {/* Rating */}
               <div className="bg-neutral-50 p-8 rounded-lg text-center">
                 <h3 className="font-display text-xl mb-4">Vous avez essayé cette recette?</h3>
@@ -358,6 +312,12 @@ export default async function RecettePage({ params }: Props) {
               <div className="mt-12">
                 <RecipeComments recipeId={recipe.id} slug={recipe.slug} />
               </div>
+
+              {/* Spices used in this recipe */}
+              {spicesInRecipe.length > 0 && (
+                <RecipeSpiceLinks spices={spicesInRecipe} locale="fr" />
+              )}
+
             </div>
 
             {/* Sidebar */}
@@ -428,9 +388,6 @@ export default async function RecettePage({ params }: Props) {
         </section>
         </article>
 
-        {/* Prochaine recette */}
-        {nextRecipe && <NextRecipe recipe={nextRecipe} locale="fr" />}
-
         {/* Recettes similaires */}
         {similarRecipes.length > 0 && (
           <section className="bg-neutral-50 py-16 md:py-20">
@@ -445,6 +402,74 @@ export default async function RecettePage({ params }: Props) {
                 Recettes similaires
               </h2>
               <RecipeSimilar recipes={similarRecipes} />
+            </div>
+          </section>
+        )}
+
+        {/* Nos derniers articles */}
+        {latestPosts.length > 0 && (
+          <section className="py-16 md:py-20">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center gap-4 mb-10">
+                <span className="text-[#F77313] text-xs font-medium uppercase tracking-widest">
+                  Blog
+                </span>
+                <div className="w-12 h-0.5 bg-[#F77313]" />
+              </div>
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="font-display text-3xl md:text-4xl text-black">
+                  Nos derniers articles
+                </h2>
+                <Link
+                  href="/blog"
+                  className="hidden md:flex items-center gap-1 text-sm text-[#F77313] hover:text-[#d45f0a] transition-colors"
+                >
+                  Voir tous les articles
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {latestPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/blog/${post.slug}/`}
+                    className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    {post.featuredImage && (
+                      <div className="relative aspect-video">
+                        <Image
+                          src={post.featuredImage}
+                          alt={post.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      </div>
+                    )}
+                    <div className="p-4">
+                      {post.categories.length > 0 && (
+                        <span className="text-xs font-medium text-[#F77313] uppercase tracking-wider">
+                          {post.categories[0].name}
+                        </span>
+                      )}
+                      <h3 className="font-medium text-black group-hover:text-[#F77313] transition-colors line-clamp-2 mt-2">
+                        {post.title}
+                      </h3>
+                      <div className="flex items-center gap-1 mt-3 text-xs text-neutral-500">
+                        <Clock className="w-3 h-3" />
+                        <span>{post.readingTime} min de lecture</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                href="/blog"
+                className="md:hidden flex items-center justify-center gap-1 mt-6 text-sm text-[#F77313] hover:text-[#d45f0a] transition-colors"
+              >
+                Voir tous les articles
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </section>
         )}

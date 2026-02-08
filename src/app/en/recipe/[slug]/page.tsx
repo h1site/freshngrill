@@ -8,12 +8,9 @@ import {
   getAllRecipeSlugs,
   getSimilarRecipes,
   enrichRecipeCardsWithEnglishSlugs,
-  getNextRecipe,
-  getRecipesWithSimilarIngredients,
-  getRecipeByDifficultyProgression,
   getSpicesInRecipe,
 } from '@/lib/recipes';
-import { getRelatedPostsForRecipe } from '@/lib/posts';
+import { getRecentPosts } from '@/lib/posts';
 import { optimizeMetaDescription } from '@/lib/utils';
 import RecipeHeader from '@/components/recipe/RecipeHeader';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
@@ -31,12 +28,8 @@ import AmazonKitchenProducts from '@/components/amazon/AmazonKitchenProducts';
 import RecipeAmazonSuggestions from '@/components/amazon/RecipeAmazonSuggestions';
 import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 import FAQSchema from '@/components/schema/FAQSchema';
-import NextRecipe from '@/components/recipe/NextRecipe';
-import RecipeExploreFooter from '@/components/recipe/RecipeExploreFooter';
-import RecipesByIngredients from '@/components/recipe/RecipesByIngredients';
-import RelatedArticles from '@/components/recipe/RelatedArticles';
+import { Clock, ArrowRight } from 'lucide-react';
 import RecipeSpiceLinks from '@/components/recipe/RecipeSpiceLinks';
-import DifficultyProgression from '@/components/recipe/DifficultyProgression';
 import RecipeVideo from '@/components/recipe/RecipeVideo';
 
 interface Props {
@@ -129,20 +122,12 @@ export default async function RecipePageEN({ params }: Props) {
 
   const [
     rawSimilarRecipes,
-    nextRecipe,
-    recipesWithSimilarIngredients,
-    easierRecipe,
-    harderRecipe,
     spicesInRecipe,
-    relatedPosts,
+    latestPosts,
   ] = await Promise.all([
-    getSimilarRecipes(recipe, 4),
-    getNextRecipe(recipe, 'en'),
-    getRecipesWithSimilarIngredients(recipe, 4, 'en'),
-    getRecipeByDifficultyProgression(recipe, 'easier', 'en'),
-    getRecipeByDifficultyProgression(recipe, 'harder', 'en'),
+    getSimilarRecipes(recipe, 12),
     getSpicesInRecipe(recipe, 6),
-    getRelatedPostsForRecipe(recipe.title, recipe.categories.map(c => c.slug), 3, 'en'),
+    getRecentPosts(6),
   ]);
   // Convert to RecipeCard format and enrich with English slugs
   const similarRecipeCards = rawSimilarRecipes.map((r) => ({
@@ -344,37 +329,6 @@ export default async function RecipePageEN({ params }: Props) {
                 <RecipeFAQ faq={recipe.faq} locale="en" />
               )}
 
-              {/* Spices used in this recipe */}
-              {spicesInRecipe.length > 0 && (
-                <RecipeSpiceLinks spices={spicesInRecipe} locale="en" />
-              )}
-
-              {/* Recipes with similar ingredients */}
-              {recipesWithSimilarIngredients.length > 0 && (
-                <RecipesByIngredients recipes={recipesWithSimilarIngredients} locale="en" />
-              )}
-
-              {/* Difficulty progression */}
-              <DifficultyProgression
-                easierRecipe={easierRecipe}
-                harderRecipe={harderRecipe}
-                currentDifficulty={recipe.difficulty}
-                locale="en"
-              />
-
-              {/* Related blog articles */}
-              {relatedPosts.length > 0 && (
-                <RelatedArticles posts={relatedPosts} locale="en" />
-              )}
-
-              {/* Explore more links */}
-              <RecipeExploreFooter
-                categories={recipe.categories}
-                difficulty={recipe.difficulty}
-                origineTags={recipe.origineTags}
-                locale="en"
-              />
-
               {/* Rating */}
               <div className="bg-neutral-50 p-8 rounded-lg text-center">
                 <h3 className="font-display text-xl mb-4">Have you tried this recipe?</h3>
@@ -389,6 +343,12 @@ export default async function RecipePageEN({ params }: Props) {
               <div className="mt-12">
                 <RecipeComments recipeId={recipe.id} slug={recipe.slug} locale="en" />
               </div>
+
+              {/* Spices used in this recipe */}
+              {spicesInRecipe.length > 0 && (
+                <RecipeSpiceLinks spices={spicesInRecipe} locale="en" />
+              )}
+
             </div>
 
             {/* Sidebar */}
@@ -460,9 +420,6 @@ export default async function RecipePageEN({ params }: Props) {
         </section>
         </article>
 
-        {/* Next recipe */}
-        {nextRecipe && <NextRecipe recipe={nextRecipe} locale="en" />}
-
         {/* Similar recipes */}
         {similarRecipes.length > 0 && (
           <section className="bg-neutral-50 py-16 md:py-20">
@@ -477,6 +434,74 @@ export default async function RecipePageEN({ params }: Props) {
                 Similar Recipes
               </h2>
               <RecipeSimilar recipes={similarRecipes} locale="en" />
+            </div>
+          </section>
+        )}
+
+        {/* Our Latest Articles */}
+        {latestPosts.length > 0 && (
+          <section className="py-16 md:py-20">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center gap-4 mb-10">
+                <span className="text-[#F77313] text-xs font-medium uppercase tracking-widest">
+                  Blog
+                </span>
+                <div className="w-12 h-0.5 bg-[#F77313]" />
+              </div>
+              <div className="flex items-center justify-between mb-10">
+                <h2 className="font-display text-3xl md:text-4xl text-black">
+                  Our Latest Articles
+                </h2>
+                <Link
+                  href="/en/blog"
+                  className="hidden md:flex items-center gap-1 text-sm text-[#F77313] hover:text-[#d45f0a] transition-colors"
+                >
+                  View all articles
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {latestPosts.map((post) => (
+                  <Link
+                    key={post.id}
+                    href={`/en/blog/${post.slug}/`}
+                    className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    {post.featuredImage && (
+                      <div className="relative aspect-video">
+                        <Image
+                          src={post.featuredImage}
+                          alt={post.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      </div>
+                    )}
+                    <div className="p-4">
+                      {post.categories.length > 0 && (
+                        <span className="text-xs font-medium text-[#F77313] uppercase tracking-wider">
+                          {post.categories[0].name}
+                        </span>
+                      )}
+                      <h3 className="font-medium text-black group-hover:text-[#F77313] transition-colors line-clamp-2 mt-2">
+                        {post.title}
+                      </h3>
+                      <div className="flex items-center gap-1 mt-3 text-xs text-neutral-500">
+                        <Clock className="w-3 h-3" />
+                        <span>{post.readingTime} min read</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <Link
+                href="/en/blog"
+                className="md:hidden flex items-center justify-center gap-1 mt-6 text-sm text-[#F77313] hover:text-[#d45f0a] transition-colors"
+              >
+                View all articles
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           </section>
         )}

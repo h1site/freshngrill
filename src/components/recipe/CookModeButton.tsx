@@ -983,12 +983,12 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       <button
         onClick={() => setIsOpen(true)}
         className={`flex items-center gap-2 bg-[#F77313] hover:bg-[#d45f0a] text-white font-medium rounded-full transition-colors ${
-          compact ? 'p-2 md:px-4 md:py-2' : 'px-5 py-2.5'
+          compact ? 'px-3 py-2 md:px-4 md:py-2' : 'px-5 py-2.5'
         }`}
         title={t.cookMode}
       >
         <Maximize2 className={compact ? 'w-4 h-4 md:w-5 md:h-5' : 'w-5 h-5'} />
-        <span className={compact ? 'hidden md:inline text-sm' : ''}>{t.cookMode}</span>
+        <span className={compact ? 'text-xs md:text-sm' : ''}>{t.cookMode}</span>
       </button>
 
       <AnimatePresence>
