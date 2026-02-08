@@ -203,7 +203,7 @@ export default async function RecipePageEN({ params }: Props) {
         <section className="container mx-auto px-4 py-16 md:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
             {/* Main column */}
-            <div className="lg:col-span-2 space-y-12">
+            <div className="lg:col-span-2 space-y-12 order-2 lg:order-1">
               {/* Introduction */}
               {recipe.introduction && (
                 <div className="relative pl-8 border-l-4 border-[#F77313] bg-gradient-to-r from-neutral-100 to-transparent py-6 -ml-4 pl-12">
@@ -342,7 +342,7 @@ export default async function RecipePageEN({ params }: Props) {
             </div>
 
             {/* Sidebar */}
-            <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start">
+            <aside className="space-y-8 lg:sticky lg:top-24 lg:self-start order-1 lg:order-2">
               {/* Recipe card - Ingredients */}
               <div className="bg-white border-2 border-neutral-200 rounded-xl p-6 shadow-sm">
                 <RecipeIngredients
