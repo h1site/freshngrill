@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase-server';
 import CategoryRecipeManager from '@/components/admin/CategoryRecipeManager';
+import DeleteCategoryButton from '@/components/admin/DeleteCategoryButton';
 
 async function getCategoryWithRecipes(id: string) {
   const supabase = await createClient();
@@ -60,7 +61,10 @@ export default async function CategoryDetailPage({
           &larr; Retour aux catégories
         </Link>
       </div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-1">{category.name}</h1>
+      <div className="flex items-center justify-between mb-1">
+        <h1 className="text-2xl font-bold text-gray-900">{category.name}</h1>
+        <DeleteCategoryButton categoryId={category.id} categoryName={category.name} />
+      </div>
       <p className="text-sm text-gray-500 mb-8 font-mono">/{category.slug}</p>
 
       <CategoryRecipeManager

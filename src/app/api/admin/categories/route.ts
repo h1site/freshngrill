@@ -16,6 +16,55 @@ function slugify(text: string): string {
     .replace(/(^-|-$)/g, '');
 }
 
+export async function DELETE(request: NextRequest) {
+  try {
+    const supabase = await createServerClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    if (user.email !== 'info@h1site.com') {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    }
+
+    const { categoryId } = await request.json();
+    if (!categoryId) {
+      return NextResponse.json({ error: 'Category ID required' }, { status: 400 });
+    }
+
+    // Delete recipe_categories associations first
+    await supabaseAdmin
+      .from('recipe_categories')
+      .delete()
+      .eq('category_id', categoryId);
+
+    // Delete translations
+    await supabaseAdmin
+      .from('category_translations')
+      .delete()
+      .eq('category_id', categoryId);
+
+    // Delete the category
+    const { error } = await supabaseAdmin
+      .from('categories')
+      .delete()
+      .eq('id', categoryId);
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const supabase = await createServerClient();
