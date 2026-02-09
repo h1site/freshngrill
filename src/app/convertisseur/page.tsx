@@ -26,6 +26,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/convertisseur/',
+    languages: {
+      'fr-CA': '/convertisseur/',
+      'en-CA': '/en/converter/',
+      'x-default': '/convertisseur/',
+    },
   },
   openGraph: {
     title: 'Convertisseur de Mesures en Cuisine | Menucochon',

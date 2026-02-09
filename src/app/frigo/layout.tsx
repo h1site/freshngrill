@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/frigo/',
+    languages: {
+      'fr-CA': '/frigo/',
+      'en-CA': '/en/frigo/',
+      'x-default': '/frigo/',
+    },
   },
   openGraph: {
     title: 'Dans mon frigo | Menucochon',

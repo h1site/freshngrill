@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/confidentialite/',
       'en-CA': '/en/privacy/',
+      'x-default': '/confidentialite/',
     },
   },
   openGraph: {

@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/convertisseur/metre-pied/',
+    languages: {
+      'fr-CA': '/convertisseur/metre-pied/',
+      'en-CA': '/en/converter/meter-feet/',
+      'x-default': '/convertisseur/metre-pied/',
+    },
   },
   openGraph: {
     title: 'Conversion Mètre en Pieds - Outil Gratuit | Menucochon',

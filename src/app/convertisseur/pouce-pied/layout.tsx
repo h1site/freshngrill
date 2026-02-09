@@ -6,6 +6,11 @@ export const metadata: Metadata = {
     '🔢 Tableau de conversion pouces en pieds de 1 à 120 po. Calculateur instantané + formule + tailles en pieds et pouces (TV, hauteur). Plus complet que Google!',
   alternates: {
     canonical: '/convertisseur/pouce-pied/',
+    languages: {
+      'fr-CA': '/convertisseur/pouce-pied/',
+      'en-CA': '/en/converter/inch-feet/',
+      'x-default': '/convertisseur/pouce-pied/',
+    },
   },
   keywords: [
     'pouces en pieds',

@@ -79,6 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         'fr-CA': `/recette/${frSlug}/`,
         'en-CA': `/en/recipe/${enSlug}/`,
+        'x-default': `/recette/${frSlug}/`,
       },
     },
     openGraph: {

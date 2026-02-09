@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/convertisseur/minuterie/',
       'en-CA': '/en/converter/timer/',
+      'x-default': '/convertisseur/minuterie/',
     },
   },
   openGraph: {

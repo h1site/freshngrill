@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/convertisseur/celsius-fahrenheit/',
       'en-CA': '/en/converter/celsius-fahrenheit/',
+      'x-default': '/convertisseur/celsius-fahrenheit/',
     },
   },
   openGraph: {

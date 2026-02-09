@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/publicite/',
       'en-CA': '/en/advertising/',
+      'x-default': '/publicite/',
     },
   },
   openGraph: {

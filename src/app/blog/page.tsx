@@ -23,6 +23,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/blog/',
       'en-CA': '/en/blog/',
+      'x-default': '/blog/',
     },
   },
   openGraph: {

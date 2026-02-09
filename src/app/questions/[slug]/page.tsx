@@ -37,6 +37,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: localized.seoDescription || localized.shortAnswer,
     alternates: {
       canonical: `/questions/${slug}/`,
+      languages: {
+        'fr-CA': `/questions/${slug}/`,
+        'en-CA': `/en/questions/${slug}/`,
+        'x-default': `/questions/${slug}/`,
+      },
     },
     openGraph: {
       title: localized.question,

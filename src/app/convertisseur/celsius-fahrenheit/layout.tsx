@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/convertisseur/celsius-fahrenheit/',
+    languages: {
+      'fr-CA': '/convertisseur/celsius-fahrenheit/',
+      'en-CA': '/en/converter/celsius-fahrenheit/',
+      'x-default': '/convertisseur/celsius-fahrenheit/',
+    },
   },
   openGraph: {
     title: 'Conversion Celsius en Fahrenheit - Outil Gratuit | Menucochon',

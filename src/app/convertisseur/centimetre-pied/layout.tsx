@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/convertisseur/centimetre-pied/',
+    languages: {
+      'fr-CA': '/convertisseur/centimetre-pied/',
+      'en-CA': '/en/converter/centimeter-feet/',
+      'x-default': '/convertisseur/centimetre-pied/',
+    },
   },
   openGraph: {
     title: 'CM en Pied - Convertisseur GRATUIT | Menucochon',

@@ -9,6 +9,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/epices/route-des-epices/',
       'en-CA': '/en/spices/spice-pairing/',
+      'x-default': '/epices/route-des-epices/',
     },
   },
   openGraph: {

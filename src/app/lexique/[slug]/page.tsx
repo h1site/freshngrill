@@ -33,6 +33,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: term.definition.substring(0, 160),
     alternates: {
       canonical: `/lexique/${slug}/`,
+      languages: {
+        'fr-CA': `/lexique/${slug}/`,
+        'en-CA': `/en/lexicon/${slug}/`,
+        'x-default': `/lexique/${slug}/`,
+      },
     },
     openGraph: {
       title: `${term.term} - Lexique Culinaire`,

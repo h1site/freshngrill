@@ -34,7 +34,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: {
       canonical: `/en/lexicon/${slug}/`,
       languages: {
+        'fr-CA': `/lexique/${slug}/`,
         'en-CA': `/en/lexicon/${slug}/`,
+        'x-default': `/lexique/${slug}/`,
       },
     },
     openGraph: {

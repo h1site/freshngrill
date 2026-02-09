@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/lexique/',
       'en-CA': '/en/lexicon/',
+      'x-default': '/lexique/',
     },
   },
   openGraph: {

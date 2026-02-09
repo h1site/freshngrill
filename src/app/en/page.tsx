@@ -46,6 +46,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/',
       'en-CA': '/en/',
+      'x-default': '/',
     },
   },
   openGraph: {

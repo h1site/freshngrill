@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/lexique/',
+    languages: {
+      'fr-CA': '/lexique/',
+      'en-CA': '/en/lexicon/',
+      'x-default': '/lexique/',
+    },
   },
   openGraph: {
     title: 'Lexique Culinaire | Menucochon',

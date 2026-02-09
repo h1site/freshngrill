@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/a-propos/',
       'en-CA': '/en/about/',
+      'x-default': '/a-propos/',
     },
   },
   authors: [{ name: 'Sébastien Ross' }],

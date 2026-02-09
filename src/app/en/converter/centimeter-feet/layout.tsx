@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/convertisseur/centimetre-pied/',
       'en-CA': '/en/converter/centimeter-feet/',
+      'x-default': '/convertisseur/centimetre-pied/',
     },
   },
   openGraph: {

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/contact/',
       'en-CA': '/en/contact/',
+      'x-default': '/contact/',
     },
   },
   openGraph: {

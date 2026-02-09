@@ -14,6 +14,11 @@ export const metadata: Metadata = {
   ],
   alternates: {
     canonical: '/convertisseur/minuterie/',
+    languages: {
+      'fr-CA': '/convertisseur/minuterie/',
+      'en-CA': '/en/converter/timer/',
+      'x-default': '/convertisseur/minuterie/',
+    },
   },
   openGraph: {
     title: 'Minuterie en Ligne Gratuite | Menucochon',

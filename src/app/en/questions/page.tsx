@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/questions/',
       'en-CA': '/en/questions/',
+      'x-default': '/questions/',
     },
   },
   openGraph: {

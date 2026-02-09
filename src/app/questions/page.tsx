@@ -9,6 +9,11 @@ export const metadata: Metadata = {
   description: 'Trouvez les réponses à vos questions de cuisine: temps de cuisson, conservation, techniques culinaires. Conseils d\'experts québécois.',
   alternates: {
     canonical: '/questions/',
+    languages: {
+      'fr-CA': '/questions/',
+      'en-CA': '/en/questions/',
+      'x-default': '/questions/',
+    },
   },
   openGraph: {
     title: 'Questions Culinaires | MenuCochon',

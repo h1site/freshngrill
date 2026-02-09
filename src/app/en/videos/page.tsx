@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/videos',
       'en-CA': '/en/videos',
+      'x-default': '/videos',
     },
   },
 };

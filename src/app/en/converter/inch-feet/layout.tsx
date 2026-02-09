@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/convertisseur/pouce-pied/',
       'en-CA': '/en/converter/inch-feet/',
+      'x-default': '/convertisseur/pouce-pied/',
     },
   },
   openGraph: {

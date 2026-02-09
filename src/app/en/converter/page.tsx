@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/convertisseur/',
       'en-CA': '/en/converter/',
+      'x-default': '/convertisseur/',
     },
   },
   openGraph: {

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/convertisseur/metre-pied/',
       'en-CA': '/en/converter/meter-feet/',
+      'x-default': '/convertisseur/metre-pied/',
     },
   },
   openGraph: {

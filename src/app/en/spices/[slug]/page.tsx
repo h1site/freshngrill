@@ -121,6 +121,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       languages: {
         'fr-CA': `/epices/${slug}/`,
         'en-CA': `/en/spices/${slug}/`,
+        'x-default': `/epices/${slug}/`,
       },
     },
     openGraph: {

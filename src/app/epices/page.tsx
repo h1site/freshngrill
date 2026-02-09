@@ -25,6 +25,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/epices/',
       'en-CA': '/en/spices/',
+      'x-default': '/epices/',
     },
   },
   openGraph: {

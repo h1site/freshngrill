@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     languages: {
       'fr-CA': '/guide-achat/',
       'en-CA': '/en/buying-guide/',
+      'x-default': '/guide-achat/',
     },
   },
   openGraph: {
