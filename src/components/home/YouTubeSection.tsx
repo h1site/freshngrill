@@ -40,7 +40,7 @@ export function YouTubeSection({ videos, locale = 'fr' }: YouTubeSectionProps) {
   const [featuredVideo, ...otherVideos] = videos;
 
   return (
-    <section className="py-20 md:py-32 bg-neutral-950">
+    <section className="py-20 md:py-32 bg-neutral-50">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
@@ -49,14 +49,14 @@ export function YouTubeSection({ videos, locale = 'fr' }: YouTubeSectionProps) {
               <Youtube className="w-4 h-4" />
               {t.ourChannel}
             </span>
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-display text-white mt-3">
+            <h2 className="text-5xl md:text-6xl lg:text-7xl font-display text-neutral-900 mt-3">
               {t.latestVideos}
             </h2>
             <div className="w-24 h-1 bg-red-500 mt-6" />
           </div>
           <Link
             href={videosBasePath}
-            className="group flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-red-500 transition-colors mt-6 md:mt-0 uppercase tracking-wide"
+            className="group flex items-center gap-2 text-sm font-medium text-neutral-500 hover:text-red-500 transition-colors mt-6 md:mt-0 uppercase tracking-wide"
           >
             {t.allVideos}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -71,7 +71,7 @@ export function YouTubeSection({ videos, locale = 'fr' }: YouTubeSectionProps) {
               href={`${videoBasePath}/${locale === 'en' ? featuredVideo.slugEn : featuredVideo.slug}`}
               className="group block h-full"
             >
-              <article className="relative h-full min-h-[300px] lg:min-h-[400px] overflow-hidden bg-neutral-900 rounded-2xl">
+              <article className="relative h-full min-h-[300px] lg:min-h-[400px] overflow-hidden bg-neutral-200 rounded-2xl">
                 {/* Thumbnail */}
                 <div className="absolute inset-0">
                   <Image
@@ -117,7 +117,7 @@ export function YouTubeSection({ videos, locale = 'fr' }: YouTubeSectionProps) {
                 href={`${videoBasePath}/${locale === 'en' ? video.slugEn : video.slug}`}
                 className="group block"
               >
-                <article className="flex gap-4 bg-neutral-900 p-4 rounded-xl border border-neutral-800 hover:border-red-500/50 hover:bg-neutral-800/80 transition-all duration-300">
+                <article className="flex gap-4 bg-white p-4 rounded-xl border border-neutral-200 hover:border-red-500/50 hover:bg-neutral-50 shadow-sm transition-all duration-300">
                   {/* Thumbnail */}
                   <div className="relative w-32 md:w-40 aspect-video flex-shrink-0 overflow-hidden rounded-lg">
                     <Image
@@ -139,7 +139,7 @@ export function YouTubeSection({ videos, locale = 'fr' }: YouTubeSectionProps) {
 
                   {/* Content */}
                   <div className="flex flex-col justify-center flex-1 min-w-0">
-                    <h3 className="font-display text-lg md:text-xl text-white leading-tight mb-2 group-hover:text-red-400 transition-colors line-clamp-2">
+                    <h3 className="font-display text-lg md:text-xl text-neutral-900 leading-tight mb-2 group-hover:text-red-500 transition-colors line-clamp-2">
                       {locale === 'en' ? video.titleEn : video.title}
                     </h3>
                     <p className="text-neutral-500 text-sm line-clamp-2 hidden md:block">

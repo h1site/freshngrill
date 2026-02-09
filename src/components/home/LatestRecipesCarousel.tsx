@@ -69,7 +69,7 @@ export function LatestRecipesCarousel({ recipes, locale = 'fr' }: LatestRecipesC
   }, []);
 
   return (
-    <section className="py-16 md:py-20 bg-neutral-900">
+    <section className="py-16 md:py-20 bg-neutral-50">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex items-end justify-between mb-10">
@@ -78,7 +78,7 @@ export function LatestRecipesCarousel({ recipes, locale = 'fr' }: LatestRecipesC
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-semibold uppercase tracking-wider">{t.title}</span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-display text-white">
+            <h2 className="text-3xl md:text-4xl font-display text-neutral-900">
               {t.subtitle}
             </h2>
           </div>
@@ -95,7 +95,7 @@ export function LatestRecipesCarousel({ recipes, locale = 'fr' }: LatestRecipesC
             <button
               onClick={() => scroll('left')}
               disabled={!canScrollLeft}
-              className="w-10 h-10 rounded-full border border-neutral-700 text-neutral-400 flex items-center justify-center hover:bg-neutral-800 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="w-10 h-10 rounded-full border border-neutral-300 text-neutral-500 flex items-center justify-center hover:bg-neutral-200 hover:text-neutral-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
               aria-label="Previous"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -103,7 +103,7 @@ export function LatestRecipesCarousel({ recipes, locale = 'fr' }: LatestRecipesC
             <button
               onClick={() => scroll('right')}
               disabled={!canScrollRight}
-              className="w-10 h-10 rounded-full border border-neutral-700 text-neutral-400 flex items-center justify-center hover:bg-neutral-800 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+              className="w-10 h-10 rounded-full border border-neutral-300 text-neutral-500 flex items-center justify-center hover:bg-neutral-200 hover:text-neutral-900 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
               aria-label="Next"
             >
               <ChevronRight className="w-5 h-5" />
@@ -123,7 +123,7 @@ export function LatestRecipesCarousel({ recipes, locale = 'fr' }: LatestRecipesC
               href={`${recipeBasePath}/${recipe.slug}`}
               className="group flex-shrink-0 w-[72vw] sm:w-[42vw] md:w-[28vw] lg:w-[calc((100%-80px)/5)] snap-start"
             >
-              <article className="bg-neutral-800/80 rounded-2xl overflow-hidden border border-neutral-700/50 hover:border-[#F77313]/50 transition-all duration-300 h-full">
+              <article className="bg-white rounded-2xl overflow-hidden border border-neutral-200 hover:border-[#F77313]/50 shadow-sm hover:shadow-md transition-all duration-300 h-full">
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden">
                   {recipe.featuredImage ? (
@@ -135,8 +135,8 @@ export function LatestRecipesCarousel({ recipes, locale = 'fr' }: LatestRecipesC
                       sizes="(max-width: 640px) 72vw, (max-width: 768px) 42vw, (max-width: 1024px) 28vw, 20vw"
                     />
                   ) : (
-                    <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center">
-                      <ChefHat className="w-12 h-12 text-neutral-700" />
+                    <div className="absolute inset-0 bg-neutral-100 flex items-center justify-center">
+                      <ChefHat className="w-12 h-12 text-neutral-300" />
                     </div>
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -152,7 +152,7 @@ export function LatestRecipesCarousel({ recipes, locale = 'fr' }: LatestRecipesC
 
                 {/* Content - fixed height so all cards are equal */}
                 <div className="p-4 flex flex-col justify-between h-[88px]">
-                  <h3 className="font-display text-base lg:text-lg text-white leading-tight line-clamp-2 group-hover:text-[#F77313] transition-colors">
+                  <h3 className="font-display text-base lg:text-lg text-neutral-900 leading-tight line-clamp-2 group-hover:text-[#F77313] transition-colors">
                     {recipe.title}
                   </h3>
                   <div className="flex items-center gap-3 text-neutral-500 text-xs mt-auto">
