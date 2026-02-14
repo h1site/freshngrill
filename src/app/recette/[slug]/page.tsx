@@ -134,28 +134,55 @@ export default async function RecettePage({ params }: Props) {
 
       <main className="min-h-screen bg-white">
         <article>
-        {/* Hero Image - Optimisé mobile */}
-        <header className="relative h-[55vh] sm:h-[50vh] md:h-[55vh] lg:h-[60vh]">
-          {recipe.featuredImage ? (
-            <Image
-              src={recipe.featuredImage}
-              alt={recipe.title}
-              fill
-              quality={100}
-              className="object-cover object-center"
-              priority
-              sizes="100vw"
-            />
-          ) : (
-            <div className="absolute inset-0 bg-black" />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
-
-          {/* Header superposé - padding réduit sur mobile */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-12">
-            <div className="container mx-auto">
-              <RecipeHeader recipe={recipe} />
+        {/* Hero - Image portrait à droite sur desktop */}
+        <header className="relative bg-black">
+          {/* Mobile: image en background classique */}
+          <div className="lg:hidden relative h-[55vh] sm:h-[50vh]">
+            {recipe.featuredImage ? (
+              <Image
+                src={recipe.featuredImage}
+                alt={recipe.title}
+                fill
+                quality={100}
+                className="object-cover object-center"
+                priority
+                sizes="100vw"
+              />
+            ) : (
+              <div className="absolute inset-0 bg-black" />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
+            <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+              <div className="container mx-auto">
+                <RecipeHeader recipe={recipe} />
+              </div>
             </div>
+          </div>
+
+          {/* Desktop: hero split diagonal */}
+          <div className="hidden lg:flex relative min-h-[55vh]">
+            {/* Côté gauche - texte sur fond sombre */}
+            <div className="relative flex-1 bg-neutral-950 flex items-center">
+              <div className="relative z-10 pl-[max(2rem,calc((100vw-1280px)/2+1rem))] pr-12 py-12">
+                <RecipeHeader recipe={recipe} />
+              </div>
+              {/* Forme diagonale */}
+              <div className="absolute top-0 -right-24 w-48 h-full bg-neutral-950 skew-x-[-6deg] z-[1]" />
+            </div>
+            {/* Côté droit - image pleine */}
+            {recipe.featuredImage && (
+              <div className="relative w-[45%]">
+                <Image
+                  src={recipe.featuredImage}
+                  alt={recipe.title}
+                  fill
+                  quality={100}
+                  className="object-cover"
+                  priority
+                  sizes="45vw"
+                />
+              </div>
+            )}
           </div>
         </header>
 
