@@ -158,33 +158,36 @@ export default async function RecettePage({ params }: Props) {
           </div>
         </header>
 
+        {/* Introduction full width */}
+        <section className="container mx-auto px-4 pt-8 md:pt-20">
+          {/* Introduction */}
+          {recipe.introduction && (
+            <div className="relative py-4 lg:py-6 lg:border-l-4 lg:border-[#F77313] lg:bg-gradient-to-r lg:from-neutral-100 lg:to-transparent lg:pl-12">
+              <div
+                className="recipe-introduction"
+                dangerouslySetInnerHTML={{ __html: recipe.introduction }}
+              />
+            </div>
+          )}
+
+          {/* Description/Excerpt (si pas d'introduction et excerpt non tronqué) */}
+          {!recipe.introduction && recipe.excerpt && !recipe.excerpt.endsWith('...') && (
+            <div className="relative py-4 lg:py-6 lg:border-l-4 lg:border-[#F77313] lg:bg-gradient-to-r lg:from-neutral-100 lg:to-transparent lg:pl-12">
+              <p className="recipe-introduction">
+                {recipe.excerpt}
+              </p>
+            </div>
+          )}
+
+          {/* 📍 1. Annonce display responsive après intro */}
+          <GoogleAd className="my-6 print:hidden" />
+        </section>
+
         {/* Contenu principal */}
-        <section className="container mx-auto px-4 py-8 md:py-20">
+        <section className="container mx-auto px-4 pb-8 md:pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
             {/* Colonne principale */}
             <div className="lg:col-span-2 space-y-12">
-              {/* Introduction */}
-              {recipe.introduction && (
-                <div className="relative py-4 lg:py-6 lg:border-l-4 lg:border-[#F77313] lg:bg-gradient-to-r lg:from-neutral-100 lg:to-transparent lg:-ml-4 lg:pl-12">
-                  <div
-                    className="recipe-introduction"
-                    dangerouslySetInnerHTML={{ __html: recipe.introduction }}
-                  />
-                </div>
-              )}
-
-              {/* Description/Excerpt (si pas d'introduction et excerpt non tronqué) */}
-              {!recipe.introduction && recipe.excerpt && !recipe.excerpt.endsWith('...') && (
-                <div className="relative py-4 lg:py-6 lg:border-l-4 lg:border-[#F77313] lg:bg-gradient-to-r lg:from-neutral-100 lg:to-transparent lg:-ml-4 lg:pl-12">
-                  <p className="recipe-introduction">
-                    {recipe.excerpt}
-                  </p>
-                </div>
-              )}
-
-              {/* 📍 1. Annonce display responsive après intro */}
-              <GoogleAd className="my-6 print:hidden" />
-
               {/* Ingrédients inline - mobile seulement */}
               <div className="lg:hidden -mx-4 [&>:first-child]:px-4 [&>:first-child]:py-6 [&>:first-child]:rounded-none">
                 <RecipeIngredients
