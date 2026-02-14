@@ -9,6 +9,7 @@ import {
   getSimilarRecipes,
   enrichRecipeCardsWithEnglishSlugs,
   getSpicesInRecipe,
+  getNextRecipe,
 } from '@/lib/recipes';
 import { getRecentPosts } from '@/lib/posts';
 import { optimizeMetaDescription } from '@/lib/utils';
@@ -125,10 +126,12 @@ export default async function RecipePageEN({ params }: Props) {
     rawSimilarRecipes,
     spicesInRecipe,
     latestPosts,
+    nextRecipe,
   ] = await Promise.all([
     getSimilarRecipes(recipe, 12),
     getSpicesInRecipe(recipe, 6),
     getRecentPosts(6),
+    getNextRecipe(recipe, 'en'),
   ]);
   // Convert to RecipeCard format and enrich with English slugs
   const similarRecipeCards = rawSimilarRecipes.map((r) => ({
@@ -368,6 +371,54 @@ export default async function RecipePageEN({ params }: Props) {
                   </div>
                 )}
               </div>
+
+              {/* Recipe suggestion (desktop only) */}
+              {nextRecipe && (
+                <div className="hidden lg:block bg-white border-2 border-neutral-200 rounded-xl overflow-hidden shadow-sm print:hidden">
+                  <div className="px-5 pt-5 pb-3">
+                    <span className="text-[#F77313] text-xs font-medium uppercase tracking-widest">
+                      Want to try?
+                    </span>
+                    <h3 className="font-display text-base mt-1 text-neutral-900">
+                      Another recipe for you
+                    </h3>
+                  </div>
+                  <Link href={`/en/recipe/${nextRecipe.slugEn || nextRecipe.slug}/`} className="group block">
+                    {nextRecipe.featuredImage && (
+                      <div className="relative aspect-[16/10] mx-5 rounded-lg overflow-hidden">
+                        <Image
+                          src={nextRecipe.featuredImage}
+                          alt={nextRecipe.title}
+                          fill
+                          quality={85}
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(min-width: 1024px) 350px, 300px"
+                        />
+                      </div>
+                    )}
+                    <div className="px-5 py-4">
+                      <p className="text-sm font-semibold text-neutral-900 group-hover:text-[#F77313] transition-colors line-clamp-2">
+                        {nextRecipe.title}
+                      </p>
+                      <div className="flex items-center gap-3 mt-2 text-xs text-neutral-500">
+                        {nextRecipe.totalTime && (
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-3 h-3" />
+                            {nextRecipe.totalTime} min
+                          </span>
+                        )}
+                        {nextRecipe.difficulty && (
+                          <span className="capitalize">{nextRecipe.difficulty}</span>
+                        )}
+                      </div>
+                      <span className="inline-flex items-center gap-1 mt-3 text-xs font-medium text-[#F77313]">
+                        View recipe
+                        <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </Link>
+                </div>
+              )}
 
               {/* Advertising CTA (desktop only, mobile version is after instructions) */}
               <div className="hidden lg:block bg-neutral-900 text-white p-5 rounded-xl print:hidden">
