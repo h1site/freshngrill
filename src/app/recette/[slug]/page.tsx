@@ -166,10 +166,8 @@ export default async function RecettePage({ params }: Props) {
               <div className="relative z-10 pl-[max(2rem,calc((100vw-1280px)/2+1rem))] pr-12 py-12">
                 <RecipeHeader recipe={recipe} />
               </div>
-              {/* Forme diagonale */}
-              <div className="absolute top-0 -right-24 w-48 h-full bg-neutral-950 skew-x-[-6deg] z-[1]" />
             </div>
-            {/* Côté droit - image pleine */}
+            {/* Côté droit - image avec dégradé */}
             {recipe.featuredImage && (
               <div className="relative w-[45%]">
                 <Image
@@ -181,6 +179,7 @@ export default async function RecettePage({ params }: Props) {
                   priority
                   sizes="45vw"
                 />
+                <div className="absolute inset-0 bg-gradient-to-r from-neutral-950 via-neutral-950/40 to-transparent" />
               </div>
             )}
           </div>
