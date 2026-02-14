@@ -141,6 +141,7 @@ export default async function RecettePage({ params }: Props) {
               src={recipe.featuredImage}
               alt={recipe.title}
               fill
+              quality={90}
               className="object-cover object-center"
               priority
               sizes="100vw"
