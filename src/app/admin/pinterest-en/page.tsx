@@ -354,7 +354,12 @@ export default function PinterestEnBatchPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {recipes.map((recipe) => (
+            {[...recipes].sort((a, b) => {
+              // Without Pinterest image first
+              if (!a.hasPinterestImageEn && b.hasPinterestImageEn) return -1;
+              if (a.hasPinterestImageEn && !b.hasPinterestImageEn) return 1;
+              return 0;
+            }).map((recipe) => (
               <tr
                 key={recipe.id}
                 className={`hover:bg-gray-50 ${

@@ -17,9 +17,9 @@ async function compressImage(file: File, maxSizeMB: number = 4): Promise<File> {
     const ctx = canvas.getContext('2d');
 
     img.onload = () => {
-      // Calculate new dimensions (max 2000px)
+      // Calculate new dimensions (max 4000px to preserve quality)
       let { width, height } = img;
-      const maxDim = 2000;
+      const maxDim = 4000;
       if (width > maxDim || height > maxDim) {
         if (width > height) {
           height = (height / width) * maxDim;
@@ -55,7 +55,7 @@ async function compressImage(file: File, maxSizeMB: number = 4): Promise<File> {
           quality
         );
       };
-      tryCompress(0.85);
+      tryCompress(0.92);
     };
 
     img.onerror = () => reject(new Error('Failed to load image'));
