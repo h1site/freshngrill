@@ -33,7 +33,7 @@ async function getLatestRecipes(): Promise<Recipe[]> {
     .from('recipes')
     .select('id, slug, title, excerpt, featured_image, total_time, difficulty')
     .order('published_at', { ascending: false })
-    .limit(10) as { data: Recipe[] | null };
+    .limit(8) as { data: Recipe[] | null };
 
   return data || [];
 }
