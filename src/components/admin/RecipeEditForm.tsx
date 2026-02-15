@@ -290,7 +290,7 @@ export default function RecipeEditForm({
               Pinterest Image (vertical 2:3)
               <span className="text-gray-400 font-normal ml-2">1000x1500px recommended</span>
             </label>
-            <ImageUpload value={form.pinterest_image} onChange={(url) => setForm({ ...form, pinterest_image: url })} />
+            <ImageUpload value={form.pinterest_image} onChange={(url) => setForm({ ...form, pinterest_image: url })} pinterest />
           </div>
         </div>
         <div className="mt-4">
