@@ -10,6 +10,22 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Fresh N' Grill | BBQ Recipes & Grilling Tips",
   description: 'Discover our collection of BBQ recipes, grilling tips, and outdoor cooking ideas. Fire up the grill!',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: "Fresh N' Grill | BBQ Recipes & Grilling Tips",
+    description: 'Discover our collection of BBQ recipes, grilling tips, and outdoor cooking ideas. Fire up the grill!',
+    url: '/',
+    siteName: "Fresh N' Grill",
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Fresh N' Grill | BBQ Recipes & Grilling Tips",
+    description: 'Discover our collection of BBQ recipes, grilling tips, and outdoor cooking ideas. Fire up the grill!',
+  },
 };
 
 const difficultyColor: Record<string, string> = {

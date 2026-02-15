@@ -5,6 +5,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import ScrollToTop from '@/components/layout/ScrollToTop';
+import WebSiteSchema from '@/components/schema/WebSiteSchema';
 import { siteConfig } from '@/lib/config';
 
 const inter = Inter({
@@ -57,6 +58,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <WebSiteSchema />
+      </head>
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-PLMYVL094V" strategy="afterInteractive" />
       <Script id="gtag-init" strategy="afterInteractive">
         {`window.dataLayer = window.dataLayer || [];

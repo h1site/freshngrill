@@ -7,6 +7,22 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: "Blog | Fresh N' Grill",
   description: 'BBQ tips, grilling techniques, steak guides, and outdoor cooking articles.',
+  alternates: {
+    canonical: '/blog/',
+  },
+  openGraph: {
+    title: "Blog | Fresh N' Grill",
+    description: 'BBQ tips, grilling techniques, steak guides, and outdoor cooking articles.',
+    url: '/blog/',
+    siteName: "Fresh N' Grill",
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Blog | Fresh N' Grill",
+    description: 'BBQ tips, grilling techniques, steak guides, and outdoor cooking articles.',
+  },
 };
 
 export default async function BlogPage() {

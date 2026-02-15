@@ -7,6 +7,22 @@ export const revalidate = 60;
 export const metadata: Metadata = {
   title: 'Recipes',
   description: 'Browse our collection of BBQ recipes, grilling guides, and outdoor cooking ideas.',
+  alternates: {
+    canonical: '/recipe/',
+  },
+  openGraph: {
+    title: "Recipes | Fresh N' Grill",
+    description: 'Browse our collection of BBQ recipes, grilling guides, and outdoor cooking ideas.',
+    url: '/recipe/',
+    siteName: "Fresh N' Grill",
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Recipes | Fresh N' Grill",
+    description: 'Browse our collection of BBQ recipes, grilling guides, and outdoor cooking ideas.',
+  },
 };
 
 async function getRecipes() {

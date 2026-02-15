@@ -6,6 +6,8 @@ import { getRecipeBySlug } from '@/lib/recipes';
 import { Clock, Users, Flame, ChefHat, ArrowLeft } from 'lucide-react';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
 import CookModeButton from '@/components/recipe/CookModeButton';
+import RecipeSchema from '@/components/recipe/RecipeSchema';
+import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -22,11 +24,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: recipe.seoTitle || recipe.title,
     description: recipe.seoDescription || recipe.excerpt || undefined,
+    alternates: {
+      canonical: `/recipe/${slug}/`,
+    },
     openGraph: {
       title: recipe.title,
       description: recipe.excerpt || undefined,
-      images: recipe.featuredImage ? [{ url: recipe.featuredImage }] : [],
+      images: recipe.featuredImage
+        ? [{ url: recipe.featuredImage, width: 1200, height: 630, alt: recipe.title }]
+        : [],
       type: 'article',
+      url: `/recipe/${slug}/`,
+      siteName: "Fresh N' Grill",
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: recipe.title,
+      description: recipe.excerpt || undefined,
+      images: recipe.featuredImage ? [recipe.featuredImage] : [],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
     },
   };
 }
@@ -49,7 +70,16 @@ export default async function RecipePage({ params }: Props) {
   const instructions = recipe.instructions || [];
   const nutrition = recipe.nutrition;
 
+  const breadcrumbs = [
+    { name: 'Home', url: '/' },
+    { name: 'Recipes', url: '/recipe' },
+    { name: recipe.title, url: `/recipe/${slug}/` },
+  ];
+
   return (
+    <>
+    <RecipeSchema recipe={recipe} />
+    <BreadcrumbSchema items={breadcrumbs} />
     <main className="min-h-screen bg-white">
       {/* Hero */}
       <header className="relative bg-black">
@@ -289,5 +319,6 @@ export default async function RecipePage({ params }: Props) {
         </div>
       </section>
     </main>
+    </>
   );
 }
