@@ -14,7 +14,7 @@ export default function PostCard({ post, variant = 'default' }: Props) {
   const isHorizontal = variant === 'horizontal';
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('fr-CA', {
+    return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -45,13 +45,13 @@ export default function PostCard({ post, variant = 'default' }: Props) {
           <div className="flex-1 py-1">
             {/* Category */}
             {post.categories[0] && (
-              <span className="text-[#F77313] text-xs font-medium uppercase tracking-wider">
+              <span className="text-[#00bf63] text-xs font-medium uppercase tracking-wider">
                 {post.categories[0].name}
               </span>
             )}
 
             {/* Title */}
-            <h3 className="font-display text-lg text-black group-hover:text-[#F77313] transition-colors leading-tight mt-1 mb-2">
+            <h3 className="font-display text-lg text-black group-hover:text-[#00bf63] transition-colors leading-tight mt-1 mb-2">
               {post.title}
             </h3>
 
@@ -91,7 +91,7 @@ export default function PostCard({ post, variant = 'default' }: Props) {
 
           {/* Category Badge */}
           {post.categories[0] && (
-            <span className="absolute top-4 left-4 bg-[#F77313] text-white text-xs font-medium uppercase tracking-wider px-3 py-1.5">
+            <span className="absolute top-4 left-4 bg-[#00bf63] text-white text-xs font-medium uppercase tracking-wider px-3 py-1.5">
               {post.categories[0].name}
             </span>
           )}
@@ -113,12 +113,12 @@ export default function PostCard({ post, variant = 'default' }: Props) {
             <span className="w-1 h-1 rounded-full bg-neutral-300" />
             <span className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
-              {post.readingTime} min de lecture
+              {post.readingTime} min read
             </span>
           </div>
 
           {/* Title */}
-          <h3 className={`font-display text-black group-hover:text-[#F77313] transition-colors leading-tight ${isLarge ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'}`}>
+          <h3 className={`font-display text-black group-hover:text-[#00bf63] transition-colors leading-tight ${isLarge ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'}`}>
             {post.title}
           </h3>
 
@@ -132,7 +132,7 @@ export default function PostCard({ post, variant = 'default' }: Props) {
           {/* Author */}
           {post.author && (
             <div className="flex items-center gap-2 mt-4">
-              <span className="text-xs text-neutral-500">Par {post.author.name}</span>
+              <span className="text-xs text-neutral-500">By {post.author.name}</span>
             </div>
           )}
         </div>

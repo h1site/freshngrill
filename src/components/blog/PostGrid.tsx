@@ -10,7 +10,7 @@ export default function PostGrid({ posts, variant = 'default' }: Props) {
   if (posts.length === 0) {
     return (
       <div className="text-center py-16">
-        <p className="text-neutral-500 text-lg">Aucun article trouvé</p>
+        <p className="text-neutral-500 text-lg">No articles found</p>
       </div>
     );
   }
