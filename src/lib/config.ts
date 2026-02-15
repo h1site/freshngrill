@@ -1,10 +1,10 @@
 // Configuration du site
 export const siteConfig = {
-  name: 'Menucochon',
-  description: 'Découvrez notre collection de recettes gourmandes et faciles à réaliser. Des idées de repas pour tous les jours.',
-  url: 'https://menucochon.com',
-  locale: 'fr_CA',
-  author: 'Menucochon',
+  name: "Fresh N' Grill",
+  description: 'Discover our collection of BBQ recipes, grilling tips, and outdoor cooking ideas. Fire up the grill!',
+  url: 'https://freshngrill.com',
+  locale: 'en_US',
+  author: "Fresh N' Grill",
 };
 
 /**
