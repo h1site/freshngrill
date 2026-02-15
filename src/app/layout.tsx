@@ -29,9 +29,7 @@ export const metadata: Metadata = {
   keywords: ['bbq recipes', 'grilling', 'barbecue', 'outdoor cooking', 'grill tips', 'smoking meat'],
   authors: [{ name: siteConfig.author }],
   icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-    ],
+    icon: '/icon.svg',
   },
   openGraph: {
     type: 'website',
