@@ -2,7 +2,8 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
-import { Clock, Flame, ArrowRight, ChefHat, BookOpen } from 'lucide-react';
+import { getRecentPosts } from '@/lib/posts';
+import { Clock, Flame, ArrowRight, ChefHat, BookOpen, Calendar } from 'lucide-react';
 
 export const revalidate = 60;
 
@@ -38,7 +39,10 @@ async function getLatestRecipes(): Promise<Recipe[]> {
 }
 
 export default async function HomePage() {
-  const recipes = await getLatestRecipes();
+  const [recipes, recentPosts] = await Promise.all([
+    getLatestRecipes(),
+    getRecentPosts(5),
+  ]);
 
   return (
     <main className="min-h-screen bg-white">
@@ -195,6 +199,80 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* Latest Blog Posts */}
+      {recentPosts.length > 0 && (
+        <section className="container mx-auto px-4 py-16 md:py-24">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-[#00bf63] font-bold uppercase tracking-wider text-sm mb-2">From the Blog</p>
+              <h2 className="font-display text-3xl md:text-4xl tracking-wide text-neutral-900">
+                Latest Articles
+              </h2>
+            </div>
+            <Link
+              href="/blog"
+              className="hidden sm:inline-flex items-center gap-2 text-[#00bf63] font-bold uppercase tracking-wider text-sm hover:gap-3 transition-all"
+            >
+              View All <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {recentPosts.slice(0, 3).map((post) => (
+              <Link
+                key={post.id}
+                href={`/blog/${post.slug}`}
+                className="group block"
+              >
+                <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-3">
+                  {post.featuredImage ? (
+                    <Image
+                      src={post.featuredImage}
+                      alt={post.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-neutral-200" />
+                  )}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
+                  {post.categories[0] && (
+                    <span className="absolute top-3 left-3 bg-[#00bf63] text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded">
+                      {post.categories[0].name}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-3 text-xs text-neutral-500 mb-1.5">
+                  <span className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                  </span>
+                  <span className="w-1 h-1 rounded-full bg-neutral-300" />
+                  <span>{post.readingTime} min read</span>
+                </div>
+                <h3 className="font-bold text-neutral-900 text-base leading-snug group-hover:text-[#00bf63] transition-colors line-clamp-2">
+                  {post.title}
+                </h3>
+                {post.excerpt && (
+                  <p className="text-neutral-500 text-sm mt-1 line-clamp-2">{post.excerpt}</p>
+                )}
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile view all */}
+          <div className="sm:hidden mt-8 text-center">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white font-bold uppercase tracking-wider text-sm rounded-lg hover:bg-neutral-800 transition-colors"
+            >
+              View All Articles <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
