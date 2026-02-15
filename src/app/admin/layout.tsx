@@ -1,10 +1,8 @@
-import { redirect } from 'next/navigation';
-import { getUser, isAdmin } from '@/lib/supabase-server';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
 export const metadata = {
-  title: 'Admin - Menucochon',
-  description: 'Administration de Menucochon',
+  title: "Admin - Fresh N' Grill",
+  description: "Fresh N' Grill Administration",
   robots: {
     index: false,
     follow: false,
@@ -15,23 +13,11 @@ export const metadata = {
   },
 };
 
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // Double vérification de sécurité (en plus du middleware)
-  const user = await getUser();
-
-  if (!user) {
-    redirect('/login?redirectTo=/admin');
-  }
-
-  const admin = await isAdmin();
-  if (!admin) {
-    redirect('/');
-  }
-
   return (
     <div className="flex min-h-screen bg-gray-100">
       <AdminSidebar />

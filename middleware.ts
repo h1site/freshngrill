@@ -102,36 +102,10 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Protection des routes /admin
-  if (request.nextUrl.pathname.startsWith('/admin')) {
-    if (!user) {
-      const url = request.nextUrl.clone();
-      url.pathname = '/login';
-      url.searchParams.set('redirectTo', request.nextUrl.pathname);
-      return NextResponse.redirect(url);
-    }
+  // Admin auth temporarily disabled — TODO: re-enable with login page
 
-    // Vérifier si l'utilisateur est admin
-    if (user.email !== ADMIN_EMAIL) {
-      const url = request.nextUrl.clone();
-      url.pathname = '/';
-      return NextResponse.redirect(url);
-    }
-  }
-
-  // Rediriger les utilisateurs connectés depuis login/register
-  if (user && (request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register')) {
-    const redirectTo = request.nextUrl.searchParams.get('redirectTo') || '/admin';
-    const url = request.nextUrl.clone();
-    url.pathname = redirectTo;
-    url.searchParams.delete('redirectTo');
-    return NextResponse.redirect(url);
-  }
-
-  // Set locale cookie AFTER all other middleware logic
-  // This ensures it's on the final response
-  const locale = currentPathname.startsWith('/en') ? 'en' : 'fr';
-  supabaseResponse.cookies.set('x-locale', locale, { path: '/', sameSite: 'lax' });
+  // English-only site
+  supabaseResponse.cookies.set('x-locale', 'en', { path: '/', sameSite: 'lax' });
 
   return supabaseResponse;
 }
