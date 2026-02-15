@@ -84,9 +84,8 @@ export async function PUT(
 
     // Notify IndexNow about the update (fire and forget)
     const slug = updatedRecipe?.slug;
-    const slugEn = translationResult?.slug_en || translationData?.slug_en;
     if (slug) {
-      submitRecipeUrls(slug, slugEn).catch(() => {});
+      submitRecipeUrls(slug).catch(() => {});
     }
 
     return NextResponse.json({

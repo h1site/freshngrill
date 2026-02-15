@@ -335,7 +335,7 @@ export async function POST(request: NextRequest) {
         }
 
         // 6. Notify IndexNow (fire and forget)
-        submitRecipeUrls(recipeFr.slug, recipeEn.slug_en).catch(() => {});
+        submitRecipeUrls(recipeFr.slug).catch(() => {});
 
         results.success++;
       } catch (err) {

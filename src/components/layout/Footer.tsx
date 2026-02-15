@@ -157,10 +157,21 @@ export default function Footer() {
           <p className="text-neutral-500 text-sm">
             &copy; {currentYear} Fresh N&apos; Grill. All rights reserved.
           </p>
-          <div className="flex items-center gap-2 text-neutral-500 text-sm">
-            <span>Made with</span>
-            <span className="text-[#00bf63]">&#9829;</span>
-            <span>for BBQ lovers</span>
+          <div className="flex items-center gap-4 text-neutral-500 text-sm">
+            <a
+              href="https://menucochon.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              menucochon.com
+            </a>
+            <span className="hidden md:inline">•</span>
+            <div className="flex items-center gap-2">
+              <span>Made with</span>
+              <span className="text-[#00bf63]">&#9829;</span>
+              <span>for BBQ lovers</span>
+            </div>
           </div>
         </div>
       </div>

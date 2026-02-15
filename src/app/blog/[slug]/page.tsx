@@ -98,7 +98,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
-      <ArticleSchema post={post} locale="fr" />
+      <ArticleSchema post={post} />
       <BreadcrumbSchema items={breadcrumbs} />
       <main className="min-h-screen bg-white">
         <article>

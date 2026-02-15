@@ -9,7 +9,7 @@ function transformAuthor(author: any): Author {
   if (!author) {
     return {
       id: 0,
-      name: 'Fresh N' Grill',
+      name: "Fresh N' Grill",
       slug: 'freshngrill',
       avatar: DEFAULT_AVATAR
     };
@@ -17,7 +17,7 @@ function transformAuthor(author: any): Author {
 
   return {
     id: author.id || 0,
-    name: author.name || 'Fresh N' Grill',
+    name: author.name || "Fresh N' Grill",
     slug: author.slug || 'freshngrill',
     avatar: author.avatar || DEFAULT_AVATAR,
     bio: author.bio,
