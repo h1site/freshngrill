@@ -20,6 +20,7 @@ export default function TipTapEditor({
   minHeight = '150px'
 }: TipTapEditorProps) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         heading: {
