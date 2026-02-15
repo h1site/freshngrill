@@ -1,0 +1,81 @@
+{
+  "slug": "boeuf-braise-carottes-pommes-de-terre",
+  "title": "Boeuf braisé aux carottes et pommes de terre",
+  "excerpt": "Cuisson lente au bouillon de boeuf, tomate et vin rouge. Un plat réconfortant et savoureux.",
+  "introduction": "Ce boeuf braisé fondant est le parfait plat réconfortant. La viande mijote doucement dans un bouillon de boeuf enrichi de vin rouge et de pâte de tomate, accompagnée de carottes et de pommes de terre grelots. Le résultat? Une viande tendre à la fourchette et une sauce onctueuse qui nappe délicieusement tous les ingrédients.",
+  "prep_time": 15,
+  "cook_time": 180,
+  "rest_time": 0,
+  "total_time": 195,
+  "servings": 4,
+  "servings_unit": "personnes",
+  "difficulty": "moyen",
+  "cuisine": "quebecoise",
+  "ingredients": [
+    {
+      "title": "Viande et légumes",
+      "items": [
+        { "quantity": "700", "unit": "g", "name": "boeuf à braiser", "note": "coupé en gros cubes (vous pouvez utiliser du boeuf ou de la bavette selon votre préférence)" },
+        { "quantity": "500", "unit": "g", "name": "pommes de terre grelots", "note": "entières" },
+        { "quantity": "3", "name": "carottes", "note": "tranchées" },
+        { "quantity": "3", "name": "gousses d'ail", "note": "hachées" },
+        { "quantity": "1", "name": "petit oignon", "note": "haché" }
+      ]
+    },
+    {
+      "title": "Liquides et assaisonnements",
+      "items": [
+        { "quantity": "2", "unit": "c. à soupe", "name": "pâte de tomate" },
+        { "quantity": "500", "unit": "ml", "name": "bouillon de boeuf" },
+        { "quantity": "125", "unit": "ml", "name": "vin rouge sec" },
+        { "quantity": "1", "name": "feuille de laurier", "note": "optionnel" },
+        { "quantity": "1", "unit": "c. à thé", "name": "thym", "note": "optionnel" },
+        { "name": "sel et poivre", "note": "au goût" },
+        { "name": "huile", "note": "pour cuisson" }
+      ]
+    },
+    {
+      "title": "Garniture",
+      "items": [
+        { "name": "basilic frais", "note": "haché" },
+        { "name": "oignon vert", "note": "émincé" }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "step": 1,
+      "title": "Saisir la viande",
+      "content": "Dans une grande cocotte ou poêle profonde, chauffer un peu d'huile à feu moyen-élevé. Saisir les cubes de boeuf 2-3 minutes par côté jusqu'à belle coloration. Retirer et réserver."
+    },
+    {
+      "step": 2,
+      "title": "Base aromatique",
+      "content": "Dans la même casserole, faire revenir l'oignon 2 minutes. Ajouter l'ail et cuire 30 secondes."
+    },
+    {
+      "step": 3,
+      "title": "Tomate et vin",
+      "content": "Ajouter la pâte de tomate et cuire 30 à 60 secondes pour enlever l'acidité. Déglacer avec le vin rouge et laisser réduire 1 à 2 minutes."
+    },
+    {
+      "step": 4,
+      "title": "Mijotage",
+      "content": "Remettre la viande, ajouter les carottes, pommes de terre, bouillon, laurier et thym. Saler et poivrer. Couvrir."
+    },
+    {
+      "step": 5,
+      "title": "Cuisson lente",
+      "content": "Laisser mijoter à feu doux 2h30 à 3h, jusqu'à ce que le boeuf soit très tendre et la sauce bien nappante."
+    },
+    {
+      "step": 6,
+      "title": "Finition",
+      "content": "Retirer le laurier. Ajouter le basilic frais. Ajuster l'assaisonnement."
+    }
+  ],
+  "conclusion": "Servir bien chaud, garni d'oignon vert frais. Délicieux avec du pain croûté ou tel quel. Ce plat est encore meilleur le lendemain! Peut aussi se faire à la mijoteuse (8h à low). Une noisette de beurre hors feu donne une sauce encore plus soyeuse.",
+  "tags": ["boeuf", "braise", "comfort-food", "hiver", "mijote"],
+  "seo_title": "Boeuf braisé aux carottes et pommes de terre | Recette québécoise",
+  "seo_description": "Recette de boeuf braisé lentement avec carottes et pommes de terre grelots. Cuisson au bouillon de boeuf, vin rouge et tomate. Plat réconfortant parfait."
+}

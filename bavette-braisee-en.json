@@ -1,0 +1,73 @@
+{
+  "locale": "en",
+  "slug_en": "slow-braised-beef-carrots-potatoes",
+  "title": "Slow-Braised Beef with Carrots and Baby Potatoes",
+  "excerpt": "Beef broth, tomato paste and red wine. A comforting and flavorful dish.",
+  "introduction": "This melt-in-your-mouth braised beef is the ultimate comfort food. The meat simmers gently in beef broth enriched with red wine and tomato paste, alongside carrots and baby potatoes. The result? Fork-tender beef and a velvety sauce that coats every ingredient beautifully.",
+  "ingredients": [
+    {
+      "title": "Meat and vegetables",
+      "items": [
+        { "quantity": "1½ to 2", "unit": "lb", "name": "beef for braising", "note": "cut into large chunks (you can use beef chuck or flank steak according to your preference)" },
+        { "quantity": "1", "unit": "lb", "name": "baby potatoes", "note": "whole" },
+        { "quantity": "3", "name": "carrots", "note": "sliced" },
+        { "quantity": "3", "name": "cloves garlic", "note": "minced" },
+        { "quantity": "1", "name": "small onion", "note": "chopped" }
+      ]
+    },
+    {
+      "title": "Liquids and seasonings",
+      "items": [
+        { "quantity": "2", "unit": "tbsp", "name": "tomato paste" },
+        { "quantity": "2", "unit": "cups", "name": "beef broth" },
+        { "quantity": "½", "unit": "cup", "name": "dry red wine" },
+        { "quantity": "1", "name": "bay leaf", "note": "optional" },
+        { "quantity": "1", "unit": "tsp", "name": "thyme", "note": "optional" },
+        { "name": "salt and pepper", "note": "to taste" },
+        { "name": "cooking oil" }
+      ]
+    },
+    {
+      "title": "Garnish",
+      "items": [
+        { "name": "fresh basil", "note": "chopped" },
+        { "name": "green onions", "note": "sliced" }
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "step": 1,
+      "title": "Sear the beef",
+      "content": "Heat oil in a large pot over medium-high heat. Sear the beef chunks 2-3 minutes per side until well browned. Remove and set aside."
+    },
+    {
+      "step": 2,
+      "title": "Aromatics",
+      "content": "In the same pot, sauté the onion for 2 minutes. Add garlic and cook for 30 seconds."
+    },
+    {
+      "step": 3,
+      "title": "Tomato & wine",
+      "content": "Stir in tomato paste and cook 30-60 seconds. Deglaze with red wine and simmer 1-2 minutes."
+    },
+    {
+      "step": 4,
+      "title": "Braising",
+      "content": "Return beef to the pot. Add carrots, potatoes, beef broth, bay leaf and thyme. Season with salt and pepper. Cover."
+    },
+    {
+      "step": 5,
+      "title": "Slow cooking",
+      "content": "Simmer on low heat for 2½ to 3 hours, until the beef is fork-tender and the sauce thickened."
+    },
+    {
+      "step": 6,
+      "title": "Finish",
+      "content": "Remove bay leaf. Stir in fresh basil. Adjust seasoning."
+    }
+  ],
+  "conclusion": "Serve hot, topped with green onions. Perfect comfort food on its own or with crusty bread. Even better the next day! Works great in a slow cooker (8 hours on low). A small knob of butter at the end adds richness.",
+  "seo_title": "Slow-Braised Beef with Carrots and Potatoes | Easy Recipe",
+  "seo_description": "Recipe for slow-braised beef with carrots and baby potatoes. Cooked in beef broth, red wine and tomato paste. Perfect comfort food."
+}
