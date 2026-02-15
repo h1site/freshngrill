@@ -102,7 +102,19 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Admin auth temporarily disabled — TODO: re-enable with login page
+  // Protect /admin routes
+  if (request.nextUrl.pathname.startsWith('/admin')) {
+    if (!user) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      return NextResponse.redirect(url);
+    }
+    if (user.email !== ADMIN_EMAIL) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/';
+      return NextResponse.redirect(url);
+    }
+  }
 
   // English-only site
   supabaseResponse.cookies.set('x-locale', 'en', { path: '/', sameSite: 'lax' });

@@ -1,3 +1,5 @@
+import { redirect } from 'next/navigation';
+import { getUser, isAdmin } from '@/lib/supabase-server';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
 export const metadata = {
@@ -13,11 +15,21 @@ export const metadata = {
   },
 };
 
-export default function AdminLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const user = await getUser();
+  if (!user) {
+    redirect('/login');
+  }
+
+  const admin = await isAdmin();
+  if (!admin) {
+    redirect('/');
+  }
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       <AdminSidebar />
