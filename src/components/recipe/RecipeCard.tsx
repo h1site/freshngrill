@@ -11,27 +11,24 @@ interface Props {
   locale?: Locale;
 }
 
-export default function RecipeCard({ recipe, variant = 'default', locale = 'fr' }: Props) {
+export default function RecipeCard({ recipe, variant = 'default' }: Props) {
   const isLarge = variant === 'large';
-  const recipeBasePath = locale === 'en' ? '/en/recipe' : '/recette';
-  const recipeSlug = locale === 'en' && recipe.slugEn ? recipe.slugEn : recipe.slug;
 
-  const difficultyLabels: Record<string, Record<string, string>> = {
-    fr: { facile: 'Facile', moyen: 'Moyen', difficile: 'Difficile' },
-    en: { facile: 'Easy', moyen: 'Medium', difficile: 'Hard' },
+  const difficultyLabels: Record<string, string> = {
+    easy: 'Easy', medium: 'Medium', hard: 'Hard',
+    facile: 'Easy', moyen: 'Medium', difficile: 'Hard',
   };
-  const difficultyLabel = difficultyLabels[locale]?.[recipe.difficulty] || recipe.difficulty;
+  const difficultyLabel = difficultyLabels[recipe.difficulty] || recipe.difficulty;
 
   const difficultyColors: Record<string, string> = {
-    facile: 'text-emerald-500',
-    moyen: 'text-amber-500',
-    difficile: 'text-red-500',
+    easy: 'text-emerald-500', medium: 'text-amber-500', hard: 'text-red-500',
+    facile: 'text-emerald-500', moyen: 'text-amber-500', difficile: 'text-red-500',
   };
   const difficultyColor = difficultyColors[recipe.difficulty] || 'text-neutral-500';
 
   return (
     <article className="group">
-      <Link href={`${recipeBasePath}/${recipeSlug}`} className="block">
+      <Link href={`/recipe/${recipe.slug}`} className="block">
         {/* Image Container with CSS hover */}
         <div
           className={`relative overflow-hidden bg-neutral-100 rounded-lg transition-transform duration-300 ease-out group-hover:-translate-y-1 ${isLarge ? 'aspect-[4/5]' : 'aspect-[3/4]'}`}
@@ -56,7 +53,7 @@ export default function RecipeCard({ recipe, variant = 'default', locale = 'fr' 
 
           {/* Category Badge */}
           {recipe.categories[0] && (
-            <span className="absolute top-4 left-4 bg-[#F77313] text-white text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-sm shadow-lg shadow-orange-500/25">
+            <span className="absolute top-4 left-4 bg-[#00bf63] text-white text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-sm shadow-lg shadow-emerald-500/25">
               {recipe.categories[0].name}
             </span>
           )}
@@ -73,7 +70,7 @@ export default function RecipeCard({ recipe, variant = 'default', locale = 'fr' 
                 )}
               </div>
               <div className="w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-lg transform group-hover:rotate-45 transition-transform duration-300">
-                <ArrowUpRight className="w-4 h-4 text-[#F77313]" />
+                <ArrowUpRight className="w-4 h-4 text-[#00bf63]" />
               </div>
             </div>
           </div>
@@ -99,7 +96,7 @@ export default function RecipeCard({ recipe, variant = 'default', locale = 'fr' 
           <h3 className={`font-display text-black leading-tight relative ${isLarge ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'}`}>
             <span className="relative">
               {recipe.title}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#F77313] group-hover:w-full transition-all duration-300 ease-out" />
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#00bf63] group-hover:w-full transition-all duration-300 ease-out" />
             </span>
           </h3>
         </div>
