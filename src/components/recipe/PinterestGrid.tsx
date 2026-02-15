@@ -108,7 +108,7 @@ export default function PinterestGrid({ recipes }: PinterestGridProps) {
 
               {/* Content */}
               <div className="p-4">
-                <h3 className="font-bold text-neutral-900 text-base leading-snug group-hover:text-[#00bf63] transition-colors line-clamp-2">
+                <h3 className="font-bold text-neutral-900 text-base leading-snug group-hover:text-[#00bf63] transition-colors line-clamp-2 min-h-[2.75rem]">
                   {recipe.title}
                 </h3>
                 {recipe.excerpt && (

@@ -93,11 +93,8 @@ export default function RecipeCard({ recipe, variant = 'default' }: Props) {
           </div>
 
           {/* Title with underline animation */}
-          <h3 className={`font-display text-black leading-tight relative ${isLarge ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'}`}>
-            <span className="relative">
-              {recipe.title}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#00bf63] group-hover:w-full transition-all duration-300 ease-out" />
-            </span>
+          <h3 className={`font-display text-black leading-tight line-clamp-2 ${isLarge ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'}`}>
+            {recipe.title}
           </h3>
         </div>
       </Link>
