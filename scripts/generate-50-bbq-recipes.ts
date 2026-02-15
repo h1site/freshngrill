@@ -191,7 +191,7 @@ async function generateCartoonImage(imageHint: string): Promise<string | null> {
       size: '1024x1792',
       quality: 'hd',
     });
-    return response.data[0].url!;
+    return response.data?.[0]?.url ?? null;
   } catch (error: any) {
     console.error(`    Image generation failed: ${error.message}`);
     return null;

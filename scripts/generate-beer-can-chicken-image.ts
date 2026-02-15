@@ -21,7 +21,8 @@ async function generateImage() {
     quality: 'hd',
   });
 
-  const imageUrl = response.data[0].url!;
+  const imageUrl = response.data?.[0]?.url;
+  if (!imageUrl) { console.error('No image URL returned'); return; }
   console.log('Image generated! Downloading...');
 
   // Download the image
