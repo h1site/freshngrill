@@ -85,10 +85,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: recipe.seo_title || recipe.title,
-    description: recipe.seo_description || recipe.excerpt,
+    description: recipe.seo_description || recipe.excerpt || undefined,
     openGraph: {
       title: recipe.title,
-      description: recipe.excerpt,
+      description: recipe.excerpt || undefined,
       images: recipe.featured_image ? [{ url: recipe.featured_image }] : [],
       type: 'article',
     },
