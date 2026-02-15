@@ -1,44 +1,32 @@
-interface Props {
-  locale?: 'fr' | 'en';
-}
-
-export default function WebSiteSchema({ locale = 'fr' }: Props) {
-  const baseUrl = 'https://menucochon.com';
-  const searchPath = locale === 'en' ? '/en/search/' : '/recherche/';
+export default function WebSiteSchema() {
+  const baseUrl = 'https://freshngrill.com';
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     '@id': `${baseUrl}/#website`,
-    name: 'Menucochon',
-    alternateName: ['Menu Cochon', 'Menucochon.com'],
-    description: locale === 'en'
-      ? 'Discover hundreds of delicious Quebec recipes. Easy homemade meals from appetizers to desserts.'
-      : 'Découvrez des centaines de recettes québécoises gourmandes. Des repas maison faciles des entrées aux desserts.',
+    name: "Fresh N' Grill",
+    alternateName: ['Fresh N Grill', 'FreshNGrill'],
+    description: 'Discover our collection of BBQ recipes, grilling tips, and outdoor cooking ideas. Fire up the grill!',
     url: baseUrl,
-    inLanguage: locale === 'en' ? 'en-CA' : 'fr-CA',
+    inLanguage: 'en',
     publisher: {
       '@type': 'Organization',
       '@id': `${baseUrl}/#organization`,
-      name: 'Menucochon',
+      name: "Fresh N' Grill",
       url: baseUrl,
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/images/logos/menucochon-blanc.svg`,
-        width: 200,
-        height: 60,
+        url: `${baseUrl}/icon.svg`,
+        width: 100,
+        height: 100,
       },
-      sameAs: [
-        'https://www.facebook.com/menucochon',
-        'https://www.instagram.com/menucochon',
-        'https://www.pinterest.ca/menucochon',
-      ],
     },
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${baseUrl}${searchPath}?q={search_term_string}`,
+        urlTemplate: `${baseUrl}/recipe/?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },

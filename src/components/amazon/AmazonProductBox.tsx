@@ -5,7 +5,7 @@ import { ExternalLink } from 'lucide-react';
 import { trackAffiliateClick, type AffiliateClickPayload } from '@/lib/amazon-affiliate';
 
 // Tag affilié depuis env (avec fallback)
-const AMAZON_STORE_ID = process.env.NEXT_PUBLIC_AMAZON_ASSOC_TAG || 'menucochon-20';
+const AMAZON_STORE_ID = process.env.NEXT_PUBLIC_AMAZON_ASSOC_TAG || 'freshngrill-20';
 const AMAZON_DOMAIN = process.env.NEXT_PUBLIC_AMAZON_DOMAIN || 'www.amazon.ca';
 
 interface AmazonProduct {

@@ -1,6 +1,6 @@
 const INDEXNOW_KEY = '9170df015d176c80201f0fb47283f655';
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
-const SITE_HOST = 'menucochon.com';
+const SITE_HOST = 'freshngrill.com';
 const KEY_LOCATION = `https://${SITE_HOST}/${INDEXNOW_KEY}.txt`;
 
 /**
@@ -46,24 +46,18 @@ export async function submitUrls(urls: string[]): Promise<boolean> {
 }
 
 /**
- * Submit a recipe URL (both FR and EN) to IndexNow
+ * Submit a recipe URL to IndexNow
  */
-export async function submitRecipeUrls(slugFr: string, slugEn?: string): Promise<boolean> {
-  const urls = [`https://${SITE_HOST}/recette/${slugFr}/`];
-  if (slugEn) {
-    urls.push(`https://${SITE_HOST}/en/recipe/${slugEn}/`);
-  }
+export async function submitRecipeUrls(slug: string): Promise<boolean> {
+  const urls = [`https://${SITE_HOST}/recipe/${slug}/`];
   return submitUrls(urls);
 }
 
 /**
- * Submit a blog post URL (both FR and EN) to IndexNow
+ * Submit a blog post URL to IndexNow
  */
-export async function submitBlogUrls(slug: string, slugEn?: string): Promise<boolean> {
+export async function submitBlogUrls(slug: string): Promise<boolean> {
   const urls = [`https://${SITE_HOST}/blog/${slug}/`];
-  if (slugEn) {
-    urls.push(`https://${SITE_HOST}/en/blog/${slugEn}/`);
-  }
   return submitUrls(urls);
 }
 

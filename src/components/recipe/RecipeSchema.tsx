@@ -2,17 +2,15 @@ import { Recipe } from '@/types/recipe';
 
 interface Props {
   recipe: Recipe;
-  locale?: 'fr' | 'en';
   rating?: {
     averageRating: number;
     ratingCount: number;
   };
 }
 
-export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
-  const baseUrl = 'https://menucochon.com';
-  const recipePath = locale === 'en' ? `/en/recipe/${recipe.slug}/` : `/recette/${recipe.slug}/`;
-  const recipeUrl = `${baseUrl}${recipePath}`;
+export default function RecipeSchema({ recipe, rating }: Props) {
+  const baseUrl = 'https://freshngrill.com';
+  const recipeUrl = `${baseUrl}/recipe/${recipe.slug}/`;
 
   // Description: use excerpt, introduction (stripped of HTML), or title
   const getDescription = () => {
@@ -22,7 +20,7 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
       const stripped = recipe.introduction.replace(/<[^>]*>/g, '').trim();
       if (stripped) return stripped.substring(0, 300);
     }
-    return `Recette de ${recipe.title} - ${recipe.categories[0]?.name || 'Menucochon'}`;
+    return `${recipe.title} - ${recipe.categories[0]?.name || "Fresh N' Grill"}`;
   };
 
   // Keywords: combine tags, categories, and cuisine
@@ -34,7 +32,7 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
     if (recipe.ingredientTags?.length) keywords.push(...recipe.ingredientTags.map(t => t.name));
     // Add default keywords if empty
     if (keywords.length === 0) {
-      keywords.push('recette', recipe.title);
+      keywords.push('recipe', recipe.title);
     }
     return [...new Set(keywords)].join(', ');
   };
@@ -53,7 +51,7 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
     ).filter(ing => ing.length > 0);
 
     // Google requires at least one ingredient
-    return ingredients.length > 0 ? ingredients : ['Voir les ingrédients dans la recette'];
+    return ingredients.length > 0 ? ingredients : ['See ingredients in the recipe'];
   };
 
   // Instructions: add url field for each step
@@ -61,7 +59,7 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
     if (!recipe.instructions?.length) {
       return [{
         '@type': 'HowToStep',
-        text: 'Consultez la recette complète sur le site.',
+        text: 'See the full recipe on the site.',
         url: recipeUrl,
       }];
     }
@@ -69,9 +67,9 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
     return recipe.instructions.map((step, index) => {
       const instruction: Record<string, unknown> = {
         '@type': 'HowToStep',
-        name: step.title || `Étape ${step.step || index + 1}`,
+        name: step.title || `Step ${step.step || index + 1}`,
         text: step.content,
-        url: `${recipeUrl}#etape-${step.step || index + 1}`,
+        url: `${recipeUrl}#step-${step.step || index + 1}`,
       };
       if (step.image) {
         instruction.image = step.image;
@@ -83,14 +81,14 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
   // Category: ensure we have one
   const getCategory = () => {
     if (recipe.categories?.[0]?.name) return recipe.categories[0].name;
-    return 'Recette';
+    return 'Recipe';
   };
 
-  // Cuisine: default to Quebec/Canadian
+  // Cuisine: default to American BBQ
   const getCuisine = () => {
     if (recipe.cuisine) return recipe.cuisine;
     if (recipe.cuisineTypeTags?.[0]?.name) return recipe.cuisineTypeTags[0].name;
-    return 'Québécoise';
+    return 'American';
   };
 
   // Video object if available
@@ -123,15 +121,15 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
       ? [recipe.featuredImage]
       : [`${baseUrl}/images/default-recipe.svg`],
     author: {
-      '@type': 'Person',
-      name: recipe.author || 'Menucochon',
+      '@type': 'Organization',
+      name: "Fresh N' Grill",
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Menucochon',
+      name: "Fresh N' Grill",
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/images/logos/menucochon-blanc.svg`,
+        url: `${baseUrl}/icon.svg`,
       },
     },
     datePublished: recipe.publishedAt,
@@ -139,7 +137,7 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
     prepTime: `PT${recipe.prepTime || 0}M`,
     cookTime: `PT${recipe.cookTime || 0}M`,
     totalTime: `PT${recipe.totalTime || (recipe.prepTime || 0) + (recipe.cookTime || 0)}M`,
-    recipeYield: `${recipe.servings || 4} ${recipe.servingsUnit || 'portions'}`,
+    recipeYield: `${recipe.servings || 4} ${recipe.servingsUnit || 'servings'}`,
     recipeCategory: getCategory(),
     recipeCuisine: getCuisine(),
     keywords: getKeywords(),
@@ -187,11 +185,6 @@ export default function RecipeSchema({ recipe, locale = 'fr', rating }: Props) {
     };
   }
 
-  // NOTE: FAQ Schema removed to avoid Next.js RSC payload duplication issue
-  // Google was detecting 2 FAQPage schemas (one in HTML, one in RSC payload)
-  // The FAQ content is still rendered in RecipeFAQ component with proper HTML structure
-
-  // Nettoyer les valeurs undefined/null
   const cleanSchema = JSON.parse(JSON.stringify(schema));
 
   return (

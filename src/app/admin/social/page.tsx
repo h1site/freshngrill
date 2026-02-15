@@ -42,7 +42,7 @@ export default function SocialPostsPage() {
   const [igMessage, setIgMessage] = useState('');
 
   const supabase = createClient();
-  const siteUrl = 'https://menucochon.com';
+  const siteUrl = 'https://freshngrill.com';
 
   useEffect(() => {
     loadRecipes();
@@ -109,9 +109,9 @@ export default function SocialPostsPage() {
 
   // Générer les textes pour les réseaux sociaux
   const generateSocialTexts = (recipe: Recipe) => {
-    const recipeUrl = `${siteUrl}/recette/${recipe.slug}/`;
+    const recipeUrl = `${siteUrl}/recipe/${recipe.slug}/`;
     const hashtags = recipe.categories.map((c) => `#${c.name.replace(/\s+/g, '')}`).join(' ');
-    const baseHashtags = '#recette #cuisine #menucochon #quebec #foodie';
+    const baseHashtags = '#recipe #bbq #freshngrill #grilling #foodie';
 
     // Facebook - peut inclure le lien directement
     const facebookText = `🍴 ${recipe.title}

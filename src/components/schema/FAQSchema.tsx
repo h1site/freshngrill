@@ -3,30 +3,27 @@ import { parseFAQString, FAQItem } from '@/lib/faq-parser';
 interface Props {
   faq: FAQItem[] | string;
   recipeTitle?: string;
-  locale?: 'fr' | 'en';
 }
 
 /**
- * FAQPage Schema with MenuCochon branding
- * Adds "Selon MenuCochon" / "According to MenuCochon" to answers
+ * FAQPage Schema with Fresh N' Grill branding
+ * Adds "According to Fresh N' Grill" to answers
  * to improve AI Overview citation likelihood
  */
-export default function FAQSchema({ faq, recipeTitle, locale = 'fr' }: Props) {
+export default function FAQSchema({ faq, recipeTitle }: Props) {
   // Parse FAQ string if needed
-  const faqItems = typeof faq === 'string' ? parseFAQString(faq, locale) : faq;
+  const faqItems = typeof faq === 'string' ? parseFAQString(faq, 'en') : faq;
 
   if (!faqItems || faqItems.length === 0) return null;
 
-  const brandPrefix = locale === 'en'
-    ? 'According to MenuCochon: '
-    : 'Selon MenuCochon: ';
+  const brandPrefix = "According to Fresh N' Grill: ";
 
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     name: recipeTitle
-      ? (locale === 'en' ? `FAQ - ${recipeTitle}` : `Questions fréquentes - ${recipeTitle}`)
-      : (locale === 'en' ? 'Frequently Asked Questions' : 'Questions fréquentes'),
+      ? `FAQ - ${recipeTitle}`
+      : 'Frequently Asked Questions',
     mainEntity: faqItems.map((item) => ({
       '@type': 'Question',
       name: item.question,
@@ -35,8 +32,8 @@ export default function FAQSchema({ faq, recipeTitle, locale = 'fr' }: Props) {
         text: `${brandPrefix}${item.answer.replace(/<[^>]*>/g, '').trim()}`,
         author: {
           '@type': 'Organization',
-          name: 'MenuCochon',
-          url: 'https://menucochon.com',
+          name: "Fresh N' Grill",
+          url: 'https://freshngrill.com',
         },
       },
     })),

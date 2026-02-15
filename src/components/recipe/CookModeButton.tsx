@@ -861,17 +861,17 @@ export default function CookModeButton({ recipe, compact = false, locale = 'fr' 
       return;
     }
 
-    // 12. Easter egg - Menucochon!
-    if (matchesAny(['menucochon', 'menu cochon'])) {
-      console.log('🐷 MENUCOCHON detected!');
+    // 12. Easter egg - Fresh N' Grill!
+    if (matchesAny(['fresh and grill', 'fresh n grill'])) {
+      console.log('🔥 FRESH N GRILL detected!');
       if (typeof window !== 'undefined' && window.speechSynthesis) {
         stopSpeaking();
-        const utterance = new SpeechSynthesisUtterance('Menucochon, vos recettes cochonnes!');
-        utterance.lang = 'fr-FR';
+        const utterance = new SpeechSynthesisUtterance("Fresh N' Grill, fire up the grill!");
+        utterance.lang = 'en-US';
         utterance.rate = 1.0;
         const voices = window.speechSynthesis.getVoices();
-        const frenchVoice = voices.find(v => v.lang.startsWith('fr'));
-        if (frenchVoice) utterance.voice = frenchVoice;
+        const englishVoice = voices.find(v => v.lang.startsWith('en'));
+        if (englishVoice) utterance.voice = englishVoice;
         window.speechSynthesis.speak(utterance);
       }
       return;

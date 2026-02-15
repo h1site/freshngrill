@@ -46,7 +46,7 @@ async function generatePinterestImage(recipe: {
 
   // Format title for display (single line, uppercase)
   const title = formatTitle(recipe.title);
-  const domain = 'menucochon.com';
+  const domain = 'freshngrill.com';
 
   // Calculate font size based on title length (must fit on single line ~80 chars max)
   const titleFontSize =
@@ -69,7 +69,7 @@ async function generatePinterestImage(recipe: {
         position: 'relative',
       }}
     >
-      {/* Center: Dark banner with title + orange button below */}
+      {/* Center: Dark banner with title + green button below */}
       <div
         style={{
           position: 'absolute',
@@ -109,11 +109,11 @@ async function generatePinterestImage(recipe: {
           </div>
         </div>
 
-        {/* Orange pill button with domain - overlapping bottom of banner */}
+        {/* Green pill button with domain - overlapping bottom of banner */}
         <div
           style={{
             display: 'flex',
-            backgroundColor: '#D4541E',
+            backgroundColor: '#00bf63',
             padding: '12px 40px',
             borderRadius: 4,
             marginTop: -24,

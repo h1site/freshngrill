@@ -2,13 +2,11 @@ import { Post } from '@/types/post';
 
 interface Props {
   post: Post;
-  locale?: 'fr' | 'en';
 }
 
-export default function ArticleSchema({ post, locale = 'fr' }: Props) {
-  const baseUrl = 'https://menucochon.com';
-  const postPath = locale === 'en' ? `/en/blog/${post.slug}/` : `/blog/${post.slug}/`;
-  const postUrl = `${baseUrl}${postPath}`;
+export default function ArticleSchema({ post }: Props) {
+  const baseUrl = 'https://freshngrill.com';
+  const postUrl = `${baseUrl}/blog/${post.slug}/`;
 
   const schema = {
     '@context': 'https://schema.org',
@@ -17,16 +15,16 @@ export default function ArticleSchema({ post, locale = 'fr' }: Props) {
     description: post.excerpt || post.seoDescription,
     image: post.featuredImage ? [post.featuredImage] : [`${baseUrl}/images/og-default.svg`],
     author: {
-      '@type': 'Person',
-      name: post.author?.name || 'Menucochon',
-      url: `${baseUrl}/a-propos`,
+      '@type': 'Organization',
+      name: "Fresh N' Grill",
+      url: baseUrl,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Menucochon',
+      name: "Fresh N' Grill",
       logo: {
         '@type': 'ImageObject',
-        url: `${baseUrl}/images/logos/menucochon-blanc.svg`,
+        url: `${baseUrl}/icon.svg`,
       },
     },
     datePublished: post.publishedAt,
@@ -38,7 +36,7 @@ export default function ArticleSchema({ post, locale = 'fr' }: Props) {
     url: postUrl,
     articleSection: post.categories?.[0]?.name || 'Blog',
     wordCount: post.content ? post.content.replace(/<[^>]*>/g, '').split(/\s+/).length : undefined,
-    inLanguage: locale === 'en' ? 'en-CA' : 'fr-CA',
+    inLanguage: 'en',
   };
 
   return (

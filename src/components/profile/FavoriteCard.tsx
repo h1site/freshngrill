@@ -51,7 +51,7 @@ export default function FavoriteCard({
   const [isRemoving, setIsRemoving] = useState(false);
   const [isSavingNote, setIsSavingNote] = useState(false);
 
-  const recipeUrl = `https://menucochon.com/recette/${slug}`;
+  const recipeUrl = `https://freshngrill.com/recipe/${slug}`;
 
   const handleCopyLink = async () => {
     await navigator.clipboard.writeText(recipeUrl);
@@ -216,7 +216,7 @@ export default function FavoriteCard({
 
       <div className="p-4">
         <Link href={`/recette/${slug}`}>
-          <h3 className="font-medium text-neutral-900 group-hover:text-[#F77313] transition-colors line-clamp-2">
+          <h3 className="font-medium text-neutral-900 group-hover:text-[#00bf63] transition-colors line-clamp-2">
             {title}
           </h3>
         </Link>
@@ -251,7 +251,7 @@ export default function FavoriteCard({
               value={note}
               onChange={(e) => setNote(e.target.value)}
               placeholder="Ajouter une note personnelle..."
-              className="w-full p-2 text-sm border border-neutral-200 rounded-lg resize-none focus:ring-2 focus:ring-[#F77313] focus:border-transparent"
+              className="w-full p-2 text-sm border border-neutral-200 rounded-lg resize-none focus:ring-2 focus:ring-[#00bf63] focus:border-transparent"
               rows={3}
               autoFocus
             />
@@ -259,7 +259,7 @@ export default function FavoriteCard({
               <button
                 onClick={handleSaveNote}
                 disabled={isSavingNote}
-                className="flex-1 py-1.5 px-3 bg-[#F77313] text-white text-sm rounded-lg hover:bg-[#e56610] transition-colors flex items-center justify-center gap-1"
+                className="flex-1 py-1.5 px-3 bg-[#00bf63] text-white text-sm rounded-lg hover:bg-[#00a855] transition-colors flex items-center justify-center gap-1"
               >
                 {isSavingNote ? (
                   <Loader2 className="w-4 h-4 animate-spin" />

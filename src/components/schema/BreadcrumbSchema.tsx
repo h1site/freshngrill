@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function BreadcrumbSchema({ items }: Props) {
-  const baseUrl = 'https://menucochon.com';
+  const baseUrl = 'https://freshngrill.com';
 
   const schema = {
     '@context': 'https://schema.org',

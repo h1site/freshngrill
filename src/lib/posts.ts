@@ -9,16 +9,16 @@ function transformAuthor(author: any): Author {
   if (!author) {
     return {
       id: 0,
-      name: 'Menucochon',
-      slug: 'menucochon',
+      name: 'Fresh N' Grill',
+      slug: 'freshngrill',
       avatar: DEFAULT_AVATAR
     };
   }
 
   return {
     id: author.id || 0,
-    name: author.name || 'Menucochon',
-    slug: author.slug || 'menucochon',
+    name: author.name || 'Fresh N' Grill',
+    slug: author.slug || 'freshngrill',
     avatar: author.avatar || DEFAULT_AVATAR,
     bio: author.bio,
   };

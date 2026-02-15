@@ -34,13 +34,13 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
     const ingredientsHTML = recipe.ingredients
       .map(
         (group) => `
-        ${group.title ? `<h3 style="font-size: 14px; font-weight: 600; color: #F77313; margin: 16px 0 8px 0; text-transform: uppercase;">${group.title}</h3>` : ''}
+        ${group.title ? `<h3 style="font-size: 14px; font-weight: 600; color: #00bf63; margin: 16px 0 8px 0; text-transform: uppercase;">${group.title}</h3>` : ''}
         <ul style="list-style: none; padding: 0; margin: 0;">
           ${group.items
             .map(
               (item) => `
             <li style="padding: 8px 0; border-bottom: 1px solid #eee; display: flex; align-items: center;">
-              <span style="width: 8px; height: 8px; background: #F77313; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></span>
+              <span style="width: 8px; height: 8px; background: #00bf63; border-radius: 50%; margin-right: 12px; flex-shrink: 0;"></span>
               <span>
                 ${item.quantity ? `<strong>${item.quantity}</strong>` : ''}
                 ${item.unit ? `${item.unit}` : ''}
@@ -61,12 +61,12 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
       .map(
         (step, index) => `
         <div style="display: flex; margin-bottom: 20px; page-break-inside: avoid;">
-          <div style="flex-shrink: 0; width: 40px; height: 40px; background: #F77313; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; margin-right: 16px;">
+          <div style="flex-shrink: 0; width: 40px; height: 40px; background: #00bf63; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; margin-right: 16px;">
             ${index + 1}
           </div>
           <div style="flex: 1; padding-top: 8px;">
             <p style="margin: 0; line-height: 1.6; color: #333;">${step.content}</p>
-            ${step.tip ? `<p style="margin: 8px 0 0 0; padding: 8px 12px; background: #fff8f0; border-left: 3px solid #F77313; font-size: 13px; color: #666;"><strong>💡 ${t.tip}:</strong> ${step.tip}</p>` : ''}
+            ${step.tip ? `<p style="margin: 8px 0 0 0; padding: 8px 12px; background: #fff8f0; border-left: 3px solid #00bf63; font-size: 13px; color: #666;"><strong>💡 ${t.tip}:</strong> ${step.tip}</p>` : ''}
           </div>
         </div>
       `
@@ -79,7 +79,7 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
       <html lang="${locale}">
       <head>
         <meta charset="UTF-8">
-        <title>${recipe.title} - Menucochon</title>
+        <title>${recipe.title} - Fresh N' Grill</title>
         <style>
           @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -119,17 +119,17 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
       </head>
       <body>
         <!-- Header avec logo -->
-        <header style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 3px solid #F77313; margin-bottom: 30px;">
+        <header style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 20px; border-bottom: 3px solid #00bf63; margin-bottom: 30px;">
           <div>
             <h1 style="font-size: 28px; font-weight: 700; color: #1a1a1a; margin: 0; line-height: 1.2;">
               ${recipe.title}
             </h1>
-            <p style="color: #666; font-size: 14px; margin-top: 4px;">menucochon.com</p>
+            <p style="color: #666; font-size: 14px; margin-top: 4px;">freshngrill.com</p>
           </div>
           <div style="text-align: right;">
             <svg width="50" height="50" viewBox="0 0 100 100" fill="none">
-              <circle cx="50" cy="50" r="45" fill="#F77313"/>
-              <text x="50" y="58" text-anchor="middle" fill="white" font-size="24" font-weight="bold">MC</text>
+              <circle cx="50" cy="50" r="45" fill="#00bf63"/>
+              <text x="50" y="68" text-anchor="middle" fill="white" font-size="62" font-weight="bold">F</text>
             </svg>
           </div>
         </header>
@@ -198,8 +198,8 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
         <!-- Deux colonnes: Ingrédients et Instructions -->
         <div style="display: grid; grid-template-columns: 280px 1fr; gap: 40px;">
           <!-- Ingrédients -->
-          <div style="background: #fff; border: 2px solid #F77313; border-radius: 12px; padding: 24px; height: fit-content;">
-            <h2 style="font-size: 18px; font-weight: 700; color: #F77313; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; text-transform: uppercase;">
+          <div style="background: #fff; border: 2px solid #00bf63; border-radius: 12px; padding: 24px; height: fit-content;">
+            <h2 style="font-size: 18px; font-weight: 700; color: #00bf63; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; text-transform: uppercase;">
               🥗 ${t.ingredients}
             </h2>
             ${ingredientsHTML}
@@ -207,7 +207,7 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
 
           <!-- Instructions -->
           <div>
-            <h2 style="font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #F77313; text-transform: uppercase;">
+            <h2 style="font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #00bf63; text-transform: uppercase;">
               📝 ${t.instructions}
             </h2>
             ${instructionsHTML}
@@ -218,16 +218,16 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
         <footer style="margin-top: 50px; padding-top: 20px; border-top: 2px solid #eee; text-align: center;">
           <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px;">
             <svg width="30" height="30" viewBox="0 0 100 100" fill="none">
-              <circle cx="50" cy="50" r="45" fill="#F77313"/>
-              <text x="50" y="58" text-anchor="middle" fill="white" font-size="24" font-weight="bold">MC</text>
+              <circle cx="50" cy="50" r="45" fill="#00bf63"/>
+              <text x="50" y="68" text-anchor="middle" fill="white" font-size="62" font-weight="bold">F</text>
             </svg>
-            <span style="font-size: 20px; font-weight: 700; color: #F77313;">Menucochon</span>
+            <span style="font-size: 20px; font-weight: 700; color: #00bf63;">Fresh N' Grill</span>
           </div>
           <p style="color: #666; font-size: 13px; margin-bottom: 8px;">
             ${t.findMore}
           </p>
-          <p style="color: #F77313; font-weight: 600; font-size: 16px;">
-            🌐 www.menucochon.com
+          <p style="color: #00bf63; font-weight: 600; font-size: 16px;">
+            🌐 www.freshngrill.com
           </p>
           <p style="color: #999; font-size: 11px; margin-top: 16px;">
             ${t.enjoyMeal} 🍽️
@@ -239,7 +239,7 @@ export default function PrintButton({ recipe, compact = false, locale = 'fr' }: 
           <button onclick="window.close()" style="background: #333; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
             ← ${t.back}
           </button>
-          <button onclick="window.print()" style="background: #F77313; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(247,115,19,0.3);">
+          <button onclick="window.print()" style="background: #00bf63; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(0,191,99,0.3);">
             🖨️ ${t.print}
           </button>
         </div>

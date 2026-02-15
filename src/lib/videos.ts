@@ -1,4 +1,4 @@
-// YouTube Videos Data for Menucochon
+// YouTube Videos Data for Fresh N' Grill
 
 export interface Video {
   id: string;
@@ -136,7 +136,7 @@ export function getRecentVideos(limit: number = 4): Video[] {
 
 // YouTube channel info
 export const YOUTUBE_CHANNEL = {
-  url: 'https://www.youtube.com/@menucochon',
-  name: 'Menucochon',
-  subscriberCount: '1K+', // Update as needed
+  url: 'https://www.youtube.com/@freshngrill',
+  name: "Fresh N' Grill",
+  subscriberCount: '0', // Update as needed
 };

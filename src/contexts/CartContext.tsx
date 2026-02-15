@@ -23,7 +23,7 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const CART_STORAGE_KEY = 'menucochon_cart';
+const CART_STORAGE_KEY = 'freshngrill_cart';
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);

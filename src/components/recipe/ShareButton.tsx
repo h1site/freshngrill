@@ -7,7 +7,7 @@ import { Share2, X, Check, Link2, Mail } from 'lucide-react';
 import type { Locale } from '@/i18n/config';
 
 // Image Pinterest par défaut (verticale 2:3)
-const DEFAULT_PINTEREST_IMAGE = 'https://menucochon.com/images/pinterest-default.jpg';
+const DEFAULT_PINTEREST_IMAGE = 'https://freshngrill.com/images/pinterest-default.jpg';
 
 interface Props {
   title: string;
