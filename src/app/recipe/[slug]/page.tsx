@@ -2,94 +2,30 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
+import { getRecipeBySlug } from '@/lib/recipes';
 import { Clock, Users, Flame, ChefHat, ArrowLeft } from 'lucide-react';
+import RecipeIngredients from '@/components/recipe/RecipeIngredients';
+import CookModeButton from '@/components/recipe/CookModeButton';
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-interface IngredientItem {
-  quantity: string;
-  unit: string;
-  name: string;
-  note?: string;
-}
-
-interface IngredientGroup {
-  title: string;
-  items: IngredientItem[];
-}
-
-interface InstructionStep {
-  step: number;
-  title: string;
-  content: string;
-  tip?: string;
-}
-
-interface Nutrition {
-  calories?: number;
-  protein?: number;
-  carbs?: number;
-  fat?: number;
-  fiber?: number;
-  sugar?: number;
-  sodium?: number;
-}
-
-interface Recipe {
-  id: number;
-  slug: string;
-  title: string;
-  excerpt: string | null;
-  content: string | null;
-  introduction: string | null;
-  conclusion: string | null;
-  featured_image: string | null;
-  prep_time: number;
-  cook_time: number;
-  rest_time: number | null;
-  total_time: number;
-  servings: number;
-  servings_unit: string | null;
-  difficulty: string;
-  cuisine: string | null;
-  ingredients: IngredientGroup[];
-  instructions: InstructionStep[];
-  nutrition: Nutrition | null;
-  tags: string[] | null;
-  seo_title: string | null;
-  seo_description: string | null;
-  author: string;
-}
-
-async function getRecipe(slug: string): Promise<Recipe | null> {
-  const { data, error } = await supabase
-    .from('recipes')
-    .select('*')
-    .eq('slug', slug)
-    .single();
-
-  if (error || !data) return null;
-  return data as unknown as Recipe;
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const recipe = await getRecipe(slug);
+  const recipe = await getRecipeBySlug(slug);
 
   if (!recipe) {
     return { title: 'Recipe not found' };
   }
 
   return {
-    title: recipe.seo_title || recipe.title,
-    description: recipe.seo_description || recipe.excerpt || undefined,
+    title: recipe.seoTitle || recipe.title,
+    description: recipe.seoDescription || recipe.excerpt || undefined,
     openGraph: {
       title: recipe.title,
       description: recipe.excerpt || undefined,
-      images: recipe.featured_image ? [{ url: recipe.featured_image }] : [],
+      images: recipe.featuredImage ? [{ url: recipe.featuredImage }] : [],
       type: 'article',
     },
   };
@@ -103,15 +39,15 @@ const difficultyColor: Record<string, string> = {
 
 export default async function RecipePage({ params }: Props) {
   const { slug } = await params;
-  const recipe = await getRecipe(slug);
+  const recipe = await getRecipeBySlug(slug);
 
   if (!recipe) {
     notFound();
   }
 
-  const ingredients = (recipe.ingredients || []) as IngredientGroup[];
-  const instructions = (recipe.instructions || []) as InstructionStep[];
-  const nutrition = recipe.nutrition as Nutrition | null;
+  const ingredients = recipe.ingredients || [];
+  const instructions = recipe.instructions || [];
+  const nutrition = recipe.nutrition;
 
   return (
     <main className="min-h-screen bg-white">
@@ -119,9 +55,9 @@ export default async function RecipePage({ params }: Props) {
       <header className="relative bg-black">
         {/* Mobile */}
         <div className="lg:hidden relative h-[50vh]">
-          {recipe.featured_image ? (
+          {recipe.featuredImage ? (
             <Image
-              src={recipe.featured_image}
+              src={recipe.featuredImage}
               alt={recipe.title}
               fill
               quality={100}
@@ -141,14 +77,14 @@ export default async function RecipePage({ params }: Props) {
               {recipe.title}
             </h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
-              {recipe.total_time > 0 && (
+              {recipe.totalTime > 0 && (
                 <span className="flex items-center gap-1.5">
-                  <Clock className="w-4 h-4" /> {recipe.total_time} min
+                  <Clock className="w-4 h-4" /> {recipe.totalTime} min
                 </span>
               )}
               {recipe.servings > 0 && (
                 <span className="flex items-center gap-1.5">
-                  <Users className="w-4 h-4" /> {recipe.servings} {recipe.servings_unit || 'servings'}
+                  <Users className="w-4 h-4" /> {recipe.servings} {recipe.servingsUnit || 'servings'}
                 </span>
               )}
               {recipe.difficulty && (
@@ -176,22 +112,22 @@ export default async function RecipePage({ params }: Props) {
                 </p>
               )}
               <div className="flex flex-wrap items-center gap-6 text-sm text-white/70">
-                {recipe.prep_time > 0 && (
+                {recipe.prepTime > 0 && (
                   <div className="text-center">
                     <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Prep</p>
-                    <p className="text-white font-bold text-lg">{recipe.prep_time}<span className="text-sm font-normal text-white/50"> min</span></p>
+                    <p className="text-white font-bold text-lg">{recipe.prepTime}<span className="text-sm font-normal text-white/50"> min</span></p>
                   </div>
                 )}
-                {recipe.cook_time > 0 && (
+                {recipe.cookTime > 0 && (
                   <div className="text-center">
                     <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Cook</p>
-                    <p className="text-white font-bold text-lg">{recipe.cook_time}<span className="text-sm font-normal text-white/50"> min</span></p>
+                    <p className="text-white font-bold text-lg">{recipe.cookTime}<span className="text-sm font-normal text-white/50"> min</span></p>
                   </div>
                 )}
-                {recipe.total_time > 0 && (
+                {recipe.totalTime > 0 && (
                   <div className="text-center">
                     <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Total</p>
-                    <p className="text-[#00bf63] font-bold text-lg">{recipe.total_time}<span className="text-sm font-normal text-[#00bf63]/60"> min</span></p>
+                    <p className="text-[#00bf63] font-bold text-lg">{recipe.totalTime}<span className="text-sm font-normal text-[#00bf63]/60"> min</span></p>
                   </div>
                 )}
                 <div className="w-px h-10 bg-white/10" />
@@ -206,10 +142,10 @@ export default async function RecipePage({ params }: Props) {
               </div>
             </div>
           </div>
-          {recipe.featured_image && (
+          {recipe.featuredImage && (
             <div className="relative w-[45%]">
               <Image
-                src={recipe.featured_image}
+                src={recipe.featuredImage}
                 alt={recipe.title}
                 fill
                 quality={100}
@@ -223,9 +159,14 @@ export default async function RecipePage({ params }: Props) {
         </div>
       </header>
 
+      {/* Cook Mode Button - floating */}
+      <div className="container mx-auto px-4 pt-6 flex justify-end">
+        <CookModeButton recipe={recipe} locale="en" />
+      </div>
+
       {/* Introduction */}
       {recipe.introduction && (
-        <section className="container mx-auto px-4 pt-10 md:pt-16">
+        <section className="container mx-auto px-4 pt-6 md:pt-10">
           <div className="max-w-3xl mx-auto lg:mx-0 border-l-4 border-[#00bf63] pl-6 py-2">
             <div className="text-neutral-600 text-lg leading-relaxed whitespace-pre-line">
               {recipe.introduction}
@@ -240,28 +181,13 @@ export default async function RecipePage({ params }: Props) {
           {/* Left: Instructions */}
           <div className="lg:col-span-2 space-y-12">
             {/* Ingredients - mobile only */}
-            <div className="lg:hidden bg-neutral-900 text-white rounded-xl p-6">
-              <h2 className="font-display text-2xl tracking-wide mb-6 flex items-center gap-3">
-                <ChefHat className="w-6 h-6 text-[#00bf63]" /> Ingredients
-              </h2>
-              {ingredients.map((group, gi) => (
-                <div key={gi} className="mb-6 last:mb-0">
-                  {group.title && (
-                    <h3 className="text-[#00bf63] text-sm font-bold uppercase tracking-wider mb-3">{group.title}</h3>
-                  )}
-                  <ul className="space-y-2">
-                    {group.items.map((item, ii) => (
-                      <li key={ii} className="flex items-start gap-2 text-white/80">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#00bf63] mt-2 flex-shrink-0" />
-                        <span>
-                          <strong className="text-white">{item.quantity} {item.unit}</strong> {item.name}
-                          {item.note && <span className="text-white/50 text-sm"> ({item.note})</span>}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+            <div className="lg:hidden">
+              <RecipeIngredients
+                ingredients={ingredients}
+                servings={recipe.servings}
+                servingsUnit={recipe.servingsUnit}
+                locale="en"
+              />
             </div>
 
             {/* Instructions */}
@@ -317,66 +243,48 @@ export default async function RecipePage({ params }: Props) {
 
           {/* Sidebar */}
           <aside className="space-y-8 lg:sticky lg:top-28 lg:self-start">
-            {/* Ingredients - desktop */}
-            <div className="hidden lg:block bg-white border-2 border-neutral-200 rounded-xl p-6">
-              <h2 className="font-display text-xl tracking-wide mb-6 flex items-center gap-3">
-                <ChefHat className="w-5 h-5 text-[#00bf63]" /> Ingredients
-              </h2>
-              <p className="text-sm text-neutral-500 mb-4 flex items-center gap-1.5">
-                <Users className="w-4 h-4" /> {recipe.servings} {recipe.servings_unit || 'servings'}
-              </p>
-              {ingredients.map((group, gi) => (
-                <div key={gi} className="mb-5 last:mb-0">
-                  {group.title && (
-                    <h3 className="text-[#00bf63] text-xs font-bold uppercase tracking-wider mb-2">{group.title}</h3>
-                  )}
-                  <ul className="space-y-2">
-                    {group.items.map((item, ii) => (
-                      <li key={ii} className="flex items-start gap-2 text-neutral-600 text-sm">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#00bf63] mt-1.5 flex-shrink-0" />
-                        <span>
-                          <strong className="text-neutral-900">{item.quantity} {item.unit}</strong> {item.name}
-                          {item.note && <span className="text-neutral-400"> ({item.note})</span>}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-
-              {/* Nutrition */}
-              {nutrition && (
-                <div className="mt-6 pt-6 border-t border-neutral-200">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3">Nutrition per serving</h3>
-                  <div className="grid grid-cols-2 gap-2">
-                    {nutrition.calories !== undefined && (
-                      <div className="bg-neutral-50 p-2.5 rounded-lg text-center">
-                        <p className="text-lg font-bold text-neutral-900">{nutrition.calories}</p>
-                        <p className="text-[10px] uppercase tracking-wider text-neutral-400">Calories</p>
-                      </div>
-                    )}
-                    {nutrition.protein !== undefined && (
-                      <div className="bg-neutral-50 p-2.5 rounded-lg text-center">
-                        <p className="text-lg font-bold text-neutral-900">{nutrition.protein}g</p>
-                        <p className="text-[10px] uppercase tracking-wider text-neutral-400">Protein</p>
-                      </div>
-                    )}
-                    {nutrition.fat !== undefined && (
-                      <div className="bg-neutral-50 p-2.5 rounded-lg text-center">
-                        <p className="text-lg font-bold text-neutral-900">{nutrition.fat}g</p>
-                        <p className="text-[10px] uppercase tracking-wider text-neutral-400">Fat</p>
-                      </div>
-                    )}
-                    {nutrition.carbs !== undefined && (
-                      <div className="bg-neutral-50 p-2.5 rounded-lg text-center">
-                        <p className="text-lg font-bold text-neutral-900">{nutrition.carbs}g</p>
-                        <p className="text-[10px] uppercase tracking-wider text-neutral-400">Carbs</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
+            {/* Ingredients - desktop with portion adjuster */}
+            <div className="hidden lg:block">
+              <RecipeIngredients
+                ingredients={ingredients}
+                servings={recipe.servings}
+                servingsUnit={recipe.servingsUnit}
+                locale="en"
+              />
             </div>
+
+            {/* Nutrition */}
+            {nutrition && (
+              <div className="bg-white border-2 border-neutral-200 rounded-xl p-6">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3">Nutrition per serving</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  {nutrition.calories !== undefined && (
+                    <div className="bg-neutral-50 p-2.5 rounded-lg text-center">
+                      <p className="text-lg font-bold text-neutral-900">{nutrition.calories}</p>
+                      <p className="text-[10px] uppercase tracking-wider text-neutral-400">Calories</p>
+                    </div>
+                  )}
+                  {nutrition.protein !== undefined && (
+                    <div className="bg-neutral-50 p-2.5 rounded-lg text-center">
+                      <p className="text-lg font-bold text-neutral-900">{nutrition.protein}g</p>
+                      <p className="text-[10px] uppercase tracking-wider text-neutral-400">Protein</p>
+                    </div>
+                  )}
+                  {nutrition.fat !== undefined && (
+                    <div className="bg-neutral-50 p-2.5 rounded-lg text-center">
+                      <p className="text-lg font-bold text-neutral-900">{nutrition.fat}g</p>
+                      <p className="text-[10px] uppercase tracking-wider text-neutral-400">Fat</p>
+                    </div>
+                  )}
+                  {nutrition.carbs !== undefined && (
+                    <div className="bg-neutral-50 p-2.5 rounded-lg text-center">
+                      <p className="text-lg font-bold text-neutral-900">{nutrition.carbs}g</p>
+                      <p className="text-[10px] uppercase tracking-wider text-neutral-400">Carbs</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </aside>
         </div>
       </section>
