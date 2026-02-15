@@ -44,6 +44,11 @@ export const metadata: Metadata = {
     follow: true,
     'max-image-preview': 'large',
   },
+  alternates: {
+    types: {
+      'application/rss+xml': '/rss/recipes',
+    },
+  },
 };
 
 export default function RootLayout({
