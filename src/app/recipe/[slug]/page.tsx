@@ -38,7 +38,33 @@ interface Nutrition {
   sodium?: number;
 }
 
-async function getRecipe(slug: string) {
+interface Recipe {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string | null;
+  content: string | null;
+  introduction: string | null;
+  conclusion: string | null;
+  featured_image: string | null;
+  prep_time: number;
+  cook_time: number;
+  rest_time: number | null;
+  total_time: number;
+  servings: number;
+  servings_unit: string | null;
+  difficulty: string;
+  cuisine: string | null;
+  ingredients: IngredientGroup[];
+  instructions: InstructionStep[];
+  nutrition: Nutrition | null;
+  tags: string[] | null;
+  seo_title: string | null;
+  seo_description: string | null;
+  author: string;
+}
+
+async function getRecipe(slug: string): Promise<Recipe | null> {
   const { data, error } = await supabase
     .from('recipes')
     .select('*')
@@ -46,7 +72,7 @@ async function getRecipe(slug: string) {
     .single();
 
   if (error || !data) return null;
-  return data;
+  return data as unknown as Recipe;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
