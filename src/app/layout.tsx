@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { Inter, Bebas_Neue } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout/Header';
@@ -56,6 +57,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Script src="https://www.googletagmanager.com/gtag/js?id=G-PLMYVL094V" strategy="afterInteractive" />
+      <Script id="gtag-init" strategy="afterInteractive">
+        {`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-PLMYVL094V');`}
+      </Script>
       <body className={`${inter.variable} ${bebasNeue.variable} font-sans antialiased`}>
         <ScrollToTop />
         <Header />
