@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Clock, Flame } from 'lucide-react';
 
-interface RecipePin {
+export interface RecipePin {
   id: number;
   slug: string;
   title: string;
@@ -16,6 +16,7 @@ interface RecipePin {
   total_time: number;
   difficulty: string;
   tags: string[] | null;
+  categories?: { id: number; slug: string; name: string }[];
 }
 
 interface PinterestGridProps {

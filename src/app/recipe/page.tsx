@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { supabase } from '@/lib/supabase';
-import PinterestGrid from '@/components/recipe/PinterestGrid';
+import RecipePageClient from '@/components/recipe/RecipePageClient';
 
 export const revalidate = 60;
 
@@ -27,8 +27,9 @@ export const metadata: Metadata = {
 
 async function getRecipes() {
   const { data, error } = await supabase
-    .from('recipes')
-    .select('id, slug, title, excerpt, featured_image, pinterest_image, total_time, difficulty, tags')
+    .from('recipes_with_categories')
+    .select('id, slug, title, excerpt, featured_image, pinterest_image, total_time, difficulty, tags, categories')
+    .not('featured_image', 'is', null)
     .order('published_at', { ascending: false });
 
   if (error) {
@@ -48,7 +49,7 @@ export default async function RecipesPage() {
         <h1 className="font-display text-4xl md:text-5xl tracking-wide text-neutral-900 mb-8">
           Recipes
         </h1>
-        <PinterestGrid recipes={recipes} />
+        <RecipePageClient recipes={recipes} />
       </div>
     </main>
   );
