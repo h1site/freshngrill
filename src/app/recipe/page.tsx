@@ -17,11 +17,13 @@ export const metadata: Metadata = {
     siteName: "Fresh N' Grill",
     locale: 'en_US',
     type: 'website',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: "Fresh N' Grill Recipes" }],
   },
   twitter: {
     card: 'summary_large_image',
     title: "Recipes | Fresh N' Grill",
     description: 'Browse our collection of BBQ recipes, grilling guides, and outdoor cooking ideas.',
+    images: ['/opengraph-image'],
   },
 };
 

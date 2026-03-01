@@ -84,7 +84,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   const breadcrumbs = [
     { name: 'Home', url: '/' },
-    { name: 'Blog', url: '/blog' },
+    { name: 'Blog', url: '/blog/' },
     { name: post.title, url: `/blog/${slug}/` },
   ];
 

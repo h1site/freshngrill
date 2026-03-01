@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
 
-export const alt = 'Menucochon - Recettes gourmandes québécoises';
+export const alt = "Fresh N' Grill - BBQ Recipes & Grilling Tips";
 export const size = {
   width: 1200,
   height: 630,
@@ -30,15 +30,15 @@ export default async function Image() {
             width: 140,
             height: 140,
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, #F77313 0%, #d45f0a 100%)',
+            background: 'linear-gradient(135deg, #00bf63 0%, #009e52 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             marginBottom: 40,
-            boxShadow: '0 20px 60px rgba(247, 115, 19, 0.3)',
+            boxShadow: '0 20px 60px rgba(0, 191, 99, 0.3)',
           }}
         >
-          <span style={{ color: 'white', fontSize: 56, fontWeight: 'bold' }}>MC</span>
+          <span style={{ color: 'white', fontSize: 56, fontWeight: 'bold' }}>FG</span>
         </div>
 
         {/* Title */}
@@ -52,7 +52,7 @@ export default async function Image() {
             letterSpacing: '-2px',
           }}
         >
-          Menucochon
+          Fresh N&apos; Grill
         </h1>
 
         {/* Subtitle */}
@@ -64,7 +64,7 @@ export default async function Image() {
             marginBottom: 40,
           }}
         >
-          Recettes gourmandes québécoises
+          BBQ Recipes &amp; Grilling Tips
         </p>
 
         {/* Accent Line */}
@@ -72,7 +72,7 @@ export default async function Image() {
           style={{
             width: 160,
             height: 4,
-            background: '#F77313',
+            background: '#00bf63',
             borderRadius: 2,
           }}
         />
@@ -87,11 +87,11 @@ export default async function Image() {
             fontSize: 20,
           }}
         >
-          <span>500+ Recettes</span>
+          <span>65+ Recipes</span>
           <span>•</span>
-          <span>Mode Cuisine</span>
+          <span>Cook Mode</span>
           <span>•</span>
-          <span>Radio Intégrée</span>
+          <span>BBQ &amp; Grilling</span>
         </div>
       </div>
     ),

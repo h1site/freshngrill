@@ -11,8 +11,6 @@ const BLOCKED_USER_AGENTS = [
   'Sogou',
   'Bytespider',
   'PetalBot',
-  'DotBot',
-  'MJ12bot',
   'Yisou',
   'YisouSpider',
   'Qihoo',

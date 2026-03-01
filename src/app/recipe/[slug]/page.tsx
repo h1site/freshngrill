@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getRecipeBySlug } from '@/lib/recipes';
+import { getRecipeBySlug, getAllRecipeSlugs, getSimilarRecipes } from '@/lib/recipes';
 import { Clock, Users, Flame, ChefHat, ArrowLeft } from 'lucide-react';
 import RecipeIngredients from '@/components/recipe/RecipeIngredients';
 import CookModeButton from '@/components/recipe/CookModeButton';
@@ -11,6 +11,11 @@ import BreadcrumbSchema from '@/components/schema/BreadcrumbSchema';
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateStaticParams() {
+  const slugs = await getAllRecipeSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -69,10 +74,11 @@ export default async function RecipePage({ params }: Props) {
   const ingredients = recipe.ingredients || [];
   const instructions = recipe.instructions || [];
   const nutrition = recipe.nutrition;
+  const similarRecipes = await getSimilarRecipes(recipe, 3);
 
   const breadcrumbs = [
     { name: 'Home', url: '/' },
-    { name: 'Recipes', url: '/recipe' },
+    { name: 'Recipes', url: '/recipe/' },
     { name: recipe.title, url: `/recipe/${slug}/` },
   ];
 
@@ -318,6 +324,58 @@ export default async function RecipePage({ params }: Props) {
           </aside>
         </div>
       </section>
+
+      {/* Similar Recipes */}
+      {similarRecipes.length > 0 && (
+        <section className="bg-neutral-50 border-t border-neutral-200">
+          <div className="container mx-auto px-4 py-16">
+            <p className="text-[#00bf63] font-bold uppercase tracking-wider text-sm mb-2">You Might Also Like</p>
+            <h2 className="font-display text-3xl tracking-wide text-neutral-900 mb-10">
+              More Recipes
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {similarRecipes.map((rec) => (
+                <Link
+                  key={rec.id}
+                  href={`/recipe/${rec.slug}/`}
+                  className="group block"
+                >
+                  <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-3">
+                    {rec.featuredImage && (
+                      <Image
+                        src={rec.featuredImage}
+                        alt={rec.title}
+                        fill
+                        quality={90}
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute top-3 left-3 flex gap-2">
+                      {rec.difficulty && (
+                        <span className={`${difficultyColor[rec.difficulty] || 'text-white/70'} text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded`}>
+                          {rec.difficulty}
+                        </span>
+                      )}
+                    </div>
+                    <div className="absolute bottom-3 left-3 right-3">
+                      {rec.totalTime > 0 && (
+                        <span className="inline-flex items-center gap-1 text-white/80 text-xs mb-2">
+                          <Clock className="w-3 h-3" /> {rec.totalTime} min
+                        </span>
+                      )}
+                      <h3 className="text-white font-bold text-sm leading-tight line-clamp-2 group-hover:text-[#00bf63] transition-colors">
+                        {rec.title}
+                      </h3>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </main>
     </>
   );

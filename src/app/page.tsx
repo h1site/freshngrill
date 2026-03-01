@@ -20,11 +20,13 @@ export const metadata: Metadata = {
     siteName: "Fresh N' Grill",
     locale: 'en_US',
     type: 'website',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: "Fresh N' Grill - BBQ Recipes & Grilling Tips" }],
   },
   twitter: {
     card: 'summary_large_image',
     title: "Fresh N' Grill | BBQ Recipes & Grilling Tips",
     description: 'Discover our collection of BBQ recipes, grilling tips, and outdoor cooking ideas. Fire up the grill!',
+    images: ['/opengraph-image'],
   },
 };
 
@@ -140,8 +142,9 @@ export default async function HomePage() {
                     src={recipe.featured_image}
                     alt={recipe.title}
                     fill
+                    quality={90}
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                 ) : (
                   <div className="absolute inset-0 bg-neutral-200" />
