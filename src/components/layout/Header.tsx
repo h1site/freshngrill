@@ -40,6 +40,7 @@ export default function Header() {
     { name: 'Home', href: '/' },
     { name: 'Recipes', href: '/recipe' },
     { name: 'Blog', href: '/blog' },
+    { name: 'Tools', href: '/tools' },
   ];
 
   const isActive = (href: string) => {
