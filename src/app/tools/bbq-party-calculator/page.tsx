@@ -1,4 +1,6 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
+import { Timer } from 'lucide-react';
 import BbqPartyCalculator from '@/components/tools/BbqPartyCalculator';
 
 export const metadata: Metadata = {
@@ -125,6 +127,21 @@ export default function BbqPartyCalculatorPage() {
             </p>
           </div>
         </section>
+
+        {/* Cross-link to other tool */}
+        <Link
+          href="/tools/bbq-calculator/"
+          className="mt-16 max-w-3xl mx-auto flex items-center gap-4 bg-neutral-950 text-white rounded-2xl p-6 hover:bg-neutral-900 transition-colors group"
+        >
+          <div className="p-3 rounded-xl bg-[#00bf63]/20 group-hover:bg-[#00bf63]/30 transition-colors">
+            <Timer className="w-6 h-6 text-[#00bf63]" />
+          </div>
+          <div className="flex-1">
+            <p className="font-bold text-sm">BBQ Cooking Calculator</p>
+            <p className="text-neutral-400 text-xs mt-0.5">Calculate exact grilling times with an interactive timer and flip alerts</p>
+          </div>
+          <span className="text-neutral-500 group-hover:text-white transition-colors text-xl">→</span>
+        </Link>
       </div>
     </main>
   );
